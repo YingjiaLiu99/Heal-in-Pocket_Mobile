@@ -1,5 +1,5 @@
-## PocketHealth
+# PocketHealth
 
-# Current stage: refactoring
+## Current stage: refactoring
 
-# Instruction Doc: https://docs.google.com/document/d/13AEhyt9ujU4YwLZlheA3eibCj5LNoD0pjbEAE7Jhfco/edit?usp=sharing
+### Instruction Doc: https://docs.google.com/document/d/13AEhyt9ujU4YwLZlheA3eibCj5LNoD0pjbEAE7Jhfco/edit?usp=sharing
