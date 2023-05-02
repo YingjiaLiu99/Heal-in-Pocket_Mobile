@@ -16,9 +16,8 @@ export default function SignUpScreen({navigation}) {
     } else if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match');
     } else {
-      // Call API to create user account
+      // Call API to create user account      
       console.log('Sign up successful');
-
     }
   };
 
