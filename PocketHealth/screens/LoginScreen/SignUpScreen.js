@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styles from './styles.js';
 
-export default function SignUpScreen() {
+export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -14,8 +14,9 @@ export default function SignUpScreen() {
     } else if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match');
     } else {
-      // Call API to create user account
+      // Call API to create user account      
       console.log('Sign up successful');
+      navigation.navigate('Home')
     }
   };
 
