@@ -1,9 +1,9 @@
-// HomeScreen.js
+// WelcomeScreen.js
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 
-export default function HomeScreen({ navigation }) {
+export default function WelcomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
@@ -30,8 +30,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   title: {
-    fontSize: 30,
-    // fontWeight: 'bold',
+    fontSize: 30,    
     color: '#20315f'
   },
   button: {
