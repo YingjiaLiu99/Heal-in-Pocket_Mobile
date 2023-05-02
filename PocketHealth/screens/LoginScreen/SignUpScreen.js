@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styles from './styles.js';
 
-export default function SignUpScreen() {
+export default function SignUpScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 /// The Backend code goes here
   const handleSignUp = () => {
+    navigation.navigate("BasicPatientInfo")
+
     if (!email || !password || !confirmPassword) {
       setErrorMessage('Please fill in all fields');
     } else if (password !== confirmPassword) {
@@ -16,6 +18,7 @@ export default function SignUpScreen() {
     } else {
       // Call API to create user account
       console.log('Sign up successful');
+
     }
   };
 
