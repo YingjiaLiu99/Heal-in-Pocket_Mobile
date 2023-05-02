@@ -9,7 +9,7 @@ export default function LoginScreen({ navigation }) {
 /// The authentification goes inside handleLogin
 
   const handleLogin = () => {
-    navigation.navigate('Login')  
+    navigation.navigate('PatientInfo')  
   };
 
   const handleSignUp = () => {
