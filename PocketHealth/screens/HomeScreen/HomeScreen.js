@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-nati
 import { Button, KeyboardAvoidingView } from "react-native-web";
 import { SearchBar } from "@rneui/base";
 import { useState } from "react";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
 
 import styles from "./styles"
@@ -32,18 +31,11 @@ const HomeScreen = () => {
 
   return (
     <View>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text onPress={() => performSwitch()}>Home Screen</Text>
-        <SearchBar
-          placeholder="Type Here..."
-          onChangeText={(text) => setSearch(text)}
-          value={search}
-          platform="ios"
-        />
+      <ScrollView contentContainerStyle={styles.container}>             
         {/* <Button onPress={() => performSwitch()} title='Switch to patient response'/> */}
         <Text style={styles.text}>ProviderList</Text>
         <ProviderList></ProviderList>
-        <Text style={styles.text}>Direct Messages</Text>
+        <Text style={styles.text}>Messages</Text>
         <PatientInfo></PatientInfo>
         <PatientInfo></PatientInfo>
 
