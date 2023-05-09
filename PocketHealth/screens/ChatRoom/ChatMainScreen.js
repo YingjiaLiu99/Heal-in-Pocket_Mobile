@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 
-const PatientHistoryScreen = () => {
+const ChatMainPage = () => {
   return (
     <View />
   );
 };
 
-export default PatientHistoryScreen;
+export default ChatMainPage;

@@ -5,20 +5,31 @@ import styles from './styles';
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
-/// The authentification goes inside handleLogin
+  const [errorMessage, setErrorMessage] = useState('');
+
+// The backend authentification should put inside handleLogin
 
   const handleLogin = () => {
-    navigation.navigate('PatientInfo')  
+    if (!email || !password) {
+      setErrorMessage('Please fill in all fields');
+    }
+    else{
+      // Backend code goes here
+      console.log('log in successful');
+      navigation.navigate('Main Page', { screen: 'Home' });
+    }
   };
 
   const handleSignUp = () => {
-    navigation.navigate('SignUp');
+    navigation.navigate('Sign Up');
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome back!</Text>
+
+      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+      
       <TextInput
         label="Email"
         value={email}

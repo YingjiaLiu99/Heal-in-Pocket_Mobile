@@ -7,10 +7,8 @@ export default function SignUpScreen({navigation}) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-/// The Backend code goes here
-  const handleSignUp = () => {
-    navigation.navigate("BasicPatientInfo")
-
+// The Backend code goes here
+  const handleSignUp = () => {   
     if (!email || !password || !confirmPassword) {
       setErrorMessage('Please fill in all fields');
     } else if (password !== confirmPassword) {
@@ -18,13 +16,16 @@ export default function SignUpScreen({navigation}) {
     } else {
       // Call API to create user account      
       console.log('Sign up successful');
+      navigation.navigate("Basic Patient Info")
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
+      
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+
       <TextInput
         style={styles.input}
         placeholder="Email"
