@@ -89,7 +89,7 @@ function HistoryNavigator() {
 function ChatNavigator() {
   return (
     <ChatStack.Navigator>
-      <ChatStack.Screen name="Patient History" component={ChatMainPage} />
+      <ChatStack.Screen name="Chat" component={ChatMainPage} />
       {/* any follow up screens from home goes from here */}
     </ChatStack.Navigator>
   );
