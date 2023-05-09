@@ -3,14 +3,24 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-nati
 import { Button, KeyboardAvoidingView } from "react-native-web";
 import { SearchBar } from "@rneui/base";
 import { useState } from "react";
-import styles from "./styles"
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { useNavigation } from '@react-navigation/native';
 
+import styles from "./styles"
 import PatientInfo from "./components/PatientInfo";
 import ProviderList from "./components/ProviderList";
 
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
+
   const [search, setSearch] = useState("");
+
+  const navigation = useNavigation();
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: null
+    });
+  }, [navigation]);
 
   const performSwitch = () => {
     navigation.navigate("PatientResponse");
@@ -49,6 +59,5 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
-
 export default HomeScreen;
 
