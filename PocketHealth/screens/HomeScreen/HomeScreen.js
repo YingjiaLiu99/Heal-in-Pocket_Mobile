@@ -15,6 +15,11 @@ const HomeScreen = ({ navigation }) => {
   const performSwitch = () => {
     navigation.navigate("PatientResponse");
   };
+
+  const handleNewComplaint = () => {
+    navigation.navigate('New Complaint');
+  }
+
   return (
     <View>
       <ScrollView contentContainerStyle={styles.container}>
@@ -34,7 +39,7 @@ const HomeScreen = ({ navigation }) => {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("NewComplaint")}
+            onPress={handleNewComplaint}
             style={[styles.button, styles.buttonOutline]}
           >
             <Text style={styles.buttonOutlineText}>New Complaint</Text>

@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import styles from './styles.js';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import styles from './styles';
 
-const BasicPatientInfoScreen = ({navigation}) => {
+const BasicPatientInfoForm = ({navigation}) => {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
@@ -20,7 +20,7 @@ const BasicPatientInfoScreen = ({navigation}) => {
       }
     else {
       console.log(`Name: ${name}, Age: ${age}, Gender: ${gender}, Phone: ${phone}`);
-      navigation.navigate("Login")
+      navigation.navigate("Patient's Vitals")
     }
     
 
@@ -28,7 +28,10 @@ const BasicPatientInfoScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Patient Basic Information</Text>
+      <View style={styles.banner}>
+        <Text style={styles.bannerText}>Patient Basic Information</Text>
+      </View>
+      
       <Text style={styles.label}>Name:</Text>
       <TextInput
         style={styles.input}
@@ -64,11 +67,14 @@ const BasicPatientInfoScreen = ({navigation}) => {
         placeholder="Enter your phone number"
         keyboardType="phone-pad"
       />
+      
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>Submit</Text>
+      </TouchableOpacity>
 
-      <Button title="Submit" onPress={handleSubmit} />
     </View>
   );
 };
 
-export default BasicPatientInfoScreen;
+export default BasicPatientInfoForm;
 

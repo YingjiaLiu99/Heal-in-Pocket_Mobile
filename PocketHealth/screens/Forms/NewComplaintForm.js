@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button} from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity} from 'react-native';
 import styles from './styles.js';
 
-const MyComplaintScreen = () => {
+const NewComplaintForm = () => {
 //   const [patientName, setPatientName] = useState('');
   const [complaints, setComplaints] = useState('');
 
@@ -32,12 +32,16 @@ const MyComplaintScreen = () => {
         multiline={true}
         numberOfLines={4}
       />
-       <View style={styles.buttonContainer}>
-        <Button title="Add Image" onPress={handleAddImage} />
-        <Button title="Submit" onPress={handleSubmit} />
-      </View>
+
+      <TouchableOpacity style={styles.button} onPress={handleAddImage}>
+        <Text style={styles.buttonText}>Add Image</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>Submit</Text>
+      </TouchableOpacity>
+
     </View>
   );
 };
 
-export default MyComplaintScreen;
+export default NewComplaintForm;
