@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView } from 'react-native';
 import styles from './styles.js';
 
 export default function SignUpScreen({navigation}) {
@@ -21,7 +21,7 @@ export default function SignUpScreen({navigation}) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView  style={styles.container} behavior="padding">
       <Text style={styles.title}>Sign Up</Text>
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
@@ -51,7 +51,7 @@ export default function SignUpScreen({navigation}) {
       <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-    </View>
+      </KeyboardAvoidingView>
   );
 }
 

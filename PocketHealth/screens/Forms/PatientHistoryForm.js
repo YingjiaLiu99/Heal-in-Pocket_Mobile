@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from './styles';
 
 const PatientHistoryForm = ({navigation}) => {
@@ -19,7 +19,7 @@ const PatientHistoryForm = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.banner}>
         <Text style={styles.bannerText}>Patient Medical History</Text>
       </View>
@@ -73,7 +73,7 @@ const PatientHistoryForm = ({navigation}) => {
         <Text style={styles.buttonText}>Update</Text>
       </TouchableOpacity>
 
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from './styles.js';
 
 const VitalsCollectingForm = ({navigation}) => {
@@ -37,7 +37,7 @@ const VitalsCollectingForm = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
 
       <View style={styles.banner}>
         <Text style={styles.bannerText}>Patient Vital Information</Text>
@@ -93,7 +93,7 @@ const VitalsCollectingForm = ({navigation}) => {
       <View style={styles.inputContainer_narrow}>
       <TextInput
           style={styles.input_narrow}
-          value={oxygen}
+          value={glucose}
           onChangeText={(text) => setGlucose(text)}
           placeholder="Enter glucose level"
           keyboardType="numeric"
@@ -154,7 +154,7 @@ const VitalsCollectingForm = ({navigation}) => {
         <Text style={styles.buttonText}>Update</Text>
       </TouchableOpacity>
 
-    </View>
+    </KeyboardAvoidingView>
 );
 };
 export default VitalsCollectingForm;
