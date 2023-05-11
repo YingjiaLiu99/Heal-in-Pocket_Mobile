@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import React, { useState} from 'react';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
 import styles from './styles.js';
 
 const VitalsCollectingForm = ({navigation}) => {
@@ -37,7 +39,13 @@ const VitalsCollectingForm = ({navigation}) => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    // <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={50}>
+    <KeyboardAwareScrollView
+    style={{ flex: 1 }}
+    resetScrollToCoords={{ x: 0, y: 0 }}
+    contentContainerStyle={styles.container}
+    scrollEnabled={true}
+  >
 
       <View style={styles.banner}>
         <Text style={styles.bannerText}>Patient Vital Information</Text>
@@ -99,16 +107,17 @@ const VitalsCollectingForm = ({navigation}) => {
           keyboardType="numeric"
         />
       </View>
+ 
+        <Text style={styles.label}>Pain Level(mg/dl)</Text>      
+        <View style={styles.inputContainer_narrow}>
+          <TextInput
+            style={styles.input_narrow}
+            value={painLevel}
+            onChangeText={(text) => setPainLevel(text)}
+            placeholder="Enter pain level"
+          />
+        </View>
 
-      <Text style={styles.label}>Pain Level(mg/dl)</Text>      
-      <View style={styles.inputContainer_narrow}>
-        <TextInput
-          style={styles.input_narrow}
-          value={painLevel}
-          onChangeText={(text) => setPainLevel(text)}
-          placeholder="Enter pain level"
-        />
-      </View>
 
       <Text style={styles.label}>Respiration (bpm):</Text>
       <View style={styles.inputContainer_narrow}>
@@ -153,8 +162,7 @@ const VitalsCollectingForm = ({navigation}) => {
       <TouchableOpacity style={styles.button} onPress={handleUpdate}>
         <Text style={styles.buttonText}>Update</Text>
       </TouchableOpacity>
-
-    </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
 );
 };
 export default VitalsCollectingForm;
