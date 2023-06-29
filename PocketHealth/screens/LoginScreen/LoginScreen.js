@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+import InputBoxWithLabel from './components/InputBoxWithLabel';
 import styles from './styles';
 
 export default function LoginScreen({ navigation }) {
@@ -25,34 +28,47 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Text style={styles.title}>Welcome back!</Text>
-
-      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+    
+      <View style={styles.title}>
+        <Text style={styles.titleText}>Pocket Health</Text>
+      </View>
       
-      <TextInput
-        label="Email"
+      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}      
+      
+      <InputBoxWithLabel
+        label="Phone Number"
         value={email}
         onChangeText={(text) => setEmail(text)}
-        style={styles.input}
-        placeholder="Please Enter Email"
+        placeholder="Please Enter Your Phone Number"
       />
-      <TextInput
+      <InputBoxWithLabel
         label="Password"
         value={password}
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry
-        style={styles.input}
+        onChangeText={(text) => setPassword(text)}              
         placeholder="Please Enter Password"
+        secureTextEntry
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Log in</Text>
+      <TouchableOpacity onPress={() => {/* handle forgotten password here */ }}>
+        <Text style={styles.forgotPassword}>Forgot password?</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-        <Text style={styles.buttonText}>Don't have an account?</Text>
-        <Text style={styles.buttonText}> Sign up</Text>
-      </TouchableOpacity>   
-    </KeyboardAvoidingView>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Log in</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+          <Text style={styles.buttonText}>Don't have an account?</Text>
+          <Text style={styles.buttonText}> Sign up</Text>
+        </TouchableOpacity>
+      </View>
+
+      <TouchableOpacity onPress={() => {/* handle doctor sign in here */ }}>
+        <Text style={styles.doctorSignin}>Provider Login?</Text>
+      </TouchableOpacity>
+      
+    </KeyboardAwareScrollView>
   );
 }

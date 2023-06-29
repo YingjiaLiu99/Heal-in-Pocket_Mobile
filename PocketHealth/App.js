@@ -4,8 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginScreen from './screens/LoginScreen/LoginScreen';
-import SignUpScreen from './screens/LoginScreen/SignUpScreen'
-import WelcomeScreen from './screens/LoginScreen/WelcomeScreen';
+import SignUpScreen from './screens/LoginScreen/SignUpScreen';
 import BasicPatientInfoForm from './screens/Forms/BasicPatientInfoForm';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import PatientHistoryForm from './screens/Forms/PatientHistoryForm';
@@ -46,17 +45,16 @@ function HomeTabs() {
           //   },
           // })}
     >
-      <Tab.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator} />
-      <Tab.Screen name="My Record" options={{ headerShown: false }} component={HistoryNavigator} />
+      <Tab.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator} />      
       <Tab.Screen name="My Chat" options={{ headerShown: false }} component={ChatNavigator} />
+      <Tab.Screen name="My Record" options={{ headerShown: false }} component={HistoryNavigator} />
     </Tab.Navigator>
   );
 }
 
 function LoginNavigator() {
   return (
-    <LoginStack.Navigator>
-      <LoginStack.Screen name="Welcome" component={WelcomeScreen} />
+    <LoginStack.Navigator>      
       <LoginStack.Screen name="Login" component={LoginScreen} />
       <LoginStack.Screen name="Sign Up" component={SignUpScreen} />
       <LoginStack.Screen name="Basic Patient Info" component={BasicPatientInfoForm} />
