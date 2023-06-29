@@ -3,42 +3,62 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingHorizontal: 20,      
-      marginTop: 20
+      alignItems: 'center',      
+      justifyContent: 'flex-start',
+      flexDirection: 'column',
+      paddingHorizontal: 20,
+      paddingVertical:0,      
+      marginTop: 0,
+      marginHorizontal:0
     },
     title: {
-      fontSize: 30,
-      fontWeight: 'bold',
-      marginBottom: 20
+      alignItems: 'center', 
+      marginTop: 75,
+      marginBottom: 90
+    },
+    titleText: {
+      alignItems: 'center',   
+      fontSize: 45,
+      fontWeight: 400  
     },
     error: {
       color: 'red',
       marginBottom: 20
+    },   
+
+    forgotPassword: {
+      fontSize: 15,
+      color: '#333232',      
+      textDecorationLine: 'underline'
     },
-    input: {
-      height: 40,
+
+    buttonContainer: {
       width: '100%',
-      borderWidth: 1,
-      borderColor: '#ccc',
-      borderRadius: 5,
-      paddingHorizontal: 10,
-      marginBottom: 10
-    },    
+      alignItems: 'center', 
+      marginTop: 30,
+      marginBottom: 40
+    }, 
     button: {
-      width: '70%',
+      height: 70,
+      width: '100%',
       marginVertical: 10,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: '#20315f',
+      backgroundColor: '#395BCD',
       paddingVertical: 5,
       paddingHorizontal: 5,
       borderRadius: 5
     },
     buttonText: {
       color: '#fff',
-      fontSize: 20
+      fontSize: 25
+    },
+
+    doctorSignin: {
+      fontSize: 15,
+      color: '#333232',      
+      textDecorationLine: 'underline'
     }
   });
+
   export default styles;
