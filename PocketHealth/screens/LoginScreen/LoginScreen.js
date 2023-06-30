@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import InputBoxWithLabel from './components/InputBoxWithLabel';
 import styles from './styles';
 
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
 // The backend authentification should put inside handleLogin
 
   const handleLogin = () => {
-    if (!email || !password) {
+    if (!phoneNumber || !password) {
       setErrorMessage('Please fill in all fields');
     }
     else{
@@ -30,7 +30,7 @@ export default function LoginScreen({ navigation }) {
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
     
-      <View style={styles.title}>
+      <View style={{alignItems:'center',marginTop: 75,marginBottom:90}}>
         <Text style={styles.titleText}>Pocket Health</Text>
       </View>
       
@@ -38,9 +38,10 @@ export default function LoginScreen({ navigation }) {
       
       <InputBoxWithLabel
         label="Phone Number"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
+        value={phoneNumber}
+        onChangeText={(text) => setPhoneNumber(text)}
         placeholder="Please Enter Your Phone Number"
+        keyboardType='phone-pad'
       />
       <InputBoxWithLabel
         label="Password"
@@ -54,7 +55,7 @@ export default function LoginScreen({ navigation }) {
         <Text style={styles.forgotPassword}>Forgot password?</Text>
       </TouchableOpacity>
 
-      <View style={styles.buttonContainer}>
+      <View style={{width:'100%',alignItems:'center',marginTop:30,marginBottom:40}}>
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Log in</Text>
         </TouchableOpacity>
