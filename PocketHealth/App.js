@@ -4,8 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginScreen from './screens/LoginScreen/LoginScreen';
-import SignUpScreen from './screens/LoginScreen/SignUpScreen'
-import WelcomeScreen from './screens/LoginScreen/WelcomeScreen';
+import SignUpScreen from './screens/LoginScreen/SignUpScreen';
+import PhoneVerification from './screens/LoginScreen/PhoneVerification';
 import BasicPatientInfoForm from './screens/Forms/BasicPatientInfoForm';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import PatientHistoryForm from './screens/Forms/PatientHistoryForm';
@@ -13,6 +13,7 @@ import VitalsCollectingForm from './screens/Forms/VitalsCollectingForm';
 import NewComplaintForm from './screens/Forms/NewComplaintForm';
 import PatientHistoryScreen from './screens/PatientHistoryScreen/PatientHistoryScreen';
 import ChatMainPage from './screens/ChatRoom/ChatMainScreen';
+
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Stack = createStackNavigator();
@@ -27,38 +28,20 @@ const infoName = "Info";
 
 function HomeTabs() {
   return (
-    <Tab.Navigator
-          // initialRouteName={homeName}
-          // screenOptions={({ route }) => ({
-          //   tabBarIcon: ({ focused, color, size }) => {
-          //     let iconName;
-          //     let routeName = route.name;
-
-          //     if (routeName == homeName) {
-          //       iconName = focused ? "home" : "home-outline";
-          //     } else if (routeName == infoName) {
-          //       iconName = focused ? "folder" : "folder-outline";
-          //     } else if (routeName == patientName) {
-          //       iconName = focused ? "person" : "person-outline";
-          //     }
-
-          //     return <Ionicons name={iconName} size={size} color={color} />;
-          //   },
-          // })}
-    >
-      <Tab.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator} />
-      <Tab.Screen name="My Record" options={{ headerShown: false }} component={HistoryNavigator} />
+    <Tab.Navigator>
+      <Tab.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator} />      
       <Tab.Screen name="My Chat" options={{ headerShown: false }} component={ChatNavigator} />
+      <Tab.Screen name="My Record" options={{ headerShown: false }} component={HistoryNavigator} />
     </Tab.Navigator>
   );
 }
 
 function LoginNavigator() {
   return (
-    <LoginStack.Navigator>
-      <LoginStack.Screen name="Welcome" component={WelcomeScreen} />
+    <LoginStack.Navigator>      
       <LoginStack.Screen name="Login" component={LoginScreen} />
       <LoginStack.Screen name="Sign Up" component={SignUpScreen} />
+      <LoginStack.Screen name="Phone Verification" component={PhoneVerification} />
       <LoginStack.Screen name="Basic Patient Info" component={BasicPatientInfoForm} />
       <LoginStack.Screen name="Medical History" component={PatientHistoryForm} />
       <LoginStack.Screen name="Patient's Vitals" component={VitalsCollectingForm} />
