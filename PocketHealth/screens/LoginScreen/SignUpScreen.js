@@ -1,57 +1,67 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+import InputBoxWithLabel from './components/InputBoxWithLabel';
 import styles from './styles.js';
 
+
 export default function SignUpScreen({navigation}) {
-  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 // The Backend code goes here
   const handleSignUp = () => {   
-    if (!email || !password || !confirmPassword) {
+    if (!phoneNumber || !password || !confirmPassword) {
       setErrorMessage('Please fill in all fields');
     } else if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match');
     } else {
       // Call API to create user account      
-      console.log('Sign up successful');
-      navigation.navigate("Basic Patient Info")
+      console.log('Step to Phone Verification');
+      navigation.navigate("Phone Verification", { phoneNumber: phoneNumber });
     }
   };
 
   return (
-    <KeyboardAvoidingView  style={styles.container} behavior="padding">
-      <Text style={styles.title}>Sign Up</Text>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+
+      <View style={{alignItems:'center',marginTop: 75,marginBottom:90}}>
+        <Text style={styles.titleText}>Create Account</Text>
+      </View>
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        keyboardType="email-address"
-        autoCapitalize="none"
+      <InputBoxWithLabel
+        label="Phone Number"    
+        value={phoneNumber}  
+        onChangeText={(text) => setPhoneNumber(text)}  
+        placeholder="Please Enter Your Phone Number"    
+        keyboardType="phone-pad"        
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        onChangeText={(text) => setPassword(text)}
-        value={password}
+      <InputBoxWithLabel
+        label="Password"   
+        value={password}   
+        onChangeText={(text) => setPassword(text)}  
+        placeholder="Please Enter Password"   
         secureTextEntry={true}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm Password"
+      <InputBoxWithLabel
+        label="Confirm Password"
+        value={confirmPassword}        
         onChangeText={(text) => setConfirmPassword(text)}
-        value={confirmPassword}
+        placeholder="Please Enter Your Password Again"
         secureTextEntry={true}
       />
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-      </KeyboardAvoidingView>
+
+      <View style={{width:'100%',alignItems:'center',marginTop:50,marginBottom:40}}>
+        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+          <Text style={styles.buttonText}>Create Account</Text>
+        </TouchableOpacity>
+      </View>      
+
+      </KeyboardAwareScrollView>
   );
 }
 
