@@ -11,11 +11,7 @@ const styles = StyleSheet.create({
       marginTop: 0,
       marginHorizontal:0
     },
-    title: {
-      alignItems: 'center', 
-      marginTop: 75,
-      marginBottom: 90
-    },
+    
     titleText: {
       alignItems: 'center',   
       fontSize: 45,
@@ -32,12 +28,6 @@ const styles = StyleSheet.create({
       textDecorationLine: 'underline'
     },
 
-    buttonContainer: {
-      width: '100%',
-      alignItems: 'center', 
-      marginTop: 30,
-      marginBottom: 40
-    }, 
     button: {
       height: 70,
       width: '100%',
