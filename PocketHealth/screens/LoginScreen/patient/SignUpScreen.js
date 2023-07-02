@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-import InputBoxWithLabel from './components/InputBoxWithLabel';
-import styles from './styles.js';
+import InputBoxWithLabel from '../components/InputBoxWithLabel';
+import styles from '../styles.js';
 
 
 export default function SignUpScreen({navigation}) {
