@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 // own components and styles
-import RadioMutipleChoice from '../../components/RadioMultipleChoice';
-import InputBoxWithLabel from '../../components/InputBoxWithLabel';
-import styles from './styles';
+import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
+import InputBoxWithLabel from '../../../components/InputBoxWithLabel';
+import styles from '../../Forms/styles';
 
 const BasicPatientInfoForm = ({navigation}) => {
 

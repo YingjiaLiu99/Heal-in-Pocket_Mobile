@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-import InputBoxWithLabel from './components/InputBoxWithLabel';
-import styles from './styles';
+import InputBoxWithLabel from '../components/InputBoxWithLabel';
+import styles from '../styles';
 
 export default function ProviderLoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('');

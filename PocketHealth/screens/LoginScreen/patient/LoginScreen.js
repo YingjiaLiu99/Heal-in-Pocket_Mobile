@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-import InputBoxWithLabel from './components/InputBoxWithLabel';
-import styles from './styles';
+import InputBoxWithLabel from '../components/InputBoxWithLabel';
+import styles from '../styles';
 
 export default function LoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -32,7 +32,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   const handleForgetPassword = () => {
-    navigation.navigate('Verify Phone Number')
+    navigation.navigate('Verify Phone Number');    
   }
 
   return (

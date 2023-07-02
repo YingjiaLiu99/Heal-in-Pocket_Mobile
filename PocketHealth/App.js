@@ -3,16 +3,16 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import LoginScreen from './screens/LoginScreen/LoginScreen';
-import ProviderLoginScreen from './screens/LoginScreen/ProviderLoginScreen';
-import SignUpScreen from './screens/LoginScreen/SignUpScreen';
-import ProviderSignUpScreen from './screens/LoginScreen/ProviderSignUpScreen';
+import LoginScreen from './screens/LoginScreen/patient/LoginScreen';
+import ProviderLoginScreen from './screens/LoginScreen/medical_provider/ProviderLoginScreen';
+import SignUpScreen from './screens/LoginScreen/patient/SignUpScreen';
+import ProviderSignUpScreen from './screens/LoginScreen/medical_provider/ProviderSignUpScreen';
 import PhoneVerification from './screens/LoginScreen/PhoneVerification';
 import ResetPassword from './screens/LoginScreen/ResetPassword';
 import EnterPhoneNumber from './screens/LoginScreen/EnterPhoneNumber';
-import BasicPatientInfoForm from './screens/Forms/BasicPatientInfoForm';
+import BasicPatientInfoForm from './screens/LoginScreen/patient/BasicPatientInfoForm';
+import MedicalHistory from './screens/LoginScreen/patient/MedicalHistory';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
-import PatientHistoryForm from './screens/Forms/PatientHistoryForm';
 import VitalsCollectingForm from './screens/Forms/VitalsCollectingForm';
 import NewComplaintForm from './screens/Forms/NewComplaintForm';
 import PatientHistoryScreen from './screens/PatientHistoryScreen/PatientHistoryScreen';
@@ -26,9 +26,7 @@ const HomeStack = createStackNavigator();
 const HistoryStack = createStackNavigator();
 const ChatStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const homeName = "Home";
-const patientName = "User";
-const infoName = "Info";
+
 
 function HomeTabs() {
   return (
@@ -51,7 +49,7 @@ function LoginNavigator() {
       <LoginStack.Screen name="Verify Phone Number" component={EnterPhoneNumber}/>
       <LoginStack.Screen name="Reset Password" component={ResetPassword}/>
       <LoginStack.Screen name="Basic Patient Info" component={BasicPatientInfoForm} />
-      <LoginStack.Screen name="Medical History" component={PatientHistoryForm} />
+      <LoginStack.Screen name="Medical History" component={MedicalHistory} />
       <LoginStack.Screen name="Patient's Vitals" component={VitalsCollectingForm} />
       {/* any follow up screens from home goes from here */}
     </LoginStack.Navigator>
