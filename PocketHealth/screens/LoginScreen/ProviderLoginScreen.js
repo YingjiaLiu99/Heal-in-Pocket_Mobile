@@ -5,7 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import InputBoxWithLabel from './components/InputBoxWithLabel';
 import styles from './styles';
 
-export default function LoginScreen({ navigation }) {
+export default function ProviderLoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -24,13 +24,8 @@ export default function LoginScreen({ navigation }) {
   };
 
   const handleSignUp = () => {
-    navigation.navigate('Sign Up');
+    navigation.navigate('Provider Sign Up');
   };
-
-  const handleProviderLogin = () => {
-    navigation.navigate('Provider Login');
-  };
-
   const handleForgetPassword = () => {
     navigation.navigate('Verify Phone Number')
   }
@@ -38,21 +33,21 @@ export default function LoginScreen({ navigation }) {
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
     
-      <View style={{alignItems:'center',marginTop: 75,marginBottom:90}}>
-        <Text style={styles.titleText}>Pocket Health</Text>
+      <View style={{marginTop: 75,marginBottom:90}}>
+        <Text style={styles.titleText}>Provider Login</Text>
       </View>
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}      
       
       <InputBoxWithLabel
-        label="Phone Number*"
+        label="Phone Number"
         value={phoneNumber}
         onChangeText={(text) => setPhoneNumber(text)}
         placeholder="Please Enter Your Phone Number"
         keyboardType='phone-pad'
       />
       <InputBoxWithLabel
-        label="Password*"
+        label="Password"
         value={password}
         onChangeText={(text) => setPassword(text)}              
         placeholder="Please Enter Password"
@@ -73,10 +68,6 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.buttonText}> Sign up</Text>
         </TouchableOpacity>
       </View>
-
-      <TouchableOpacity onPress={handleProviderLogin}>
-        <Text style={styles.doctorSignin}>Provider Login?</Text>
-      </TouchableOpacity>
       
     </KeyboardAwareScrollView>
   );

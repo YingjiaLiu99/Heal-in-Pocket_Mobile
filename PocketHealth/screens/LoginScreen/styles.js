@@ -27,6 +27,12 @@ const styles = StyleSheet.create({
       color: '#333232',      
       textDecorationLine: 'underline'
     },
+    resend: {
+      fontSize: 15,
+      color: '#333232',      
+      textDecorationLine: 'underline',
+      textAlign: 'right'
+    },
 
     button: {
       height: 70,
