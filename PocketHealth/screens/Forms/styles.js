@@ -2,14 +2,21 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 20,
-      alignItems: 'center'
+      alignItems: 'center',      
+      justifyContent: 'flex-start',
+      flexDirection: 'column',
+      paddingHorizontal: 20,
+      paddingVertical:0,      
+      marginTop: 0,
+      marginHorizontal:0
     },
-    title: {
-      fontSize: 30,
-      fontWeight: 'bold',
-      marginBottom: 20
+
+    titleText: {
+      alignItems: 'center',   
+      fontSize: 40,
+      fontWeight: 400  
     },
+
     label: {
         fontSize: 16,
         marginBottom: 5,

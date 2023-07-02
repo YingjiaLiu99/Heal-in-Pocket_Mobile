@@ -1,78 +1,104 @@
-
+// react native library：
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+// own components and styles
+import RadioMutipleChoice from '../../components/RadioMultipleChoice';
+import InputBoxWithLabel from '../../components/InputBoxWithLabel';
 import styles from './styles';
 
 const BasicPatientInfoForm = ({navigation}) => {
-  const [name, setName] = useState('');
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [phone, setPhone] = useState('');
+  const [genderSelection, setGenderSelection] = useState(null);
+  const genderOptions = [
+    {value: 'male', choiceLabel: 'Male'},
+    {value: 'female', choiceLabel: 'Female'},
+    {value: 'other', choiceLabel: 'Other'},
+  ];  
 
-  // API TO DB GOES INSIDE
+  // Backend api call GOES INSIDE
   const handleSubmit = () => {
-    if (!name ) {
-      alert('Please enter your name');
-    } else if (age &(isNaN(parseInt(age)))) {
-      alert('Please enter a valid age');
-    } else if (typeof name !== "string" ) {
-    alert('Please enter a valid name');
-      }
-    else {
-      console.log(`Name: ${name}, Age: ${age}, Gender: ${gender}, Phone: ${phone}`);
-      navigation.navigate("Patient's Vitals")
+    if (!firstName) {
+      alert('Please enter your first name');
     }
-    
-
+    else if(!age) {
+      alert('Please enter your age');
+    }
+    else if(!genderSelection){
+      alert('Please choose your Biological Sex');
+    }
+    else if (typeof firstName !== "string" || typeof lastName !== "string") {
+      alert('Please enter a valid name');
+    }
+    else {
+      console.log(`First Name: ${firstName}, Last Name: ${lastName}, Age: ${age}, Sex: ${genderSelection}`);
+      navigation.navigate("Medical History");
+    }   
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.banner}>
-        <Text style={styles.bannerText}>Patient Basic Information</Text>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+      <View style={{marginTop: 75,marginBottom:70,width:'100%'}}>
+        <Text style={styles.titleText}>Welcome,{'\n'}Set Up Your Account</Text>
+        <Text style={{marginTop:10,fontSize:17}}>* is Required</Text>
+      </View>    
+
+      <InputBoxWithLabel
+        label="First Name*"        
+        value={firstName}
+        onChangeText={(text) => setFirstName(text)}
+        placeholder="Please enter your first name"
+        keyboardType="default"
+        width='100%'
+      />
+
+      <InputBoxWithLabel
+        label="Last Name"        
+        value={lastName}
+        onChangeText={(text) => setLastName(text)}
+        placeholder="Please enter your Last name"
+        keyboardType="default"
+        width='100%'
+      />
+      
+      <View style={{width:'100%',flexDirection:'row'}}>
+        <InputBoxWithLabel
+          label="Age*"        
+          value={age}
+          onChangeText={(text) => setAge(text)}
+          placeholder="Age"        
+          width='30%'
+          keyboardType="phone-pad"
+        />
+
+        <View style={{marginLeft:30,marginTop:-10}}>
+          <RadioMutipleChoice
+            options={genderOptions}
+            onSelectionChange={setGenderSelection}
+            upperLabel='Biological Sex*'
+          />        
+        </View>
+      </View>      
+      
+
+      <View style={{width:'100%',alignItems:'flex-end',marginTop:30,marginBottom:40}}>
+        <TouchableOpacity 
+        style={{
+          height: 70,
+          width: '30%',
+          marginVertical: 10,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#395BCD',          
+        }} onPress={handleSubmit}>
+          <Text style={{color:'#fff',fontSize: 25}}>Next</Text>
+        </TouchableOpacity>
       </View>
-      
-      <Text style={styles.label}>Name:</Text>
-      <TextInput
-        style={styles.input}
-        value={name}
-        onChangeText={(text) => setName(text)}
-        placeholder="Enter your name"
-        keyboardType="default"
-      />
 
-      <Text style={styles.label}>Age:</Text>
-      <TextInput
-        style={styles.input}
-        value={age}
-        onChangeText={(text) => setAge(text)}
-        placeholder="Enter your age"
-        keyboardType="numeric"
-      />
-
-      <Text style={styles.label}>Gender:</Text>
-      <TextInput
-        style={styles.input}
-        value={gender}
-        onChangeText={(text) => setGender(text)}
-        placeholder="Enter your gender"
-        keyboardType="default"
-      />
-
-      <Text style={styles.label}>Phone:</Text>
-      <TextInput
-        style={styles.input}
-        value={phone}
-        onChangeText={(text) => setPhone(text)}
-        placeholder="Enter your phone number"
-        keyboardType="phone-pad"
-      />
-      
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
-
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
