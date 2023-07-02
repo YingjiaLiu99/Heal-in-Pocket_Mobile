@@ -4,8 +4,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginScreen from './screens/LoginScreen/LoginScreen';
+import ProviderLoginScreen from './screens/LoginScreen/ProviderLoginScreen';
 import SignUpScreen from './screens/LoginScreen/SignUpScreen';
+import ProviderSignUpScreen from './screens/LoginScreen/ProviderSignUpScreen';
 import PhoneVerification from './screens/LoginScreen/PhoneVerification';
+import ResetPassword from './screens/LoginScreen/ResetPassword';
+import EnterPhoneNumber from './screens/LoginScreen/EnterPhoneNumber';
 import BasicPatientInfoForm from './screens/Forms/BasicPatientInfoForm';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import PatientHistoryForm from './screens/Forms/PatientHistoryForm';
@@ -40,8 +44,12 @@ function LoginNavigator() {
   return (
     <LoginStack.Navigator>      
       <LoginStack.Screen name="Login" component={LoginScreen} />
+      <LoginStack.Screen name="Provider Login" component={ProviderLoginScreen} />
       <LoginStack.Screen name="Sign Up" component={SignUpScreen} />
+      <LoginStack.Screen name="Provider Sign Up" component={ProviderSignUpScreen} />
       <LoginStack.Screen name="Phone Verification" component={PhoneVerification} />
+      <LoginStack.Screen name="Verify Phone Number" component={EnterPhoneNumber}/>
+      <LoginStack.Screen name="Reset Password" component={ResetPassword}/>
       <LoginStack.Screen name="Basic Patient Info" component={BasicPatientInfoForm} />
       <LoginStack.Screen name="Medical History" component={PatientHistoryForm} />
       <LoginStack.Screen name="Patient's Vitals" component={VitalsCollectingForm} />

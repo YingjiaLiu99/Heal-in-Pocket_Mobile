@@ -7,39 +7,30 @@ import styles from './styles.js';
 
 
 export default function SignUpScreen({navigation}) {
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 // The Backend code goes here
-  const handleSignUp = () => {   
-    if (!phoneNumber || !password || !confirmPassword) {
+  const handleReset = () => {   
+    if (!password || !confirmPassword) {
       setErrorMessage('Please fill in all fields');
     } else if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match');
     } else {
       // Call API to create user account      
       console.log('Step to Phone Verification');
-      navigation.navigate("Phone Verification", { phoneNumber: phoneNumber });
+      navigation.navigate("Basic Patient Info");
     }
   };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-
       <View style={{alignItems:'center',marginTop: 75,marginBottom:90}}>
-        <Text style={styles.titleText}>Create Account</Text>
+        <Text style={styles.titleText}>Reset Password</Text>
       </View>
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
-      <InputBoxWithLabel
-        label="Phone Number*"    
-        value={phoneNumber}  
-        onChangeText={(text) => setPhoneNumber(text)}  
-        placeholder="Please Enter Your Phone Number"    
-        keyboardType="phone-pad"        
-      />
       <InputBoxWithLabel
         label="Password*"   
         value={password}   
@@ -56,8 +47,8 @@ export default function SignUpScreen({navigation}) {
       />
 
       <View style={{width:'100%',alignItems:'center',marginTop:50,marginBottom:40}}>
-        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-          <Text style={styles.buttonText}>Create Account</Text>
+        <TouchableOpacity style={styles.button} onPress={handleReset}>
+          <Text style={styles.buttonText}>Reset</Text>
         </TouchableOpacity>
       </View>      
 

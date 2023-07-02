@@ -6,8 +6,9 @@ import InputBoxWithLabel from './components/InputBoxWithLabel';
 import styles from './styles.js';
 
 
-export default function SignUpScreen({navigation}) {
+export default function ProviderSignUpScreen({navigation}) {
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [pocketHealthCode, setCode] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -33,6 +34,13 @@ export default function SignUpScreen({navigation}) {
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
+      <InputBoxWithLabel
+        label="Pocket Health Code*"    
+        value={pocketHealthCode}  
+        onChangeText={(text) => setCode(text)}  
+        placeholder="Please Enter Your Invitation Code"    
+        keyboardType="phone-pad"        
+      />
       <InputBoxWithLabel
         label="Phone Number*"    
         value={phoneNumber}  
