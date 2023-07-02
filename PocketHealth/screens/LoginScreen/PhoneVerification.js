@@ -29,7 +29,7 @@ export default function PhoneVerification({route, navigation}) {
             </View>
 
             <View style={{width:'100%',alignItems:'center',marginTop:20,marginBottom:20}}>
-                <Text style={{color:'#7C7C7C',fontSize:15}}>A verification code has just been sent to your phone number: +1 {route.params.phoneNumber}</Text>
+                <Text style={{color:'#7C7C7C',fontSize:15}}>A verification code has just been sent to your phone number:    +1{route.params.phoneNumber}</Text>
             </View>
 
             {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}

@@ -55,7 +55,7 @@ export default function SignUpScreen({navigation}) {
         secureTextEntry={true}
       />
 
-      <View style={{width:'100%',alignItems:'center',marginTop:50,marginBottom:40}}>
+      <View style={{width:'100%',alignItems:'center',marginTop:20,marginBottom:40}}>
         <TouchableOpacity style={styles.button} onPress={handleSignUp}>
           <Text style={styles.buttonText}>Create Account</Text>
         </TouchableOpacity>
