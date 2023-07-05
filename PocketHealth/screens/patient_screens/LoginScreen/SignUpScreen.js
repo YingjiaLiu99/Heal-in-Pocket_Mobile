@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-import InputBoxWithLabel from '../components/InputBoxWithLabel';
-import styles from '../styles.js';
+import InputBoxWithLabel from './components/InputBoxWithLabel';
+import styles from './styles.js';
 
 
-export default function ProviderSignUpScreen({navigation}) {
+export default function SignUpScreen({navigation}) {
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [pocketHealthCode, setCode] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -21,7 +20,7 @@ export default function ProviderSignUpScreen({navigation}) {
     } else {
       // Call API to create user account      
       console.log('Step to Phone Verification');
-      navigation.navigate("Phone Verification", { phoneNumber: phoneNumber });
+      navigation.navigate("Patient Phone Verification", { phoneNumber: phoneNumber, fromForgotPassword: false });
     }
   };
 
@@ -34,13 +33,6 @@ export default function ProviderSignUpScreen({navigation}) {
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
-      <InputBoxWithLabel
-        label="Pocket Health Code*"    
-        value={pocketHealthCode}  
-        onChangeText={(text) => setCode(text)}  
-        placeholder="Please Enter Your Invitation Code"    
-        keyboardType="phone-pad"        
-      />
       <InputBoxWithLabel
         label="Phone Number*"    
         value={phoneNumber}  
@@ -63,7 +55,7 @@ export default function ProviderSignUpScreen({navigation}) {
         secureTextEntry={true}
       />
 
-      <View style={{width:'100%',alignItems:'center',marginTop:50,marginBottom:40}}>
+      <View style={{width:'100%',alignItems:'center',marginTop:20,marginBottom:40}}>
         <TouchableOpacity style={styles.button} onPress={handleSignUp}>
           <Text style={styles.buttonText}>Create Account</Text>
         </TouchableOpacity>

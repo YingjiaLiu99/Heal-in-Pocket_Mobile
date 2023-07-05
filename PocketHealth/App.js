@@ -3,97 +3,191 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import LoginScreen from './screens/LoginScreen/patient/LoginScreen';
-import ProviderLoginScreen from './screens/LoginScreen/medical_provider/ProviderLoginScreen';
-import SignUpScreen from './screens/LoginScreen/patient/SignUpScreen';
-import ProviderSignUpScreen from './screens/LoginScreen/medical_provider/ProviderSignUpScreen';
-import PhoneVerification from './screens/LoginScreen/PhoneVerification';
-import ResetPassword from './screens/LoginScreen/ResetPassword';
-import EnterPhoneNumber from './screens/LoginScreen/EnterPhoneNumber';
-import BasicPatientInfoForm from './screens/LoginScreen/patient/BasicPatientInfoForm';
-import MedicalHistory from './screens/LoginScreen/patient/MedicalHistory';
-import HomeScreen from './screens/HomeScreen/HomeScreen';
-import VitalsCollectingForm from './screens/Forms/VitalsCollectingForm';
-import NewComplaintForm from './screens/Forms/NewComplaintForm';
-import PatientHistoryScreen from './screens/PatientHistoryScreen/PatientHistoryScreen';
-import ChatMainPage from './screens/ChatRoom/ChatMainScreen';
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+// Entry screen of the app: general login page:
+import LoginScreen from './screens/patient_screens/LoginScreen/LoginScreen';
+// patient login & signup related screens:
+import SignUpScreen_patient from './screens/patient_screens/LoginScreen/SignUpScreen';
+import PhoneVerification_patient from './screens/patient_screens/LoginScreen/PhoneVerification';
+import ResetPassword_patient from './screens/patient_screens/LoginScreen/ResetPassword';
+import EnterPhoneNumToResetPassword_patient from './screens/patient_screens/LoginScreen/EnterPhoneNumToResetPass';
+import BasicPatientInfoForm_patient from './screens/patient_screens/LoginScreen/BasicPatientInfoForm';
+import MedicalHistory_patient from './screens/patient_screens/LoginScreen/MedicalHistory';
+import HomeScreen_patient from './screens/patient_screens/HomeScreen/HomeScreen';
+// patient home screen related screens:
+import VitalsCollectingForm_patient from './screens/patient_screens/Forms/VitalsCollectingForm';
+import NewComplaintForm_patient from './screens/patient_screens/Forms/NewComplaintForm';
+import PatientHistoryScreen_patient from './screens/patient_screens/PatientHistoryScreen/PatientHistoryScreen';
+import ChatMainPage_patient from './screens/patient_screens/ChatRoom/ChatMainScreen';
+// provider login & signup related screens:
+import SignUpScreen_provider from './screens/provider_screens/LoginScreen/ProviderSignUpScreen';
+import LoginScreen_provider from './screens/provider_screens/LoginScreen/ProviderLoginScreen';
+import PhoneVerification_provider from './screens/provider_screens/LoginScreen/ProviderPhoneVerification';
+import ProviderEnterPhoneNumToResetPass from './screens/provider_screens/LoginScreen/ProviderEnterPhoneNumToResetPass';
+import ProviderResetPassword from './screens/provider_screens/LoginScreen/ProviderResetPassword';
+import BasicProviderInfo from './screens/provider_screens/LoginScreen/BasicProviderInfo';
+import MoreInfoProvider from './screens/provider_screens/LoginScreen/MoreInfoProvider';
+// provider home screen related screens:
+import HomeScreen_provider from './screens/provider_screens/HomeScreen/HomeScreen_provider';
 
+
+// the main stack:
 const Stack = createStackNavigator();
+// the login stack(which supports patients, providers, and admin login)
 const LoginStack = createStackNavigator();
-const HomeStack = createStackNavigator();
-const HistoryStack = createStackNavigator();
-const ChatStack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+// patient's tab: including Home screen stack, record screen stack, chat screen stack
+const Tab_patient = createBottomTabNavigator();
+const HomeStack_patient = createStackNavigator();
+const HistoryStack_patient = createStackNavigator();
+const ChatStack_patient = createStackNavigator();
+// provider's tab: including Home screen stack, chat stack
+const Tab_provider = createBottomTabNavigator();
+const HomeStack_provider = createStackNavigator();
+const ChatStack_provider = createStackNavigator();
+// volunteer's tab: including Home screen stack, patient profile manage stack
+const Tab_vol = createBottomTabNavigator();
+const HomeStack_vol = createStackNavigator();
+const RecordManagerStack_vol = createStackNavigator();
 
 
-function HomeTabs() {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator} />      
-      <Tab.Screen name="My Chat" options={{ headerShown: false }} component={ChatNavigator} />
-      <Tab.Screen name="My Record" options={{ headerShown: false }} component={HistoryNavigator} />
-    </Tab.Navigator>
-  );
-}
-
+//-------------------------------------------------Login & SignUp Stack----------------------------------------------------------------//
 function LoginNavigator() {
   return (
     <LoginStack.Navigator>      
       <LoginStack.Screen name="Login" component={LoginScreen} />
-      <LoginStack.Screen name="Provider Login" component={ProviderLoginScreen} />
-      <LoginStack.Screen name="Sign Up" component={SignUpScreen} />
-      <LoginStack.Screen name="Provider Sign Up" component={ProviderSignUpScreen} />
-      <LoginStack.Screen name="Phone Verification" component={PhoneVerification} />
-      <LoginStack.Screen name="Verify Phone Number" component={EnterPhoneNumber}/>
-      <LoginStack.Screen name="Reset Password" component={ResetPassword}/>
-      <LoginStack.Screen name="Basic Patient Info" component={BasicPatientInfoForm} />
-      <LoginStack.Screen name="Medical History" component={MedicalHistory} />
-      <LoginStack.Screen name="Patient's Vitals" component={VitalsCollectingForm} />
+      {/* Patient login related screens: */}      
+      <LoginStack.Screen name="Patient Sign Up" component={SignUpScreen_patient} />      
+      <LoginStack.Screen name="Patient Phone Verification" component={PhoneVerification_patient} />
+      <LoginStack.Screen name="Patient Enter Phone Num to Reset Password" component={EnterPhoneNumToResetPassword_patient}/>
+      <LoginStack.Screen name="Patient Reset Password" component={ResetPassword_patient}/>
+      <LoginStack.Screen name="Basic Patient Info" component={BasicPatientInfoForm_patient} />
+      <LoginStack.Screen name="Medical History" component={MedicalHistory_patient} />
+      <LoginStack.Screen name="Patient's Vitals" component={VitalsCollectingForm_patient} />
+      {/* Provider login related screens: */}
+      <LoginStack.Screen name="Provider Login" component={LoginScreen_provider} />
+      <LoginStack.Screen name="Provider Sign Up" component={SignUpScreen_provider} />
+      <LoginStack.Screen name="Provider Phone Verification" component={PhoneVerification_provider} />
+      <LoginStack.Screen name="Provider Reset Password" component={ProviderResetPassword} />
+      <LoginStack.Screen name="Provider Enter Phone Num to Reset Password" component={ProviderEnterPhoneNumToResetPass} />
+      <LoginStack.Screen name="Basic Provider Info" component={BasicProviderInfo} />
+      <LoginStack.Screen name="More Provider Info" component={MoreInfoProvider} />
+      
       {/* any follow up screens from home goes from here */}
     </LoginStack.Navigator>
   );
 }
 
-function HomeNavigator() {
+//-------------------------------------------------Patient Tab & Stack----------------------------------------------------------------//
+// Patient Tab:
+function HomeTab_patient() {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
-      <HomeStack.Screen name="New Complaint" component={NewComplaintForm} />
-      {/* any follow up screens from home goes from here */}
-    </HomeStack.Navigator>
+    <Tab_patient.Navigator>
+      <Tab_patient.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_patient} />   
+      <Tab_patient.Screen name="My Record" options={{ headerShown: false }} component={HistoryNavigator_patient} />
+      <Tab_patient.Screen name="My Chat" options={{ headerShown: false }} component={ChatNavigator_patient} />
+    </Tab_patient.Navigator>
   );
 }
 
-function HistoryNavigator() {
+// Patient Stacks: home, history, chat:
+function HomeNavigator_patient() {
   return (
-    <HistoryStack.Navigator>
-      <HistoryStack.Screen name="Patient History" component={PatientHistoryScreen} />
+    <HomeStack_patient.Navigator>    
+      <HomeStack_patient.Screen name="Home" component={HomeScreen_patient} options={{ tabBarVisible:true }}/> 
+      <HomeStack_patient.Screen name="New Complaint" component={NewComplaintForm_patient} options={{ tabBarVisible:false }}/>
       {/* any follow up screens from home goes from here */}
-    </HistoryStack.Navigator>
+    </HomeStack_patient.Navigator>
   );
 }
 
-function ChatNavigator() {
+function HistoryNavigator_patient() {
   return (
-    <ChatStack.Navigator>
-      <ChatStack.Screen name="Chat" component={ChatMainPage} />
+    <HistoryStack_patient.Navigator>
+      <HistoryStack_patient.Screen name="Patient History" component={PatientHistoryScreen} />
       {/* any follow up screens from home goes from here */}
-    </ChatStack.Navigator>
+    </HistoryStack_patient.Navigator>
   );
 }
 
+function ChatNavigator_patient() {
+  return (
+    <ChatStack_patient.Navigator>
+      <ChatStack_patient.Screen name="Chat" component={ChatMainPage} />
+      {/* any follow up screens from home goes from here */}
+    </ChatStack_patient.Navigator>
+  );
+}
+
+//-------------------------------------------------Provider Tab & Stack----------------------------------------------------------------//
+// Provider Tab:
+function HomeTab_provider() {
+  return(
+    <Tab_provider.Navigator>
+      <Tab_provider.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_provider} />
+      <Tab_provider.Screen name="My Chat" options={{ headerShown: false }} component={ChatNavigator_provider} />      
+    </Tab_provider.Navigator>
+  );
+}
+
+// Provider Stacks: home, chat:
+function HomeNavigator_provider() {
+  return (
+    <HomeStack_provider.Navigator>
+      <HomeStack_provider.Screen name="Home" component={HomeScreen_provider} />
+      {/* any follow up screens from home goes from here */}
+    </HomeStack_provider.Navigator>
+  );
+}
+
+function ChatNavigator_provider() {
+  return(
+    <ChatStack_provider.Navigator>
+      <HomeStack_provider.Screen name="Chat" component={ChatScreen_provider} />
+    </ChatStack_provider.Navigator>
+  );
+}
+
+//-------------------------------------------------Volunteer Tab & Stack----------------------------------------------------------------//
+// Volunteer Tab:
+function HomeTab_vol() {
+  return(
+    <Tab_vol.Navigator>
+      <Tab_vol.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_vol} />
+      <Tab_vol.Screen name="Record Manager" options={{ headerShown: false }} component={RecordManagerNavigator_vol} />
+    </Tab_vol.Navigator>
+  );
+}
+
+// Volunteer Stacks:
+function HomeNavigator_vol() {
+  return(
+    <HomeStack_vol.Navigator>
+      <HomeStack_vol.Screen name="Home" component={HomeScreen_vol} />     
+       {/* any follow up screens from home goes from here */}
+    </HomeStack_vol.Navigator>
+  );
+}
+
+function RecordManagerNavigator_vol() {
+  return(
+    <RecordManagerStack_vol.Navigator>
+      <RecordManagerStack_vol.Screen name="Home" component={RecordManagerScreen_vol} />
+    </RecordManagerStack_vol.Navigator>
+  );
+}
+
+//-------------------------------------------------Entry Point of App.js----------------------------------------------------------------//
 function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator options={{ headerShown: false }}>
-        <Stack.Screen name="Login Page" options={{ headerShown: false }} component={LoginNavigator} />
-        <Stack.Screen name="Main Page" options={{ headerShown: false }} component={HomeTabs} />
+        <Stack.Screen name="Login Section" options={{ headerShown: false }} component={LoginNavigator} />
+        <Stack.Screen name="Patient Main Tab" options={{ headerShown: false }} component={HomeTab_patient} />
+        <Stack.Screen name="Provider Main Tab" options={{ headerShown: false }} component={HomeTab_provider} />
+        <Stack.Screen name="Volunteer Main Tab" options={{ headerShown: false }} component={HomeTab_vol} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
 export default App;
-

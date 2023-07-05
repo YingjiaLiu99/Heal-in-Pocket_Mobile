@@ -1,18 +1,20 @@
 // react native library：
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 // own components and styles
 import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
 import InputBoxWithLabel from '../../../components/InputBoxWithLabel';
-import styles from '../../Forms/styles';
+import styles from '../../patient_screens/Forms/styles';
 
 const BasicPatientInfoForm = ({navigation}) => {
 
+  const [errorMessage, setErrorMessage] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [age, setAge] = useState('');
   const [genderSelection, setGenderSelection] = useState(null);
+
   const genderOptions = [
     {value: 'male', choiceLabel: 'Male'},
     {value: 'female', choiceLabel: 'Female'},
@@ -22,16 +24,16 @@ const BasicPatientInfoForm = ({navigation}) => {
   // Backend api call GOES INSIDE
   const handleSubmit = () => {
     if (!firstName) {
-      alert('Please enter your first name');
+      setErrorMessage('Please enter your first name');      
     }
     else if(!age) {
-      alert('Please enter your age');
+      setErrorMessage('Please enter your age');
     }
     else if(!genderSelection){
-      alert('Please choose your Biological Sex');
+      setErrorMessage('Please choose your Biological Sex');
     }
     else if (typeof firstName !== "string" || typeof lastName !== "string") {
-      alert('Please enter a valid name');
+      setErrorMessage('Please enter a valid name');
     }
     else {
       console.log(`First Name: ${firstName}, Last Name: ${lastName}, Age: ${age}, Sex: ${genderSelection}`);
@@ -45,6 +47,8 @@ const BasicPatientInfoForm = ({navigation}) => {
         <Text style={styles.titleText}>Welcome,{'\n'}Set Up Your Account</Text>
         <Text style={{marginTop:10,fontSize:17}}>* is Required</Text>
       </View>    
+
+      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
       <InputBoxWithLabel
         label="First Name*"        
@@ -92,7 +96,8 @@ const BasicPatientInfoForm = ({navigation}) => {
           marginVertical: 10,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#395BCD',          
+          backgroundColor: '#395BCD',
+          borderRadius:20           
         }} onPress={handleSubmit}>
           <Text style={{color:'#fff',fontSize: 25}}>Next</Text>
         </TouchableOpacity>
