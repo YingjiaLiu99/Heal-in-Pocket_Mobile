@@ -6,25 +6,27 @@ import InputBoxWithLabel from './components/InputBoxWithLabel';
 import styles from './styles.js';
 
 
-export default function SignUpScreen({navigation}) {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+export default function EnterPhoneNumber({navigation}) {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');  
+
 // The Backend code goes here
   const handleReset = () => {   
-    if (!password || !confirmPassword) {
-      setErrorMessage('Please fill in all fields');
-    } else if (password !== confirmPassword) {
-      setErrorMessage('Passwords do not match');
-    } else {
-      // Call API to create user account      
-      console.log('Step to Phone Verification');
-      navigation.navigate("Basic Patient Info");
+    if (!phoneNumber ) {
+      setErrorMessage('Please enter your phone number');
+    }else if (phoneNumber != 1234567890){
+        //check if the number is registered already
+        setErrorMessage('This number is not registered');
+    }else {
+      // Call API 
+      console.log('Forgot Password');
+      navigation.navigate("Patient Phone Verification", { phoneNumber: phoneNumber, fromForgotPassword: true });
     }
   };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+
       <View style={{alignItems:'center',marginTop: 75,marginBottom:90}}>
         <Text style={styles.titleText}>Reset Password</Text>
       </View>
@@ -32,18 +34,11 @@ export default function SignUpScreen({navigation}) {
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
       <InputBoxWithLabel
-        label="Password*"   
-        value={password}   
-        onChangeText={(text) => setPassword(text)}  
-        placeholder="Please Enter Password"   
-        secureTextEntry={true}
-      />
-      <InputBoxWithLabel
-        label="Confirm Password*"
-        value={confirmPassword}        
-        onChangeText={(text) => setConfirmPassword(text)}
-        placeholder="Please Enter Your Password Again"
-        secureTextEntry={true}
+        label="Phone Number*"    
+        value={phoneNumber}  
+        onChangeText={(text) => setPhoneNumber(text)}  
+        placeholder="Please Enter Your Phone Number"    
+        keyboardType="phone-pad"        
       />
 
       <View style={{width:'100%',alignItems:'center',marginTop:50,marginBottom:40}}>

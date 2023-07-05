@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-import InputBoxWithLabel from '../components/InputBoxWithLabel';
-import styles from '../styles';
+import InputBoxWithLabel from './components/InputBoxWithLabel';
+import styles from './styles';
 
 export default function LoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -18,13 +18,22 @@ export default function LoginScreen({ navigation }) {
     }
     else{
       // Backend code goes here
-      console.log('log in successful');
-      navigation.navigate('Main Page', { screen: 'Home' });
+      console.log('log in successful');      
+      // this will prevent user go back to previous stack:
+      navigation.reset({
+        index: 0,
+        routes: [{ name:'Patient Main Tab', 
+          state:{ 
+            routes:[ {name:'My Home', state:{routes:[ {name:'Home'} ]}} ] 
+          } 
+        }],
+      });
+      
     }
   };
 
   const handleSignUp = () => {
-    navigation.navigate('Sign Up');
+    navigation.navigate('Patient Sign Up');
   };
 
   const handleProviderLogin = () => {
@@ -32,8 +41,12 @@ export default function LoginScreen({ navigation }) {
   };
 
   const handleForgetPassword = () => {
-    navigation.navigate('Verify Phone Number');    
-  }
+    navigation.navigate('Patient Enter Phone Num to Reset Password');    
+  };
+
+  const handleVolunteerLogin = () => {
+
+  };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -76,6 +89,10 @@ export default function LoginScreen({ navigation }) {
 
       <TouchableOpacity onPress={handleProviderLogin}>
         <Text style={styles.doctorSignin}>Provider Login?</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={{marginTop:20}} onPress={handleVolunteerLogin}>
+        <Text style={styles.doctorSignin}>Volunteer Login?</Text>
       </TouchableOpacity>
       
     </KeyboardAwareScrollView>

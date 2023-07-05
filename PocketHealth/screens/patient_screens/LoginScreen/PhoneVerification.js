@@ -11,6 +11,7 @@ export default function PhoneVerification({route, navigation}) {
     const [counter, setCounter] = useState(60);
     const [disableResend, setDisableResend] = useState(true);
     const [isNewCodeSent, setIsNewCodeSent] = useState(false);
+
     useEffect(() => {
         if(counter > 0) {
             const timer = setTimeout(() => setCounter(counter - 1), 1000);
@@ -20,7 +21,7 @@ export default function PhoneVerification({route, navigation}) {
         }
     }, [counter]);
 
-    const handleVerification = () => {
+    const handleSignUpVerification = () => {
         if(!verificationCode) {
             setErrorMessage('Please Enter Your Verification Code');
         }
@@ -29,13 +30,13 @@ export default function PhoneVerification({route, navigation}) {
             navigation.navigate("Basic Patient Info");
         }      
     };
-    const handleReset = () => {
+    const handleFromResetPassword = () => {
         if(!verificationCode) {
             setErrorMessage('Please Enter Your Verification Code');
         }
         else{
             console.log('verify Success!');
-            navigation.navigate("Reset Password");
+            navigation.navigate("Patient Reset Password");
         }      
     };
 
@@ -46,9 +47,6 @@ export default function PhoneVerification({route, navigation}) {
         setDisableResend(true);
         setIsNewCodeSent(true);
     };
-
-
-
 
     return (
         <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -84,9 +82,9 @@ export default function PhoneVerification({route, navigation}) {
             </TouchableOpacity>
 
             <View style={{width:'100%',alignItems:'center',marginTop:50,marginBottom:40}}>
-                <TouchableOpacity style={styles.button} onPress={route.params.isFindPassword ? handleReset : handleVerification} >
+                <TouchableOpacity style={styles.button} onPress={route.params.fromForgotPassword ? handleFromResetPassword : handleSignUpVerification} >
                     <Text style={styles.buttonText}>
-                    {route.params.isFindPassword ? 'Reset Password' : 'Create Account'}</Text>
+                    {route.params.fromForgotPassword ? 'Reset Password' : 'Create Account'}</Text>
                 </TouchableOpacity>
             </View> 
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 
-const InputBoxWithLabel = ({ label, value, onChangeText, placeholder, width, ...props }) => {
+const BigInputBoxWithLabel = ({ label, value, onChangeText, placeholder, ...props }) => {
   return (
-    <View style={[styles.inputContainer,{width:width}]}>
+    <View style={styles.inputContainer}>
       <Text style={styles.inputLabel}>{label}</Text>
       <TextInput
         style={styles.inputField}
@@ -11,6 +11,8 @@ const InputBoxWithLabel = ({ label, value, onChangeText, placeholder, width, ...
         onChangeText={onChangeText}
         placeholder={placeholder}
         placeholderTextColor='#7C7C7C'
+        multiline={true}  // allow multiple lines
+        numberOfLines={4} // start off with 4 lines
         {...props}
       />
     </View>
@@ -18,7 +20,8 @@ const InputBoxWithLabel = ({ label, value, onChangeText, placeholder, width, ...
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {    
+  inputContainer: {
+    width: '100%',
     marginBottom: 10, 
   },
   inputLabel: {
@@ -27,7 +30,7 @@ const styles = StyleSheet.create({
   fontWeight: 'bold',
   },
   inputField: {
-    height: 70,
+    height: 130,
     borderWidth: 2,
     borderColor: '#7C7C7C',
     borderRadius: 10,
@@ -36,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InputBoxWithLabel;
+export default BigInputBoxWithLabel;

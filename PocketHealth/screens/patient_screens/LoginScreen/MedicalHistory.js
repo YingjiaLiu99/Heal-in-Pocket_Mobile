@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { View, Text, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import BigInputBoxWithLabel from '../components/BigInputBoxWithLabel';
-import styles from '../styles';
+import BigInputBoxWithLabel from './components/BigInputBoxWithLabel';
+import styles from './styles';
 
 const PatientHistoryForm = ({navigation}) => {
   const [allergies, setAllergies] = useState('');
@@ -14,7 +14,16 @@ const PatientHistoryForm = ({navigation}) => {
     console.log(`Chronical Illness: ${illness}`);    
     console.log(`Medications: ${medications}`);   
     console.log(`Allergies: ${allergies}`); 
-    navigation.navigate('Main Page', { screen: 'Home' });
+    
+    navigation.reset({
+        index: 0,
+        routes: [{ name:'Patient Main Tab', 
+          state:{ 
+            routes:[ {name:'My Home', state:{routes:[ {name:'Home'} ]}} ] 
+          } 
+        }],
+      });
+
   };
 
   return (
