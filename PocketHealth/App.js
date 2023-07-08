@@ -17,8 +17,12 @@ import HomeScreen_patient from './screens/patient_screens/HomeScreen/HomeScreen'
 // patient home screen related screens:
 import VitalsCollectingForm_patient from './screens/patient_screens/Forms/VitalsCollectingForm';
 import NewComplaintForm_patient from './screens/patient_screens/Forms/NewComplaintForm';
-import PatientHistoryScreen_patient from './screens/patient_screens/PatientHistoryScreen/PatientHistoryScreen';
+// patient medical history related screens:
+import PatientHistoryMain_patient from './screens/patient_screens/PatientHistoryScreen/PatientHistoryScreen';
+import VitalHistory_patient from './screens/patient_screens/PatientHistoryScreen/VitalHistory';
+// patient chat related screens:
 import ChatMainPage_patient from './screens/patient_screens/ChatRoom/ChatMainScreen';
+
 // provider login & signup related screens:
 import SignUpScreen_provider from './screens/provider_screens/LoginScreen/ProviderSignUpScreen';
 import LoginScreen_provider from './screens/provider_screens/LoginScreen/ProviderLoginScreen';
@@ -103,7 +107,8 @@ function HomeNavigator_patient() {
 function HistoryNavigator_patient() {
   return (
     <HistoryStack_patient.Navigator>
-      <HistoryStack_patient.Screen name="Patient History" component={PatientHistoryScreen} />
+      <HistoryStack_patient.Screen name="Patient History" component={PatientHistoryMain_patient} />
+      <HistoryStack_patient.Screen name="Vital History" component={VitalHistory_patient} />
       {/* any follow up screens from home goes from here */}
     </HistoryStack_patient.Navigator>
   );
@@ -112,7 +117,7 @@ function HistoryNavigator_patient() {
 function ChatNavigator_patient() {
   return (
     <ChatStack_patient.Navigator>
-      <ChatStack_patient.Screen name="Chat" component={ChatMainPage} />
+      <ChatStack_patient.Screen name="Chat" component={ChatMainPage_patient} />
       {/* any follow up screens from home goes from here */}
     </ChatStack_patient.Navigator>
   );
