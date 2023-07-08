@@ -1,39 +1,18 @@
-import React from 'react';
-// import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import ProviderList from "./../HomeScreen/components/ProviderList";
-import styles from "./styles"
-import ChatPage from './ChatPage';
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 
-const ChatMainPage = () => {
+import styles from './styles.js';
 
-  // const navigation = useNavigation();
-  // React.useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerLeft: null
-  //   });
-  // }, [navigation]);
+export default function ChatMainScreen({navigation}) {  
 
   return (
-    <View>
-      <ScrollView contentContainerStyle={styles.container}>             
-        {/* <Button onPress={() => performSwitch()} title='Switch to patient response'/> */}
-        <View>
-        <Text style={styles.text}>ProviderList</Text>
-        <ProviderList></ProviderList>
-        <Text style={styles.text}>Chat</Text>
-        <ChatPage style={styles.chatPage}></ChatPage>
-        </View>
+    <View style={styles.container}>
 
+      <View style={{marginTop: 75,marginBottom:70,width:'100%',alignItems: 'center'}}>
+        <Text style={styles.titleText}>"Chat With Doctors"{'\n'}Coming Soon,{'\n'}Stay Tuned!</Text>        
+      </View>
 
-        </ScrollView>
     </View>
-
-    
-   
   );
 };
-
-export default ChatMainPage;
