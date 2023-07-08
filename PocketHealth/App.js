@@ -34,6 +34,9 @@ import MoreInfoProvider from './screens/provider_screens/LoginScreen/MoreInfoPro
 // provider home screen related screens:
 import HomeScreen_provider from './screens/provider_screens/HomeScreen/HomeScreen_provider';
 
+// volunteer login & signup related screens:
+// TODO: change import to VolunteerLoginScreen instead of HomeScreen_volunteer once created (7/8/23 tw)
+import LoginScreen_volunteer from './screens/volunteer_screens/HomeScreen/HomeScreen_volunteer';
 
 // the main stack:
 const Stack = createStackNavigator();
@@ -77,6 +80,10 @@ function LoginNavigator() {
       <LoginStack.Screen name="More Provider Info" component={MoreInfoProvider} />
       
       {/* any follow up screens from home goes from here */}
+      
+      {/* TODO: add additional volunteer screens once created (7/8/2023 tw) */}
+      {/* Volunteer login related screens: */}
+      <LoginStack.Screen name="Volunteer Login" component={LoginScreen_volunteer} />
     </LoginStack.Navigator>
   );
 }

@@ -45,7 +45,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   const handleVolunteerLogin = () => {
-
+    navigation.navigate('Volunteer Login');
   };
 
   return (
