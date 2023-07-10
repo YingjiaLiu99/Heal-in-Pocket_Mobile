@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
     paddingVertical:0,      
     marginTop: 0,
     marginHorizontal:0,
-    marginBottom:10
+    marginBottom:10,
+    // backgroundColor:'#FFFFFF'
   },
 
   titleText: {

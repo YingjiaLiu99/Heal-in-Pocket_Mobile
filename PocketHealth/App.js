@@ -20,6 +20,8 @@ import NewComplaintForm_patient from './screens/patient_screens/Forms/NewComplai
 // patient medical history related screens:
 import PatientHistoryMain_patient from './screens/patient_screens/PatientHistoryScreen/PatientHistoryScreen';
 import VitalHistory_patient from './screens/patient_screens/PatientHistoryScreen/VitalHistory';
+import MedicalHistoryRecord_patient from './screens/patient_screens/PatientHistoryScreen/MedicalHistory';
+import PastVisitRecord_patient from './screens/patient_screens/PatientHistoryScreen/PastVisit';
 // patient chat related screens:
 import ChatMainPage_patient from './screens/patient_screens/ChatRoom/ChatMainScreen';
 
@@ -109,6 +111,8 @@ function HistoryNavigator_patient() {
     <HistoryStack_patient.Navigator>
       <HistoryStack_patient.Screen name="Patient History" component={PatientHistoryMain_patient} />
       <HistoryStack_patient.Screen name="Vital History" component={VitalHistory_patient} />
+      <HistoryStack_patient.Screen name="Medical History" component={MedicalHistoryRecord_patient} />
+      <HistoryStack_patient.Screen name="Past Visit" component={PastVisitRecord_patient} />
       {/* any follow up screens from home goes from here */}
     </HistoryStack_patient.Navigator>
   );

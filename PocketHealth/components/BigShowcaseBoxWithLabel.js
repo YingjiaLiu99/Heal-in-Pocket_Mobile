@@ -1,20 +1,21 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
-const ShowcaseBoxWithLabel = ({ label, value, unit, width, ...props }) => {
+const BigShowcaseBoxWithLabel = ({ label, value, unit, width, ...props }) => {
   return (
     <View style={[styles.boxContainer, {width:width}]}>
       <View style={styles.valueContainer}>
-        <View>
+        <View style={styles.labelValueContainer}>
           <Text style={styles.boxLabel}>{label}</Text>
-          <Text
-            style={styles.boxField}
-            {...props}
-          >
-            {value}
-          </Text>
-        </View>
-        <Text style={styles.unit}>{unit}</Text>
+          <ScrollView>
+            <Text
+              style={styles.boxField}
+              {...props}
+            >
+              {value}
+            </Text>
+          </ScrollView>
+        </View>        
       </View>
     </View>
   );
@@ -29,24 +30,23 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderWidth: 2,
     borderColor: '#7C7C7C',
-    backgroundColor:'#FFFFFF',
     borderRadius: 15,
     paddingHorizontal: 10,    
     paddingTop:5,
-    height: 60,
+    backgroundColor:'#FFFFFF',
+  },
+  labelValueContainer: {
+    flex: 1,
+    minHeight: 60,
+    maxHeight: 200,
   },
   boxLabel: {
     fontSize: 15,
-    fontWeight: 300,
+    fontWeight: '300',
     marginBottom: 5,
   },
   boxField: {
     fontSize: 20,
-  },
-  unit: {
-    fontSize: 20,
-    alignSelf: 'center',
-    marginTop:18,
-  },
+  },  
 });
-export default ShowcaseBoxWithLabel;
+export default BigShowcaseBoxWithLabel;

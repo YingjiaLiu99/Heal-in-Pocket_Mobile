@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
       paddingHorizontal: 20,
       paddingVertical:0,      
       marginTop: 0,
-      marginHorizontal:0
+      marginHorizontal:0,
+      // backgroundColor:'#FFFFFF'
     },
     
     titleText: {

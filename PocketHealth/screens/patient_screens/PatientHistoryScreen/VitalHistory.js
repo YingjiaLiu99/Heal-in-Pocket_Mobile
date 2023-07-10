@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 
 import VitalsFoldableList from './components/VitalsFoldableList';
 import styles from './styles.js';

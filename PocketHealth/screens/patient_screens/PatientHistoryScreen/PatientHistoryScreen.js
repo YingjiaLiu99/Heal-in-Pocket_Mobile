@@ -10,10 +10,10 @@ export default function PatientHistoryScreen({navigation}) {
     navigation.navigate('Vital History');
   };
   const handleMedicalHistory = () => {
-
+    navigation.navigate('Medical History');
   };
   const handlePastVisit = () => {
-
+    navigation.navigate('Past Visit');
   };  
 
   return (
