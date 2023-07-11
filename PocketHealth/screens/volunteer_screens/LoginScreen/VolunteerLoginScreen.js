@@ -18,7 +18,7 @@ export default function VolunteerLoginScreen({ navigation }) {
     }
     else{
       // Backend code goes here
-      console.log('log in successful');     
+      console.log('volunteer log in successful');     
       // this will prevent user go back to previous stack
       navigation.reset({
         index: 0,
@@ -33,10 +33,12 @@ export default function VolunteerLoginScreen({ navigation }) {
   };
 
   const handleSignUp = () => {
+    console.log('volunteer try to sign up');
     navigation.navigate('Volunteer Sign Up');
   };
   const handleForgetPassword = () => {
-    navigation.navigate('Provider Enter Phone Num to Reset Password');
+    console.log('volunteer forgot password');
+    navigation.navigate('Volunteer Enter Phone Num to Reset Password');
   }
 
   return (

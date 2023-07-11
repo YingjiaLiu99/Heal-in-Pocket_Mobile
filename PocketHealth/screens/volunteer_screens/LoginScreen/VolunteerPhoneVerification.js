@@ -26,7 +26,7 @@ export default function PhoneVerification({route, navigation}) {
             setErrorMessage('Please Enter Your Verification Code');
         }
         else{
-            console.log('from sign up');
+            console.log('go to volunteer basic info, because its from sign up');
             navigation.navigate("Basic Volunteer Info");
         }      
     };
@@ -35,7 +35,7 @@ export default function PhoneVerification({route, navigation}) {
             setErrorMessage('Please Enter Your Verification Code');
         }
         else{
-            console.log('from volunteer reset password');
+            console.log('go to volunteer reset password, because its from forgot password');
             navigation.navigate("Volunteer Reset Password");
         }      
     };

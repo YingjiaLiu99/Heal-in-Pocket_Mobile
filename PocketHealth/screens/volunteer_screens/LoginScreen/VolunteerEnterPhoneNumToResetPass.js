@@ -6,7 +6,7 @@ import InputBoxWithLabel from './components/InputBoxWithLabel';
 import styles from './styles.js';
 
 
-export default function ProviderEnterPhoneNumToResetPass({navigation}) {
+export default function VolunteerEnterPhoneNumToResetPass({navigation}) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -18,8 +18,8 @@ export default function ProviderEnterPhoneNumToResetPass({navigation}) {
             setErrorMessage('This number is not registered');
         }else {
           // Call API 
-          console.log('Forgot Password');
-          navigation.navigate("Provider Phone Verification", { phoneNumber: phoneNumber, fromForgotPassword: true });
+          console.log('go to vol phone verification from forgot password');
+          navigation.navigate("Volunteer Phone Verification", { phoneNumber: phoneNumber, fromForgotPassword: true });
         }
       };
 
