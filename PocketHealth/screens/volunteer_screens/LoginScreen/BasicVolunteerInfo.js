@@ -9,9 +9,8 @@ import styles from './styles';
 export default function BasicVolunteerInfo({navigation}) {
     const [errorMessage, setErrorMessage] = useState('');
     const [lastName, setLastName] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [title, setTitle] = useState('');
-    const [affiliation, setAffiliation] = useState('');
+    const [firstName, setFirstName] = useState('');   
+    
 
     const handleSignUp = () => {
         if (!firstName) {
@@ -20,12 +19,16 @@ export default function BasicVolunteerInfo({navigation}) {
         else if (!lastName) {
             setErrorMessage('Please enter your last name');
         }
-        else if (!title) {
-            setErrorMessage('Please enter your title');
-        }
         else {
-            console.log(`First Name: ${firstName}, Last Name: ${lastName}, title: ${title}, affiliation: ${affiliation}`);
-            navigation.navigate("More Volunteer Info");
+            console.log(`First Name: ${firstName}, Last Name: ${lastName}`);
+            navigation.reset({
+                index: 0,
+                routes: [{ name:'Volunteer Main Tab', 
+                  state:{ 
+                    routes:[ {name:'My Home', state:{routes:[ {name:'Home'} ]}} ] 
+                  } 
+                }],
+              });
         }
     };
 
@@ -52,22 +55,6 @@ return (
             value={lastName}  
             onChangeText={(text) => setLastName(text)}  
             placeholder="Please Enter Your Last Name"    
-            keyboardType="default"        
-        />
-
-        <InputBoxWithLabel
-            label="Title*"    
-            value={title}  
-            onChangeText={(text) => setTitle(text)}  
-            placeholder="Please Enter Your title (eg. MD, NP, etc.)"    
-            keyboardType="default"        
-        />
-
-        <InputBoxWithLabel
-            label="Affiliation"    
-            value={affiliation}  
-            onChangeText={(text) => setAffiliation(text)}  
-            placeholder="Please Enter Your Affiliation (optional)"    
             keyboardType="default"        
         />
 

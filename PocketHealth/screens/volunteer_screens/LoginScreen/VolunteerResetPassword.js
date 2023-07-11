@@ -21,7 +21,7 @@ export default function VolunteerResetPassword({navigation}) {
         'Password Reset Success!', 
         'Please login again using your new password',
         [
-          {text: 'OK', onPress: () => console.log('provider password reset success!')},
+          {text: 'OK', onPress: () => console.log('volunteer password reset success!')},
         ],
         {cancelable: false},
       );

@@ -43,7 +43,7 @@ import PhoneVerification_volunteer from './screens/volunteer_screens/LoginScreen
 import VolunteerEnterPhoneNumToResetPass from './screens/volunteer_screens/LoginScreen/VolunteerEnterPhoneNumToResetPass';
 import VolunteerResetPassword from './screens/volunteer_screens/LoginScreen/VolunteerResetPassword';
 import BasicVolunteerInfo from './screens/volunteer_screens/LoginScreen/BasicVolunteerInfo';
-import MoreInfoVolunteer from './screens/volunteer_screens/LoginScreen/MoreInfoVolunteer';
+
 // volunteer home screen related screens:
 import HomeScreen_volunteer from './screens/volunteer_screens/HomeScreen/HomeScreen_volunteer';
 
@@ -79,6 +79,7 @@ function LoginNavigator() {
       <LoginStack.Screen name="Basic Patient Info" component={BasicPatientInfoForm_patient} />
       <LoginStack.Screen name="Medical History" component={MedicalHistory_patient} />
       <LoginStack.Screen name="Patient's Vitals" component={VitalsCollectingForm_patient} />
+
       {/* Provider login related screens: */}
       <LoginStack.Screen name="Provider Login" component={LoginScreen_provider} />
       <LoginStack.Screen name="Provider Sign Up" component={SignUpScreen_provider} />
@@ -86,9 +87,7 @@ function LoginNavigator() {
       <LoginStack.Screen name="Provider Reset Password" component={ProviderResetPassword} />
       <LoginStack.Screen name="Provider Enter Phone Num to Reset Password" component={ProviderEnterPhoneNumToResetPass} />
       <LoginStack.Screen name="Basic Provider Info" component={BasicProviderInfo} />
-      <LoginStack.Screen name="More Provider Info" component={MoreInfoProvider} />
-      
-      {/* any follow up screens from home goes from here */}
+      <LoginStack.Screen name="More Provider Info" component={MoreInfoProvider} />      
       
       {/* Volunteer login related screens: */}
       <LoginStack.Screen name="Volunteer Login" component={LoginScreen_volunteer} />
@@ -96,8 +95,8 @@ function LoginNavigator() {
       <LoginStack.Screen name="Volunteer Phone Verification" component={PhoneVerification_volunteer} />
       <LoginStack.Screen name="Volunteer Reset Password" component={VolunteerResetPassword} />
       <LoginStack.Screen name="Volunteer Enter Phone Num to Reset Password" component={VolunteerEnterPhoneNumToResetPass} />
-      <LoginStack.Screen name="Basic Volunteer Info" component={BasicVolunteerInfo} />
-      <LoginStack.Screen name="More Volunteer Info" component={MoreInfoVolunteer} />
+      <LoginStack.Screen name="Basic Volunteer Info" component={BasicVolunteerInfo} />      
+
     </LoginStack.Navigator>
   );
 }
@@ -180,8 +179,7 @@ function ChatNavigator_provider() {
 function HomeTab_vol() {
   return(
     <Tab_vol.Navigator>
-      <Tab_vol.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_vol} />
-      <Tab_vol.Screen name="Record Manager" options={{ headerShown: false }} component={RecordManagerNavigator_vol} />
+      <Tab_vol.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_vol} />      
     </Tab_vol.Navigator>
   );
 }
@@ -190,7 +188,7 @@ function HomeTab_vol() {
 function HomeNavigator_vol() {
   return(
     <HomeStack_vol.Navigator>
-      <HomeStack_vol.Screen name="Home" component={HomeScreen_vol} />     
+      <HomeStack_vol.Screen name="Home" component={HomeScreen_volunteer} />     
        {/* any follow up screens from home goes from here */}
     </HomeStack_vol.Navigator>
   );

@@ -20,7 +20,7 @@ export default function VolunteerSignUpScreen({navigation}) {
       setErrorMessage('Passwords do not match');
     } else {
       // Call API to create user account      
-      console.log('Step to Phone Verification');
+      console.log('go to volunteer Phone Verification from sign up');
       navigation.navigate("Volunteer Phone Verification", { phoneNumber: phoneNumber });
     }
   };
