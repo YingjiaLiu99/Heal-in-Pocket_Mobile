@@ -36,6 +36,16 @@ import MoreInfoProvider from './screens/provider_screens/LoginScreen/MoreInfoPro
 // provider home screen related screens:
 import HomeScreen_provider from './screens/provider_screens/HomeScreen/HomeScreen_provider';
 
+// volunteer login & signup related screens:
+import SignUpScreen_volunteer from './screens/volunteer_screens/LoginScreen/VolunteerSignUpScreen';
+import LoginScreen_volunteer from './screens/volunteer_screens/LoginScreen/VolunteerLoginScreen';
+import PhoneVerification_volunteer from './screens/volunteer_screens/LoginScreen/VolunteerPhoneVerification';
+import VolunteerEnterPhoneNumToResetPass from './screens/volunteer_screens/LoginScreen/VolunteerEnterPhoneNumToResetPass';
+import VolunteerResetPassword from './screens/volunteer_screens/LoginScreen/VolunteerResetPassword';
+import BasicVolunteerInfo from './screens/volunteer_screens/LoginScreen/BasicVolunteerInfo';
+import MoreInfoVolunteer from './screens/volunteer_screens/LoginScreen/MoreInfoVolunteer';
+// volunteer home screen related screens:
+import HomeScreen_volunteer from './screens/volunteer_screens/HomeScreen/HomeScreen_volunteer';
 
 // the main stack:
 const Stack = createStackNavigator();
@@ -79,6 +89,15 @@ function LoginNavigator() {
       <LoginStack.Screen name="More Provider Info" component={MoreInfoProvider} />
       
       {/* any follow up screens from home goes from here */}
+      
+      {/* Volunteer login related screens: */}
+      <LoginStack.Screen name="Volunteer Login" component={LoginScreen_volunteer} />
+      <LoginStack.Screen name="Volunteer Sign Up" component={SignUpScreen_volunteer} />
+      <LoginStack.Screen name="Volunteer Phone Verification" component={PhoneVerification_volunteer} />
+      <LoginStack.Screen name="Volunteer Reset Password" component={VolunteerResetPassword} />
+      <LoginStack.Screen name="Volunteer Enter Phone Num to Reset Password" component={VolunteerEnterPhoneNumToResetPass} />
+      <LoginStack.Screen name="Basic Volunteer Info" component={BasicVolunteerInfo} />
+      <LoginStack.Screen name="More Volunteer Info" component={MoreInfoVolunteer} />
     </LoginStack.Navigator>
   );
 }
