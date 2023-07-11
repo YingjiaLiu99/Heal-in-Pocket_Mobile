@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-import InputBoxWithLabel from '../../provider_screens/LoginScreen/components/InputBoxWithLabel';
+import InputBoxWithLabel from '../../volunteer_screens/LoginScreen/components/InputBoxWithLabel';
 import styles from './styles';
 
-export default function ProviderLoginScreen({ navigation }) {
+export default function VolunteerLoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -22,7 +22,7 @@ export default function ProviderLoginScreen({ navigation }) {
       // this will prevent user go back to previous stack
       navigation.reset({
         index: 0,
-        routes: [{ name:'Provider Main Tab', 
+        routes: [{ name:'Volunteer Main Tab', 
           state:{ 
             routes:[ {name:'My Home', state:{routes:[ {name:'Home'} ]}} ] 
           } 
@@ -33,7 +33,7 @@ export default function ProviderLoginScreen({ navigation }) {
   };
 
   const handleSignUp = () => {
-    navigation.navigate('Provider Sign Up');
+    navigation.navigate('Volunteer Sign Up');
   };
   const handleForgetPassword = () => {
     navigation.navigate('Provider Enter Phone Num to Reset Password');
@@ -43,7 +43,7 @@ export default function ProviderLoginScreen({ navigation }) {
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
     
       <View style={{marginTop: 75,marginBottom:80}}>
-        <Text style={styles.titleText}>Provider Login</Text>
+        <Text style={styles.titleText}>Volunteer Login</Text>
       </View>
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}      
