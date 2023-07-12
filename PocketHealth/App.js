@@ -23,7 +23,7 @@ import VitalHistory_patient from './screens/patient_screens/PatientHistoryScreen
 import MedicalHistoryRecord_patient from './screens/patient_screens/PatientHistoryScreen/MedicalHistory';
 import PastVisitRecord_patient from './screens/patient_screens/PatientHistoryScreen/PastVisit';
 // patient chat related screens:
-import ChatMainPage_patient from './screens/patient_screens/ChatRoom/ChatMainScreen';
+import ChatMainPage_patient from './screens/patient_screens/Chat/ChatMainScreen';
 
 // provider login & signup related screens:
 import SignUpScreen_provider from './screens/provider_screens/LoginScreen/ProviderSignUpScreen';
@@ -33,8 +33,10 @@ import ProviderEnterPhoneNumToResetPass from './screens/provider_screens/LoginSc
 import ProviderResetPassword from './screens/provider_screens/LoginScreen/ProviderResetPassword';
 import BasicProviderInfo from './screens/provider_screens/LoginScreen/BasicProviderInfo';
 import MoreInfoProvider from './screens/provider_screens/LoginScreen/MoreInfoProvider';
-// provider home screen related screens:
+// provider homescreen and related screens:
 import HomeScreen_provider from './screens/provider_screens/HomeScreen/HomeScreen_provider';
+// Provider chat related screens:
+import ChatMainPage_provider from './screens/provider_screens/Chat/ChatMainScreen_provider';
 
 // volunteer login & signup related screens:
 import SignUpScreen_volunteer from './screens/volunteer_screens/LoginScreen/VolunteerSignUpScreen';
@@ -46,6 +48,9 @@ import BasicVolunteerInfo from './screens/volunteer_screens/LoginScreen/BasicVol
 
 // volunteer home screen related screens:
 import HomeScreen_volunteer from './screens/volunteer_screens/HomeScreen/HomeScreen_volunteer';
+import RegisterNewPatient_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterNewPatientScreen';
+
+
 
 // the main stack:
 const Stack = createStackNavigator();
@@ -169,7 +174,7 @@ function HomeNavigator_provider() {
 function ChatNavigator_provider() {
   return(
     <ChatStack_provider.Navigator>
-      <HomeStack_provider.Screen name="Chat" component={ChatScreen_provider} />
+      <HomeStack_provider.Screen name="Chat" component={ChatMainPage_provider} />
     </ChatStack_provider.Navigator>
   );
 }
@@ -188,19 +193,20 @@ function HomeTab_vol() {
 function HomeNavigator_vol() {
   return(
     <HomeStack_vol.Navigator>
-      <HomeStack_vol.Screen name="Home" component={HomeScreen_volunteer} />     
+      <HomeStack_vol.Screen name="Home" component={HomeScreen_volunteer} />    
+      <HomeStack_vol.Screen name="Register A New Patient" component={RegisterNewPatient_volunteer} />
        {/* any follow up screens from home goes from here */}
     </HomeStack_vol.Navigator>
   );
 }
 
-function RecordManagerNavigator_vol() {
-  return(
-    <RecordManagerStack_vol.Navigator>
-      <RecordManagerStack_vol.Screen name="Home" component={RecordManagerScreen_vol} />
-    </RecordManagerStack_vol.Navigator>
-  );
-}
+// function RecordManagerNavigator_vol() {
+//   return(
+//     <RecordManagerStack_vol.Navigator>
+//       <RecordManagerStack_vol.Screen name="Home" component={RecordManagerScreen_vol} />
+//     </RecordManagerStack_vol.Navigator>
+//   );
+// }
 
 //-------------------------------------------------Entry Point of App.js----------------------------------------------------------------//
 function App() {
