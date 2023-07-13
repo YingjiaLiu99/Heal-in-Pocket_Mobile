@@ -12,7 +12,7 @@ const AnnouncementData = [
   //...
 ];
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   
 
   const handleConsult = () => {
@@ -21,6 +21,7 @@ const HomeScreen = () => {
 
   const handleUpdate = () => {
     console.log('Update pressed');
+    navigation.navigate("Upload Vitals")
   };
 
   return (

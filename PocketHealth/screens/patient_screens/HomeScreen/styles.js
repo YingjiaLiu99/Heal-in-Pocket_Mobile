@@ -40,7 +40,20 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 20,
-  },  
+  }, 
+  container2: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  title: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  content: {
+    marginTop: 20,
+  }, 
 });
 
 export default styles;
