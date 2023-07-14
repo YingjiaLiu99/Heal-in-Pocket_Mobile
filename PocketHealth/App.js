@@ -14,6 +14,10 @@ import EnterPhoneNumToResetPassword_patient from './screens/patient_screens/Logi
 import BasicPatientInfoForm_patient from './screens/patient_screens/LoginScreen/BasicPatientInfoForm';
 import MedicalHistory_patient from './screens/patient_screens/LoginScreen/MedicalHistory';
 import HomeScreen_patient from './screens/patient_screens/HomeScreen/HomeScreen';
+import UploadVitals from './screens/patient_screens/HomeScreen/UploadVitals';
+import VitalReviewScreen from './screens/patient_screens/HomeScreen/VitalReview';
+import UploadMedicalHistory from './screens/patient_screens/HomeScreen/UploadMedicalHistory';
+import MedHisReviewScreen from './screens/patient_screens/HomeScreen/MedHisReview';
 // patient home screen related screens:
 import VitalsCollectingForm_patient from './screens/patient_screens/Forms/VitalsCollectingForm';
 import NewComplaintForm_patient from './screens/patient_screens/Forms/NewComplaintForm';
@@ -124,6 +128,11 @@ function HomeNavigator_patient() {
     <HomeStack_patient.Navigator>    
       <HomeStack_patient.Screen name="Home" component={HomeScreen_patient} options={{ tabBarVisible:true }}/> 
       <HomeStack_patient.Screen name="New Complaint" component={NewComplaintForm_patient} options={{ tabBarVisible:false }}/>
+      <HomeStack_patient.Screen name="Upload Vitals" component={UploadVitals} options={{ tabBarVisible:false }}/>   
+      <HomeStack_patient.Screen name="VitalReviewScreen" component={VitalReviewScreen} options={{ tabBarVisible:false }}/>  
+      <HomeStack_patient.Screen name= "Upload MedHis" component={UploadMedicalHistory} options={{ tabBarVisible:false}}/>
+      <HomeStack_patient.Screen name= "MedHisReviewScreen" component={MedHisReviewScreen} options={{tabBarVisible:false}}/>
+
       {/* any follow up screens from home goes from here */}
     </HomeStack_patient.Navigator>
   );
