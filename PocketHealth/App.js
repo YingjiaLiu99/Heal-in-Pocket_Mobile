@@ -39,6 +39,7 @@ import BasicProviderInfo from './screens/provider_screens/LoginScreen/BasicProvi
 import MoreInfoProvider from './screens/provider_screens/LoginScreen/MoreInfoProvider';
 // provider home screen related screens:
 import HomeScreen_provider from './screens/provider_screens/HomeScreen/HomeScreen_provider';
+import ProviderResponseScreen from './screens/provider_screens/HomeScreen/ProviderResponse';
 
 
 // the main stack:
@@ -152,6 +153,7 @@ function HomeNavigator_provider() {
   return (
     <HomeStack_provider.Navigator>
       <HomeStack_provider.Screen name="Home" component={HomeScreen_provider} />
+      <HomeStack_provider.Screen name="Provider Response" component={ProviderResponseScreen} />
       {/* any follow up screens from home goes from here */}
     </HomeStack_provider.Navigator>
   );
