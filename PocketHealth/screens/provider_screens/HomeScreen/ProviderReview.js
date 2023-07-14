@@ -1,25 +1,30 @@
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+// Your custom components:
 import ShowcaseBoxWithLabel from '../../../components/ShowcaseBoxWithLabel';
 import BigShowcaseBoxWithLabel from '../../../components/BigShowcaseBoxWithLabel';
 import MedHisInputBoxWithLabel from '../../patient_screens/HomeScreen/components/MedHisInputBoxWithLabel';
 
-
-import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, ScrollView} from 'react-native';
+// Your styles:
 import styles from './styles';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-export default function ProviderResponseScreen({navigation}) {
-    
-        const [inputValues, setInputValues] = useState({});
 
-        const handleInputChange = (label, value) => {
+export default function ProviderReviewScreen({route, navigation}) {
+    const { inputValues: initialInputValues } = route.params;  // Get the initial inputValues from navigation params
+    const [inputValues, setInputValues] = useState(initialInputValues); // Set initial values and manage state for this screen
+
+    const handleInputChange = (label, value) => {
         setInputValues({
-        ...inputValues,
-        [label]: value,
+            ...inputValues,
+            [label]: value,
         });
     };
 
-    const handleReviewSubmit = () => {
-        navigation.navigate('ProviderReviewScreen', { inputValues });
+    // This function can be used to handle submission of review such as connect to database
+    const handleSubmit = () => {
+        // Handle the submit action here
+        navigation.navigate("Home")
     };
     const labelProperties = {
         'Assessment': { unit: '', width: '95%' },
@@ -71,19 +76,11 @@ export default function ProviderResponseScreen({navigation}) {
                 be very serious.'
             },        
         ];
-    
 
-return (
-    <ScrollView>
-    <KeyboardAwareScrollView Style={styles.container}>
-    {/* //     contentContainerStyle={styles.container}
-    // extraScrollHeight={10}
-    // enableOnAndroid
-    // enableAutomaticScroll
-    // keyboardOpeningTime={0}
-    // scrollEnabled style={styles.container}> */}
-    {/* <ScrollView style = {styles.ButtonOuterContainer2}> */}
-    <Text style={styles.heading}>Review Patient's Input</Text>
+    return (
+        <ScrollView>
+            <KeyboardAwareScrollView Style={styles.container}>
+            <Text style={styles.heading}>Review Patient's Input</Text>
     <Text style={{fontSize:25,marginLeft:20 }}>Patient Info</Text>
       {name.map((item, index) => (
         <ShowcaseBoxWithLabel
@@ -125,30 +122,26 @@ return (
           width={350}
         />
       ))}
-    
-    <Text style={styles.heading}>Provider's Input</Text>
-    {Object.entries(labelProperties).map(([label, properties], index) => (
-          <MedHisInputBoxWithLabel
-            key={index}
-            label={label}
-            value={inputValues[label] || ''}
-            unit={properties.unit}
-            width={properties.width}
-            // onChange={(value) => handleInputChange(label, value)}
-            onChangeText={(value) => handleInputChange(label, value)} // change here
-          />
-        ))}
-    <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleReviewSubmit}>
-          <Text style={styles.buttonText}>Review and Submit</Text>
-        </TouchableOpacity>
-      </View>
-    
-    
-
-    {/* </ScrollView>     */}
-    </KeyboardAwareScrollView>
-    </ScrollView>
-
-  );
+               
+                
+                <Text style={styles.heading}>Review Provider's Input</Text>
+                {Object.entries(labelProperties).map(([label, properties], index) => (
+                    <MedHisInputBoxWithLabel
+                        key={index}
+                        label={label}
+                        value={inputValues[label] || ''}
+                        unit={properties.unit}
+                        width={properties.width}
+                        onChangeText={(value) => handleInputChange(label, value)} 
+                    />
+                ))}
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                        <Text style={styles.buttonText}>Submit</Text>
+                    </TouchableOpacity>
+                </View>
+            </KeyboardAwareScrollView>
+        </ScrollView>
+    );
 }
+
