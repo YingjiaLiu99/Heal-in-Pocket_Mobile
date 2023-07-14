@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import MedHisInputBoxWithLabel from './components/MedHisInputBoxWithLabel';
+import styles from './styles';
 
 const UploadMedicalHistory = ({navigation}) => {
   const [values, setValues] = useState({
-    value1: 'Value 1',
-    value2: 'Value 2',
-    value3: 'Value 3',
+    value1: null,
+    value2: null,
+    value3: null,
   });
+
+// function to check if the patient enter any vital
+const isInputEmpty = (values) => {
+  for (let key in values) {
+    if (values[key] !== null) {
+      return false;
+    }
+  }
+  return true;
+};
 
   const handleValueChange = (key, value) => {
     setValues({
@@ -18,20 +29,70 @@ const UploadMedicalHistory = ({navigation}) => {
     });
   };
 
-  const handleReviewSubmit = () => {
-    navigation.navigate('MedHisReviewScreen', { inputValues: values });
+  const handleSubmit = () => {
+    if(isInputEmpty(values)){
+      Alert.alert('Your Input is Empty', 'If you dont wish to enter anything, please skip.',[
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },
+        {
+          text: 'Skip',
+          onPress: () => {
+            navigation.navigate('Home');
+          }          
+        },        
+      ]); 
+    }
+    else{
+      Alert.alert('Are You Sure To Submit?', 'You cannot edit once submitted',[
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            navigation.navigate('Home');
+            console.log(values);
+          }
+        },
+      ]);
+    }    
   };
 
   const handleSkip = () => {
-    navigation.navigate('Home')
+    if(!isInputEmpty(values)){
+      Alert.alert('Are You Sure To Skip?', 'Your entered vitals will not be saved',[
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            navigation.navigate('Home');
+          }
+        },
+      ]);
+    }
+    else{
+      navigation.navigate('Home');
+    }
   };
 
   return (
     <ScrollView>
-    <KeyboardAwareScrollView style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
 
-      <Text style={styles.title}>Upload Medical Hisotry</Text>
-      <View style={styles.content}>
+      <View style={{marginTop: 20,marginBottom:20,width:'100%'}}>
+        <Text style={{fontSize:30, fontWeight:400}}>Upload My Medical Hisotry</Text>          
+      </View>      
+      
+      <View style={{width:"100%"}}>
         <MedHisInputBoxWithLabel
           label="Chronic Illness"
           value={values.value1}
@@ -54,55 +115,23 @@ const UploadMedicalHistory = ({navigation}) => {
           onChangeText={(text) => handleValueChange('value3', text)}
         />
       </View>
-      <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.button} onPress={handleReviewSubmit}>
-        <Text style={styles.buttonText}>Review and Submit</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, styles.buttonMargin]} onPress={handleSkip}>
-        <Text style={styles.buttonText}>Skip</Text>
-      </TouchableOpacity>
-    </View>
 
+
+      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+        <TouchableOpacity style={styles.button} onPress={handleSkip}>
+          <Text style={styles.buttonText}>Skip</Text>
+        </TouchableOpacity>
+      </View>
+    
     </KeyboardAwareScrollView>
     </ScrollView>
   );
-};
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingHorizontal: 20,
-      paddingTop: 20,
-    },
-    title: {
-      fontSize: 34,
-      fontWeight: 'bold',
-      marginBottom: 20,
-    },
-    content: {
-      flex: 1,  // Change this to adjust the screen space taken by the boxes
-    },
-    buttonContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        paddingHorizontal: 20,
-      },
-      button: {
-        backgroundColor: '#395BCD',
-        borderRadius: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        alignItems: 'center',
-        width: '100%',
-      },
-      buttonMargin: {
-        marginTop: 20, // Add some vertical space between buttons
-      },
-      buttonText: {
-        color: '#fff',
-        fontSize: 20,
-      },
-  });
-  
+};  
 
 export default UploadMedicalHistory;

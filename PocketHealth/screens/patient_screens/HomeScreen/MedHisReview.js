@@ -1,8 +1,9 @@
-
-// export default MedHisReviewScreen;
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import MedHisInputBoxWithLabel from './components/MedHisInputBoxWithLabel';
+import styles from './styles';
 
 const MedHisReviewScreen = ({ route, navigation }) => {
   const [inputValues, setInputValues] = useState(route.params.inputValues);
@@ -20,9 +21,14 @@ const MedHisReviewScreen = ({ route, navigation }) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Review Your Input</Text>
-      <View style={styles.content}>
+    <ScrollView>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+
+      <View style={{marginTop: 30,marginBottom:30,width:'100%'}}>
+        <Text style={{fontSize:30, fontWeight:400}}>Review Entered Information</Text>          
+      </View>
+
+      <View style={{width:"100%"}}>
         <MedHisInputBoxWithLabel
           label="Chronic Illness"
           value={inputValues.value1}
@@ -46,41 +52,15 @@ const MedHisReviewScreen = ({ route, navigation }) => {
         />
       </View>
 
-      <TouchableOpacity style={styles.saveButton} onPress={handleSaveToDatabase}>
-        <Text style={styles.saveButtonText}>Submit</Text>
-      </TouchableOpacity>
+      <View style={{width:'80%',alignItems:'center',marginTop:20,marginBottom:0}}>
+        <TouchableOpacity style={styles.button} onPress={handleSaveToDatabase}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+      </View>
 
+    </KeyboardAwareScrollView>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-  },
-  title: {
-    fontSize: 34,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  content: {
-    flex: 1,
-  },
-  saveButton: {
-    backgroundColor: '#395BCD',
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    alignItems: 'center',
-    width: '100%',
-    marginTop: 20,
-  },
-  saveButtonText: {
-    color: '#fff',
-    fontSize: 20,
-  },
-});
 
 export default MedHisReviewScreen;

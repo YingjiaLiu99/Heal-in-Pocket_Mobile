@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import InputBoxWithLabel from './components/VitalsInputBoxWithLabel';
+import styles from './styles';
+
 
 export default function VitalReviewScreen({ route, navigation }) {
   const { inputValues } = route.params;
   const labelProperties = {
-    'Pain Level': { unit: '', width: '95%' },
+    'Pain Level (0~10, 0-no pain, 10-the worst pain)': { unit: '', width: '95%' },
     'Temperature': { unit: 'F', width: '95%' },
     'Blood Pressure': { unit: 'mmHg', width: '95%' },
     'Pulse': { unit: 'bpm', width: '95%' },
@@ -35,9 +39,13 @@ export default function VitalReviewScreen({ route, navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Review Your Input</Text>
-      <ScrollView>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+
+      <View style={{marginTop: 20,marginBottom:30,width:'100%'}}>
+        <Text style={{fontSize:35, fontWeight:400}}>Review Entered Vitals</Text>          
+      </View>
+
+      <View style={{width:"100%"}}>
         {Object.entries(labelProperties).map(([label, properties], index) => (
           <InputBoxWithLabel
             key={index}
@@ -48,35 +56,14 @@ export default function VitalReviewScreen({ route, navigation }) {
             onChange={(text) => handleInputChange(label, text)}
           />
         ))}
-      </ScrollView>
-      <TouchableOpacity style={styles.saveButton} onPress={handleSaveToDatabase}>
-        <Text style={styles.saveButtonText}>Submit</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
+      </View>
+      
+      <View style={{width:'80%',alignItems:'center',marginTop:30,marginBottom:0}}>
+        <TouchableOpacity style={styles.button} onPress={handleSaveToDatabase}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+      </View>
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-  },
-  title: {
-    fontSize: 34,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  saveButton: {
-    backgroundColor: '#395BCD',
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  saveButtonText: {
-    color: '#fff',
-    fontSize: 20,
-  },
-});
+    </KeyboardAwareScrollView>
+  );
+};
