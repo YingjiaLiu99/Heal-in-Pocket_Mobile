@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-import InputBoxWithLabel from './components/InputBoxWithLabel';
+import InputBoxWithLabel from '../../volunteer_screens/LoginScreen/components/InputBoxWithLabel';
 import styles from './styles';
 
-export default function LoginScreen({ navigation }) {
+export default function VolunteerLoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -18,54 +18,47 @@ export default function LoginScreen({ navigation }) {
     }
     else{
       // Backend code goes here
-      console.log('log in successful');      
-      // this will prevent user go back to previous stack:
+      console.log('volunteer log in successful');     
+      // this will prevent user go back to previous stack
       navigation.reset({
         index: 0,
-        routes: [{ name:'Patient Main Tab', 
+        routes: [{ name:'Volunteer Main Tab', 
           state:{ 
             routes:[ {name:'My Home', state:{routes:[ {name:'Home'} ]}} ] 
           } 
         }],
       });
-      
+
     }
   };
 
   const handleSignUp = () => {
-    navigation.navigate('Patient Sign Up');
+    console.log('volunteer try to sign up');
+    navigation.navigate('Volunteer Sign Up');
   };
-
-  const handleProviderLogin = () => {
-    navigation.navigate('Provider Login');
-  };
-
   const handleForgetPassword = () => {
-    navigation.navigate('Patient Enter Phone Num to Reset Password');    
-  };
-
-  const handleVolunteerLogin = () => {
-    navigation.navigate('Volunteer Login');
-  };
+    console.log('volunteer forgot password');
+    navigation.navigate('Volunteer Enter Phone Num to Reset Password');
+  }
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
     
-      <View style={{alignItems:'center',marginTop: 75,marginBottom:90}}>
-        <Text style={styles.titleText}>Pocket Health</Text>
+      <View style={{marginTop: 75,marginBottom:80}}>
+        <Text style={styles.titleText}>Volunteer Login</Text>
       </View>
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}      
       
       <InputBoxWithLabel
-        label="Phone Number*"
+        label="Phone Number"
         value={phoneNumber}
         onChangeText={(text) => setPhoneNumber(text)}
         placeholder="Please Enter Your Phone Number"
         keyboardType='phone-pad'
       />
       <InputBoxWithLabel
-        label="Password*"
+        label="Password"
         value={password}
         onChangeText={(text) => setPassword(text)}              
         placeholder="Please Enter Password"
@@ -86,14 +79,6 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.buttonText}> Sign up</Text>
         </TouchableOpacity>
       </View>
-
-      <TouchableOpacity onPress={handleProviderLogin}>
-        <Text style={styles.doctorSignin}>Provider Login?</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={{marginTop:20}} onPress={handleVolunteerLogin}>
-        <Text style={styles.doctorSignin}>Volunteer Login?</Text>
-      </TouchableOpacity>
       
     </KeyboardAwareScrollView>
   );

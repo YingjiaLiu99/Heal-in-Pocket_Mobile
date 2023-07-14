@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-import InputBoxWithLabel from '../../patient_screens/LoginScreen/components/InputBoxWithLabel';
+import InputBoxWithLabel from '../../provider_screens/LoginScreen/components/InputBoxWithLabel';
 import styles from './styles';
 
 export default function ProviderLoginScreen({ navigation }) {

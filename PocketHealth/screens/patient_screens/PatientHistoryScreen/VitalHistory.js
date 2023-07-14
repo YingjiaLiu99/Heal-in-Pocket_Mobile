@@ -7,7 +7,7 @@ import styles from './styles.js';
 export default function VitalHistory({navigation}) {
     // Dummy Vital Data:
     const vitalData1 = [
-        {label: 'Pain Level', value: '8'},
+        {label: 'Pain Level (0~10, 0-no pain, 10-the worst pain)', value: '8'},
         {label: 'Temperature', value: '99'},
         {label: 'Blood Pressure', value: '120/80'},
         {label: 'Pulse', value: '70'},
@@ -17,7 +17,7 @@ export default function VitalHistory({navigation}) {
     ];
 
     const vitalData2 = [
-        {label: 'Pain Level', value: '8'},
+        {label: 'Pain Level (0~10, 0-no pain, 10-the worst pain)', value: '8'},
         {label: 'Temperature', value: '99'},
         {label: 'Blood Pressure', value: '120/80'},
         {label: 'Pulse', value: '70'},
@@ -27,7 +27,7 @@ export default function VitalHistory({navigation}) {
     ];
 
     const vitalData3 = [
-        {label: 'Pain Level', value: '8'},
+        {label: 'Pain Level (0~10, 0-no pain, 10-the worst pain)', value: '8'},
         {label: 'Temperature', value: '99'},
         {label: 'Blood Pressure', value: '120/80'},
         {label: 'Pulse', value: '70'},
@@ -38,7 +38,7 @@ export default function VitalHistory({navigation}) {
 
     const AllVitalData = [
         {
-            title: "Nov, 6, 2022",
+            title: "Nov, 12, 2022",
             items: vitalData1,
         },
         {
@@ -46,7 +46,7 @@ export default function VitalHistory({navigation}) {
             items: vitalData2,            
         },
         {
-            title: "Nov, 12, 2022",
+            title: "Nov, 1, 2022",
             items: vitalData3,            
         },
     ];

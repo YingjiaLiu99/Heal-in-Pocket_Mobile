@@ -15,9 +15,8 @@ import BasicPatientInfoForm_patient from './screens/patient_screens/LoginScreen/
 import MedicalHistory_patient from './screens/patient_screens/LoginScreen/MedicalHistory';
 import HomeScreen_patient from './screens/patient_screens/HomeScreen/HomeScreen';
 import UploadVitals from './screens/patient_screens/HomeScreen/UploadVitals';
-import VitalReviewScreen from './screens/patient_screens/HomeScreen/VitalReview';
 import UploadMedicalHistory from './screens/patient_screens/HomeScreen/UploadMedicalHistory';
-import MedHisReviewScreen from './screens/patient_screens/HomeScreen/MedHisReview';
+
 // patient home screen related screens:
 import VitalsCollectingForm_patient from './screens/patient_screens/Forms/VitalsCollectingForm';
 import NewComplaintForm_patient from './screens/patient_screens/Forms/NewComplaintForm';
@@ -27,7 +26,7 @@ import VitalHistory_patient from './screens/patient_screens/PatientHistoryScreen
 import MedicalHistoryRecord_patient from './screens/patient_screens/PatientHistoryScreen/MedicalHistory';
 import PastVisitRecord_patient from './screens/patient_screens/PatientHistoryScreen/PastVisit';
 // patient chat related screens:
-import ChatMainPage_patient from './screens/patient_screens/ChatRoom/ChatMainScreen';
+import ChatMainPage_patient from './screens/patient_screens/Chat/ChatMainScreen';
 
 // provider login & signup related screens:
 import SignUpScreen_provider from './screens/provider_screens/LoginScreen/ProviderSignUpScreen';
@@ -37,10 +36,28 @@ import ProviderEnterPhoneNumToResetPass from './screens/provider_screens/LoginSc
 import ProviderResetPassword from './screens/provider_screens/LoginScreen/ProviderResetPassword';
 import BasicProviderInfo from './screens/provider_screens/LoginScreen/BasicProviderInfo';
 import MoreInfoProvider from './screens/provider_screens/LoginScreen/MoreInfoProvider';
-// provider home screen related screens:
+// provider homescreen and related screens:
 import HomeScreen_provider from './screens/provider_screens/HomeScreen/HomeScreen_provider';
+
 import ProviderResponseScreen from './screens/provider_screens/HomeScreen/ProviderResponse';
 import ProviderReviewScreen from './screens/provider_screens/HomeScreen/ProviderReview';
+
+// Provider chat related screens:
+import ChatMainPage_provider from './screens/provider_screens/Chat/ChatMainScreen_provider';
+
+// volunteer login & signup related screens:
+import SignUpScreen_volunteer from './screens/volunteer_screens/LoginScreen/VolunteerSignUpScreen';
+import LoginScreen_volunteer from './screens/volunteer_screens/LoginScreen/VolunteerLoginScreen';
+import PhoneVerification_volunteer from './screens/volunteer_screens/LoginScreen/VolunteerPhoneVerification';
+import VolunteerEnterPhoneNumToResetPass from './screens/volunteer_screens/LoginScreen/VolunteerEnterPhoneNumToResetPass';
+import VolunteerResetPassword from './screens/volunteer_screens/LoginScreen/VolunteerResetPassword';
+import BasicVolunteerInfo from './screens/volunteer_screens/LoginScreen/BasicVolunteerInfo';
+
+// volunteer home screen related screens:
+import HomeScreen_volunteer from './screens/volunteer_screens/HomeScreen/HomeScreen_volunteer';
+import RegisterNewPatient_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterNewPatientScreen';
+
+
 
 
 // the main stack:
@@ -75,6 +92,7 @@ function LoginNavigator() {
       <LoginStack.Screen name="Basic Patient Info" component={BasicPatientInfoForm_patient} />
       <LoginStack.Screen name="Medical History" component={MedicalHistory_patient} />
       <LoginStack.Screen name="Patient's Vitals" component={VitalsCollectingForm_patient} />
+
       {/* Provider login related screens: */}
       <LoginStack.Screen name="Provider Login" component={LoginScreen_provider} />
       <LoginStack.Screen name="Provider Sign Up" component={SignUpScreen_provider} />
@@ -82,9 +100,16 @@ function LoginNavigator() {
       <LoginStack.Screen name="Provider Reset Password" component={ProviderResetPassword} />
       <LoginStack.Screen name="Provider Enter Phone Num to Reset Password" component={ProviderEnterPhoneNumToResetPass} />
       <LoginStack.Screen name="Basic Provider Info" component={BasicProviderInfo} />
-      <LoginStack.Screen name="More Provider Info" component={MoreInfoProvider} />
+      <LoginStack.Screen name="More Provider Info" component={MoreInfoProvider} />      
       
-      {/* any follow up screens from home goes from here */}
+      {/* Volunteer login related screens: */}
+      <LoginStack.Screen name="Volunteer Login" component={LoginScreen_volunteer} />
+      <LoginStack.Screen name="Volunteer Sign Up" component={SignUpScreen_volunteer} />
+      <LoginStack.Screen name="Volunteer Phone Verification" component={PhoneVerification_volunteer} />
+      <LoginStack.Screen name="Volunteer Reset Password" component={VolunteerResetPassword} />
+      <LoginStack.Screen name="Volunteer Enter Phone Num to Reset Password" component={VolunteerEnterPhoneNumToResetPass} />
+      <LoginStack.Screen name="Basic Volunteer Info" component={BasicVolunteerInfo} />      
+
     </LoginStack.Navigator>
   );
 }
@@ -107,11 +132,8 @@ function HomeNavigator_patient() {
     <HomeStack_patient.Navigator>    
       <HomeStack_patient.Screen name="Home" component={HomeScreen_patient} options={{ tabBarVisible:true }}/> 
       <HomeStack_patient.Screen name="New Complaint" component={NewComplaintForm_patient} options={{ tabBarVisible:false }}/>
-      <HomeStack_patient.Screen name="Upload Vitals" component={UploadVitals} options={{ tabBarVisible:false }}/>   
-      <HomeStack_patient.Screen name="VitalReviewScreen" component={VitalReviewScreen} options={{ tabBarVisible:false }}/>  
+      <HomeStack_patient.Screen name="Upload Vitals" component={UploadVitals} options={{ tabBarVisible:false }}/>
       <HomeStack_patient.Screen name= "Upload MedHis" component={UploadMedicalHistory} options={{ tabBarVisible:false}}/>
-      <HomeStack_patient.Screen name= "MedHisReviewScreen" component={MedHisReviewScreen} options={{tabBarVisible:false}}/>
-
       {/* any follow up screens from home goes from here */}
     </HomeStack_patient.Navigator>
   );
@@ -165,7 +187,7 @@ function HomeNavigator_provider() {
 function ChatNavigator_provider() {
   return(
     <ChatStack_provider.Navigator>
-      <HomeStack_provider.Screen name="Chat" component={ChatScreen_provider} />
+      <HomeStack_provider.Screen name="Chat" component={ChatMainPage_provider} />
     </ChatStack_provider.Navigator>
   );
 }
@@ -175,8 +197,7 @@ function ChatNavigator_provider() {
 function HomeTab_vol() {
   return(
     <Tab_vol.Navigator>
-      <Tab_vol.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_vol} />
-      <Tab_vol.Screen name="Record Manager" options={{ headerShown: false }} component={RecordManagerNavigator_vol} />
+      <Tab_vol.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_vol} />      
     </Tab_vol.Navigator>
   );
 }
@@ -185,19 +206,20 @@ function HomeTab_vol() {
 function HomeNavigator_vol() {
   return(
     <HomeStack_vol.Navigator>
-      <HomeStack_vol.Screen name="Home" component={HomeScreen_vol} />     
+      <HomeStack_vol.Screen name="Home" component={HomeScreen_volunteer} />    
+      <HomeStack_vol.Screen name="Register A New Patient" component={RegisterNewPatient_volunteer} />
        {/* any follow up screens from home goes from here */}
     </HomeStack_vol.Navigator>
   );
 }
 
-function RecordManagerNavigator_vol() {
-  return(
-    <RecordManagerStack_vol.Navigator>
-      <RecordManagerStack_vol.Screen name="Home" component={RecordManagerScreen_vol} />
-    </RecordManagerStack_vol.Navigator>
-  );
-}
+// function RecordManagerNavigator_vol() {
+//   return(
+//     <RecordManagerStack_vol.Navigator>
+//       <RecordManagerStack_vol.Screen name="Home" component={RecordManagerScreen_vol} />
+//     </RecordManagerStack_vol.Navigator>
+//   );
+// }
 
 //-------------------------------------------------Entry Point of App.js----------------------------------------------------------------//
 function App() {

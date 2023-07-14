@@ -5,10 +5,6 @@ const VitalsInputBoxWithLabel = ({ label, value, unit, width, onChange }) => {
 
   const inputRef = useRef(null);
   
-  const handleChangeText = (text) => {
-    onChange(text);
-  };
-
   const handlePress = () => {
     inputRef.current.focus();
   };
@@ -23,7 +19,8 @@ const VitalsInputBoxWithLabel = ({ label, value, unit, width, onChange }) => {
               ref={inputRef}
               style={styles.boxField}
               value={value}
-              onChangeText={handleChangeText}
+              onChangeText={onChange}
+              placeholder='Click to Enter Your Vital ...'
               keyboardType="phone-pad"
             />
           </View>
