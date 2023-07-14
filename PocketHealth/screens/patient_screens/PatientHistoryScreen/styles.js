@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     color: 'red',
     marginBottom: 20
   },  
-
   button: {
     height: 70,
     width: '100%',
