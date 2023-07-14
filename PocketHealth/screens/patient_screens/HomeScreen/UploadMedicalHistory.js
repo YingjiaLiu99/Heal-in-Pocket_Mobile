@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import MedHisInputBoxWithLabel from './components/MedHisInputBoxWithLabel';
@@ -7,10 +7,20 @@ import styles from './styles';
 
 const UploadMedicalHistory = ({navigation}) => {
   const [values, setValues] = useState({
-    value1: '',
-    value2: '',
-    value3: '',
+    value1: null,
+    value2: null,
+    value3: null,
   });
+
+// function to check if the patient enter any vital
+const isInputEmpty = (values) => {
+  for (let key in values) {
+    if (values[key] !== null) {
+      return false;
+    }
+  }
+  return true;
+};
 
   const handleValueChange = (key, value) => {
     setValues({
@@ -19,12 +29,59 @@ const UploadMedicalHistory = ({navigation}) => {
     });
   };
 
-  const handleReviewSubmit = () => {
-    navigation.navigate('MedHisReviewScreen', { inputValues: values });
+  const handleSubmit = () => {
+    if(isInputEmpty(values)){
+      Alert.alert('Your Input is Empty', 'If you dont wish to enter anything, please skip.',[
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },
+        {
+          text: 'Skip',
+          onPress: () => {
+            navigation.navigate('Home');
+          }          
+        },        
+      ]); 
+    }
+    else{
+      Alert.alert('Are You Sure To Submit?', 'You cannot edit once submitted',[
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            navigation.navigate('Home');
+            console.log(values);
+          }
+        },
+      ]);
+    }    
   };
 
   const handleSkip = () => {
-    navigation.navigate('Home');
+    if(!isInputEmpty(values)){
+      Alert.alert('Are You Sure To Skip?', 'Your entered vitals will not be saved',[
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            navigation.navigate('Home');
+          }
+        },
+      ]);
+    }
+    else{
+      navigation.navigate('Home');
+    }
   };
 
   return (
@@ -61,8 +118,8 @@ const UploadMedicalHistory = ({navigation}) => {
 
 
       <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
-        <TouchableOpacity style={styles.button} onPress={handleReviewSubmit}>
-          <Text style={styles.buttonText}>Review and Submit</Text>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
 

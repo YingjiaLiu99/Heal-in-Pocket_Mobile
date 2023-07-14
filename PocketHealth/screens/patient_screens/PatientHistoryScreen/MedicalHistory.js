@@ -55,7 +55,7 @@ export default function MedicalHistory({navigation}) {
 
     const AllMedData = [
         {
-            title: "Nov, 6, 2022",
+            title: "Nov, 12, 2022",
             items: Data1,
         },
         {
@@ -63,7 +63,7 @@ export default function MedicalHistory({navigation}) {
             items: Data2,            
         },
         {
-            title: "Nov, 12, 2022",
+            title: "Nov, 1, 2022",
             items: Data3,            
         },
     ];
