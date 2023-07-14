@@ -12,7 +12,7 @@ const AnnouncementData = [
   //...
 ];
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   
 
   const handleConsult = () => {
@@ -21,10 +21,11 @@ const HomeScreen = () => {
 
   const handleUpdate = () => {
     console.log('Update pressed');
+    navigation.navigate("Upload Vitals")
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{flex: 1}}>
       <Text style={styles.heading}>Welcome, James</Text>
 
       <Text style={{fontSize:20,marginLeft:20}}>Announcement Board</Text>
