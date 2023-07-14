@@ -38,6 +38,10 @@ import BasicProviderInfo from './screens/provider_screens/LoginScreen/BasicProvi
 import MoreInfoProvider from './screens/provider_screens/LoginScreen/MoreInfoProvider';
 // provider homescreen and related screens:
 import HomeScreen_provider from './screens/provider_screens/HomeScreen/HomeScreen_provider';
+
+import ProviderResponseScreen from './screens/provider_screens/HomeScreen/ProviderResponse';
+import ProviderReviewScreen from './screens/provider_screens/HomeScreen/ProviderReview';
+
 // Provider chat related screens:
 import ChatMainPage_provider from './screens/provider_screens/Chat/ChatMainScreen_provider';
 
@@ -52,6 +56,7 @@ import BasicVolunteerInfo from './screens/volunteer_screens/LoginScreen/BasicVol
 // volunteer home screen related screens:
 import HomeScreen_volunteer from './screens/volunteer_screens/HomeScreen/HomeScreen_volunteer';
 import RegisterNewPatient_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterNewPatientScreen';
+
 
 
 
@@ -171,6 +176,9 @@ function HomeNavigator_provider() {
   return (
     <HomeStack_provider.Navigator>
       <HomeStack_provider.Screen name="Home" component={HomeScreen_provider} />
+      <HomeStack_provider.Screen name="Provider Response" component={ProviderResponseScreen} />
+      <HomeStack_provider.Screen name="ProviderReviewScreen" component={ProviderReviewScreen} />
+      
       {/* any follow up screens from home goes from here */}
     </HomeStack_provider.Navigator>
   );
