@@ -7,14 +7,14 @@ const MedHisInputBoxWithLabel = ({ label, value, unit, width, onChangeText }) =>
       <View style={styles.valueContainer}>
         <View style={styles.labelValueContainer}>
           <Text style={styles.boxLabel}>{label}</Text>
-          <ScrollView>
+          {/* <ScrollView> */}
             <TextInput
               style={styles.boxField}
               value={value}
               onChangeText={onChangeText}
               multiline
             />
-          </ScrollView>
+          {/* </ScrollView> */}
           <Text style={styles.unit}>{unit}</Text>
         </View>
       </View>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   labelValueContainer: {
     flex: 1,
     minHeight: 170,
-    maxHeight: 170, // This sets a fixed height for the TextInput box
+    // maxHeight: 170, // This sets a fixed height for the TextInput box
   },
   boxLabel: {
     fontSize: 15,

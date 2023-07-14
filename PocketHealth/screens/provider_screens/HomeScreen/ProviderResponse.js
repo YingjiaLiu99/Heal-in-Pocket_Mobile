@@ -1,5 +1,7 @@
 import ShowcaseBoxWithLabel from '../../../components/ShowcaseBoxWithLabel';
 import BigShowcaseBoxWithLabel from '../../../components/BigShowcaseBoxWithLabel';
+// import VitalsInputBoxWithLabel from '/Users/wenyuanchen/Desktop/PocketHealth/PocketHealth/screens/patient_screens/HomeScreen/components/VitalsInputBoxWithLabel.js'
+
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text, ScrollView} from 'react-native';
 import styles from './styles';
@@ -54,8 +56,9 @@ export default function ProviderResponseScreen({navigaton}) {
     
 
 return (
-    <ScrollView style={styles.container}>
-    <View style = {styles.ButtonOuterContainer2}>
+    <ScrollView>
+    <KeyboardAwareScrollView style={styles.container}>
+    {/* <ScrollView style = {styles.ButtonOuterContainer2}> */}
     <Text style={styles.heading}>Review Patient's Input</Text>
     <Text style={{fontSize:25,marginLeft:20 }}>Patient Info</Text>
       {name.map((item, index) => (
@@ -76,9 +79,7 @@ return (
           width={350}
         />
       ))}
-    </View>
 
-    <View style = {styles.ButtonOuterContainer2}>
     <Text style={{fontSize:25,marginLeft:20 }}>Vital Info</Text>
     {vitalData.map((item, index) => (
         <ShowcaseBoxWithLabel
@@ -89,8 +90,7 @@ return (
           width={350}
         />
       ))}
-       </View>
-    <View style = {styles.ButtonOuterContainer2}>
+  
     <Text style={{fontSize:25,marginLeft:20 }}>Medical History</Text>
     {medHisData.map((item, index) => (
         <BigShowcaseBoxWithLabel
@@ -101,9 +101,8 @@ return (
           width={350}
         />
       ))}
-        </View>    
-     
-
+    {/* </ScrollView>     */}
+    </KeyboardAwareScrollView>
     </ScrollView>
 
   );
