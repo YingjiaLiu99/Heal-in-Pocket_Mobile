@@ -27,7 +27,9 @@ const UploadMedicalHistory = ({navigation}) => {
   };
 
   return (
+    <ScrollView>
     <KeyboardAwareScrollView style={styles.container}>
+
       <Text style={styles.title}>Upload Medical Hisotry</Text>
       <View style={styles.content}>
         <MedHisInputBoxWithLabel
@@ -62,6 +64,7 @@ const UploadMedicalHistory = ({navigation}) => {
     </View>
 
     </KeyboardAwareScrollView>
+    </ScrollView>
   );
 };
 
