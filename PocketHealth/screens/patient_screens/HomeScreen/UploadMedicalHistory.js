@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import MedHisInputBoxWithLabel from './components/MedHisInputBoxWithLabel';
 
 const UploadMedicalHistory = ({navigation}) => {
@@ -25,7 +27,7 @@ const UploadMedicalHistory = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       <Text style={styles.title}>Upload Medical Hisotry</Text>
       <View style={styles.content}>
         <MedHisInputBoxWithLabel
@@ -59,7 +61,7 @@ const UploadMedicalHistory = ({navigation}) => {
       </TouchableOpacity>
     </View>
 
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 
