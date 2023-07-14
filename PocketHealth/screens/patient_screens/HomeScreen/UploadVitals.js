@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 import VitalsInputBoxWithLabel from './components/VitalsInputBoxWithLabel';
 
 export default function UploadVitals({ navigation }) {
@@ -32,7 +34,7 @@ export default function UploadVitals({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       <Text style={styles.title}>Upload Vitals</Text>
       <View style={styles.content}>
         {Object.entries(labelProperties).map(([label, properties], index) => (
@@ -56,7 +58,7 @@ export default function UploadVitals({ navigation }) {
           <Text style={styles.buttonText}>Skip</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 

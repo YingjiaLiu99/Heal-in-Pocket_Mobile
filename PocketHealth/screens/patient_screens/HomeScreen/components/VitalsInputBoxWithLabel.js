@@ -1,27 +1,36 @@
-
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
 const VitalsInputBoxWithLabel = ({ label, value, unit, width, onChange }) => {
+
+  const inputRef = useRef(null);
+  
   const handleChangeText = (text) => {
     onChange(text);
   };
 
+  const handlePress = () => {
+    inputRef.current.focus();
+  };
+
   return (
-    <View style={[styles.boxContainer, { width: width }]}>
-      <View style={styles.valueContainer}>
-        <View>
-          <Text style={styles.boxLabel}>{label}</Text>
-          <TextInput
-            style={styles.boxField}
-            value={value}
-            onChangeText={handleChangeText}
-            keyboardType="phone-pad"
-          />
+    <TouchableOpacity onPress={handlePress} activeOpacity={1}>
+      <View style={[styles.boxContainer, { width: width }]}>
+        <View style={styles.valueContainer}>
+          <View>
+            <Text style={styles.boxLabel}>{label}</Text>
+            <TextInput
+              ref={inputRef}
+              style={styles.boxField}
+              value={value}
+              onChangeText={handleChangeText}
+              keyboardType="phone-pad"
+            />
+          </View>
+          <Text style={styles.unit}>{unit}</Text>
         </View>
-        <Text style={styles.unit}>{unit}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
