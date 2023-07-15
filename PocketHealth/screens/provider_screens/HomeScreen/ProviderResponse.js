@@ -1,35 +1,36 @@
-import ShowcaseBoxWithLabel from '../../../components/ShowcaseBoxWithLabel';
-import BigShowcaseBoxWithLabel from '../../../components/BigShowcaseBoxWithLabel';
-import MedHisInputBoxWithLabel from '../../patient_screens/HomeScreen/components/MedHisInputBoxWithLabel';
-
-
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text, ScrollView} from 'react-native';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+import ShowcaseBoxWithLabel from '../../../components/ShowcaseBoxWithLabel';
+import BigShowcaseBoxWithLabel from '../../../components/BigShowcaseBoxWithLabel';
+import MedHisInputBoxWithLabel from '../../patient_screens/HomeScreen/components/MedHisInputBoxWithLabel';
+
 export default function ProviderResponseScreen({navigation}) {
     
-        const [inputValues, setInputValues] = useState({});
+  const [inputValues, setInputValues] = useState({});
 
-        const handleInputChange = (label, value) => {
-        setInputValues({
-        ...inputValues,
-        [label]: value,
-        });
-    };
+  const handleInputChange = (label, value) => {
+    setInputValues({
+    ...inputValues,
+    [label]: value,
+    });
+  };
 
-    const handleReviewSubmit = () => {
-        navigation.navigate('ProviderReviewScreen', { inputValues });
-    };
+  const handleReviewSubmit = () => {
+    navigation.navigate('ProviderReviewScreen', { inputValues });
+  };
     const labelProperties = {
         'Assessment': { unit: '', width: '95%' },
         'Future Plan': { unit: '', width: '95%' },
         }
         // Dummy Vital Data:
-        const name = [ {label: 'Name', value: 'James'}]
-        const reason = [{label: 'Complaints', value:'Backpain'}]           
+        const firstName = [ {label: 'First Name', value: 'James'}]
+        const lastName = [ {label: 'Last Name', value: 'Carter'}]
+        const reason = [{label: 'Reason for Consultation', value:'Backpain'}]           
         const vitalData = [
-            {label: 'Pain Level', value: '8', unit: ''},
+            {label: 'Pain Level (0~10, 0-no pain, 10-the worst pain)', value: '8', unit: ''},
             {label: 'Temperature', value: '99', unit: 'F'},
             {label: 'Blood Pressure', value: '120/80', unit:'mmHg'},
             {label: 'Pulse', value: '70', unit:'bpm'},
@@ -76,14 +77,8 @@ export default function ProviderResponseScreen({navigation}) {
 return (
     <ScrollView>
     <KeyboardAwareScrollView Style={styles.container}>
-    {/* //     contentContainerStyle={styles.container}
-    // extraScrollHeight={10}
-    // enableOnAndroid
-    // enableAutomaticScroll
-    // keyboardOpeningTime={0}
-    // scrollEnabled style={styles.container}> */}
-    {/* <ScrollView style = {styles.ButtonOuterContainer2}> */}
-    <Text style={styles.heading}>Review Patient's Input</Text>
+    
+    <Text style={styles.heading}>Consultation Report</Text>
     <Text style={{fontSize:25,marginLeft:20 }}>Patient Info</Text>
       {name.map((item, index) => (
         <ShowcaseBoxWithLabel
