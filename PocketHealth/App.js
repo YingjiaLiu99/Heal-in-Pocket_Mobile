@@ -40,7 +40,6 @@ import MoreInfoProvider from './screens/provider_screens/LoginScreen/MoreInfoPro
 import HomeScreen_provider from './screens/provider_screens/HomeScreen/HomeScreen_provider';
 
 import ProviderResponseScreen from './screens/provider_screens/HomeScreen/ProviderResponse';
-import ProviderReviewScreen from './screens/provider_screens/HomeScreen/ProviderReview';
 
 // Provider chat related screens:
 import ChatMainPage_provider from './screens/provider_screens/Chat/ChatMainScreen_provider';
@@ -177,7 +176,6 @@ function HomeNavigator_provider() {
     <HomeStack_provider.Navigator>
       <HomeStack_provider.Screen name="Home" component={HomeScreen_provider} />
       <HomeStack_provider.Screen name="Provider Response" component={ProviderResponseScreen} />
-      <HomeStack_provider.Screen name="ProviderReviewScreen" component={ProviderReviewScreen} />
       
       {/* any follow up screens from home goes from here */}
     </HomeStack_provider.Navigator>
