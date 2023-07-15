@@ -54,7 +54,8 @@ export default function UploadVitals({ navigation }) {
         },
         {
           text: 'Skip',
-          onPress: () => {            
+          onPress: () => {
+            // prevent user to go back from Upload MedHis to Upload Vitals
             navigation.dispatch(StackActions.replace('Upload MedHis'));
           }          
         },        
@@ -72,6 +73,7 @@ export default function UploadVitals({ navigation }) {
           text: 'Yes',
           onPress: () => {
             console.log(inputValues);
+            // prevent user to go back from Upload MedHis to Upload Vitals
             navigation.dispatch(StackActions.replace('Upload MedHis'));
           }
         },
@@ -89,13 +91,15 @@ export default function UploadVitals({ navigation }) {
         },
         {
           text: 'Yes',
-          onPress: () => {            
+          onPress: () => {           
+            // prevent user to go back from Upload MedHis to Upload Vitals 
             navigation.dispatch(StackActions.replace('Upload MedHis'));
           }
         },
       ]);
     }
     else{
+      // prevent user to go back from Upload MedHis to Upload Vitals
       navigation.dispatch(StackActions.replace('Upload MedHis'));
     }    
   };
