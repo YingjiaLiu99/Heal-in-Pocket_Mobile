@@ -7,7 +7,7 @@ import ShowcaseBoxWithLabel from '../../../components/ShowcaseBoxWithLabel';
 import BigShowcaseBoxWithLabel from '../../../components/BigShowcaseBoxWithLabel';
 import MedHisInputBoxWithLabel from '../../patient_screens/HomeScreen/components/MedHisInputBoxWithLabel';
 
-export default function ProviderResponseScreen({navigation}) {
+export default function ProviderResponseScreen({navigation}) { 
     
   const [inputValues, setInputValues] = useState({});
 
