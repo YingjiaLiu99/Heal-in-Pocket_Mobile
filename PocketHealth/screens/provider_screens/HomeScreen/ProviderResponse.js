@@ -58,27 +58,35 @@ export default function ProviderResponseScreen({navigation}) {
       {label: 'Weight', value: '150',unit:'Lbs'}, 
   ];
 
-  const medHisData = [
-        {
-            title: "Nov, 12, 2022",
-            providerReport: providerReport,
-            medicalData: medicalData,
-            vitalData: vitalData,
+  const medicalData = [
+    {   
+        label: 'Chronic Illness', 
+        value: ' high blood pressure, diabetes'
+    },
+    {   
+        label: 'Current Medication', 
+        value: 'Metoprolol'
+    },
+    {
+        label: 'Allergies', 
+        value: 'Sulfa'
+    },        
+  ];
 
-        },
-        {
-            title: "Nov, 8, 2022",
-            providerReport: providerReport,
-            medicalData: medicalData,
-            vitalData: vitalData,            
-        },
-        {
-            title: "Nov, 1, 2022",
-            providerReport: providerReport,
-            medicalData: medicalData,
-            vitalData: vitalData,            
-        },
-    ];
+  const medHisData = [
+    {   
+      label: 'Chronic Illness', 
+      value: ' high blood pressure, diabetes'
+    },
+    {   
+      label: 'Current Medication', 
+      value: 'Metoprolol'
+    },
+    {
+      label: 'Allergies', 
+      value: 'Sulfa'
+    },
+  ];
     
 
 return (
