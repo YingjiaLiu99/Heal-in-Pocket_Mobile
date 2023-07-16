@@ -18,11 +18,18 @@ const styles = StyleSheet.create({
       fontSize: 45,
       fontWeight: 400  
     },
+
+    buttonContainer: {
+      height: 70,
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom:15
+    },
     
     button: {
       height: 70,
-      width: '100%',
-      marginVertical: 10,
+      width: '100%',      
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: '#395BCD',
@@ -33,6 +40,27 @@ const styles = StyleSheet.create({
     buttonText: {
       color: '#fff',
       fontSize: 25
+    },
+
+    userShowcase: {
+      height: 70,
+      width: '100%',
+      marginVertical: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#C5D1F9',
+      paddingVertical: 5,
+      paddingHorizontal: 5,
+      borderRadius: 0,             
+    },
+    userShowcaseText: {
+      color: '#000000',
+      fontSize: 18
+    },
+
+    dropdownContainer: {
+      height: 400, // Adjust to suitable value
+      marginBottom: 40 // Add some space at the end of the list
     },
 
   });
