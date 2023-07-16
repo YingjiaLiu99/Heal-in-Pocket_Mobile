@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
-const BigShowcaseBoxWithLabel = ({ label, value, unit, width, ...props }) => {
+const BigShowcaseBoxWithLabel = ({ label, value, width, ...props }) => {
   return (
     <View style={[styles.boxContainer, {width:width}]}>
       <View style={styles.valueContainer}>

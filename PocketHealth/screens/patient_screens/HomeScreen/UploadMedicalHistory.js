@@ -7,15 +7,15 @@ import styles from './styles';
 
 const UploadMedicalHistory = ({navigation}) => {
   const [values, setValues] = useState({
-    value1: null,
-    value2: null,
-    value3: null,
+    value1: '',
+    value2: '',
+    value3: '',
   });
 
 // function to check if the patient enter any vital
 const isInputEmpty = (values) => {
   for (let key in values) {
-    if (values[key] !== null) {
+    if (values[key] !== '') {
       return false;
     }
   }
@@ -95,22 +95,19 @@ const isInputEmpty = (values) => {
       <View style={{width:"100%"}}>
         <MedHisInputBoxWithLabel
           label="Chronic Illness"
-          value={values.value1}
-          unit=""
+          value={values.value1}          
           width="95%"
           onChangeText={(text) => handleValueChange('value1', text)}
         />
         <MedHisInputBoxWithLabel
           label="Current Medication"
-          value={values.value2}
-          unit=""
+          value={values.value2}          
           width="95%"
           onChangeText={(text) => handleValueChange('value2', text)}
         />
         <MedHisInputBoxWithLabel
           label="Allergies"
-          value={values.value3}
-          unit=""
+          value={values.value3}   
           width="95%"
           onChangeText={(text) => handleValueChange('value3', text)}
         />
