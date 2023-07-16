@@ -6,9 +6,9 @@ import styles from './styles';
 
 // Dummy annoucement data. NOTICE: The number of annoucements can increase but the length of the content should smaller than a certain amount
 const AnnouncementData = [
-  { title: 'Job Opportunity', date: '2023-07-01', content: 'Nearby Chinese restaurant is hiring! If you are interested please contact this phone number: 858-361-4927' },
-  { title: 'Event Canceled!', date: '2023-07-02', content: 'The Sundays church event is canceled! Sorry for any inconvenience.' },
-  { title: 'Location Changed!', date: '2023-07-03', content: 'Our regular meeting location has been changed to XXX st' },  
+  { title: 'Free healthcare for you!', date: '2023-07-01', content: 'Street Corner Care every Sunday 2-3:30pm at First Presbyterian Church of San Diego'},
+  { title: 'Get your flu shot!', date: '2023-08-02', content: 'There is a flu going around, get free flu shot at CVS!' },
+  { title: 'System Maintenance', date: '2023-07-03', content: 'Content: Due to system maintenance, Pocket Health will be shut down for use between 2-4pm on 9/1' },  
   //...
 ];
 

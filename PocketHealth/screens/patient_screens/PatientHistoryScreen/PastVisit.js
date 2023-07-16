@@ -8,54 +8,34 @@ export default function PastVisitRecord( {navigation} ) {
     const providerReport = [
         {   
             label: 'Reason For consultation', 
-            value: 'Feeling dizzy after having diarrhea and upset stomach.'
+            value: 'Left hand wound leaking pus'
         },
         {   
             label: 'Assessment', 
-            value: 'Likely dehydrated because of diarrhea'
+            value: 'Left hand wound infected, cleaned wound with saline and applied antibiotic ointment. Antibiotic ointment samples given to patients.'
         },
         {   
             label: 'Future Plan', 
-            value: 'Drink more water. If possible, take over the counter diarrhea medications to control symptoms'
+            value: 'Use antibiotic ointment twice a day. Come back to street corner care next week.'
         },
     ];
     const medicalData = [
         {   
             label: 'Chronic Illness', 
-            value: 'About Chronic Diseases:\
-            Chronic diseases are defined \
-            broadly as conditions that last\
-            1 year or more and require ongoing\
-            medical attention or limit activities\
-            of daily living or both. Chronic\
-            diseases such as heart disease,\
-            cancer, and diabetes are the \
-            leading causes of death and \
-            disability in the United States.'
+            value: ' high blood pressure, diabetes'
         },
         {   
             label: 'Current Medication', 
-            value: 'Current Medications: Medications \
-            the patient is presently taking \
-            including all prescriptions, \
-            over-the-counters, herbals and vitamin/mineral/dietary \
-            (nutritional) supplements with each \
-            medications name, dosage, frequency \
-            and administered route.'
+            value: 'Metoprolol'
         },
         {
             label: 'Allergies', 
-            value: 'An allergy is where your body reacts \
-            to something thats normally harmless like \
-            pollen, dust or animal fur. The symptoms \
-            can be mild, but for some people they can \
-            be very serious.'
-        },
-
+            value: 'Sulfa'
+        },        
     ];
 
     const vitalData = [
-        {label: 'Pain Level (0~10, 0-no pain, 10-the worst pain)', value: '8'},
+        {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
         {label: 'Temperature', value: '99'},
         {label: 'Blood Pressure', value: '120/80'},
         {label: 'Pulse', value: '70'},

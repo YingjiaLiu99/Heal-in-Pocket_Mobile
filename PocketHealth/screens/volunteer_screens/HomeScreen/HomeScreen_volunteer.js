@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Text, View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
+import { Text, View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { SearchBar } from '@rneui/themed';
 
 
@@ -62,7 +62,7 @@ export default function HomeScreen({navigation}) {
   };
 
   const handleUserPress = (user) => {
-    
+    navigation.navigate('Options');    
   };
 
   const handleRegister = () => {
