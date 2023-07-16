@@ -89,7 +89,7 @@ const isInputEmpty = (values) => {
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
 
       <View style={{marginTop: 20,marginBottom:20,width:'100%'}}>
-        <Text style={{fontSize:30, fontWeight:400}}>Upload My Medical Hisotry</Text>          
+        <Text style={{fontSize:30, fontWeight:400}}>Upload My Medical History</Text>          
       </View>      
       
       <View style={{width:"100%"}}>
