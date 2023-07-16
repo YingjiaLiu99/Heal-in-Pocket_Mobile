@@ -21,29 +21,35 @@ const AnnouncementData = [
   };
 
   return (
-      <View style={styles.container}>
-      <Text style={styles.heading}>Welcome, Joan</Text>
+      <View style={{flex: 1}}>
 
-      <Text style={{fontSize:25,marginLeft:20}}>Announcement Board</Text>
+        <Text style={styles.heading}>Welcome, Joan</Text>
 
-      <AnnouncementBoard items={AnnouncementData} />
-      <Text style={{fontSize:25,marginLeft:20 }}>Current Request </Text>
-      <Text style={{fontSize:15,marginLeft:20, marginBottom:20,color:'gray' }}>15 patients are waiting</Text>
-      <View style={styles.ButtonOuterContainer}>
-        <Text style={styles.ButtonNotesText}>New patient</Text>
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={handleAccept}
-        >
-          <Text style={styles.buttonText}>Accept</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={()=>{console.log("Reject pressed")}}
-        >
-          <Text style={styles.buttonText}>Reject</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={{alignItems: 'center',marginBottom:0,marginVertical:0}}>
+          <Text style={{fontSize:22}}>Announcement Board</Text>
+        </View>
+
+        <AnnouncementBoard items={AnnouncementData} />
+        <Text style={{fontSize:25,marginLeft:20 }}>Current Request </Text>
+        <Text style={{fontSize:15,marginLeft:20, marginBottom:20,color:'gray' }}>15 patients are waiting</Text>
+
+        <View style={styles.ButtonOuterContainer}>
+          <Text style={styles.ButtonNotesText}>New patient</Text>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={handleAccept}
+          >
+            <Text style={styles.buttonText}>Accept</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={()=>{console.log("Reject pressed")}}
+          >
+            <Text style={styles.buttonText}>Reject</Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
   );
 };

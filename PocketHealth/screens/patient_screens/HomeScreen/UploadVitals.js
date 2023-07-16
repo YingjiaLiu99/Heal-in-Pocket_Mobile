@@ -21,14 +21,14 @@ export default function UploadVitals({ navigation }) {
 
   // initialize all the vitals to null
   const initialInputValues = Object.keys(labelProperties).reduce((values, label) => {
-    values[label] = null;
+    values[label] = '';
     return values;
   }, {});
 
   // function to check if the patient enter any vital
   const isInputEmpty = (inputValues) => {
     for (let key in inputValues) {
-      if (inputValues[key] !== null) {
+      if (inputValues[key] !== '') {
         return false;
       }
     }

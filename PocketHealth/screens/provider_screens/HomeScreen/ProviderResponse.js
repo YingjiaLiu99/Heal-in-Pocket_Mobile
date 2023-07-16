@@ -1,32 +1,48 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, ScrollView} from 'react-native';
+import { View, TouchableOpacity, Text, ScrollView, Alert} from 'react-native';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import ShowcaseBoxWithLabel from '../../../components/ShowcaseBoxWithLabel';
 import BigShowcaseBoxWithLabel from '../../../components/BigShowcaseBoxWithLabel';
-import MedHisInputBoxWithLabel from '../../patient_screens/HomeScreen/components/MedHisInputBoxWithLabel';
+import ProviderInputBox from './components/ProviderInputBox';
 
 export default function ProviderResponseScreen({navigation}) { 
     
-  const [inputValues, setInputValues] = useState({});
+  const [assessment, setAssessment] = useState('');
+  const [futurePlan, setFuturePlan] = useState('');
+  const [reasonDoc, setReasonDoc] = useState('');
 
-  const handleInputChange = (label, value) => {
-    setInputValues({
-    ...inputValues,
-    [label]: value,
-    });
+  const handleSubmit = () => {
+    if(assessment === '' || futurePlan === '' || reasonDoc === ''){
+      Alert.alert('Missing Input', 'Please enter all required areas',[
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },               
+      ]); 
+    }
+    else{
+      Alert.alert('Are You Sure To Submit?', 'You cannot edit once submitted',[
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            navigation.navigate('Home');
+            console.log(assessment);
+            console.log(futurePlan);
+          }
+        },
+      ]);
+    }    
   };
 
-  const handleReviewSubmit = () => {
-    navigation.navigate('Home');
-  };
-
-  // DUMMY DATA
-  const labelProperties = {
-    'Assessment': { unit: '', width: '95%' },
-    'Future Plan': { unit: '', width: '95%' },
-  };
+  // DUMMY DATA 
 
   const firstName = {label: 'First Name', value: 'James'}
   const lastName = {label: 'Last Name', value: 'Carter'}
@@ -81,67 +97,84 @@ return (
     <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
     
-    <Text style={styles.heading}>Consultation Report</Text>
-    <Text style={{fontSize:15}}>Patient Info</Text>
-    
-    <ShowcaseBoxWithLabel
-      label={firstName.label}
-      value={firstName.value}
-      unit=''
-      width="100%"
-    />
+      <Text style={styles.heading}>Consultation Request</Text>
+      <Text style={{fontSize:18}}>Patient Info</Text>
+      
+      <ShowcaseBoxWithLabel
+        label={firstName.label}
+        value={firstName.value}
+        unit=''
+        width="100%"
+      />
 
-    <ShowcaseBoxWithLabel
-      label={lastName.label}
-      value={lastName.value}
-      unit=''
-      width="100%"
-    />
-    
-    <ShowcaseBoxWithLabel
-      label={reason.label}
-      value={reason.value}
-      unit=''
-      width="100%"
-    />
+      <ShowcaseBoxWithLabel
+        label={lastName.label}
+        value={lastName.value}
+        unit=''
+        width="100%"
+      />
+      
+      <BigShowcaseBoxWithLabel
+        label={reason.label}
+        value={reason.value}
+        unit=''
+        width="100%"
+      />
 
-  
-
-    <Text style={{fontSize:25,marginLeft:20 }}>Vital Info</Text>
-    {vitalData.map((item, index) => (
-        <ShowcaseBoxWithLabel
-          key={index}
-          label={item.label}
-          value={item.value}
-          unit= {item.unit}
-          width={350}
-        />
-      ))}
-  
-    <Text style={{fontSize:25,marginLeft:20 }}>Medical History</Text>
-    {medHisData.map((item, index) => (
-        <BigShowcaseBoxWithLabel
-          key={index}
-          label={item.label}
-          value={item.value}
-          unit=""
-          width={350}
-        />
-      ))}
     
-    <Text style={styles.heading}>Provider's Input</Text>
-    {Object.entries(labelProperties).map(([label, properties], index) => (
-          <MedHisInputBoxWithLabel
+      <Text style={{fontSize:18}}>Patient Vitals</Text>
+
+      {vitalData.map((item, index) => (
+          <ShowcaseBoxWithLabel
             key={index}
-            label={label}
-            value={inputValues[label] || ''}
-            unit={properties.unit}
-            width={properties.width}
-            onChangeText={(value) => handleInputChange(label, value)} // change here
+            label={item.label}
+            value={item.value}
+            unit= {item.unit}
+            width="100%"
           />
         ))}
-    <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleReviewSubmit}>
+    
+      <Text style={{fontSize:18}}>Patient Medical History</Text>
+
+      {medHisData.map((item, index) => (
+          <BigShowcaseBoxWithLabel
+            key={index}
+            label={item.label}
+            value={item.value}          
+            width="100%"
+          />
+        ))}
+      
+      <Text style={{fontSize:20, color:'red'}}>Provider's Input (*required)</Text>
+
+      <View style={{width:"100%"}}>
+      <ProviderInputBox 
+        label="Reason For Consultation*"
+        value={reasonDoc}
+        width="100%"
+        placeholder="Click to Enter Reason For Consultation ..."
+        onChangeText={(text) => setReasonDoc(text)}
+      />
+
+      <ProviderInputBox 
+        label="Assessment*"
+        value={assessment}
+        width="100%"
+        placeholder="Click to Enter Your Assessment ..."
+        onChangeText={(text) => setAssessment(text)}
+      />
+
+      <ProviderInputBox 
+        label="Future Plan*"
+        value={futurePlan}
+        width="100%"
+        placeholder="Click to Enter Suggested Future Plan ..."
+        onChangeText={(text) => setFuturePlan(text)}
+      />
+      </View>
+
+      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>

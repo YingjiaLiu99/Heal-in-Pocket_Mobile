@@ -9,11 +9,12 @@ const styles = StyleSheet.create({
     marginHorizontal:20
   },
   heading: {
-    fontSize: 30,
+    fontSize: 32,
     textAlign: 'left',
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 10,
-    marginLeft:20
+    marginLeft:20,
+    fontWeight:400
   },
   ButtonOuterContainer: {    
     borderColor: '#7C7C7C',

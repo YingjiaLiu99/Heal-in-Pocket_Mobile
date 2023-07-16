@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-const MedHisInputBoxWithLabel = ({ label, value, width, onChangeText }) => {
+const ProviderInputBox = ({ label, value, width, placeholder, onChangeText }) => {
 
   const inputRef = useRef(null);
 
@@ -20,7 +20,7 @@ const MedHisInputBoxWithLabel = ({ label, value, width, onChangeText }) => {
                 style={styles.boxField}
                 value={value}
                 onChangeText={onChangeText}
-                placeholder='Click to Enter Your medical information ...'
+                placeholder={placeholder}
                 multiline
               />
           </View>
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MedHisInputBoxWithLabel;
+export default ProviderInputBox;
