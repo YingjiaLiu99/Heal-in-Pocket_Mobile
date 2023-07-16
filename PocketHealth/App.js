@@ -55,7 +55,9 @@ import BasicVolunteerInfo from './screens/volunteer_screens/LoginScreen/BasicVol
 // volunteer home screen related screens:
 import HomeScreen_volunteer from './screens/volunteer_screens/HomeScreen/HomeScreen_volunteer';
 import RegisterNewPatient_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterNewPatientScreen';
-
+import RegisterPatientWithoutPhone from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientWithoutPhone';
+import RegisterPatientWithPhone from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientWithPhone';
+import RegisterPatientPhoneVerification from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientPhoneVerification';
 
 
 
@@ -204,9 +206,12 @@ function HomeTab_vol() {
 function HomeNavigator_vol() {
   return(
     <HomeStack_vol.Navigator>
-      <HomeStack_vol.Screen name="Home" component={HomeScreen_volunteer} />    
+      <HomeStack_vol.Screen name="Home" component={HomeScreen_volunteer} />  
+      {/* any follow up screens from home goes from here */}  
       <HomeStack_vol.Screen name="Register A New Patient" component={RegisterNewPatient_volunteer} />
-       {/* any follow up screens from home goes from here */}
+      <HomeStack_vol.Screen name="Register Patient With Phone" component={RegisterPatientWithPhone} />
+      <HomeStack_vol.Screen name="Register Patient Without Phone" component={RegisterPatientWithoutPhone} />
+      <HomeStack_vol.Screen name="Register Patient Phone Verification" component={RegisterPatientPhoneVerification} />
     </HomeStack_vol.Navigator>
   );
 }
