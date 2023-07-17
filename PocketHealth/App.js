@@ -27,6 +27,8 @@ import MedicalHistoryRecord_patient from './screens/patient_screens/PatientHisto
 import PastVisitRecord_patient from './screens/patient_screens/PatientHistoryScreen/PastVisit';
 // patient chat related screens:
 import ChatMainPage_patient from './screens/patient_screens/Chat/ChatMainScreen';
+// patient settings related screens:
+import SettingsMainScreen_patient from './screens/patient_screens/SettingsScreen/SettingsMainScreen';
 
 // provider login & signup related screens:
 import SignUpScreen_provider from './screens/provider_screens/LoginScreen/ProviderSignUpScreen';
@@ -38,11 +40,12 @@ import BasicProviderInfo from './screens/provider_screens/LoginScreen/BasicProvi
 import MoreInfoProvider from './screens/provider_screens/LoginScreen/MoreInfoProvider';
 // provider homescreen and related screens:
 import HomeScreen_provider from './screens/provider_screens/HomeScreen/HomeScreen_provider';
-
 import ProviderResponseScreen from './screens/provider_screens/HomeScreen/ProviderResponse';
-
+import SuccessScreen_provider from './screens/provider_screens/HomeScreen/Success';
 // Provider chat related screens:
 import ChatMainPage_provider from './screens/provider_screens/Chat/ChatMainScreen_provider';
+// Provider settings related screens:
+import SettingsMainScreen_provider from './screens/provider_screens/SettingsScreen/SettingsMainScreen';
 
 // volunteer login & signup related screens:
 import SignUpScreen_volunteer from './screens/volunteer_screens/LoginScreen/VolunteerSignUpScreen';
@@ -51,13 +54,19 @@ import PhoneVerification_volunteer from './screens/volunteer_screens/LoginScreen
 import VolunteerEnterPhoneNumToResetPass from './screens/volunteer_screens/LoginScreen/VolunteerEnterPhoneNumToResetPass';
 import VolunteerResetPassword from './screens/volunteer_screens/LoginScreen/VolunteerResetPassword';
 import BasicVolunteerInfo from './screens/volunteer_screens/LoginScreen/BasicVolunteerInfo';
-
 // volunteer home screen related screens:
 import HomeScreen_volunteer from './screens/volunteer_screens/HomeScreen/HomeScreen_volunteer';
+import OptionScreen_vol from './screens/volunteer_screens/HomeScreen/OptionScreen';
 import RegisterNewPatient_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterNewPatientScreen';
 import RegisterPatientWithoutPhone from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientWithoutPhone';
 import RegisterPatientWithPhone from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientWithPhone';
 import RegisterPatientPhoneVerification from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientPhoneVerification';
+import UploadNewRecord_vol from './screens/volunteer_screens/HomeScreen/uploadNewRecord';
+import SuccessScreen_vol from './screens/volunteer_screens/HomeScreen/Success';
+// volunteer settings related screens:
+import SettingsMainScreen_vol from './screens/volunteer_screens/SettingsScreen/SettingsMainScreen';
+
+
 
 
 
@@ -70,14 +79,17 @@ const Tab_patient = createBottomTabNavigator();
 const HomeStack_patient = createStackNavigator();
 const HistoryStack_patient = createStackNavigator();
 const ChatStack_patient = createStackNavigator();
+const SettingStack_patient = createStackNavigator();
 // provider's tab: including Home screen stack, chat stack
 const Tab_provider = createBottomTabNavigator();
 const HomeStack_provider = createStackNavigator();
 const ChatStack_provider = createStackNavigator();
+const SettingStack_provider = createStackNavigator();
 // volunteer's tab: including Home screen stack, patient profile manage stack
 const Tab_vol = createBottomTabNavigator();
 const HomeStack_vol = createStackNavigator();
 const RecordManagerStack_vol = createStackNavigator();
+const SettingStack_vol = createStackNavigator();
 
 
 //-------------------------------------------------Login & SignUp Stack----------------------------------------------------------------//
@@ -123,6 +135,7 @@ function HomeTab_patient() {
       <Tab_patient.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_patient} />   
       <Tab_patient.Screen name="My Record" options={{ headerShown: false }} component={HistoryNavigator_patient} />
       <Tab_patient.Screen name="My Chat" options={{ headerShown: false }} component={ChatNavigator_patient} />
+      <Tab_patient.Screen name="My Settings" options={{ headerShown: false }} component={SettingsNavigator_patient} />
     </Tab_patient.Navigator>
   );
 }
@@ -135,7 +148,7 @@ function HomeNavigator_patient() {
       <HomeStack_patient.Screen name="New Complaint" component={NewComplaintForm_patient} options={{ tabBarVisible:false }}/>
       <HomeStack_patient.Screen name="Upload Vitals" component={UploadVitals} options={{ tabBarVisible:false }}/>
       <HomeStack_patient.Screen name= "Upload MedHis" component={UploadMedicalHistory} options={{ tabBarVisible:false}}/>
-      {/* any follow up screens from home goes from here */}
+      {/* any follow up screens goes from here */}
     </HomeStack_patient.Navigator>
   );
 }
@@ -147,7 +160,7 @@ function HistoryNavigator_patient() {
       <HistoryStack_patient.Screen name="Vital History" component={VitalHistory_patient} />
       <HistoryStack_patient.Screen name="Medical History" component={MedicalHistoryRecord_patient} />
       <HistoryStack_patient.Screen name="Past Visit" component={PastVisitRecord_patient} />
-      {/* any follow up screens from home goes from here */}
+      {/* any follow up screens goes from here */}
     </HistoryStack_patient.Navigator>
   );
 }
@@ -156,8 +169,18 @@ function ChatNavigator_patient() {
   return (
     <ChatStack_patient.Navigator>
       <ChatStack_patient.Screen name="Chat" component={ChatMainPage_patient} />
-      {/* any follow up screens from home goes from here */}
+      {/* any follow up screens goes from here */}
     </ChatStack_patient.Navigator>
+  );
+}
+
+
+function SettingsNavigator_patient() {
+  return (
+    <SettingStack_patient.Navigator>
+      <SettingStack_patient.Screen name="Settings" component={SettingsMainScreen_patient} />
+      {/* any follow up screens goes from here */}
+    </SettingStack_patient.Navigator>
   );
 }
 
@@ -167,7 +190,8 @@ function HomeTab_provider() {
   return(
     <Tab_provider.Navigator>
       <Tab_provider.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_provider} />
-      <Tab_provider.Screen name="My Chat" options={{ headerShown: false }} component={ChatNavigator_provider} />      
+      <Tab_provider.Screen name="My Chat" options={{ headerShown: false }} component={ChatNavigator_provider} />  
+      <Tab_provider.Screen name="My Settings" options={{ headerShown: false }} component={SettingsNavigator_provider} />
     </Tab_provider.Navigator>
   );
 }
@@ -178,6 +202,7 @@ function HomeNavigator_provider() {
     <HomeStack_provider.Navigator>
       <HomeStack_provider.Screen name="Home" component={HomeScreen_provider} />
       <HomeStack_provider.Screen name="Provider Response" component={ProviderResponseScreen} />
+      <HomeStack_provider.Screen name="Success" component={SuccessScreen_provider} />
       
       {/* any follow up screens from home goes from here */}
     </HomeStack_provider.Navigator>
@@ -192,12 +217,22 @@ function ChatNavigator_provider() {
   );
 }
 
+function SettingsNavigator_provider() {
+  return (
+    <SettingStack_provider.Navigator>
+      <SettingStack_provider.Screen name="Settings" component={SettingsMainScreen_provider} />
+      {/* any follow up screens goes from here */}
+    </SettingStack_provider.Navigator>
+  );
+}
+
 //-------------------------------------------------Volunteer Tab & Stack----------------------------------------------------------------//
 // Volunteer Tab:
 function HomeTab_vol() {
   return(
     <Tab_vol.Navigator>
-      <Tab_vol.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_vol} />      
+      <Tab_vol.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_vol} /> 
+      <Tab_vol.Screen name="My Settings" options={{ headerShown: false }} component={SettingsNavigator_vol} />     
     </Tab_vol.Navigator>
   );
 }
@@ -212,17 +247,23 @@ function HomeNavigator_vol() {
       <HomeStack_vol.Screen name="Register Patient With Phone" component={RegisterPatientWithPhone} />
       <HomeStack_vol.Screen name="Register Patient Without Phone" component={RegisterPatientWithoutPhone} />
       <HomeStack_vol.Screen name="Register Patient Phone Verification" component={RegisterPatientPhoneVerification} />
+      <HomeStack_vol.Screen name="Options" component={OptionScreen_vol} />
+      <HomeStack_vol.Screen name="Upload New Record" component={UploadNewRecord_vol} />
+      <HomeStack_vol.Screen name='Success' component={SuccessScreen_vol} />
+
     </HomeStack_vol.Navigator>
   );
 }
 
-// function RecordManagerNavigator_vol() {
-//   return(
-//     <RecordManagerStack_vol.Navigator>
-//       <RecordManagerStack_vol.Screen name="Home" component={RecordManagerScreen_vol} />
-//     </RecordManagerStack_vol.Navigator>
-//   );
-// }
+function SettingsNavigator_vol() {
+  return (
+    <SettingStack_vol.Navigator>
+      <SettingStack_vol.Screen name="Settings" component={SettingsMainScreen_vol} />
+      {/* any follow up screens goes from here */}
+    </SettingStack_vol.Navigator>
+  );
+}
+
 
 //-------------------------------------------------Entry Point of App.js----------------------------------------------------------------//
 function App() {
