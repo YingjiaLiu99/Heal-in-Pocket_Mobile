@@ -33,7 +33,7 @@ export default function ProviderResponseScreen({navigation}) {
         {
           text: 'Yes',
           onPress: () => {
-            navigation.navigate('Home');
+            navigation.navigate('Success');
             console.log(assessment);
             console.log(futurePlan);
           }
