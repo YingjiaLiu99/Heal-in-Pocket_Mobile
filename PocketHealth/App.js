@@ -58,10 +58,14 @@ import BasicVolunteerInfo from './screens/volunteer_screens/LoginScreen/BasicVol
 import HomeScreen_volunteer from './screens/volunteer_screens/HomeScreen/HomeScreen_volunteer';
 import OptionScreen_vol from './screens/volunteer_screens/HomeScreen/OptionScreen';
 import RegisterNewPatient_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterNewPatientScreen';
+import RegisterPatientWithoutPhone from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientWithoutPhone';
+import RegisterPatientWithPhone from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientWithPhone';
+import RegisterPatientPhoneVerification from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientPhoneVerification';
 import UploadNewRecord_vol from './screens/volunteer_screens/HomeScreen/uploadNewRecord';
 import SuccessScreen_vol from './screens/volunteer_screens/HomeScreen/Success';
 // volunteer settings related screens:
 import SettingsMainScreen_vol from './screens/volunteer_screens/SettingsScreen/SettingsMainScreen';
+
 
 
 
@@ -237,12 +241,16 @@ function HomeTab_vol() {
 function HomeNavigator_vol() {
   return(
     <HomeStack_vol.Navigator>
-      <HomeStack_vol.Screen name="Home" component={HomeScreen_volunteer} />    
+      <HomeStack_vol.Screen name="Home" component={HomeScreen_volunteer} />  
+      {/* any follow up screens from home goes from here */}  
       <HomeStack_vol.Screen name="Register A New Patient" component={RegisterNewPatient_volunteer} />
+      <HomeStack_vol.Screen name="Register Patient With Phone" component={RegisterPatientWithPhone} />
+      <HomeStack_vol.Screen name="Register Patient Without Phone" component={RegisterPatientWithoutPhone} />
+      <HomeStack_vol.Screen name="Register Patient Phone Verification" component={RegisterPatientPhoneVerification} />
       <HomeStack_vol.Screen name="Options" component={OptionScreen_vol} />
       <HomeStack_vol.Screen name="Upload New Record" component={UploadNewRecord_vol} />
       <HomeStack_vol.Screen name='Success' component={SuccessScreen_vol} />
-       {/* any follow up screens from home goes from here */}
+
     </HomeStack_vol.Navigator>
   );
 }

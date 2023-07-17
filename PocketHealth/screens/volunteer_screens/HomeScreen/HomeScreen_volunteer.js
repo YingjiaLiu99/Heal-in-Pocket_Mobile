@@ -66,7 +66,7 @@ export default function HomeScreen({navigation}) {
   };
 
   const handleRegister = () => {
-    // Handle the register event
+    navigation.navigate("Register A New Patient");
   };
 
   return (
