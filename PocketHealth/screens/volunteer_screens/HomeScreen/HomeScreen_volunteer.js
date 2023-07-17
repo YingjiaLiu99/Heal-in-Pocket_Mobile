@@ -91,7 +91,7 @@ export default function HomeScreen({navigation}) {
             onFocus={() => handleSearchFocus(true)}            
           />
 
-          {searchFocus && (
+          {(searchInput !== '') && (
             <FlatList
               data={filteredUsers}
               keyExtractor={(item, index) => index.toString()}

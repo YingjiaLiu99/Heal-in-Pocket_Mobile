@@ -16,7 +16,7 @@ const HomeScreen = ({navigation}) => {
   
 
   const handleConsult = () => {
-    console.log('Consult pressed');
+    navigation.navigate('My Chat');    
   };
 
   const handleUpdate = () => {
@@ -32,6 +32,7 @@ const HomeScreen = ({navigation}) => {
 
       <AnnouncementBoard items={AnnouncementData} />
       
+      {/* patient's chat function still under dev */}
       <View style={styles.ButtonOuterContainer}>
         <Text style={styles.ButtonNotesText}>Begin New Consult</Text>
         <TouchableOpacity

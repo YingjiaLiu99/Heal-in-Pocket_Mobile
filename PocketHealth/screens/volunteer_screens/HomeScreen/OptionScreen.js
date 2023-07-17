@@ -18,7 +18,7 @@ export default function OptionScreen({navigation}) {
 
         <View style={{width:'100%',alignItems:'center',marginTop:150,marginBottom:100}}>
           <TouchableOpacity style={styles.button} onPress={handleCreateNewRecord}>
-            <Text style={styles.buttonText}>Create a New Record</Text>
+            <Text style={styles.buttonText}>Create a New Visit</Text>
           </TouchableOpacity>
         </View>
 
