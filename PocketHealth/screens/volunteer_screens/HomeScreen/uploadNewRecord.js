@@ -88,7 +88,7 @@ export default function UploadMedicalInfo({ navigation }) {
           text: 'Yes',
           onPress: () => {
             console.log({vitalValues, medHistoryValues, reason});
-            navigation.navigate('Home');
+            navigation.navigate('Success');
           }
         },
       ]);
@@ -159,7 +159,7 @@ export default function UploadMedicalInfo({ navigation }) {
 
         <View style={{ marginBottom: 10, width:'100%'}}>
             <BigInputBoxWithInnerLabel
-                label="Resaon For Consultation"
+                label="Resaon For Consultation*"
                 value={reason}
                 width="95%"
                 height={100}
