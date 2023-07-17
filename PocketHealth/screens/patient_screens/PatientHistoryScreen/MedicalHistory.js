@@ -10,47 +10,28 @@ export default function MedicalHistory({navigation}) {
     const Data1 = [
         {   
             label: 'Chronic Illness', 
-            value: 'About Chronic Diseases:\
-            Chronic diseases are defined \
-            broadly as conditions that last\
-            1 year or more and require ongoing\
-            medical attention or limit activities\
-            of daily living or both. Chronic\
-            diseases such as heart disease,\
-            cancer, and diabetes are the \
-            leading causes of death and \
-            disability in the United States.'
+            value: ' high blood pressure, diabetes'
         },
         {   
             label: 'Current Medication', 
-            value: 'Current Medications: Medications \
-            the patient is presently taking \
-            including all prescriptions, \
-            over-the-counters, herbals and vitamin/mineral/dietary \
-            (nutritional) supplements with each \
-            medications name, dosage, frequency \
-            and administered route.'
+            value: 'Metoprolol'
         },
         {
             label: 'Allergies', 
-            value: 'An allergy is where your body reacts \
-            to something thats normally harmless like \
-            pollen, dust or animal fur. The symptoms \
-            can be mild, but for some people they can \
-            be very serious.'
+            value: 'Sulfa'
         },        
     ];
 
     const Data2 = [
-        {label: 'Chronic Illness', value: 'Back pain'},
-        {label: 'Current Medication', value: ''},
-        {label: 'Allergies', value: 'Banana'},        
+        {label: 'Chronic Illness', value: 'high blood pressure, diabetes'},
+        {label: 'Current Medication', value: 'Metoprolol'},
+        {label: 'Allergies', value: 'Sulfa'},        
     ];
 
     const Data3 = [
-        {label: 'Chronic Illness', value: ''},
+        {label: 'Chronic Illness', value: 'high blood pressure, diabetes'},
         {label: 'Current Medication', value: ''},
-        {label: 'Allergies', value: 'Milk'},        
+        {label: 'Allergies', value: 'Sulfa'},        
     ];
 
     const AllMedData = [
