@@ -26,7 +26,7 @@ export default function OptionScreen({navigation}) {
 
         <View style={{width:'100%',alignItems:'center',marginTop:100,marginBottom:150}}>
           <TouchableOpacity style={styles.button} onPress={handleUploadRecord}>
-            <Text style={styles.buttonText}>Upload an Old Record</Text>
+            <Text style={styles.buttonText}>Transfer Old Record</Text>
           </TouchableOpacity>
         </View>
 

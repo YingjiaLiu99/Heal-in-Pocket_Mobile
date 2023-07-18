@@ -26,20 +26,9 @@ export default function PhoneVerification({route, navigation}) {
             setErrorMessage('Please Enter Your Verification Code');
         }
         else{
-            console.log('from sign up');
-            navigation.navigate("Basic Provider Info");
+            navigation.navigate("Home");
         }      
     };
-    const handleFromResetPassword = () => {
-        if(!verificationCode) {
-            setErrorMessage('Please Enter Your Verification Code');
-        }
-        else{
-            console.log('from provider reset password');
-            navigation.navigate("Provider Reset Password");
-        }      
-    };
-
 
     const handleResend = () => {
         // resend verification code backend goes here
@@ -67,7 +56,7 @@ export default function PhoneVerification({route, navigation}) {
 
             </View>
 
-            {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+            {errorMessage ? <Text style={{color:'red'}}>{errorMessage}</Text> : null}
 
             <InputBoxWithLabel
                 label="Verification Code"    
@@ -82,9 +71,8 @@ export default function PhoneVerification({route, navigation}) {
             </TouchableOpacity>
 
             <View style={{width:'100%',alignItems:'center',marginTop:50,marginBottom:40}}>
-                <TouchableOpacity style={styles.button} onPress={route.params.fromForgotPassword ? handleFromResetPassword : handleSignUpVerification} >
-                    <Text style={styles.buttonText}>
-                    {route.params.fromForgotPassword ? 'Reset Password' : 'Create Account'}</Text>
+                <TouchableOpacity style={styles.button} onPress={handleSignUpVerification} >
+                    <Text style={styles.buttonText}>Create Account</Text>
                 </TouchableOpacity>
             </View> 
 

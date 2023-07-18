@@ -33,13 +33,13 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: '#395BCD',
-      paddingVertical: 5,
-      paddingHorizontal: 5,
+      paddingVertical: 10,
+      paddingHorizontal: 10,
       borderRadius: 20
     },
     buttonText: {
       color: '#fff',
-      fontSize: 25
+      fontSize: 22
     },
 
     userShowcase: {

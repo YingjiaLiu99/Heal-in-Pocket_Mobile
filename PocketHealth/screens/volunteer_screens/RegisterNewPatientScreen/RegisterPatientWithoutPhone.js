@@ -37,14 +37,14 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
     }
     else {
       console.log(`First Name: ${firstName}, Last Name: ${lastName}, Age: ${age}, Sex: ${genderSelection}`);
-      navigation.navigate("Medical History");
+      navigation.navigate("Home");
     }   
   };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <View style={{marginTop: 75,marginBottom:70,width:'100%'}}>
-        <Text style={styles.titleText}>Welcome,{'\n'}Set Up Your Account</Text>
+      <View style={{marginTop: 25,marginBottom:10,width:'100%'}}>
+        <Text style={styles.titleText}>Enter Patient Information To Set Up Account</Text>
         <Text style={{marginTop:10,fontSize:17}}>* is Required</Text>
       </View>    
 
@@ -54,7 +54,7 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
         label="First Name*"        
         value={firstName}
         onChangeText={(text) => setFirstName(text)}
-        placeholder="Please enter your first name"
+        placeholder="Please enter patient first name"
         keyboardType="default"
         width='100%'
       />
@@ -63,7 +63,7 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
         label="Last Name"        
         value={lastName}
         onChangeText={(text) => setLastName(text)}
-        placeholder="Please enter your Last name"
+        placeholder="Please enter patient Last name"
         keyboardType="default"
         width='100%'
       />
@@ -88,7 +88,7 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
       </View>      
       
 
-      <View style={{width:'100%',alignItems:'flex-end',marginTop:30,marginBottom:40}}>
+      <View style={{width:'100%',alignItems:'flex-end',marginTop:20,marginBottom:20}}>
         <TouchableOpacity 
         style={{
           height: 70,
