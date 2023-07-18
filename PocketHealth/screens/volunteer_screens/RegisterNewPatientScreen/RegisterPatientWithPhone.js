@@ -12,6 +12,7 @@ const RegisterPatientWithPhone = ({navigation}) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [age, setAge] = useState('');
   const [genderSelection, setGenderSelection] = useState(null);
 
@@ -20,17 +21,6 @@ const RegisterPatientWithPhone = ({navigation}) => {
     {value: 'female', choiceLabel: 'Female'},
     {value: 'other', choiceLabel: 'Other'},
   ];  
-  const handleSignUp = () => {   
-    if (!phoneNumber || !password || !confirmPassword) {
-      setErrorMessage('Please fill in all fields');
-    } else if (password !== confirmPassword) {
-      setErrorMessage('Passwords do not match');
-    } else {
-      // Call API to create user account      
-      console.log('Step to Phone Verification');
-      navigation.navigate("Register Patient Phone Verification", { phoneNumber: phoneNumber });
-    }
-  };
 
   // Backend api call GOES INSIDE
   const handleSubmit = () => {
@@ -40,6 +30,9 @@ const RegisterPatientWithPhone = ({navigation}) => {
     else if(!age) {
       setErrorMessage('Please enter your age');
     }
+    else if(!phoneNumber) {
+      setErrorMessage('Please enter your phone number');
+    }
     else if(!genderSelection){
       setErrorMessage('Please choose your Biological Sex');
     }
@@ -47,15 +40,15 @@ const RegisterPatientWithPhone = ({navigation}) => {
       setErrorMessage('Please enter a valid name');
     }
     else {
-      console.log(`First Name: ${firstName}, Last Name: ${lastName}, Age: ${age}, Sex: ${genderSelection}`);
-      navigation.navigate("Medical History");
+      console.log(`First Name: ${firstName}, Last Name: ${lastName}, Age: ${age}, Sex: ${genderSelection}, Phone: ${phoneNumber}`);
+      navigation.navigate("Register Patient Phone Verification",{phoneNumber:phoneNumber});
     }   
   };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <View style={{marginTop: 75,marginBottom:70,width:'100%'}}>
-        <Text style={styles.titleText}>Welcome,{'\n'}Set Up Your Account</Text>
+      <View style={{marginTop: 25,marginBottom:10,width:'100%'}}>
+        <Text style={styles.titleText}>Enter Patient Information To Set Up Account</Text>
         <Text style={{marginTop:10,fontSize:17}}>* is Required</Text>
       </View>    
 
@@ -65,7 +58,7 @@ const RegisterPatientWithPhone = ({navigation}) => {
         label="First Name*"        
         value={firstName}
         onChangeText={(text) => setFirstName(text)}
-        placeholder="Please enter your first name"
+        placeholder="Please enter patient first name"
         keyboardType="default"
         width='100%'
       />
@@ -74,11 +67,20 @@ const RegisterPatientWithPhone = ({navigation}) => {
         label="Last Name"        
         value={lastName}
         onChangeText={(text) => setLastName(text)}
-        placeholder="Please enter your Last name"
+        placeholder="Please enter patient Last name"
         keyboardType="default"
         width='100%'
       />
       
+      <InputBoxWithLabel
+        label="Phone Number*"        
+        value={phoneNumber}
+        onChangeText={(text) => setPhoneNumber(text)}
+        placeholder="Please enter patient phone number"
+        keyboardType="phone-pad"
+        width='100%'
+      />
+
       <View style={{width:'100%',flexDirection:'row'}}>
         <InputBoxWithLabel
           label="Age*"        
@@ -99,7 +101,7 @@ const RegisterPatientWithPhone = ({navigation}) => {
       </View>      
       
 
-      <View style={{width:'100%',alignItems:'flex-end',marginTop:30,marginBottom:40}}>
+      <View style={{width:'100%',alignItems:'flex-end',marginTop:20,marginBottom:20}}>
         <TouchableOpacity 
         style={{
           height: 70,
@@ -109,7 +111,7 @@ const RegisterPatientWithPhone = ({navigation}) => {
           justifyContent: 'center',
           backgroundColor: '#395BCD',
           borderRadius:20           
-        }} onPress={handleSignUp}>
+        }} onPress={handleSubmit}>
           <Text style={{color:'#fff',fontSize: 25}}>Next</Text>
         </TouchableOpacity>
       </View>
