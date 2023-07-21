@@ -7,6 +7,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import  Feather from 'react-native-vector-icons/Feather';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 
+// Welcome Page:
+import WelcomeScreen from './screens/WelcomeScreen';
 // Entry screen of the app: general login page:
 import LoginScreen from './screens/patient_screens/LoginScreen/LoginScreen';
 // patient login & signup related screens:
@@ -98,7 +100,8 @@ const SettingStack_vol = createStackNavigator();
 //-------------------------------------------------Login & SignUp Stack----------------------------------------------------------------//
 function LoginNavigator() {
   return (
-    <LoginStack.Navigator>      
+    <LoginStack.Navigator>
+      <LoginStack.Screen name='Welcome' component={WelcomeScreen} />      
       <LoginStack.Screen name="Login" component={LoginScreen} />
       {/* Patient login related screens: */}      
       <LoginStack.Screen name="Patient Sign Up" component={SignUpScreen_patient} />      

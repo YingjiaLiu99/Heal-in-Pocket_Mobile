@@ -46,6 +46,9 @@ export default function ProviderResponseScreen({navigation}) {
 
   const firstName = {label: 'First Name', value: 'James'}
   const lastName = {label: 'Last Name', value: 'Carter'}
+  const DateOfBirth = {label: 'Date of Birth', value: '07/25/1972'}
+  const DateOfService = {label: 'Date of Service', value: '07/20/2023'}
+  const location = {label: 'Care Location', value: 'Street Corner Care'}
   const reason = {label: 'Reason for Consultation', value:'Patient feels dizzy after diarrhea'}
 
   const vitalData = [
@@ -93,23 +96,54 @@ return (
     <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
     
+      {/* User Meta Data: */}
       <Text style={styles.heading}>Visit Note</Text>
-      <Text style={{fontSize:18}}>Patient Info</Text>
-      
+      <View style={{alignItems:'flex-start',width:'100%'}}>
+        <Text style={{fontSize:20, marginLeft:5}}>Patient Info</Text>
+      </View>
+
+      <View style={{width:'100%',flexDirection:'row'}}>
       <ShowcaseBoxWithLabel
         label={firstName.label}
         value={firstName.value}
         unit=''
-        width="100%"
+        width="45%"
+        marginRight={15}        
       />
-
       <ShowcaseBoxWithLabel
         label={lastName.label}
         value={lastName.value}
         unit=''
-        width="100%"
+        width="45%"    
+        marginLeft={15}    
       />
-      
+      </View>
+
+      <View style={{width:'100%',flexDirection:'row'}}>
+      <ShowcaseBoxWithLabel
+        label={DateOfBirth.label}
+        value={DateOfBirth.value}
+        unit=''
+        width="45%"
+        marginRight={15}        
+      />
+      <ShowcaseBoxWithLabel
+        label={DateOfService.label}
+        value={DateOfService.value}
+        unit=''
+        width="45%"    
+        marginLeft={15}    
+      />
+      </View>
+
+      <ShowcaseBoxWithLabel
+        label={location.label}
+        value={location.value}
+        unit=''
+        width="100%"            
+      />
+
+
       <BigShowcaseBoxWithLabel
         label={reason.label}
         value={reason.value}
@@ -117,6 +151,7 @@ return (
         width="100%"
       />
 
+      
     
       <Text style={{fontSize:18}}>Patient Vitals</Text>
 
