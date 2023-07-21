@@ -58,8 +58,17 @@ export default function UploadMedicalInfo({ navigation }) {
     return true;
   };
 
-  const handleSubmit = () => {    
-    if(reason === ''){
+  const handleSubmit = () => {
+    if(isInputEmpty(vitalValues) && isInputEmpty(medHistoryValues)){
+      Alert.alert('Missing Input', 'No medical data entered',[
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },       
+      ]); 
+    }
+    else if(reason === ''){
         Alert.alert('Missing Input', 'Reason for consultation is missing',[
           {
             text: 'Cancel',

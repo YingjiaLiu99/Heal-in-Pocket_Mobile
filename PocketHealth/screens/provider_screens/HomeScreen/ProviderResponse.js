@@ -92,9 +92,10 @@ export default function ProviderResponseScreen({navigation}) {
 return (
     <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.heading}>Visit Note</Text>
+    
+      <Text style={styles.heading}>Consultation Request</Text>
       <Text style={{fontSize:18}}>Patient Info</Text>
-            
+      
       <ShowcaseBoxWithLabel
         label={firstName.label}
         value={firstName.value}

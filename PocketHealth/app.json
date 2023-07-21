@@ -4,11 +4,10 @@
     "slug": "PocketHealth",
     "version": "1.0.0",
     "orientation": "portrait",
-
-    "icon": "./assets/images/pocket_health.png",
+    "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/pocket_health.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,12 +19,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/pocket_health.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/images/pocket_health.png"
+      "favicon": "./assets/images/favicon.png"
     }
   }
 }
