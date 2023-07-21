@@ -264,8 +264,7 @@ function HomeNavigator_provider() {
     <HomeStack_provider.Navigator>
       <HomeStack_provider.Screen name="Home" component={HomeScreen_provider} />
       <HomeStack_provider.Screen name="Provider Response" component={ProviderResponseScreen} />
-      <HomeStack_provider.Screen name="Success" component={SuccessScreen_provider} />
-      
+      <HomeStack_provider.Screen name="Success" component={SuccessScreen_provider} />      
       {/* any follow up screens from home goes from here */}
     </HomeStack_provider.Navigator>
   );
