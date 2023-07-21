@@ -1,8 +1,11 @@
 // App.js
 import React from 'react';
+import { Text } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import  Feather from 'react-native-vector-icons/Feather';
+import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 
 // Entry screen of the app: general login page:
 import LoginScreen from './screens/patient_screens/LoginScreen/LoginScreen';
@@ -68,25 +71,23 @@ import SettingsMainScreen_vol from './screens/volunteer_screens/SettingsScreen/S
 
 
 
-
-
 // the main stack:
 const Stack = createStackNavigator();
 // the login stack(which supports patients, providers, and admin login)
 const LoginStack = createStackNavigator();
 // patient's tab: including Home screen stack, record screen stack, chat screen stack
-const Tab_patient = createBottomTabNavigator();
+const Tab_patient = createMaterialBottomTabNavigator();
 const HomeStack_patient = createStackNavigator();
 const HistoryStack_patient = createStackNavigator();
 const ChatStack_patient = createStackNavigator();
 const SettingStack_patient = createStackNavigator();
 // provider's tab: including Home screen stack, chat stack
-const Tab_provider = createBottomTabNavigator();
+const Tab_provider = createMaterialBottomTabNavigator();
 const HomeStack_provider = createStackNavigator();
 const ChatStack_provider = createStackNavigator();
 const SettingStack_provider = createStackNavigator();
 // volunteer's tab: including Home screen stack, patient profile manage stack
-const Tab_vol = createBottomTabNavigator();
+const Tab_vol = createMaterialBottomTabNavigator();
 const HomeStack_vol = createStackNavigator();
 const RecordManagerStack_vol = createStackNavigator();
 const SettingStack_vol = createStackNavigator();
@@ -131,11 +132,45 @@ function LoginNavigator() {
 // Patient Tab:
 function HomeTab_patient() {
   return (
-    <Tab_patient.Navigator>
-      <Tab_patient.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_patient} />   
-      <Tab_patient.Screen name="My Record" options={{ headerShown: false }} component={HistoryNavigator_patient} />
-      <Tab_patient.Screen name="My Chat" options={{ headerShown: false }} component={ChatNavigator_patient} />
-      <Tab_patient.Screen name="My Settings" options={{ headerShown: false }} component={SettingsNavigator_patient} />
+    <Tab_patient.Navigator
+      initialRouteName='My Home'
+      activeColor='#395BCD' 
+      inactiveColor= 'black' 
+      barStyle={{ backgroundColor: '#DDE5FD' }}
+    >
+      <Tab_patient.Screen name="My Home" component={HomeNavigator_patient} options={{
+         headerShown: false,
+         tabBarColor:'black',
+         tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Home</Text>,         
+         tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={30} />
+          ),
+         }}
+      />
+      <Tab_patient.Screen name="My Record" component={HistoryNavigator_patient} options={{
+         headerShown: false,
+         tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>My Record</Text>,         
+         tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="clipboard-text-outline" color={color} size={30} />
+          ),
+         }}
+      />   
+      {/* <Tab_patient.Screen name="My Chat" component={ChatNavigator_patient} options={{
+         headerShown: false,
+         tabBarLabel: <Text style={{fontSize:18}}>Home</Text>,         
+         tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="" color={color} size={30} />
+          ),
+         }}
+      /> */}
+      <Tab_patient.Screen name="My Settings" component={SettingsNavigator_patient} options={{
+         headerShown: false,
+         tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Settings</Text>,         
+         tabBarIcon: ({ color }) => (
+            <Feather name="settings" color={color} size={25} />
+          ),
+         }}
+      />      
     </Tab_patient.Navigator>
   );
 }
@@ -187,11 +222,36 @@ function SettingsNavigator_patient() {
 //-------------------------------------------------Provider Tab & Stack----------------------------------------------------------------//
 // Provider Tab:
 function HomeTab_provider() {
-  return(
-    <Tab_provider.Navigator>
-      <Tab_provider.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_provider} />
-      <Tab_provider.Screen name="My Chat" options={{ headerShown: false }} component={ChatNavigator_provider} />  
-      <Tab_provider.Screen name="My Settings" options={{ headerShown: false }} component={SettingsNavigator_provider} />
+  return(   
+    <Tab_provider.Navigator
+      initialRouteName='My Home'
+      activeColor='#395BCD'      
+      barStyle={{ backgroundColor: '#DDE5FD' }}
+    >
+      <Tab_provider.Screen name="My Home" component={HomeNavigator_provider} options={{
+         headerShown: false,
+         tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Home</Text>,         
+         tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={30} />
+          ),
+         }}
+      />
+      {/* <Tab_provider.Screen name="My Chat" component={ChatNavigator_provider} options={{
+         headerShown: false,
+         tabBarLabel: <Text style={{fontSize:18}}>Chat</Text>,         
+         tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="" color={color} size={30} />
+          ),
+         }}
+      /> */}
+      <Tab_provider.Screen name="My Settings" component={SettingsNavigator_provider} options={{
+         headerShown: false,
+         tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Settings</Text>,         
+         tabBarIcon: ({ color }) => (
+            <Feather name="settings" color={color} size={25} />
+          ),
+         }}
+      />      
     </Tab_provider.Navigator>
   );
 }
@@ -202,8 +262,7 @@ function HomeNavigator_provider() {
     <HomeStack_provider.Navigator>
       <HomeStack_provider.Screen name="Home" component={HomeScreen_provider} />
       <HomeStack_provider.Screen name="Provider Response" component={ProviderResponseScreen} />
-      <HomeStack_provider.Screen name="Success" component={SuccessScreen_provider} />
-      
+      <HomeStack_provider.Screen name="Success" component={SuccessScreen_provider} />      
       {/* any follow up screens from home goes from here */}
     </HomeStack_provider.Navigator>
   );
@@ -229,10 +288,28 @@ function SettingsNavigator_provider() {
 //-------------------------------------------------Volunteer Tab & Stack----------------------------------------------------------------//
 // Volunteer Tab:
 function HomeTab_vol() {
-  return(
-    <Tab_vol.Navigator>
-      <Tab_vol.Screen name="My Home" options={{ headerShown: false }} component={HomeNavigator_vol} /> 
-      <Tab_vol.Screen name="My Settings" options={{ headerShown: false }} component={SettingsNavigator_vol} />     
+  return(   
+    <Tab_vol.Navigator
+      initialRouteName='My Home'
+      activeColor='#395BCD'      
+      barStyle={{ backgroundColor: '#DDE5FD' }}
+    >
+      <Tab_vol.Screen name="My Home" component={HomeNavigator_vol} options={{
+         headerShown: false,
+         tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Home</Text>,         
+         tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={30} />
+          ),
+         }}
+      />      
+      <Tab_vol.Screen name="My Settings" component={SettingsNavigator_vol} options={{
+         headerShown: false,
+         tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Settings</Text>,         
+         tabBarIcon: ({ color }) => (
+            <Feather name="settings" color={color} size={25} />
+          ),
+         }}
+      />      
     </Tab_vol.Navigator>
   );
 }
