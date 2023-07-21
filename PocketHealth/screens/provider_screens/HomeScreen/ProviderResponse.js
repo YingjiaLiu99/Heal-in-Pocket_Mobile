@@ -44,10 +44,10 @@ export default function ProviderResponseScreen({navigation}) {
 
   // DUMMY DATA 
 
-  const firstName = {label: 'First Name', value: 'James'}
-  const lastName = {label: 'Last Name', value: 'Carter'}
-  const DateOfBirth = {label: 'Date of Birth', value: '07/25/1972'}
-  const DateOfService = {label: 'Date of Service', value: '07/20/2023'}
+  const firstName = {label: 'First Name', value: 'John'}
+  const lastName = {label: 'Last Name', value: 'Doe'}
+  const DateOfBirth = {label: 'Date of Birth', value: '1985-07-25'}
+  const DateOfService = {label: 'Date of Service', value: '2023-07-21'}
   const location = {label: 'Care Location', value: 'Street Corner Care'}
   const reason = {label: 'Reason for Consultation', value:'Patient feels dizzy after diarrhea'}
 
@@ -93,9 +93,30 @@ export default function ProviderResponseScreen({navigation}) {
     
 
 return (
+  <View style={{ flex: 1 }}>
+
+    <View style={{
+            position: 'absolute', 
+            top: 0, 
+            left: 0, 
+            right: 0, 
+            padding: 10, 
+            backgroundColor: '#fff', 
+            zIndex: 999, 
+            elevation: 3, 
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+          }}>
+            <Text>Name: John Doe</Text>
+            <Text>DOB: 1985-07-25</Text>
+            <Text>DOS: 2023-07-21</Text>
+            <Text>Location: Street Corner Care</Text>
+      </View>
+
+
     <ScrollView>
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-    
+    <KeyboardAwareScrollView contentContainerStyle={{...styles.container, paddingTop: 50}}>
       {/* User Meta Data: */}
       <Text style={styles.heading}>Visit Note</Text>
       <View style={{alignItems:'flex-start',width:'100%'}}>
@@ -213,5 +234,6 @@ return (
     </KeyboardAwareScrollView>
     </ScrollView>
 
+  </View>
   );
 }
