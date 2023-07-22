@@ -6,7 +6,7 @@ import ShowcaseBoxWithLabel from '../../../../components/ShowcaseBoxWithLabel';
 
 // This is the map object that maps label names to their respective units and widths.
 const labelProperties = {
-  'Pain Level(0~10,0-no pain,10-worst pain)': { unit: '', width: '95%' },
+  // 'Pain Level(0~10,0-no pain,10-worst pain)': { unit: '', width: '95%' },
   'Temperature': { unit: 'F', width: '95%' },
   'Blood Pressure': { unit: 'mmHg', width: '95%' },
   'Pulse': { unit: 'bpm', width: '95%' },
