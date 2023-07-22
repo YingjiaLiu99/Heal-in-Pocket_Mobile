@@ -26,44 +26,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-
-  ButtonNotesText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    flexShrink: 1,
-    textAlign: 'left',
-
-
-  },
-  SubText: {
-    fontSize: 16,
-    marginTop: 5,
-    textAlign: 'left',
-  },
-
+  },  
+  
   title: {
     fontSize: 50,
     fontWeight: 'bold',
     marginBottom: 10,
   },
-
   buttonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#395BCD',
     borderRadius: 20,
     paddingHorizontal: 15,
     paddingVertical: 10,
     marginLeft: 10,
+    width:'80%',
+    height:50,    
   },
   buttonText: {
     color: '#fff',
-    fontSize: 20,
-  },
-  requestContainer: {
-    alignItems: 'left',
-    flexDirection: 'column',
-    flex: 1,
-  },
+    fontSize: 25,
+  },  
 });
 
 export default styles;

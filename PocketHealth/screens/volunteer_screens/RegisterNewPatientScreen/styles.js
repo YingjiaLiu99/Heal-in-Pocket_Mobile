@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     
     titleText: {
       alignItems: 'center',      
-      fontSize: 45,
+      fontSize: 40,
       fontWeight: 400  
     },
 

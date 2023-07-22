@@ -109,6 +109,7 @@ export default function UploadMedicalInfo({ navigation }) {
                 height={60}
                 placeholder={'Click to Enter...'}
                 onChange={(value) => handleInputChange("vital", label, value)}
+                keyboardType={'numeric'}
             />
             ))}
         </View>

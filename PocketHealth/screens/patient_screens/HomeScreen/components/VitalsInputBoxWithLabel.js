@@ -21,7 +21,7 @@ const VitalsInputBoxWithLabel = ({ label, value, unit, width, onChange }) => {
               value={value}
               onChangeText={onChange}
               placeholder='Click to Enter Your Vital ...'
-              keyboardType="phone-pad"
+              keyboardType="numeric"
             />
           </View>
           <Text style={styles.unit}>{unit}</Text>

@@ -101,7 +101,7 @@ export default function HomeScreen({navigation}) {
           )}
         </View>
 
-        <View style={{width:'100%',alignItems:'center',marginTop:10,marginBottom:20}}>
+        <View style={{width:'100%',alignItems:'center',marginTop:30,marginBottom:20}}>
           <TouchableOpacity style={styles.button} onPress={handleRegister}>
             <Text style={styles.buttonText}>Register A New Patient</Text>
           </TouchableOpacity>

@@ -1,6 +1,6 @@
 // react native library：
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 // own components and styles
 import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
@@ -46,8 +46,9 @@ const RegisterPatientWithPhone = ({navigation}) => {
   };
 
   return (
+    <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <View style={{marginTop: 25,marginBottom:10,width:'100%'}}>
+      <View style={{marginTop: 20,marginBottom:10,width:'100%'}}>
         <Text style={styles.titleText}>Enter Patient Information To Set Up Account</Text>
         <Text style={{marginTop:10,fontSize:17}}>* is Required</Text>
       </View>    
@@ -106,7 +107,8 @@ const RegisterPatientWithPhone = ({navigation}) => {
         style={{
           height: 70,
           width: '30%',
-          marginVertical: 10,
+          marginVertical: 0,
+          marginBottom:20,
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: '#395BCD',
@@ -117,6 +119,7 @@ const RegisterPatientWithPhone = ({navigation}) => {
       </View>
 
     </KeyboardAwareScrollView>
+    </ScrollView>
   );
 };
 

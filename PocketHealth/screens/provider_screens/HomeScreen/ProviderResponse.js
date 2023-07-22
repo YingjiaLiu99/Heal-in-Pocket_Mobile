@@ -171,7 +171,7 @@ return (
         />
       </View>
 
-      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+      <View style={{width:'80%',alignItems:'center',marginTop:10,marginBottom:20}}>
         <TouchableOpacity style={styles.buttonContainer} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>

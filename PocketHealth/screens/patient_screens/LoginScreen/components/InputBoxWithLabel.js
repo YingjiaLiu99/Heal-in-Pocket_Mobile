@@ -11,6 +11,7 @@ const InputBoxWithLabel = ({ label, value, onChangeText, placeholder, ...props }
         onChangeText={onChangeText}
         placeholder={placeholder}
         placeholderTextColor='#7C7C7C'
+        
         {...props}
       />
     </View>
@@ -33,7 +34,8 @@ const styles = StyleSheet.create({
     borderColor: '#7C7C7C',
     borderRadius: 10,
     paddingHorizontal: 10,    
-    fontSize: 20     
+    fontSize: 20,
+    backgroundColor: '#FFFFFF'     
   },
 });
 
