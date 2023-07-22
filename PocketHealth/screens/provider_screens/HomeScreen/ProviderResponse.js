@@ -58,7 +58,7 @@ export default function ProviderResponseScreen({navigation}) {
       {label: 'Pulse', value: '70', unit:'bpm'},
       {label: 'Oxygen', value: '98', unit:'%'},
       {label: 'Glucose', value: '110', unit:'mg/dl'},  
-      {label: 'Weight', value: '150',unit:'Lbs'}, 
+      // {label: 'Weight', value: '150',unit:'Lbs'}, 
   ];
 
   const medicalHistory = {label: 'Medical History', value: 'high blood pressure, diabetes'};

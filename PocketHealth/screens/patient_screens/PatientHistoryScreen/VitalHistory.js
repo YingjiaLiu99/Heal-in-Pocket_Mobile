@@ -13,7 +13,7 @@ export default function VitalHistory({navigation}) {
         {label: 'Pulse', value: '70'},
         {label: 'Oxygen', value: '98'},
         {label: 'Glucose', value: '110'},  
-        {label: 'Weight', value: '150'}, 
+        // {label: 'Weight', value: '150'}, 
     ];
 
     const vitalData2 = [
@@ -23,7 +23,7 @@ export default function VitalHistory({navigation}) {
         {label: 'Pulse', value: '70'},
         {label: 'Oxygen', value: ''},
         {label: 'Glucose', value: '190'},  
-        {label: 'Weight', value: '170'},
+        // {label: 'Weight', value: '170'},
     ];
 
     const vitalData3 = [
@@ -33,7 +33,7 @@ export default function VitalHistory({navigation}) {
         {label: 'Pulse', value: '70'},
         {label: 'Oxygen', value: ''},
         {label: 'Glucose', value: '110'},  
-        {label: 'Weight', value: '150'},
+        // {label: 'Weight', value: '150'},
     ];
 
     const AllVitalData = [
