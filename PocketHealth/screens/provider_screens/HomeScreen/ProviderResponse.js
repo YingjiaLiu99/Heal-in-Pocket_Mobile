@@ -52,7 +52,7 @@ export default function ProviderResponseScreen({navigation}) {
   const reason = {label: 'Reason for Consultation', value:'Patient feels dizzy after diarrhea'};
 
   const vitalData = [
-      {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8', unit: ''},
+      // {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8', unit: ''},
       {label: 'Temperature', value: '99', unit: 'F'},
       {label: 'Blood Pressure', value: '120/80', unit:'mmHg'},
       {label: 'Pulse', value: '70', unit:'bpm'},
@@ -139,13 +139,16 @@ return (
       </View>
 
       {vitalData.map((item, index) => (
-          <ShowcaseBoxWithLabel
+        <View style={styles.vitalContainer}>
+         
+          <ShowcaseBoxWithLabel style={styles.vitalItem}
             key={index}
             label={item.label}
             value={item.value}
             unit= {item.unit}
             width="100%"
           />
+          </View>
         ))}
 
       <View style={{alignItems:'flex-start',width:'100%'}}>
