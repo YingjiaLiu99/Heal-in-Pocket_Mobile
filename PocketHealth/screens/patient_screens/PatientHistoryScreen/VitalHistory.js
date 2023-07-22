@@ -7,7 +7,7 @@ import styles from './styles.js';
 export default function VitalHistory({navigation}) {
     // Dummy Vital Data:
     const vitalData1 = [
-        {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
+        // {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
         {label: 'Temperature', value: '99'},
         {label: 'Blood Pressure', value: '120/80'},
         {label: 'Pulse', value: '70'},
@@ -17,7 +17,7 @@ export default function VitalHistory({navigation}) {
     ];
 
     const vitalData2 = [
-        {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
+        // {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
         {label: 'Temperature', value: ''},
         {label: 'Blood Pressure', value: '120/80'},
         {label: 'Pulse', value: '70'},
@@ -27,7 +27,7 @@ export default function VitalHistory({navigation}) {
     ];
 
     const vitalData3 = [
-        {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
+        // {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
         {label: 'Temperature', value: ''},
         {label: 'Blood Pressure', value: '120/80'},
         {label: 'Pulse', value: '70'},
