@@ -15,7 +15,7 @@ export default function UploadVitals({ navigation }) {
     'Pulse': { unit: 'bpm', width: '95%' },
     'Oxygen': { unit: '%', width: '95%' },
     'Glucose': { unit: 'mg/dl', width: '95%' },
-    'Weight': { unit: 'Lbs', width: '95%' },
+    // 'Weight': { unit: 'Lbs', width: '95%' },
     // Add more entries as needed
   };
 
