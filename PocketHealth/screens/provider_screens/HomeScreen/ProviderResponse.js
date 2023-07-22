@@ -97,7 +97,6 @@ return (
 
     <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={{...styles.container, paddingTop: 100}}>
-      
       <Text style={{fontSize:27}}>Visit Note</Text>
 
       <View style={{alignItems:'flex-start',width:'100%'}}>
