@@ -41,7 +41,7 @@ const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = () => {
 
     if (isInputEmpty(values)) {
-      setErrorMessage('Please fill in fields.');
+      setErrorMessage('Please fill in at least one Medical history to submit. Or you can skip this page.');
       return;
     }
     else {
@@ -70,60 +70,63 @@ const [errorMessage, setErrorMessage] = useState('');
   const handleOutsidePress = () => {
     if(confirmSubmit) {
       setConfirmSubmit(false);
-    }
-    Keyboard.dismiss(); // Dismiss the keyboard
+    }    
   };
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
+      <View style={{flex:1}}>
+      <ScrollView style={{flex: 1}}>
+      <KeyboardAwareScrollView contentContainerStyle={[styles.container, {flexGrow: 1}]}>
 
-    <ScrollView style={{flex: 1}}>
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-
-      <View style={{marginTop: 20,marginBottom:20,width:'100%'}}>
-        <Text style={{fontSize:30, fontWeight:400}}>Update My Medical History</Text>          
-      </View>      
-      
-      <View style={{width:"100%"}}>
-        <MedHisInputBoxWithLabel
-          label="Chronic Illness"
-          value={values.value1}          
-          width="95%"
-          onChangeText={(text) => handleValueChange('value1', text)}
-        />
-        <MedHisInputBoxWithLabel
-          label="Current Medication"
-          value={values.value2}          
-          width="95%"
-          onChangeText={(text) => handleValueChange('value2', text)}
-        />
-        <MedHisInputBoxWithLabel
-          label="Allergies"
-          value={values.value3}   
-          width="95%"
-          onChangeText={(text) => handleValueChange('value3', text)}
-        />
-      </View>
-
-      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}  
-
-
-      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
-          <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}>
-              {confirmSubmit ? 'Submit' : 'Confirm'}
-            </Text>
-          </TouchableOpacity>
+        <View style={{marginTop: 20,marginBottom:20,width:'100%'}}>
+          <Text style={{fontSize:30, fontWeight:400}}>Update My Medical History</Text>          
+        </View>      
+        
+        <View style={{width:"100%"}}>
+          <MedHisInputBoxWithLabel
+            label="Chronic Illness"
+            value={values.value1}          
+            width="95%"
+            onChangeText={(text) => handleValueChange('value1', text)}
+            onFocus={handleOutsidePress}
+          />
+          <MedHisInputBoxWithLabel
+            label="Current Medication"
+            value={values.value2}          
+            width="95%"
+            onChangeText={(text) => handleValueChange('value2', text)}
+            onFocus={handleOutsidePress}
+          />
+          <MedHisInputBoxWithLabel
+            label="Allergies"
+            value={values.value3}   
+            width="95%"
+            onChangeText={(text) => handleValueChange('value3', text)}
+            onFocus={handleOutsidePress}
+          />
         </View>
 
-      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
-        <TouchableOpacity style={styles.button} onPress={handleSkip}>
-          <Text style={styles.buttonText}>Skip</Text>
-        </TouchableOpacity>
+        {errorMessage ? <Text style={{color:'red', fontSize:18, marginVertical:10}}>{errorMessage}</Text> : null}  
+
+
+        <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+            <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
+              <Text style={styles.buttonText}>
+                {confirmSubmit ? 'Submit' : 'Confirm'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+        <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+          <TouchableOpacity style={styles.button} onPress={handleSkip}>
+            <Text style={styles.buttonText}>Skip</Text>
+          </TouchableOpacity>
+        </View>
+      
+      </KeyboardAwareScrollView>
+      </ScrollView>
       </View>
-    
-    </KeyboardAwareScrollView>
-    </ScrollView>
     </TouchableWithoutFeedback>
   );
 };  

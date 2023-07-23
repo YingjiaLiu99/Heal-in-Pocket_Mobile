@@ -66,9 +66,7 @@ export default function UploadMedicalInfo({ navigation }) {
   const handleSubmit = () => {    
     if(reason === ''){
         // Set error message
-      setErrorMessage('Please fill in fields.');
-      return;
-    
+      setErrorMessage('Please fill in reason for consultation');  
     }
     else{
 
@@ -91,13 +89,13 @@ export default function UploadMedicalInfo({ navigation }) {
   const handleOutsidePress = () => {
     if(confirmSubmit) {
       setConfirmSubmit(false);
-    }
-    Keyboard.dismiss(); // Dismiss the keyboard
+    }    
   };
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
-    <ScrollView>
+    <View style={{flex:1}}>
+    <ScrollView style={{flex: 1}}>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       
         <View style={{marginTop: 20, marginBottom: 20, width: '100%', alignItems: 'center',}}>
@@ -119,6 +117,7 @@ export default function UploadMedicalInfo({ navigation }) {
                 height={60}
                 placeholder={'Click to Enter...'}
                 onChange={(value) => handleInputChange("vital", label, value)}
+                onFocus = {handleOutsidePress}
                 keyboardType={'numeric'}
             />
             ))}
@@ -136,6 +135,7 @@ export default function UploadMedicalInfo({ navigation }) {
                 height={100}
                 onChangeText={(text) => handleInputChange('medHistory', 'chronicIllness', text)}
                 placeholder={'Please enter chronic illness...'}
+                onFocus = {handleOutsidePress}
             />
             <BigInputBoxWithInnerLabel
                 label="Current Medication"
@@ -144,6 +144,7 @@ export default function UploadMedicalInfo({ navigation }) {
                 height={100}
                 onChangeText={(text) => handleInputChange('medHistory', 'currentMedication', text)}
                 placeholder={'Please enter current medication...'}
+                onFocus = {handleOutsidePress}
             />
             <BigInputBoxWithInnerLabel
                 label="Allergies"
@@ -152,11 +153,12 @@ export default function UploadMedicalInfo({ navigation }) {
                 height={100}
                 onChangeText={(text) => handleInputChange('medHistory', 'allergies', text)}
                 placeholder={'Please enter allergies...'}
+                onFocus = {handleOutsidePress}
             />
         </View>
 
         <View style={{ marginBottom: 5, width:'100%'}}>
-            <Text style={{fontSize:20, fontWeight:400}}>Resaon For Consultation</Text>          
+            <Text style={{fontSize:20, fontWeight:400}}>Reason For Consultation</Text>          
         </View>
 
         <View style={{ marginBottom: 10, width:'100%'}}>
@@ -167,12 +169,13 @@ export default function UploadMedicalInfo({ navigation }) {
                 height={100}
                 onChangeText={(text) => setReason(text)}
                 placeholder={'Please enter patient reason for consultation...'}
+                onFocus = {handleOutsidePress}
             />
         </View>
 
-      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}  
+      {errorMessage ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}  
 
-        <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+        <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:30}}>
           <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>
               {confirmSubmit ? 'Submit' : 'Confirm'}
@@ -182,6 +185,7 @@ export default function UploadMedicalInfo({ navigation }) {
 
     </KeyboardAwareScrollView>
     </ScrollView>
+    </View>
     </TouchableWithoutFeedback>
   );
 }

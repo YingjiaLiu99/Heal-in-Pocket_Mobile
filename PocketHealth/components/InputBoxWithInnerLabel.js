@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-const InputBoxWithInnerLabel = ({ label, value, unit, width, height, onChange, placeholder, keyboardType }) => {
+const InputBoxWithInnerLabel = ({ label, value, unit, width, height, onChange, onFocus, placeholder, keyboardType }) => {
 
   const inputRef = useRef(null);
   
@@ -22,6 +22,7 @@ const InputBoxWithInnerLabel = ({ label, value, unit, width, height, onChange, p
               onChangeText={onChange}
               placeholder={placeholder}
               keyboardType={keyboardType}
+              onFocus={onFocus}
             />
           </View>
           <Text style={styles.unit}>{unit}</Text>

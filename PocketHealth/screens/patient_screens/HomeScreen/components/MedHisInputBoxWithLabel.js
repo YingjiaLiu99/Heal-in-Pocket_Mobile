@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-const MedHisInputBoxWithLabel = ({ label, value, width, onChangeText }) => {
+const MedHisInputBoxWithLabel = ({ label, value, width, onChangeText, onFocus }) => {
 
   const inputRef = useRef(null);
 
@@ -20,6 +20,7 @@ const MedHisInputBoxWithLabel = ({ label, value, width, onChangeText }) => {
                 style={styles.boxField}
                 value={value}
                 onChangeText={onChangeText}
+                onFocus={onFocus}
                 placeholder='Click to Enter Your medical information ...'
                 multiline
               />

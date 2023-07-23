@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, ScrollView, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import { View, TouchableOpacity, Text, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -8,14 +8,12 @@ import BigShowcaseBoxWithLabel from '../../../components/BigShowcaseBoxWithLabel
 import ProviderInputBox from './components/ProviderInputBox';
 
 export default function ProviderResponseScreen({navigation}) { 
-// qzh_General5
-    
-//   const [assessment, setAssessment] = useState('');
-//   const [futurePlan, setFuturePlan] = useState('');
-//   const [reasonDoc, setReasonDoc] = useState('');
-//   const [confirmSubmit, setConfirmSubmit] = useState(false);
-//   const [errorMessage, setErrorMessage] = useState('');
 
+  const [confirmSubmit, setConfirmSubmit] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); 
+  const [subjective, setSubjective] = useState('');
+  const [objective, setObjective] = useState('');
+  const [assessment, setAssessment] = useState(''); 
 
 //   const handleInputChange = (name, value) => {
 //     switch (name) {
@@ -37,62 +35,28 @@ export default function ProviderResponseScreen({navigation}) {
 //     }
 //   }
 
-//   const handleSubmit = () => {
-//     if(assessment === '' || futurePlan === '' || reasonDoc === ''){
-//       setErrorMessage('Please fill in fields.');
-//       return;
-//     }
+const handleSubmit = () => {
+  if(assessment === '' || subjective === '' || objective === ''){
+    setErrorMessage('Please fill in fields.');      
+  }
 
-//     if (confirmSubmit) {
-              
-//       // Go to success while confirm
-//       navigation.navigate('Success');
-//       console.log(assessment);
-//       console.log(futurePlan);
-//       setConfirmSubmit(false);
-  
-//     } 
-//     else {
-//       // Press first time, input is done, so set it true
-//       setConfirmSubmit(true);  
-//     }
-
-      
-
-  
-  const [subjective, setSubjective] = useState('');
-  const [objective, setObjective] = useState('');
-  const [assessment, setAssessment] = useState('');  
-  
-  const handleSubmit = () => {
-    if(assessment === '' || subjective === '' || objective === ''){
-      Alert.alert('Missing Input', 'Please enter all required areas',[
-        {
-          text: 'Cancel',
-          onPress: () => {},
-          style: 'cancel'
-        },               
-      ]); 
-    }
-    else{
-      Alert.alert('Are You Sure To Submit?', 'You cannot edit once submitted',[
-        {
-          text: 'Cancel',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: 'Yes',
-          onPress: () => {
-            navigation.navigate('Success');
-            console.log(subjective);
-            console.log(objective);
-            console.log(assessment);            
-          }
-        },
-      ]);
+  if (confirmSubmit) {            
+    // Go to success while confirm
+    navigation.navigate('Success');
+    console.log(assessment);
+    console.log(subjective);
+    console.log(objective); 
+  } 
+  else {
+    // Press first time, input is done, so set it true
+    setConfirmSubmit(true);  
+  }
+}
+ 
+  const handleOutsidePress = () => {
+    if(confirmSubmit) {
+      setConfirmSubmit(false);
     }    
-
   };
 
   // DUMMY DATA 
@@ -111,130 +75,17 @@ export default function ProviderResponseScreen({navigation}) {
       {label: 'BG', value: '110', unit:'mg/dl'},             
   ];
 
-// qzh_General5
-//   const medHisData = [
-//     {   
-//       label: 'Chronic Illness', 
-//       value: ' high blood pressure, diabetes'
-//     },
-//     {   
-//       label: 'Current Medication', 
-//       value: 'Metoprolol'
-//     },
-//     {
-//       label: 'Allergies', 
-//       value: 'Sulfa'
-//     },
-//   ];
-
-//   const handleOutsidePress = () => {
-//     if(confirmSubmit) {
-//       setConfirmSubmit(false);
-//     }
-//     Keyboard.dismiss(); // Dismiss the keyboard
-//   };
-    
-
-//   return (
-//     <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
-//       <ScrollView>
-//         <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-    
-//           <Text style={styles.heading}>Visit Note</Text>
-//           <Text style={{fontSize:18}}>Patient Info</Text>
-        
-//           <ShowcaseBoxWithLabel
-//             label={firstName.label}
-//             value={firstName.value}
-//             unit=''
-//             width="100%"
-//           />
-
-//         <ShowcaseBoxWithLabel
-//           label={lastName.label}
-//           value={lastName.value}
-//           unit=''
-//           width="100%"
-//         />
-        
-//         <BigShowcaseBoxWithLabel
-//           label={reason.label}
-//           value={reason.value}
-//           unit=''
-//           width="100%"
-//         />
-
-      
-//         <Text style={{fontSize:18}}>Patient Vitals</Text>
-
-//         {vitalData.map((item, index) => (
-//             <ShowcaseBoxWithLabel
-//               key={index}
-//               label={item.label}
-//               value={item.value}
-//               unit= {item.unit}
-//               width="100%"
-//             />
-//           ))}
-    
-//         <Text style={{fontSize:18}}>Patient Medical History</Text>
-
-//         {medHisData.map((item, index) => (
-//             <BigShowcaseBoxWithLabel
-//               key={index}
-//               label={item.label}
-//               value={item.value}          
-//               width="100%"
-//             />
-//           ))}
-        
-//         <Text style={{fontSize:20, color:'red'}}>Provider's Input (*required)</Text>
-
-//         <View style={{width:"100%"}}>
-//         <ProviderInputBox 
-//           label="Reason For Consultation*"
-//           value={reasonDoc}
-//           width="100%"
-//           placeholder="Click to Enter Reason For Consultation ..."
-//           onChangeText={(text) => handleInputChange('reasonDoc', text)}
-//         />
-
-//         <ProviderInputBox 
-//           label="Assessment*"
-//           value={assessment}
-//           width="100%"
-//           placeholder="Click to Enter Your Assessment ..."
-//           onChangeText={(text) => handleInputChange('assessment', text)}
-//         />
-
-//         <ProviderInputBox 
-//           label="Future Plan*"
-//           value={futurePlan}
-//           width="100%"
-//           placeholder="Click to Enter Suggested Future Plan ..."
-//           onChangeText={(text) => handleInputChange('futurePlan', text)}
-//         />
-//         </View>
-
-//         {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null} 
-
-
-//         <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
-//           <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.buttonContainer} onPress={handleSubmit}>
-//             <Text style={styles.buttonText}>
-//               {confirmSubmit ? 'Submit' : 'Confirm'}
-//             </Text>
-//           </TouchableOpacity>
-//         </View>
-// =======
   const medicalHistory = {label: 'Medical History', value: 'high blood pressure, diabetes'};
   const medication = {label: 'Current Medication', value: 'Metoprolol, furosemide, metformin'};
   const allergies = {label: 'Allergies', value: 'Sulfa'};
       
 
 return (
+  
+  
   <View style={{ flex: 1 }}>
     {/* The floating window that contains patient's personal info  */}
+    <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
     <View style={{
       position: 'absolute', 
       top: 0, 
@@ -259,8 +110,9 @@ return (
         <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>Site: {location.value}</Text>
       </View>
     </View>
+    </TouchableWithoutFeedback>
     {/* --------------------------------------------------------- */}
-
+    <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
     <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={{...styles.container, paddingTop: 100}}>
       <Text style={{fontSize:27}}>Visit Note</Text>
@@ -361,17 +213,20 @@ return (
         />
       </View>
 
+      {errorMessage ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}
+
       <View style={{width:'80%',alignItems:'center',marginTop:10,marginBottom:20}}>
-        <TouchableOpacity style={styles.buttonContainer} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit</Text>
+        <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.buttonContainer} onPress={handleSubmit}>
+          <Text style={{fontSize:25, color:'white'}}>
+            {confirmSubmit ? 'Submit' : 'Confirm'}
+          </Text>
         </TouchableOpacity>
       </View>
 
     
-      </KeyboardAwareScrollView>
-      </ScrollView>
+    </KeyboardAwareScrollView>
+    </ScrollView>
     </TouchableWithoutFeedback>
-
-  </View>
+  </View> 
   );
-}
+};

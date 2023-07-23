@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-const VitalsInputBoxWithLabel = ({ label, value, unit, width, onChange }) => {
+const VitalsInputBoxWithLabel = ({ label, value, unit, width, onChange, onFocus }) => {
 
   const inputRef = useRef(null);
   
@@ -20,6 +20,7 @@ const VitalsInputBoxWithLabel = ({ label, value, unit, width, onChange }) => {
               style={styles.boxField}
               value={value}
               onChangeText={onChange}
+              onFocus={onFocus}
               placeholder='Click to Enter Your Vital ...'
               keyboardType="numeric"
             />

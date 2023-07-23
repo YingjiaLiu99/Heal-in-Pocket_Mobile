@@ -30,11 +30,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     height:150,
-  },
-  error: {
-    color: 'red',
-    marginBottom: 20
-  },  
+  },    
   buttonContainer: {
     height: 50,
     width: '70%',

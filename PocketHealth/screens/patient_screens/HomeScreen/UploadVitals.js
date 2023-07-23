@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Alert, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackActions } from '@react-navigation/native';
 
@@ -8,6 +8,7 @@ import styles from './styles';
 
 
 export default function UploadVitals({ navigation }) {
+
   const labelProperties = {    
     'Temperature': { unit: 'F', width: '95%' },
     'Blood Pressure': { unit: 'mmHg', width: '95%' },
@@ -32,11 +33,9 @@ export default function UploadVitals({ navigation }) {
     return true;
   };
 
-
   const [inputValues, setInputValues] = useState(initialInputValues);
   const [confirmSubmit, setConfirmSubmit] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
- 
+  const [errorMessage, setErrorMessage] = useState(''); 
 
   const handleInputChange = (label, value) => {
     setInputValues({
@@ -53,19 +52,17 @@ export default function UploadVitals({ navigation }) {
 
     // Set error message
     if (isInputEmpty(inputValues)) {
-      setErrorMessage('Please fill in fields.');
+      setErrorMessage('Please fill in at least one vital information to submit. Or you can skip this page.');
       return;
     }
     else {
       setErrorMessage('');
     }
    
-    if (confirmSubmit) {
-              
+    if (confirmSubmit) {              
       // prevent user to go back from Upload MedHis to Upload Vitals 
       navigation.dispatch(StackActions.replace('Upload MedHis'));
-      setConfirmSubmit(false);
-  
+      setConfirmSubmit(false);  
     } 
     else {
       // Press first time, input is done, so set it true
@@ -81,12 +78,12 @@ export default function UploadVitals({ navigation }) {
   const handleOutsidePress = () => {
     if(confirmSubmit) {
       setConfirmSubmit(false);
-    }
-    Keyboard.dismiss(); // Dismiss the keyboard
+    }    
   };
 
-  return (
+  return (    
     <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
+      <View style={{flex:1}}>
       <ScrollView style={{flex: 1}}>
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       
@@ -95,21 +92,22 @@ export default function UploadVitals({ navigation }) {
         </View> 
 
         <View style={{width:"100%"}}>
-          {Object.entries(labelProperties).map(([label, properties], index) => (
+          {Object.entries(labelProperties).map(([label, properties], index) => (            
             <VitalsInputBoxWithLabel
               key={index}
               label={label}
               value={inputValues[label] || ''}
               unit={properties.unit}
               width={properties.width}
-              onChange={(value) => handleInputChange(label, value)}
-            />
+              onChange={(value) => handleInputChange(label, value)}   
+              onFocus={handleOutsidePress}           
+            />            
           ))}
         </View>
 
-        {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}  
+        {errorMessage ? <Text style={{color:'red', fontSize:18, marginVertical:10}}>{errorMessage}</Text> : null}  
 
-        <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+        <View style={{width:'80%',alignItems:'center',marginTop:40,marginBottom:0}}>
           <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>
               {confirmSubmit ? 'Submit' : 'Confirm'}
@@ -117,14 +115,15 @@ export default function UploadVitals({ navigation }) {
           </TouchableOpacity>
         </View>
 
-      < View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
           <TouchableOpacity style={styles.button} onPress={handleSkip}>
             <Text style={styles.buttonText}>Skip</Text>
           </TouchableOpacity>
         </View>
 
-      </KeyboardAwareScrollView>
+      </KeyboardAwareScrollView>      
       </ScrollView>
-    </TouchableWithoutFeedback>
+      </View>
+    </TouchableWithoutFeedback>    
   );
 }
