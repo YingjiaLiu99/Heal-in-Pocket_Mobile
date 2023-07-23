@@ -51,14 +51,12 @@ export default function ProviderResponseScreen({navigation}) {
   const location = {label: 'Care Location', value: 'Street Corner Care'};
   const reason = {label: 'Reason for Consultation', value:'Patient feels dizzy after diarrhea'};
 
-  const vitalData = [
-      // {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8', unit: ''},
-      {label: 'Temperature', value: '99', unit: 'F'},
-      {label: 'Blood Pressure', value: '120/80', unit:'mmHg'},
+  const vitalData = [      
+      {label: 'Temp', value: '99', unit: 'F'},      
       {label: 'Pulse', value: '70', unit:'bpm'},
       {label: 'Oxygen', value: '98', unit:'%'},
-      {label: 'Glucose', value: '110', unit:'mg/dl'},  
-      // {label: 'Weight', value: '150',unit:'Lbs'}, 
+      {label: 'BP', value: '120/80', unit:'mmHg'},
+      {label: 'BG', value: '110', unit:'mg/dl'},             
   ];
 
   const medicalHistory = {label: 'Medical History', value: 'high blood pressure, diabetes'};
@@ -135,21 +133,43 @@ return (
             unit= ''
             width="100%"
         />
-
       </View>
 
-      {vitalData.map((item, index) => (
-        <View style={styles.vitalContainer}>
-         
-          <ShowcaseBoxWithLabel style={styles.vitalItem}
-            key={index}
-            label={item.label}
-            value={item.value}
-            unit= {item.unit}
-            width="100%"
-          />
-          </View>
-        ))}
+      <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
+        <ShowcaseBoxWithLabel 
+          label={vitalData[0].label}
+          value={vitalData[0].value}
+          unit={vitalData[0].unit}
+          width='30%'
+        />
+        <ShowcaseBoxWithLabel 
+          label={vitalData[1].label}
+          value={vitalData[1].value}
+          unit={vitalData[1].unit}
+          width='30%'
+        />
+        <ShowcaseBoxWithLabel 
+          label={vitalData[2].label}
+          value={vitalData[2].value}
+          unit={vitalData[2].unit}
+          width='30%'
+        />
+      </View>
+
+      <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
+        <ShowcaseBoxWithLabel
+          label={vitalData[3].label}
+          value={vitalData[3].value}
+          unit={vitalData[3].unit}
+          width='45%'
+        />
+        <ShowcaseBoxWithLabel
+          label={vitalData[4].label}
+          value={vitalData[4].value}
+          unit={vitalData[4].unit}
+          width='45%'
+        />
+      </View>
 
       <View style={{alignItems:'flex-start',width:'100%'}}>
         <Text style={{fontSize:20, marginLeft:5, fontWeight:500}}>Objective</Text>

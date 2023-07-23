@@ -8,14 +8,12 @@ import BigInputBoxWithInnerLabel from '../../../components/BigInputBoxWithInnerL
 import styles from './styles';
 
 export default function UploadMedicalInfo({ navigation }) {
-  const labelProperties = {
-    // 'Pain Level(0~10,0-no pain,10-worst pain)': { unit: '', width: '95%' },
+  const labelProperties = {    
     'Temperature': { unit: 'F', width: '95%' },
     'Blood Pressure': { unit: 'mmHg', width: '95%' },
     'Pulse': { unit: 'bpm', width: '95%' },
     'Oxygen': { unit: '%', width: '95%' },
-    'Glucose': { unit: 'mg/dl', width: '95%' },
-    'Weight': { unit: 'Lbs', width: '95%' },
+    'Glucose': { unit: 'mg/dl', width: '95%' },    
     // Add more entries as needed
   };
 

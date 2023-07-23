@@ -48,15 +48,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 25,
   },  
-  vitalContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start' // if you want to fill rows left to right
-  },
-  vitalItem: {
-    width: '50%' // is 50% of container width
-  }
+  
 });
 
 export default styles;

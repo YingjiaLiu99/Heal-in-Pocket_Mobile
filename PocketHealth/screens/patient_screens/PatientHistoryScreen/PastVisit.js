@@ -40,8 +40,7 @@ export default function PastVisitRecord( {navigation} ) {
         {label: 'Blood Pressure', value: '120/80'},
         {label: 'Pulse', value: '70'},
         {label: 'Oxygen', value: '98'},
-        {label: 'Glucose', value: '110'},  
-        {label: 'Weight', value: '150'},
+        {label: 'Glucose', value: '110'},        
     ];
 
     const FullData = [
