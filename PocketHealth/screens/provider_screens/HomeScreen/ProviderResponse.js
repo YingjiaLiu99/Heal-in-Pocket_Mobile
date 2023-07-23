@@ -15,32 +15,12 @@ export default function ProviderResponseScreen({navigation}) {
   const [objective, setObjective] = useState('');
   const [assessment, setAssessment] = useState(''); 
 
-//   const handleInputChange = (name, value) => {
-//     switch (name) {
-//         case 'assessment':
-//             setAssessment(value);
-//             break;
-//         case 'futurePlan':
-//             setFuturePlan(value);
-//             break;
-//         case 'reasonDoc':
-//             setReasonDoc(value);
-//             break;
-//         default:
-//             break;
-//     }
-
-//     if (confirmSubmit) {
-//       setConfirmSubmit(false);
-//     }
-//   }
-
 const handleSubmit = () => {
   if(assessment === '' || subjective === '' || objective === ''){
     setErrorMessage('Please fill in fields.');      
   }
 
-  if (confirmSubmit) {            
+  else if (confirmSubmit) {            
     // Go to success while confirm
     navigation.navigate('Success');
     console.log(assessment);
@@ -81,152 +61,144 @@ const handleSubmit = () => {
       
 
 return (
-  
-  
-  <View style={{ flex: 1 }}>
-    {/* The floating window that contains patient's personal info  */}
-    <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
-    <View style={{
-      position: 'absolute', 
-      top: 0, 
-      left: 0, 
-      right: 0, 
-      padding: 10, 
-      backgroundColor: '#DDE5FD', 
-      zIndex: 999, 
-      elevation: 3, 
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      height:100
-    }}>
-      <View style={{ flexDirection: 'row' }}>
-        <Text style={{fontSize: 25, fontWeight: '500', width: '100%'}}>Name: {firstName.value} {lastName.value}</Text>
-      </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {DateOfBirth.value}</Text>
-        <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOS: {DateOfService.value}</Text>
-      </View>
-      <View style={{ flexDirection: 'row' }}>
-        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>Site: {location.value}</Text>
-      </View>
-    </View>
-    </TouchableWithoutFeedback>
-    {/* --------------------------------------------------------- */}
-    <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
-    <ScrollView>
-    <KeyboardAwareScrollView contentContainerStyle={{...styles.container, paddingTop: 100}}>
-      <Text style={{fontSize:27}}>Visit Note</Text>
+      <View style={{flex:1}}>
+        <View style={{
+          position: 'absolute', 
+          top: 0, 
+          left: 0, 
+          right: 0, 
+          padding: 10, 
+          backgroundColor: '#DDE5FD', 
+          zIndex: 999, 
+          elevation: 3, 
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height:100
+        }}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={{fontSize: 25, fontWeight: '500', width: '100%'}}>Name: {firstName.value} {lastName.value}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {DateOfBirth.value}</Text>
+            <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOS: {DateOfService.value}</Text>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>Site: {location.value}</Text>
+          </View>
+        </View>
+        <ScrollView>
+        <KeyboardAwareScrollView contentContainerStyle={{...styles.container, paddingTop: 100}}>
+          <Text style={{fontSize:27}}>Visit Note</Text>
 
-      <View style={{alignItems:'flex-start',width:'100%'}}>
-        <Text style={{fontSize:20, marginLeft:5, fontWeight:500}}>Chief Complaint</Text>
-      </View>
+          <View style={{alignItems:'flex-start',width:'100%'}}>
+            <Text style={{fontSize:20, marginLeft:5, fontWeight:500}}>Chief Complaint</Text>
+          </View>
 
-      <BigShowcaseBoxWithLabel
-        label={reason.label}
-        value={reason.value}
-        unit=''
-        width="100%"
-      />
-          
-      <View style={{alignItems:'flex-start',width:'100%'}}>
-        <Text style={{fontSize:20, marginLeft:5, fontWeight:500}}>Subjective</Text>
-      </View>
-
-      <View style={{width:'100%'}}>
-        <ProviderInputBox 
-          label="Subjective*"
-          value={subjective}
-          width="100%"
-          placeholder="Click to Enter Your Subjective ..."
-          onChangeText={(text) => setSubjective(text)}
-        />
-
-        <BigShowcaseBoxWithLabel            
-            label={medicalHistory.label}
-            value={medicalHistory.value}
-            unit= ''
+          <BigShowcaseBoxWithLabel
+            label={reason.label}
+            value={reason.value}
+            unit=''
             width="100%"
-        />
-        <BigShowcaseBoxWithLabel            
-            label={[ medication.label, ' / ', allergies.label ]}
-            value={[ medication.value, ' [',allergies.label,': ', allergies.value, ']' ]}
-            unit= ''
-            width="100%"
-        />
+          />
+              
+          <View style={{alignItems:'flex-start',width:'100%'}}>
+            <Text style={{fontSize:20, marginLeft:5, fontWeight:500}}>Subjective</Text>
+          </View>
+
+          <View style={{width:'100%'}}>
+            <ProviderInputBox 
+              label="Subjective*"
+              value={subjective}
+              width="100%"
+              placeholder="Click to Enter Your Subjective ..."
+              onChangeText={(text) => setSubjective(text)}
+            />
+
+            <BigShowcaseBoxWithLabel            
+                label={medicalHistory.label}
+                value={medicalHistory.value}
+                unit= ''
+                width="100%"
+            />
+            <BigShowcaseBoxWithLabel            
+                label={[ medication.label, ' / ', allergies.label ]}
+                value={[ medication.value, ' [',allergies.label,': ', allergies.value, ']' ]}
+                unit= ''
+                width="100%"
+            />
+          </View>
+
+          <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
+            <ShowcaseBoxWithLabel 
+              label={vitalData[0].label}
+              value={vitalData[0].value}
+              unit={vitalData[0].unit}
+              width='30%'
+            />
+            <ShowcaseBoxWithLabel 
+              label={vitalData[1].label}
+              value={vitalData[1].value}
+              unit={vitalData[1].unit}
+              width='30%'
+            />
+            <ShowcaseBoxWithLabel 
+              label={vitalData[2].label}
+              value={vitalData[2].value}
+              unit={vitalData[2].unit}
+              width='30%'
+            />
+          </View>
+
+          <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
+            <ShowcaseBoxWithLabel
+              label={vitalData[3].label}
+              value={vitalData[3].value}
+              unit={vitalData[3].unit}
+              width='45%'
+            />
+            <ShowcaseBoxWithLabel
+              label={vitalData[4].label}
+              value={vitalData[4].value}
+              unit={vitalData[4].unit}
+              width='45%'
+            />
+          </View>
+
+          <View style={{alignItems:'flex-start',width:'100%'}}>
+            <Text style={{fontSize:20, marginLeft:5, fontWeight:500}}>Objective</Text>
+          </View>
+
+          <View style={{width:'100%'}}>
+            <ProviderInputBox 
+              label="Objective*"
+              value={objective}
+              width="100%"
+              placeholder="Click to Enter Your Objective ..."
+              onChangeText={(text) => setObjective(text)}
+            />
+
+            <ProviderInputBox 
+              label="Assessment / Future Plan*"
+              value={assessment}
+              width="100%"
+              placeholder="Click to Enter Your Assessment/Future Plan ..."
+              onChangeText={(text) => setAssessment(text)}
+            />
+          </View>
+
+          {errorMessage ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}
+
+          <View style={{width:'80%',alignItems:'center',marginTop:10,marginBottom:20}}>
+            <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.buttonContainer} onPress={handleSubmit}>
+              <Text style={styles.buttonText}>
+                {confirmSubmit ? 'Submit' : 'Confirm'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+        
+        </KeyboardAwareScrollView>
+        </ScrollView>
       </View>
-
-      <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
-        <ShowcaseBoxWithLabel 
-          label={vitalData[0].label}
-          value={vitalData[0].value}
-          unit={vitalData[0].unit}
-          width='30%'
-        />
-        <ShowcaseBoxWithLabel 
-          label={vitalData[1].label}
-          value={vitalData[1].value}
-          unit={vitalData[1].unit}
-          width='30%'
-        />
-        <ShowcaseBoxWithLabel 
-          label={vitalData[2].label}
-          value={vitalData[2].value}
-          unit={vitalData[2].unit}
-          width='30%'
-        />
-      </View>
-
-      <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
-        <ShowcaseBoxWithLabel
-          label={vitalData[3].label}
-          value={vitalData[3].value}
-          unit={vitalData[3].unit}
-          width='45%'
-        />
-        <ShowcaseBoxWithLabel
-          label={vitalData[4].label}
-          value={vitalData[4].value}
-          unit={vitalData[4].unit}
-          width='45%'
-        />
-      </View>
-
-      <View style={{alignItems:'flex-start',width:'100%'}}>
-        <Text style={{fontSize:20, marginLeft:5, fontWeight:500}}>Objective</Text>
-      </View>
-
-      <View style={{width:'100%'}}>
-        <ProviderInputBox 
-          label="Objective*"
-          value={objective}
-          width="100%"
-          placeholder="Click to Enter Your Objective ..."
-          onChangeText={(text) => setObjective(text)}
-        />
-
-        <ProviderInputBox 
-          label="Assessment / Future Plan*"
-          value={assessment}
-          width="100%"
-          placeholder="Click to Enter Your Assessment/Future Plan ..."
-          onChangeText={(text) => setAssessment(text)}
-        />
-      </View>
-
-      {errorMessage ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}
-
-      <View style={{width:'80%',alignItems:'center',marginTop:10,marginBottom:20}}>
-        <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.buttonContainer} onPress={handleSubmit}>
-          <Text style={{fontSize:25, color:'white'}}>
-            {confirmSubmit ? 'Submit' : 'Confirm'}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-    
-    </KeyboardAwareScrollView>
-    </ScrollView>
-    </TouchableWithoutFeedback>
-  </View> 
   );
 };

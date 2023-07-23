@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-const ProviderInputBox = ({ label, value, width, placeholder, onChangeText }) => {
+const ProviderInputBox = ({ label, value, width, placeholder, onChangeText, backgroundColor }) => {
 
   const inputRef = useRef(null);
 
@@ -21,7 +21,7 @@ const ProviderInputBox = ({ label, value, width, placeholder, onChangeText }) =>
                 value={value}
                 onChangeText={onChangeText}
                 placeholder={placeholder}
-                multiline
+                multiline                
               />
           </View>
         </View>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderWidth: 2,
     borderColor: '#7C7C7C',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFD7',
     borderRadius: 15,
     paddingHorizontal: 10,
     paddingTop: 5,

@@ -123,7 +123,7 @@ export default function UploadVitals({ navigation }) {
 
       </KeyboardAwareScrollView>      
       </ScrollView>
-      </View>
+      </View>      
     </TouchableWithoutFeedback>    
   );
 }
