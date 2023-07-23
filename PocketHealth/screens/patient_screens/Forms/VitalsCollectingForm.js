@@ -10,7 +10,7 @@ const VitalsCollectingForm = ({navigation}) => {
   const [pulse, setPulse] = useState('');
   const [oxygen, setOxygen] = useState('');
   const [glucose, setGlucose] = useState('');
-  const [painLevel, setPainLevel] = useState('');
+  // const [painLevel, setPainLevel] = useState('');
   const [respiration, setRespiration] = useState('');
   const [heightFeet, setHeightFeet] = useState('');
   const [heightInches, setHeightInches] = useState('');
@@ -22,7 +22,7 @@ const VitalsCollectingForm = ({navigation}) => {
     console.log(`Pulse: ${pulse} bpm`);
     console.log(`Oxygen: ${oxygen}%`);
     console.log(`Glucose: ${glucose} mg/dl`);
-    console.log(`Pain Level: ${painLevel}`);
+    // console.log(`Pain Level: ${painLevel}`);
     console.log(`Respiration: ${respiration} bpm`);
     console.log(`Height: ${heightFeet}'${heightInches}"`);
     console.log(`Weight: ${weight} lbs`);
@@ -108,7 +108,7 @@ const VitalsCollectingForm = ({navigation}) => {
         />
       </View>
  
-        <Text style={styles.label}>Pain Level(mg/dl)</Text>      
+        {/* <Text style={styles.label}>Pain Level(mg/dl)</Text>      
         <View style={styles.inputContainer_narrow}>
           <TextInput
             style={styles.input_narrow}
@@ -116,7 +116,7 @@ const VitalsCollectingForm = ({navigation}) => {
             onChangeText={(text) => setPainLevel(text)}
             placeholder="Enter pain level"
           />
-        </View>
+        </View> */}
 
 
       <Text style={styles.label}>Respiration (bpm):</Text>

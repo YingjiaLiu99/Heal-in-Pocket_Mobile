@@ -35,13 +35,12 @@ export default function PastVisitRecord( {navigation} ) {
     ];
 
     const vitalData = [
-        {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
+        // {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
         {label: 'Temperature', value: '99'},
         {label: 'Blood Pressure', value: '120/80'},
         {label: 'Pulse', value: '70'},
         {label: 'Oxygen', value: '98'},
-        {label: 'Glucose', value: '110'},  
-        {label: 'Weight', value: '150'},
+        {label: 'Glucose', value: '110'},        
     ];
 
     const FullData = [

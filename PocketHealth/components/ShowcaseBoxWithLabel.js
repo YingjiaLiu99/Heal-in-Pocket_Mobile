@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const ShowcaseBoxWithLabel = ({ label, value, unit, width, ...props }) => {
+const ShowcaseBoxWithLabel = ({ label, value, unit, width, marginLeft, marginRight, ...props }) => {
   return (
-    <View style={[styles.boxContainer, {width:width}]}>
+    <View style={[styles.boxContainer, {width:width}, {marginLeft:marginLeft}, {marginRight:marginRight}]}>
       <View style={styles.valueContainer}>
         <View>
           <Text style={styles.boxLabel}>{label}</Text>

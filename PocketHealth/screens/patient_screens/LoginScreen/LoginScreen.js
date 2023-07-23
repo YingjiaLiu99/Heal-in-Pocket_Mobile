@@ -34,25 +34,17 @@ export default function LoginScreen({ navigation }) {
 
   const handleSignUp = () => {
     navigation.navigate('Patient Sign Up');
-  };
-
-  const handleProviderLogin = () => {
-    navigation.navigate('Provider Login');
-  };
+  };  
 
   const handleForgetPassword = () => {
     navigation.navigate('Patient Enter Phone Num to Reset Password');    
-  };
-
-  const handleVolunteerLogin = () => {
-    navigation.navigate('Volunteer Login');
-  };
+  };  
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
     
       <View style={{alignItems:'center',marginTop: 75,marginBottom:90}}>
-        <Text style={styles.titleText}>Pocket Health</Text>
+        <Text style={styles.titleText}>Patient Login</Text>
       </View>
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}      
@@ -86,14 +78,6 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.buttonText}> Sign up</Text>
         </TouchableOpacity>
       </View>
-
-      <TouchableOpacity onPress={handleProviderLogin}>
-        <Text style={styles.doctorSignin}>Provider Login?</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={{marginTop:20}} onPress={handleVolunteerLogin}>
-        <Text style={styles.doctorSignin}>Volunteer Login?</Text>
-      </TouchableOpacity>
       
     </KeyboardAwareScrollView>
   );

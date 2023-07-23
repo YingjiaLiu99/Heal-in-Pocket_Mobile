@@ -9,8 +9,7 @@ export default function SettingsMainScreen({navigation}) {
         navigation.reset({
             index: 0,
             routes: [{ name: 'Login Section' }],
-        });
-        // navigation.navigate("Login");
+        });        
     };
 
     return (

@@ -1,55 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
-import { useState } from "react";
-import { useNavigation } from '@react-navigation/native';
-import styles from './styles';
-import AnnouncementBoard from './components/AnnouncementBoard';
 
-export default function HomeScreen({navigaton}) {
-  // Dummy annoucement data. NOTICE: The number of annoucements can increase but the length of the content should smaller than a certain amount
-  const AnnouncementData = [
-    { title: 'Free healthcare for you!', date: '2023-07-01', content: 'Street Corner Care every Sunday 2-3:30pm at First Presbyterian Church of San Diego'},
-    { title: 'Get your flu shot!', date: '2023-08-02', content: 'There is a flu going around, get free flu shot at CVS!' },
-    { title: 'System Maintenance', date: '2023-07-03', content: 'Content: Due to system maintenance, Pocket Health will be shut down for use between 2-4pm on 9/1' },  
-    //...
+import styles from './styles';
+import RequestMessage from './components/RequestMessage'; 
+
+export default function HomeScreen({navigation}) { 
+
+  const initialRequests = [
+    { buttonNoteText: "Experiencing constant dizziness, High fever and chills for two days, Feeling unusually thirsty and frequent urination", subText: "Jane Smith   07/24 10:30AM" },
+    { buttonNoteText: "Severe abdominal pain,Sudden rash and itching on the arms", subText: "Bob Martin   07/23 02:15PM" },
+    { buttonNoteText: "Persistent cough and runny nose", subText: "Alice Thompson   07/23 03:25PM" },
+    { buttonNoteText: "Sharp chest pain after physical exertion, Sharp lower back pain radiating to legs", subText: "Sarah Clark   07/21 12:55PM" },    
+    { buttonNoteText: "Unexplained weight loss and fatigue", subText: "Mary Lewis   07/20 11:00AM" },
+    { buttonNoteText: "Frequent headaches and blurred vision", subText: "James White   07/19 02:10PM" },   
+    { buttonNoteText: "Swelling and pain in the right knee, Shortness of breath and chest tightness", subText: "Robert Nelson   07/18 01:30PM" },
+    { buttonNoteText: "Feeling nauseous with occasional vomiting", subText: "Jennifer Hall   07/17 08:45AM" },
+    { buttonNoteText: "Persistent sore throat and difficulty swallowing", subText: "Jessica Young   07/15 05:20PM" },
   ];
 
-  const navigation = useNavigation();
-  const handleAccept = () => {
+  const [requests, setRequests] = useState(initialRequests);
+
+  const handleAccept = (index) => {
     console.log('Accept pressed');
-    navigation.navigate("Provider Response")
+    navigation.navigate("Provider Response");
+    const newRequests = [...requests];
+    newRequests.splice(index, 1);
+    setRequests(newRequests);
   };
 
   return (
-      <View style={{flex: 1}}>
-
-        <Text style={styles.heading}>Welcome, Joan</Text>
-
-        <View style={{alignItems: 'center',marginBottom:0,marginVertical:0}}>
-          <Text style={{fontSize:22}}>Announcement Board</Text>
-        </View>
-
-        <AnnouncementBoard items={AnnouncementData} />
-        <Text style={{fontSize:25,marginLeft:20 }}>Current Request </Text>
-        <Text style={{fontSize:15,marginLeft:20, marginBottom:20,color:'gray' }}>15 patients are waiting</Text>
-
-        <View style={styles.ButtonOuterContainer}>
-          <Text style={styles.ButtonNotesText}>New Patient: James Carter - Dizzy after diarrhea</Text>
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={handleAccept}
-          >
-            <Text style={styles.buttonText}>Accept</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={()=>{console.log("Reject pressed")}}
-          >
-            <Text style={styles.buttonText}>Reject</Text>
-          </TouchableOpacity>
-        </View>
-
+    <View style={{flex: 1}}>
+      <Text style={styles.heading}>Welcome, Dr. Aram</Text>
+      <Text style={{fontSize:25,textAlign: 'center', }}>Current Request </Text>
+      <Text style={{fontSize:18,color:'gray', textAlign: 'center' }}>{requests.length} patient(s) are waiting</Text>
+      
+      {/* This is the waiting line container: */}
+      <View style={{
+        borderRadius:20,
+        borderWidth:2,
+        backgroundColor:'#FFFFFF',
+        marginTop:5,
+        marginHorizontal:15,
+        paddingTop:10,
+        paddingHorizontal:0,
+        height:580
+      }}>
+        <ScrollView>
+          {requests.length > 0 ? (
+            requests.map((request, index) => (
+              <RequestMessage
+                key={index}
+                buttonNoteText={request.buttonNoteText}
+                subText={request.subText}
+                onPress={() => handleAccept(index)}
+              />
+            ))
+          ) : (
+            <View style={{ alignItems: 'center', justifyContent: 'center',marginTop:30 }}>
+              <Text style={{fontSize: 30, color: '#000000'}}>No patient request yet...</Text>
+            </View>
+          )}
+        </ScrollView>
       </View>
+    </View>
   );
 };

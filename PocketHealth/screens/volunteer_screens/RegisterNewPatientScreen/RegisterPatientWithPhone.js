@@ -60,9 +60,12 @@ const RegisterPatientWithPhone = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={{flex: 1}}>
+// <<<<<<< qzh_General5
+//     <ScrollView style={{flex: 1}}>
+// =======
+    <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <View style={{marginTop: 25,marginBottom:10,width:'100%'}}>
+      <View style={{marginTop: 20,marginBottom:10,width:'100%'}}>
         <Text style={styles.titleText}>Enter Patient Information To Set Up Account</Text>
         <Text style={{marginTop:10,fontSize:17}}>* is Required</Text>
       </View>    
@@ -121,7 +124,8 @@ const RegisterPatientWithPhone = ({navigation}) => {
         style={{
           height: 70,
           width: '30%',
-          marginVertical: 10,
+          marginVertical: 0,
+          marginBottom:20,
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: '#395BCD',
