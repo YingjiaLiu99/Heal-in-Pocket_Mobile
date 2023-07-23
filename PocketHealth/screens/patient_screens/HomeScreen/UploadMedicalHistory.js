@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Alert} from 'react-native';
+import { Text, View, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import MedHisInputBoxWithLabel from './components/MedHisInputBoxWithLabel';
 import styles from './styles';
+
 
 const UploadMedicalHistory = ({navigation}) => {
   const [values, setValues] = useState({
@@ -22,70 +23,61 @@ const isInputEmpty = (values) => {
   return true;
 };
 
+const [confirmSubmit, setConfirmSubmit] = useState(false);
+const [errorMessage, setErrorMessage] = useState('');
+
   const handleValueChange = (key, value) => {
     setValues({
       ...values,
       [key]: value,
     });
+
+    // input is on going, so set it false
+    if (confirmSubmit) {
+      setConfirmSubmit(false);
+    }
   };
 
   const handleSubmit = () => {
-    if(isInputEmpty(values)){
-      Alert.alert('Your Input is Empty', 'If you dont wish to enter anything, please skip.',[
-        {
-          text: 'Cancel',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: 'Skip',
-          onPress: () => {
-            navigation.navigate('Home');
-          }          
-        },        
-      ]); 
+
+    if (isInputEmpty(values)) {
+      setErrorMessage('Please fill in fields.');
+      return;
     }
-    else{
-      Alert.alert('Are You Sure To Submit?', 'You cannot edit once submitted',[
-        {
-          text: 'Cancel',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: 'Yes',
-          onPress: () => {
-            navigation.navigate('Home');
-            console.log(values);
-          }
-        },
-      ]);
+    else {
+      setErrorMessage('');
+    }
+   
+    if (confirmSubmit) {
+              
+      // Go Home while confirm
+      navigation.navigate('Home');
+      setConfirmSubmit(false);
+  
+    } 
+    else {
+      // Press first time, input is done, so set it true
+      setConfirmSubmit(true);  
     }    
   };
 
   const handleSkip = () => {
-    if(!isInputEmpty(values)){
-      Alert.alert('Are You Sure To Skip?', 'Your entered vitals will not be saved',[
-        {
-          text: 'Cancel',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: 'Yes',
-          onPress: () => {
-            navigation.navigate('Home');
-          }
-        },
-      ]);
-    }
-    else{
+    
       navigation.navigate('Home');
+    
+  };
+
+  const handleOutsidePress = () => {
+    if(confirmSubmit) {
+      setConfirmSubmit(false);
     }
+    Keyboard.dismiss(); // Dismiss the keyboard
   };
 
   return (
-    <ScrollView>
+    <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
+
+    <ScrollView style={{flex: 1}}>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
 
       <View style={{marginTop: 20,marginBottom:20,width:'100%'}}>
@@ -113,12 +105,16 @@ const isInputEmpty = (values) => {
         />
       </View>
 
+      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}  
+
 
       <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}>
+              {confirmSubmit ? 'Submit' : 'Confirm'}
+            </Text>
+          </TouchableOpacity>
+        </View>
 
       <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
         <TouchableOpacity style={styles.button} onPress={handleSkip}>
@@ -128,6 +124,7 @@ const isInputEmpty = (values) => {
     
     </KeyboardAwareScrollView>
     </ScrollView>
+    </TouchableWithoutFeedback>
   );
 };  
 

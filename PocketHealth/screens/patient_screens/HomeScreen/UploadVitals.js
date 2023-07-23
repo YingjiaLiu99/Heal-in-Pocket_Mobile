@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, TouchableOpacity, Alert, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackActions } from '@react-navigation/native';
 
@@ -32,107 +32,99 @@ export default function UploadVitals({ navigation }) {
     return true;
   };
 
+
   const [inputValues, setInputValues] = useState(initialInputValues);
+  const [confirmSubmit, setConfirmSubmit] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+ 
 
   const handleInputChange = (label, value) => {
     setInputValues({
       ...inputValues,
       [label]: value,
     });
+    // input is on going, so set it false
+    if (confirmSubmit) {
+      setConfirmSubmit(false);
+    }
   };
 
   const handleSubmit = () => {
-    if(isInputEmpty(inputValues)){
-      Alert.alert('Your Input is Empty', 'If you dont wish to enter anything, please skip.',[
-        {
-          text: 'Cancel',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: 'Skip',
-          onPress: () => {
-            // prevent user to go back from Upload MedHis to Upload Vitals
-            navigation.dispatch(StackActions.replace('Upload MedHis'));
-          }          
-        },        
-      ]); 
-    }
 
-    else{
-      Alert.alert('Are You Sure To Submit?', 'You cannot edit once submitted',[
-        {
-          text: 'Cancel',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: 'Yes',
-          onPress: () => {
-            console.log(inputValues);
-            // prevent user to go back from Upload MedHis to Upload Vitals
-            navigation.dispatch(StackActions.replace('Upload MedHis'));
-          }
-        },
-      ]);
-    }        
+    // Set error message
+    if (isInputEmpty(inputValues)) {
+      setErrorMessage('Please fill in fields.');
+      return;
+    }
+    else {
+      setErrorMessage('');
+    }
+   
+    if (confirmSubmit) {
+              
+      // prevent user to go back from Upload MedHis to Upload Vitals 
+      navigation.dispatch(StackActions.replace('Upload MedHis'));
+      setConfirmSubmit(false);
+  
+    } 
+    else {
+      // Press first time, input is done, so set it true
+      setConfirmSubmit(true);  
+    }
   };
 
   const handleSkip = () => {
-    if(!isInputEmpty(inputValues)){
-      Alert.alert('Are You Sure To Skip?', 'Your entered vitals will not be saved',[
-        {
-          text: 'Cancel',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: 'Yes',
-          onPress: () => {           
-            // prevent user to go back from Upload MedHis to Upload Vitals 
-            navigation.dispatch(StackActions.replace('Upload MedHis'));
-          }
-        },
-      ]);
+    navigation.dispatch(StackActions.replace('Upload MedHis')); 
+  };
+
+  // When press outside of the target button, it reverse to not confirm to submit
+  const handleOutsidePress = () => {
+    if(confirmSubmit) {
+      setConfirmSubmit(false);
     }
-    else{
-      // prevent user to go back from Upload MedHis to Upload Vitals
-      navigation.dispatch(StackActions.replace('Upload MedHis'));
-    }    
+    Keyboard.dismiss(); // Dismiss the keyboard
   };
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+    <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
+      <ScrollView style={{flex: 1}}>
+      <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       
-      <View style={{marginTop: 20,marginBottom:30,width:'100%'}}>
-        <Text style={{fontSize:35, fontWeight:400}}>Update My Vitals</Text>          
-      </View>
+        <View style={{marginTop: 20,marginBottom:20,width:'100%'}}>
+          <Text style={{fontSize:35, fontWeight:400}}>Update My Vitals</Text>          
+        </View> 
 
-      <View style={{width:"100%"}}>
-        {Object.entries(labelProperties).map(([label, properties], index) => (
-          <VitalsInputBoxWithLabel
-            key={index}
-            label={label}
-            value={inputValues[label] || ''}
-            unit={properties.unit}
-            width={properties.width}
-            onChange={(value) => handleInputChange(label, value)}
-          />
-        ))}
-      </View>
-            
-      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit and Continue</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={{width:"100%"}}>
+          {Object.entries(labelProperties).map(([label, properties], index) => (
+            <VitalsInputBoxWithLabel
+              key={index}
+              label={label}
+              value={inputValues[label] || ''}
+              unit={properties.unit}
+              width={properties.width}
+              onChange={(value) => handleInputChange(label, value)}
+            />
+          ))}
+        </View>
 
-      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
-        <TouchableOpacity style={styles.button} onPress={handleSkip}>
-          <Text style={styles.buttonText}>Skip</Text>
-        </TouchableOpacity>
-      </View>
+        {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}  
 
-    </KeyboardAwareScrollView>
+        <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+          <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}>
+              {confirmSubmit ? 'Submit' : 'Confirm'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+      < View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+          <TouchableOpacity style={styles.button} onPress={handleSkip}>
+            <Text style={styles.buttonText}>Skip</Text>
+          </TouchableOpacity>
+        </View>
+
+      </KeyboardAwareScrollView>
+      </ScrollView>
+    </TouchableWithoutFeedback>
   );
 }

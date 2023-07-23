@@ -63,6 +63,22 @@ const styles = StyleSheet.create({
       marginBottom: 40 // Add some space at the end of the list
     },
 
+    error: {
+      color: 'red',
+      marginBottom: 20
+    },  
+    confirmButton: {
+      backgroundColor: '#FF9248',
+      // ... other styles same as 'button' ...
+      height: 70,
+      width: '100%',      
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 5,
+      paddingHorizontal: 5,
+      borderRadius: 20
+    },
+
   });
 
   export default styles;

@@ -1,6 +1,6 @@
 // react native library：
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 // own components and styles
 import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
@@ -12,7 +12,7 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [age, setAge] = useState('');
+  const [dateofbirth, setDateofBirth] = useState('');
   const [genderSelection, setGenderSelection] = useState(null);
 
   const genderOptions = [
@@ -21,13 +21,27 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
     {value: 'other', choiceLabel: 'Other'},
   ];  
 
+  // Handle date of birth with "/"
+  const handleDateChange = (text) => {
+    const formattedText = text.split('/').join('');
+    if (formattedText.length >= 5) {
+      text = text.split('/').join('').replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
+    } else if (formattedText.length >= 3) {
+      text = text.split('/').join('').replace(/(\d{2})(\d{1,2})/, "$1/$2");
+    }
+  
+    if (formattedText.length <= 8) {
+      setDateofBirth(text);
+    }
+  };
+
   // Backend api call GOES INSIDE
   const handleSubmit = () => {
     if (!firstName) {
       setErrorMessage('Please enter your first name');      
     }
-    else if(!age) {
-      setErrorMessage('Please enter your age');
+    else if(!dateofbirth) {
+      setErrorMessage('Please enter your date of birth');
     }
     else if(!genderSelection){
       setErrorMessage('Please choose your Biological Sex');
@@ -36,12 +50,13 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
       setErrorMessage('Please enter a valid name');
     }
     else {
-      console.log(`First Name: ${firstName}, Last Name: ${lastName}, Age: ${age}, Sex: ${genderSelection}`);
+      console.log(`First Name: ${firstName}, Last Name: ${lastName}, DOB: ${dateofbirth}, Sex: ${genderSelection}`);
       navigation.navigate("Home");
     }   
   };
 
   return (
+    <ScrollView style={{flex: 1}}>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <View style={{marginTop: 25,marginBottom:10,width:'100%'}}>
         <Text style={styles.titleText}>Enter Patient Information To Set Up Account</Text>
@@ -70,10 +85,10 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
       
       <View style={{width:'100%',flexDirection:'row'}}>
         <InputBoxWithLabel
-          label="Age*"        
-          value={age}
-          onChangeText={(text) => setAge(text)}
-          placeholder="Age"        
+          label="Date of Birth*"        
+          value={dateofbirth}
+          onChangeText={(text) => handleDateChange(text)}
+          placeholder="MM/DD/YYYY"        
           width='30%'
           keyboardType="phone-pad"
         />
@@ -104,6 +119,7 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
       </View>
 
     </KeyboardAwareScrollView>
+    </ScrollView>
   );
 };
 

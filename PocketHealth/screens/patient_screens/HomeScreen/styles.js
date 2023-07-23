@@ -31,6 +31,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height:150,
   },
+  error: {
+    color: 'red',
+    marginBottom: 20
+  },  
   buttonContainer: {
     height: 50,
     width: '70%',
@@ -53,6 +57,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#395BCD',
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    borderRadius: 20
+  },
+  confirmButton: {
+    backgroundColor: '#FF9248',
+    // ... other styles same as 'button' ...
+    height: 55,
+    width: '100%',
+    marginVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: 5,
     paddingHorizontal: 5,
     borderRadius: 20

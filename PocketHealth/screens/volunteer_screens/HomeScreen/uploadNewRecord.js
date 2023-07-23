@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, Alert, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackActions } from '@react-navigation/native';
 
@@ -23,6 +23,8 @@ export default function UploadMedicalInfo({ navigation }) {
   }, {});
 
   const [vitalValues, setVitalValues] = useState(initialInputValues);
+  const [confirmSubmit, setConfirmSubmit] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [medHistoryValues, setMedHistoryValues] = useState({
     chronicIllness: '',
     currentMedication: '',
@@ -44,6 +46,11 @@ export default function UploadMedicalInfo({ navigation }) {
         [label]: value,
       });
     }
+
+    // input is on going, so set it false
+    if (confirmSubmit) {
+      setConfirmSubmit(false);
+    }
   };
 
 
@@ -58,37 +65,42 @@ export default function UploadMedicalInfo({ navigation }) {
 
   const handleSubmit = () => {    
     if(reason === ''){
-        Alert.alert('Missing Input', 'Reason for consultation is missing',[
-          {
-            text: 'Cancel',
-            onPress: () => {},
-            style: 'cancel'
-          },       
-        ]); 
+        // Set error message
+      setErrorMessage('Please fill in fields.');
+      return;
+    
     }
     else{
-      Alert.alert('Are You Sure To Submit?', 'You cannot edit once submitted',[
-        {
-          text: 'Cancel',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: 'Yes',
-          onPress: () => {
-            console.log({vitalValues, medHistoryValues, reason});
-            navigation.navigate('Success');
-          }
-        },
-      ]);
-    } 
+
+      if (confirmSubmit) {
+              
+        // Go to success, while click confirm
+        console.log({vitalValues, medHistoryValues, reason});
+        navigation.dispatch(StackActions.replace('Success'));
+        setConfirmSubmit(false);
+    
+      } 
+      else {
+        // Press first time, input is done, so set it true
+        setConfirmSubmit(true);  
+      }
+    }
+  };
+
+
+  const handleOutsidePress = () => {
+    if(confirmSubmit) {
+      setConfirmSubmit(false);
+    }
+    Keyboard.dismiss(); // Dismiss the keyboard
   };
 
   return (
+    <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
     <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       
-        <View style={{marginTop: 20, marginBottom: 10, width: '100%', alignItems: 'center',}}>
+        <View style={{marginTop: 20, marginBottom: 20, width: '100%', alignItems: 'center',}}>
             <Text style={{fontSize: 35, fontWeight: 400}}>Create New Record</Text>          
         </View>
 
@@ -158,13 +170,18 @@ export default function UploadMedicalInfo({ navigation }) {
             />
         </View>
 
-      <View style={{width:'80%', alignItems:'center', marginTop:0, marginBottom:30}}>
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
-      </View>
+      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}  
+
+        <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+          <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}>
+              {confirmSubmit ? 'Submit' : 'Confirm'}
+            </Text>
+          </TouchableOpacity>
+        </View>
 
     </KeyboardAwareScrollView>
     </ScrollView>
+    </TouchableWithoutFeedback>
   );
 }

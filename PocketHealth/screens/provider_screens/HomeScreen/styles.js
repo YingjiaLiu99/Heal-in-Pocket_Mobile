@@ -46,6 +46,39 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
+// <<<<<<< qzh_General5
+//     fontSize: 20,
+//   }, 
+//   container2: {
+//     flex: 1,
+//     paddingHorizontal: 20,
+//     paddingTop: 20,
+//   },
+//   title: {
+//     fontSize: 50,
+//     fontWeight: 'bold',
+//     marginBottom: 10,
+//   },
+//   content: {
+//     marginTop: 20,
+//   }, 
+//   error: {
+//     color: 'red',
+//     marginBottom: 20
+//   },  
+//   confirmButton: {
+//     backgroundColor: '#FF9248',
+//     // ... other styles same as 'button' ...
+//     height: 50,
+//     width: '70%',
+//     marginVertical: 10,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     paddingVertical: 5,
+//     paddingHorizontal: 5,
+//     borderRadius: 20,
+//   },
+// =======
     fontSize: 25,
   },  
   

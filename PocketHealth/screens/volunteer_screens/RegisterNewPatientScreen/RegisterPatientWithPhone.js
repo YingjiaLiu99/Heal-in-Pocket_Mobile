@@ -13,7 +13,7 @@ const RegisterPatientWithPhone = ({navigation}) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [age, setAge] = useState('');
+  const [dateofbirth, setDateofBirth] = useState('');
   const [genderSelection, setGenderSelection] = useState(null);
 
   const genderOptions = [
@@ -22,13 +22,27 @@ const RegisterPatientWithPhone = ({navigation}) => {
     {value: 'other', choiceLabel: 'Other'},
   ];  
 
+  // Handle date of birth with "/"
+  const handleDateChange = (text) => {
+    const formattedText = text.split('/').join('');
+    if (formattedText.length >= 5) {
+      text = text.split('/').join('').replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
+    } else if (formattedText.length >= 3) {
+      text = text.split('/').join('').replace(/(\d{2})(\d{1,2})/, "$1/$2");
+    }
+  
+    if (formattedText.length <= 8) {
+      setDateofBirth(text);
+    }
+  };
+
   // Backend api call GOES INSIDE
   const handleSubmit = () => {
     if (!firstName) {
       setErrorMessage('Please enter your first name');      
     }
-    else if(!age) {
-      setErrorMessage('Please enter your age');
+    else if(!dateofbirth) {
+      setErrorMessage('Please enter your date of birth');
     }
     else if(!phoneNumber) {
       setErrorMessage('Please enter your phone number');
@@ -40,12 +54,15 @@ const RegisterPatientWithPhone = ({navigation}) => {
       setErrorMessage('Please enter a valid name');
     }
     else {
-      console.log(`First Name: ${firstName}, Last Name: ${lastName}, Age: ${age}, Sex: ${genderSelection}, Phone: ${phoneNumber}`);
+      console.log(`First Name: ${firstName}, Last Name: ${lastName}, DOB: ${dateofbirth}, Sex: ${genderSelection}, Phone: ${phoneNumber}`);
       navigation.navigate("Register Patient Phone Verification",{phoneNumber:phoneNumber});
     }   
   };
 
   return (
+// <<<<<<< qzh_General5
+//     <ScrollView style={{flex: 1}}>
+// =======
     <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <View style={{marginTop: 20,marginBottom:10,width:'100%'}}>
@@ -84,10 +101,10 @@ const RegisterPatientWithPhone = ({navigation}) => {
 
       <View style={{width:'100%',flexDirection:'row'}}>
         <InputBoxWithLabel
-          label="Age*"        
-          value={age}
-          onChangeText={(text) => setAge(text)}
-          placeholder="Age"        
+          label="Date of Birth*"        
+          value={dateofbirth}
+          onChangeText={(text) => handleDateChange(text)}
+          placeholder="MM/DD/YYYY"        
           width='30%'
           keyboardType="phone-pad"
         />
