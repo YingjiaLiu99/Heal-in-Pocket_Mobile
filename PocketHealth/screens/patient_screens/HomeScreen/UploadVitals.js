@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { Text, View, TouchableOpacity, Alert, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackActions } from '@react-navigation/native';
 
@@ -54,6 +54,7 @@ export default function UploadVitals({ navigation }) {
 
   const handleSubmit = () => {
 
+    // Set error message
     if (isInputEmpty(inputValues)) {
       setErrorMessage('Please fill in fields.');
       return;
@@ -79,6 +80,7 @@ export default function UploadVitals({ navigation }) {
     navigation.dispatch(StackActions.replace('Upload MedHis')); 
   };
 
+  // When press outside of the target button, it reverse to not confirm to submit
   const handleOutsidePress = () => {
     if(confirmSubmit) {
       setConfirmSubmit(false);
@@ -88,7 +90,7 @@ export default function UploadVitals({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
-      <View style={{flex: 1}}>
+      <ScrollView style={{flex: 1}}>
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       
         <View style={{marginTop: 20,marginBottom:20,width:'100%'}}>
@@ -125,7 +127,7 @@ export default function UploadVitals({ navigation }) {
         </View>
 
       </KeyboardAwareScrollView>
-      </View>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 }
