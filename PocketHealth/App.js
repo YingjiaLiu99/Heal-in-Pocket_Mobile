@@ -49,6 +49,10 @@ import ProviderResponseScreen from './screens/provider_screens/HomeScreen/Provid
 import SuccessScreen_provider from './screens/provider_screens/HomeScreen/Success';
 // Provider chat related screens:
 import ChatMainPage_provider from './screens/provider_screens/Chat/ChatMainScreen_provider';
+// Provider past visit related screens:
+import PastVisits_provider from './screens/provider_screens/PastVisit/PastVisit';
+// Provider search related screens:
+import Search_provider from './screens/provider_screens/SearchScreen/search'
 // Provider settings related screens:
 import SettingsMainScreen_provider from './screens/provider_screens/SettingsScreen/SettingsMainScreen';
 
@@ -89,6 +93,8 @@ const SettingStack_patient = createStackNavigator();
 const Tab_provider = createMaterialBottomTabNavigator();
 const HomeStack_provider = createStackNavigator();
 const ChatStack_provider = createStackNavigator();
+const PastVisitStack_provider = createStackNavigator();
+const SearchStack_provider = createStackNavigator();
 const SettingStack_provider = createStackNavigator();
 // volunteer's tab: including Home screen stack, patient profile manage stack
 const Tab_vol = createMaterialBottomTabNavigator();
@@ -241,14 +247,25 @@ function HomeTab_provider() {
           ),
          }}
       />
-      {/* <Tab_provider.Screen name="My Chat" component={ChatNavigator_provider} options={{
+      
+      <Tab_provider.Screen name="My Past Visits" component={PastVisitNavigator_provider} options={{
          headerShown: false,
-         tabBarLabel: <Text style={{fontSize:18}}>Chat</Text>,         
+         tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Past Visits</Text>,         
          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="" color={color} size={30} />
+          <MaterialCommunityIcons name="clipboard-text-outline" color={color} size={30} />
           ),
          }}
-      /> */}
+      />
+
+      <Tab_provider.Screen name="My Search" component={SearchNavigator_provider} options={{
+         headerShown: false,
+         tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Search</Text>,         
+         tabBarIcon: ({ color }) => (
+          <Feather name="search" color={color} size={25} />
+          ),
+         }}
+      />
+
       <Tab_provider.Screen name="My Settings" component={SettingsNavigator_provider} options={{
          headerShown: false,
          tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Settings</Text>,         
@@ -274,11 +291,19 @@ function HomeNavigator_provider() {
   );
 }
 
-function ChatNavigator_provider() {
-  return(
-    <ChatStack_provider.Navigator>
-      <HomeStack_provider.Screen name="Chat" component={ChatMainPage_provider} />
-    </ChatStack_provider.Navigator>
+function PastVisitNavigator_provider() {
+  return (
+    <PastVisitStack_provider.Navigator>
+      <PastVisitStack_provider.Screen name="Past Visit" component={PastVisits_provider} />
+    </PastVisitStack_provider.Navigator>
+  );
+}
+
+function SearchNavigator_provider() {
+  return (
+    <SearchStack_provider.Navigator>
+      <SearchStack_provider.Screen name="Search" component={Search_provider} />
+    </SearchStack_provider.Navigator>
   );
 }
 
