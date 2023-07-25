@@ -52,7 +52,9 @@ import ChatMainPage_provider from './screens/provider_screens/Chat/ChatMainScree
 // Provider past visit related screens:
 import PastVisits_provider from './screens/provider_screens/PastVisit/PastVisit';
 // Provider search related screens:
-import Search_provider from './screens/provider_screens/SearchScreen/search'
+import Search_provider from './screens/provider_screens/SearchScreen/search';
+import PatientPastVisit_provider from './screens/provider_screens/SearchScreen/PatientPastVisit';
+import CreateNewNote_provider from './screens/provider_screens/SearchScreen/createNewNote';
 // Provider settings related screens:
 import SettingsMainScreen_provider from './screens/provider_screens/SettingsScreen/SettingsMainScreen';
 
@@ -166,14 +168,7 @@ function HomeTab_patient() {
           ),
          }}
       />   
-      {/* <Tab_patient.Screen name="My Chat" component={ChatNavigator_patient} options={{
-         headerShown: false,
-         tabBarLabel: <Text style={{fontSize:18}}>Home</Text>,         
-         tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="" color={color} size={30} />
-          ),
-         }}
-      /> */}
+      
       <Tab_patient.Screen name="My Settings" component={SettingsNavigator_patient} options={{
          headerShown: false,
          tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Settings</Text>,         
@@ -303,6 +298,8 @@ function SearchNavigator_provider() {
   return (
     <SearchStack_provider.Navigator>
       <SearchStack_provider.Screen name="Search" component={Search_provider} />
+      <SearchStack_provider.Screen name="Patient Past Visits" component={PatientPastVisit_provider} />
+      <SearchStack_provider.Screen name="Create New Note" component={CreateNewNote_provider} />
     </SearchStack_provider.Navigator>
   );
 }
