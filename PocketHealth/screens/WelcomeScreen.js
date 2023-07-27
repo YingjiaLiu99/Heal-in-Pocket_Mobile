@@ -15,7 +15,7 @@ const WelcomeScreen = ({navigation}) => {
     };
 
   return (
-    <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor:'#FFFFFF', paddingHorizontal: 20,}}>
+    <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor:'#FFFFFF', paddingHorizontal: 20, paddingTop:60}}>
         
         <View style={{width:'100%', alignItems:'flex-end'}}>        
             <Image

@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 0,
     justifyContent: 'center',
-    marginHorizontal: 20
+    marginHorizontal: 20,
+    paddingTop:100
   },
   heading: {
     fontSize: 32,
@@ -60,7 +61,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderRadius: 20,
   },
-      
+  normalButton: {
+    backgroundColor: '#395BCD',    
+    height: 50,
+    width: '70%',
+    marginVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    borderRadius: 20,
+  },      
   
 });
 

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-const ProviderInputBox = ({ label, value, width, placeholder, onChangeText, backgroundColor }) => {
+const ProviderInputBox = ({ label, value, width, placeholder, onChangeText, onFocus }) => {
 
   const inputRef = useRef(null);
 
@@ -20,6 +20,7 @@ const ProviderInputBox = ({ label, value, width, placeholder, onChangeText, back
                 style={styles.boxField}
                 value={value}
                 onChangeText={onChangeText}
+                onFocus={onFocus}
                 placeholder={placeholder}
                 multiline                
               />

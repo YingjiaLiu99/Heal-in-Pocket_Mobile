@@ -81,49 +81,47 @@ export default function UploadVitals({ navigation }) {
     }    
   };
 
-  return (    
-    <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
-      <View style={{flex:1}}>
-      <ScrollView style={{flex: 1}}>
-      <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      
-        <View style={{marginTop: 20,marginBottom:20,width:'100%'}}>
-          <Text style={{fontSize:35, fontWeight:400}}>Update My Vitals</Text>          
-        </View> 
+  return (        
+    <View style={{flex:1}}>
+    <ScrollView style={{flex: 1}}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+    
+      <View style={{marginTop: 20,marginBottom:20,width:'100%'}}>
+        <Text style={{fontSize:35, fontWeight:400}}>Update My Vitals</Text>          
+      </View> 
 
-        <View style={{width:"100%"}}>
-          {Object.entries(labelProperties).map(([label, properties], index) => (            
-            <VitalsInputBoxWithLabel
-              key={index}
-              label={label}
-              value={inputValues[label] || ''}
-              unit={properties.unit}
-              width={properties.width}
-              onChange={(value) => handleInputChange(label, value)}   
-              onFocus={handleOutsidePress}           
-            />            
-          ))}
-        </View>
+      <View style={{width:"100%"}}>
+        {Object.entries(labelProperties).map(([label, properties], index) => (            
+          <VitalsInputBoxWithLabel
+            key={index}
+            label={label}
+            value={inputValues[label] || ''}
+            unit={properties.unit}
+            width={properties.width}
+            onChange={(value) => handleInputChange(label, value)}   
+            onFocus={handleOutsidePress}           
+          />            
+        ))}
+      </View>
 
-        {errorMessage ? <Text style={{color:'red', fontSize:18, marginVertical:10}}>{errorMessage}</Text> : null}  
+      {errorMessage ? <Text style={{color:'red', fontSize:18, marginVertical:10}}>{errorMessage}</Text> : null}  
 
-        <View style={{width:'80%',alignItems:'center',marginTop:40,marginBottom:0}}>
-          <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}>
-              {confirmSubmit ? 'Submit' : 'Confirm'}
-            </Text>
-          </TouchableOpacity>
-        </View>
+      <View style={{width:'80%',alignItems:'center',marginTop:40,marginBottom:0}}>
+        <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>
+            {confirmSubmit ? 'Submit' : 'Confirm'}
+          </Text>
+        </TouchableOpacity>
+      </View>
 
-      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
-          <TouchableOpacity style={styles.button} onPress={handleSkip}>
-            <Text style={styles.buttonText}>Skip</Text>
-          </TouchableOpacity>
-        </View>
+    <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:0}}>
+        <TouchableOpacity style={styles.button} onPress={handleSkip}>
+          <Text style={styles.buttonText}>Skip</Text>
+        </TouchableOpacity>
+      </View>
 
-      </KeyboardAwareScrollView>      
-      </ScrollView>
-      </View>      
-    </TouchableWithoutFeedback>    
+    </KeyboardAwareScrollView>      
+    </ScrollView>
+    </View> 
   );
 }

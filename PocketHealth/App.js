@@ -109,33 +109,33 @@ const SettingStack_vol = createStackNavigator();
 function LoginNavigator() {
   return (
     <LoginStack.Navigator>
-      <LoginStack.Screen name='Welcome' component={WelcomeScreen} />      
-      <LoginStack.Screen name="Login" component={LoginScreen} />
+      <LoginStack.Screen name='Welcome' component={WelcomeScreen} options={{headerShown:false}}/>      
+      <LoginStack.Screen name="Login" component={LoginScreen} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       {/* Patient login related screens: */}      
-      <LoginStack.Screen name="Patient Sign Up" component={SignUpScreen_patient} />      
-      <LoginStack.Screen name="Patient Phone Verification" component={PhoneVerification_patient} />
-      <LoginStack.Screen name="Patient Enter Phone Num to Reset Password" component={EnterPhoneNumToResetPassword_patient}/>
-      <LoginStack.Screen name="Patient Reset Password" component={ResetPassword_patient}/>
-      <LoginStack.Screen name="Basic Patient Info" component={BasicPatientInfoForm_patient} />
-      <LoginStack.Screen name="Medical History" component={MedicalHistory_patient} />
-      <LoginStack.Screen name="Patient's Vitals" component={VitalsCollectingForm_patient} />
+      <LoginStack.Screen name="Patient Sign Up" component={SignUpScreen_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>      
+      <LoginStack.Screen name="Patient Phone Verification" component={PhoneVerification_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Patient Enter Phone Num to Reset Password" component={EnterPhoneNumToResetPassword_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Patient Reset Password" component={ResetPassword_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Basic Patient Info" component={BasicPatientInfoForm_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Medical History" component={MedicalHistory_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Patient's Vitals" component={VitalsCollectingForm_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
 
       {/* Provider login related screens: */}
-      <LoginStack.Screen name="Provider Login" component={LoginScreen_provider} />
-      <LoginStack.Screen name="Provider Sign Up" component={SignUpScreen_provider} />
-      <LoginStack.Screen name="Provider Phone Verification" component={PhoneVerification_provider} />
-      <LoginStack.Screen name="Provider Reset Password" component={ProviderResetPassword} />
-      <LoginStack.Screen name="Provider Enter Phone Num to Reset Password" component={ProviderEnterPhoneNumToResetPass} />
-      <LoginStack.Screen name="Basic Provider Info" component={BasicProviderInfo} />
-      <LoginStack.Screen name="More Provider Info" component={MoreInfoProvider} />      
+      <LoginStack.Screen name="Provider Login" component={LoginScreen_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Provider Sign Up" component={SignUpScreen_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Provider Phone Verification" component={PhoneVerification_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Provider Reset Password" component={ProviderResetPassword} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Provider Enter Phone Num to Reset Password" component={ProviderEnterPhoneNumToResetPass} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Basic Provider Info" component={BasicProviderInfo} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="More Provider Info" component={MoreInfoProvider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>      
       
       {/* Volunteer login related screens: */}
-      <LoginStack.Screen name="Volunteer Login" component={LoginScreen_volunteer} />
-      <LoginStack.Screen name="Volunteer Sign Up" component={SignUpScreen_volunteer} />
-      <LoginStack.Screen name="Volunteer Phone Verification" component={PhoneVerification_volunteer} />
-      <LoginStack.Screen name="Volunteer Reset Password" component={VolunteerResetPassword} />
-      <LoginStack.Screen name="Volunteer Enter Phone Num to Reset Password" component={VolunteerEnterPhoneNumToResetPass} />
-      <LoginStack.Screen name="Basic Volunteer Info" component={BasicVolunteerInfo} />      
+      <LoginStack.Screen name="Volunteer Login" component={LoginScreen_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Volunteer Sign Up" component={SignUpScreen_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Volunteer Phone Verification" component={PhoneVerification_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Volunteer Reset Password" component={VolunteerResetPassword} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Volunteer Enter Phone Num to Reset Password" component={VolunteerEnterPhoneNumToResetPass} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Basic Volunteer Info" component={BasicVolunteerInfo} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>      
 
     </LoginStack.Navigator>
   );
@@ -185,10 +185,10 @@ function HomeTab_patient() {
 function HomeNavigator_patient() {
   return (
     <HomeStack_patient.Navigator>    
-      <HomeStack_patient.Screen name="Home" component={HomeScreen_patient} options={{ tabBarVisible:true }}/> 
-      <HomeStack_patient.Screen name="New Complaint" component={NewComplaintForm_patient} options={{ tabBarVisible:false }}/>
-      <HomeStack_patient.Screen name="Upload Vitals" component={UploadVitals} options={{ tabBarVisible:false }}/>
-      <HomeStack_patient.Screen name= "Upload MedHis" component={UploadMedicalHistory} options={{ tabBarVisible:false}}/>
+      <HomeStack_patient.Screen name="Home" component={HomeScreen_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/> 
+      <HomeStack_patient.Screen name="New Complaint" component={NewComplaintForm_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HomeStack_patient.Screen name="Upload Vitals" component={UploadVitals} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HomeStack_patient.Screen name= "Upload MedHis" component={UploadMedicalHistory} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       {/* any follow up screens goes from here */}
     </HomeStack_patient.Navigator>
   );
@@ -197,29 +197,19 @@ function HomeNavigator_patient() {
 function HistoryNavigator_patient() {
   return (
     <HistoryStack_patient.Navigator>
-      <HistoryStack_patient.Screen name="Patient History" component={PatientHistoryMain_patient} />
-      <HistoryStack_patient.Screen name="Vital History" component={VitalHistory_patient} />
-      <HistoryStack_patient.Screen name="Medical History" component={MedicalHistoryRecord_patient} />
-      <HistoryStack_patient.Screen name="Past Visit" component={PastVisitRecord_patient} />
+      <HistoryStack_patient.Screen name="Patient History" component={PatientHistoryMain_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HistoryStack_patient.Screen name="Vital History" component={VitalHistory_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HistoryStack_patient.Screen name="Medical History" component={MedicalHistoryRecord_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HistoryStack_patient.Screen name="Past Visit" component={PastVisitRecord_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       {/* any follow up screens goes from here */}
     </HistoryStack_patient.Navigator>
   );
 }
 
-function ChatNavigator_patient() {
-  return (
-    <ChatStack_patient.Navigator>
-      <ChatStack_patient.Screen name="Chat" component={ChatMainPage_patient} />
-      {/* any follow up screens goes from here */}
-    </ChatStack_patient.Navigator>
-  );
-}
-
-
 function SettingsNavigator_patient() {
   return (
     <SettingStack_patient.Navigator>
-      <SettingStack_patient.Screen name="Settings" component={SettingsMainScreen_patient} />
+      <SettingStack_patient.Screen name="Settings" component={SettingsMainScreen_patient} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       {/* any follow up screens goes from here */}
     </SettingStack_patient.Navigator>
   );
@@ -230,9 +220,10 @@ function SettingsNavigator_patient() {
 function HomeTab_provider() {
   return(   
     <Tab_provider.Navigator
-      initialRouteName='My Home'
-      activeColor='#395BCD'      
-      barStyle={{ backgroundColor: '#DDE5FD' }}
+      initialRouteName='My Home'      
+      activeColor='#395BCD' 
+      inactiveColor= 'black' 
+      barStyle={{ backgroundColor: '#DDE5FD' }}     
     >
       <Tab_provider.Screen name="My Home" component={HomeNavigator_provider} options={{
          headerShown: false,
@@ -277,9 +268,9 @@ function HomeTab_provider() {
 function HomeNavigator_provider() {
   return (
     <HomeStack_provider.Navigator>
-      <HomeStack_provider.Screen name="Home" component={HomeScreen_provider} />
-      <HomeStack_provider.Screen name="Provider Response" component={ProviderResponseScreen} />
-      <HomeStack_provider.Screen name="Success" component={SuccessScreen_provider} />
+      <HomeStack_provider.Screen name="Home" component={HomeScreen_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}} />
+      <HomeStack_provider.Screen name="Provider Response" component={ProviderResponseScreen} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}} />
+      <HomeStack_provider.Screen name="Success" component={SuccessScreen_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD',}}} />
       
       {/* any follow up screens from home goes from here */}
     </HomeStack_provider.Navigator>
@@ -289,7 +280,7 @@ function HomeNavigator_provider() {
 function PastVisitNavigator_provider() {
   return (
     <PastVisitStack_provider.Navigator>
-      <PastVisitStack_provider.Screen name="Past Visit" component={PastVisits_provider} />
+      <PastVisitStack_provider.Screen name="Past Visit" component={PastVisits_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
     </PastVisitStack_provider.Navigator>
   );
 }
@@ -297,9 +288,9 @@ function PastVisitNavigator_provider() {
 function SearchNavigator_provider() {
   return (
     <SearchStack_provider.Navigator>
-      <SearchStack_provider.Screen name="Search" component={Search_provider} />
-      <SearchStack_provider.Screen name="Patient Past Visits" component={PatientPastVisit_provider} />
-      <SearchStack_provider.Screen name="Create New Note" component={CreateNewNote_provider} />
+      <SearchStack_provider.Screen name="Search" component={Search_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <SearchStack_provider.Screen name="Patient Past Visits" component={PatientPastVisit_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <SearchStack_provider.Screen name="Create New Note" component={CreateNewNote_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
     </SearchStack_provider.Navigator>
   );
 }
@@ -307,7 +298,7 @@ function SearchNavigator_provider() {
 function SettingsNavigator_provider() {
   return (
     <SettingStack_provider.Navigator>
-      <SettingStack_provider.Screen name="Settings" component={SettingsMainScreen_provider} />
+      <SettingStack_provider.Screen name="Settings" component={SettingsMainScreen_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       {/* any follow up screens goes from here */}
     </SettingStack_provider.Navigator>
   );
@@ -348,13 +339,13 @@ function HomeNavigator_vol() {
     <HomeStack_vol.Navigator>
       <HomeStack_vol.Screen name="Home" component={HomeScreen_volunteer} />  
       {/* any follow up screens from home goes from here */}  
-      <HomeStack_vol.Screen name="Register A New Patient" component={RegisterNewPatient_volunteer} />
-      <HomeStack_vol.Screen name="Register Patient With Phone" component={RegisterPatientWithPhone_volunteer} />
-      <HomeStack_vol.Screen name="Register Patient Without Phone" component={RegisterPatientWithoutPhone_volunteer} />
-      <HomeStack_vol.Screen name="Register Patient Phone Verification" component={RegisterPatientPhoneVerification_volunteer} />
-      <HomeStack_vol.Screen name="Options" component={OptionScreen_vol} />
-      <HomeStack_vol.Screen name="Upload New Record" component={UploadNewRecord_vol} />
-      <HomeStack_vol.Screen name='Success' component={SuccessScreen_vol} />
+      <HomeStack_vol.Screen name="Register A New Patient" component={RegisterNewPatient_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HomeStack_vol.Screen name="Register Patient With Phone" component={RegisterPatientWithPhone_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HomeStack_vol.Screen name="Register Patient Without Phone" component={RegisterPatientWithoutPhone_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HomeStack_vol.Screen name="Register Patient Phone Verification" component={RegisterPatientPhoneVerification_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HomeStack_vol.Screen name="Options" component={OptionScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HomeStack_vol.Screen name="Upload New Record" component={UploadNewRecord_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HomeStack_vol.Screen name='Success' component={SuccessScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
 
     </HomeStack_vol.Navigator>
   );
@@ -363,7 +354,7 @@ function HomeNavigator_vol() {
 function SettingsNavigator_vol() {
   return (
     <SettingStack_vol.Navigator>
-      <SettingStack_vol.Screen name="Settings" component={SettingsMainScreen_vol} />
+      <SettingStack_vol.Screen name="Settings" component={SettingsMainScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       {/* any follow up screens goes from here */}
     </SettingStack_vol.Navigator>
   );
