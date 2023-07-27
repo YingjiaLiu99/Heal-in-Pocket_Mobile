@@ -7,7 +7,8 @@ import ShowcaseBoxWithLabel from '../../../components/ShowcaseBoxWithLabel';
 import BigShowcaseBoxWithLabel from '../../../components/BigShowcaseBoxWithLabel';
 import ProviderInputBox from './components/ProviderInputBox';
 
-export default function ProviderResponseScreen({navigation}) { 
+export default function ProviderResponseScreen({route, navigation}) { 
+  const { index, requests, setRequests } = route.params;
 
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); 
@@ -22,6 +23,10 @@ const handleSubmit = () => {
 
   if (confirmSubmit) {            
     // Go to success while confirm
+    const newRequests = [...requests];
+    newRequests.splice(index, 1);
+    setRequests(newRequests);
+
     navigation.navigate('Success');
     console.log(assessment);
     console.log(subjective);

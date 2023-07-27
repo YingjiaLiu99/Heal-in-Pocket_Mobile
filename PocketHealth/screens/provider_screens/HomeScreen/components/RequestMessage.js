@@ -2,22 +2,22 @@ import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 
 
-const RequestMessage= ({ buttonNoteText, subText, onPress }) => {
+const RequestMessage= ({ buttonNoteText, subText, onPress}) => {
   return (
-    <View style={styles.ButtonOuterContainer}>
+      <TouchableOpacity style={styles.ButtonOuterContainer} onPress={onPress}>
       <View style={styles.requestContainer}>
         <ScrollView>
           <Text style={styles.ButtonNotesText}>{buttonNoteText}</Text>
         </ScrollView>
         <Text style={styles.SubText}>{subText}</Text>
       </View>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.buttonContainer}
-        onPress={onPress}
-      >
-        <Text style={{color:'#FFFFFF'}}>Accept</Text>
+        // onPress={onPress}
+      > */}
+        {/* <Text style={{color:'#FFFFFF'}}>Accept</Text> */}
+      {/* </TouchableOpacity> */}
       </TouchableOpacity>
-    </View>
   );
 };
 
