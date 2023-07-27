@@ -19,10 +19,9 @@ const MedicalHistoryList = ({ title, items, width }) => {
       </TouchableOpacity>
 
       {isExpanded && (
-        <View style={ {alignItems: 'center'} }>
-          {items.map((item, index) => {            
-            return <BigShowcaseBoxWithLabel key={index} {...item} width={width} />;
-          })}
+        <View style={ {alignItems: 'center'} }>          
+          <BigShowcaseBoxWithLabel label={items[0].label} value={items[0].value} width={width}/>
+          <BigShowcaseBoxWithLabel label={"Current Medication/Allergies"} value={items[1].value + ' [Allergies: ' + items[2].value+']'} width={width}/>          
         </View>
       )}
     </View>

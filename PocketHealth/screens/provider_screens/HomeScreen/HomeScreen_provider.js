@@ -22,8 +22,7 @@ export default function HomeScreen({navigation}) {
 
   const [requests, setRequests] = useState(initialRequests);
 
-  const handleAccept = (index) => {
-    console.log('Accept pressed');
+  const handleAccept = (index) => {    
     // navigation.navigate("Provider Response");
     // const newRequests = [...requests];
     // newRequests.splice(index, 1);
@@ -34,8 +33,6 @@ export default function HomeScreen({navigation}) {
       setRequests 
     })
   };
-
-
 
   return (
     <View style={{flex: 1}}>

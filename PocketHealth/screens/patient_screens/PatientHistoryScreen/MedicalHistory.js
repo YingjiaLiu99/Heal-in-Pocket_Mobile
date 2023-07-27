@@ -8,30 +8,21 @@ import styles from './styles.js';
 export default function MedicalHistory({navigation}) {
     // Dummy medical history Data:
     const Data1 = [
-        {   
-            label: 'Chronic Illness', 
-            value: ' high blood pressure, diabetes'
-        },
-        {   
-            label: 'Current Medication', 
-            value: 'Metoprolol'
-        },
-        {
-            label: 'Allergies', 
-            value: 'Sulfa'
-        },        
-    ];
-
-    const Data2 = [
-        {label: 'Chronic Illness', value: 'high blood pressure, diabetes'},
+        {label: 'Medical History', value: 'high blood pressure, diabetes'},
         {label: 'Current Medication', value: 'Metoprolol'},
         {label: 'Allergies', value: 'Sulfa'},        
     ];
 
+    const Data2 = [
+        {label: 'Medical History', value: 'illness 2'},
+        {label: 'Current Medication', value: 'med 2'},
+        {label: 'Allergies', value: 'A2'},        
+    ];
+
     const Data3 = [
-        {label: 'Chronic Illness', value: 'high blood pressure, diabetes'},
-        {label: 'Current Medication', value: ''},
-        {label: 'Allergies', value: 'Sulfa'},        
+        {label: 'Medical History', value: 'illness 3'},
+        {label: 'Current Medication', value: 'med 3'},
+        {label: 'Allergies', value: 'A3'},        
     ];
 
     const AllMedData = [

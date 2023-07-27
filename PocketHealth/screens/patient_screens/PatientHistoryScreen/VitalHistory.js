@@ -6,34 +6,28 @@ import styles from './styles.js';
 
 export default function VitalHistory({navigation}) {
     // Dummy Vital Data:
-    const vitalData1 = [
-        // {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
-        {label: 'Temperature', value: '99'},
-        {label: 'Blood Pressure', value: '120/80'},
-        {label: 'Pulse', value: '70'},
-        {label: 'Oxygen', value: '98'},
-        {label: 'Glucose', value: '110'},  
-        // {label: 'Weight', value: '150'}, 
+    const vitalData1 = [        
+        {label: 'Temp', value: '99', unit: 'F'},
+        {label: 'Pulse', value: '70', unit:'bpm'},
+        {label: 'Oxygen', value: '98', unit:'%'},
+        {label: 'BP', value: '120/80', unit:'mmHg'},
+        {label: 'BG', value: '110', unit:'mg/dl'}, 
     ];
 
     const vitalData2 = [
-        // {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
-        {label: 'Temperature', value: ''},
-        {label: 'Blood Pressure', value: '120/80'},
-        {label: 'Pulse', value: '70'},
-        {label: 'Oxygen', value: ''},
-        {label: 'Glucose', value: '190'},  
-        // {label: 'Weight', value: '170'},
+        {label: 'Temp', value: '102', unit: 'F'},
+        {label: 'Pulse', value: '78', unit:'bpm'},
+        {label: 'Oxygen', value: '90', unit:'%'},
+        {label: 'BP', value: '129/70', unit:'mmHg'},
+        {label: 'BG', value: '110', unit:'mg/dl'},
     ];
 
     const vitalData3 = [
-        // {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
-        {label: 'Temperature', value: ''},
-        {label: 'Blood Pressure', value: '120/80'},
-        {label: 'Pulse', value: '70'},
-        {label: 'Oxygen', value: ''},
-        {label: 'Glucose', value: '110'},  
-        // {label: 'Weight', value: '150'},
+        {label: 'Temp', value: '97', unit: 'F'},
+        {label: 'Pulse', value: '120', unit:'bpm'},
+        {label: 'Oxygen', value: '100', unit:'%'},
+        {label: 'BP', value: '140/90', unit:'mmHg'},
+        {label: 'BG', value: '150', unit:'mg/dl'},
     ];
 
     const AllVitalData = [

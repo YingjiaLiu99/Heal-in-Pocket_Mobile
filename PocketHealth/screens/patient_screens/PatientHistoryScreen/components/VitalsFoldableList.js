@@ -4,20 +4,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import ShowcaseBoxWithLabel from '../../../../components/ShowcaseBoxWithLabel';
 
-// This is the map object that maps label names to their respective units and widths.
-const labelProperties = {
-  // 'Pain Level(0~10,0-no pain,10-worst pain)': { unit: '', width: '95%' },
-  'Temperature': { unit: 'F', width: '95%' },
-  'Blood Pressure': { unit: 'mmHg', width: '95%' },
-  'Pulse': { unit: 'bpm', width: '95%' },
-  'Oxygen': { unit: '%', width: '95%' },
-  'Glucose': { unit: 'mg/dl', width: '95%' },  
-  'Weight': { unit: 'Lbs', width: '95%' },
-  // Add more entries as needed
-};
-
 const VitalsFoldableList = ({ title, items, width }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  // split items into two rows
+  const rowOne = items.slice(0,3);
+  const rowTwo = items.slice(3,5);
 
   return (
     <View style={{ width: width}}>
@@ -30,14 +22,34 @@ const VitalsFoldableList = ({ title, items, width }) => {
       </TouchableOpacity>
 
       {isExpanded && (
-        <View style={ {alignItems: 'center'} }>
-          {items.map((item, index) => {
-            // Retrieve the properties for this label from the map object.
-            const { unit, width } = labelProperties[item.label];
+        <View>
+          <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
+            {rowOne.map((item, index) => {
+              return (
+                <ShowcaseBoxWithLabel 
+                  key={index}
+                  label={item.label}
+                  value={item.value}
+                  unit={item.unit}
+                  width='30%'
+                />
+              )
+            })}
+          </View>
 
-            // Pass these properties to ShowcaseBoxWithLabel.
-            return <ShowcaseBoxWithLabel key={index} {...item} unit={unit} width={width} />;
-          })}
+          <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
+            {rowTwo.map((item, index) => {
+              return (
+                <ShowcaseBoxWithLabel
+                  key={index}
+                  label={item.label}
+                  value={item.value}
+                  unit={item.unit}
+                  width='45%'
+                />
+              )
+            })}
+          </View>
         </View>
       )}
     </View>

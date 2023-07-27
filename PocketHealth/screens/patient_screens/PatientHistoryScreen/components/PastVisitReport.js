@@ -16,8 +16,10 @@ const labelProperties = {
     // Add more entries as needed
     };
 
-const PastVisitReport = ({ title, providerReport, medicalData, vitalData, width }) => {
+const PastVisitReport = ({ title, chiefComplaint, providerReport, medicalData, vitalData, width }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const rowOne = vitalData.slice(0,3);
+  const rowTwo = vitalData.slice(3,5);
 
   return (
     <View style={{ width: width}}>
@@ -31,22 +33,45 @@ const PastVisitReport = ({ title, providerReport, medicalData, vitalData, width 
 
       {isExpanded && (
         <View style={ {alignItems: 'center'} }>
-        <Text style={styles.classifyText}>Medical Provider's note:</Text>        
+        <BigShowcaseBoxWithLabel label={chiefComplaint.label} value={chiefComplaint.value} width={width}/>
+                
         {/* render doctor's report */}
         {providerReport.map((item, index) => {            
-            return <BigShowcaseBoxWithLabel key={index} {...item} width={width} />;
+            return <BigShowcaseBoxWithLabel key={index} {...item} width={width} backgroundColor={'#FFFFD7'}/>;
         })} 
-        <Text style={styles.classifyText}>Patient's Infomation:</Text>
+        
         {/* render patient's medical history */}
-        {medicalData.map((item, index) => {            
-            return <BigShowcaseBoxWithLabel key={index} {...item} width={width} />;
-        })}
+        <BigShowcaseBoxWithLabel label={medicalData[0].label} value={medicalData[0].value} width={width}/>
+        <BigShowcaseBoxWithLabel label={"Current Medication/Allergies"} value={medicalData[1].value + ' [Allergies: ' + medicalData[2].value+']'} width={width}/>
 
         {/* render patient's vital data with unit */}
-        {vitalData.map((item, index) => {            
-            const { unit, width } = labelProperties[item.label];            
-            return <ShowcaseBoxWithLabel key={index} {...item} unit={unit} width={width} />;
-        })}
+        <View style={{width:'95%', flexDirection: 'row', justifyContent: 'space-between',}}>
+            {rowOne.map((item, index) => {
+              return (
+                <ShowcaseBoxWithLabel 
+                  key={index}
+                  label={item.label}
+                  value={item.value}
+                  unit={item.unit}
+                  width='30%'
+                />
+              )
+            })}
+        </View>
+        <View style={{width:'95%', flexDirection: 'row', justifyContent: 'space-between',}}>
+            {rowTwo.map((item, index) => {
+              return (
+                <ShowcaseBoxWithLabel
+                  key={index}
+                  label={item.label}
+                  value={item.value}
+                  unit={item.unit}
+                  width='45%'
+                />
+              )
+            })}
+        </View>
+
         </View>
 
       )}

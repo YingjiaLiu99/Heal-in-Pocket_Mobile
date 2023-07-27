@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
-const BigShowcaseBoxWithLabel = ({ label, value, width, ...props }) => {
+const BigShowcaseBoxWithLabel = ({ label, value, width, backgroundColor = '#FFFFFF', ...props }) => {
   return (
     <View style={[styles.boxContainer, {width:width}]}>
-      <View style={styles.valueContainer}>
+      <View style={[styles.valueContainer, {backgroundColor: backgroundColor}]}>
         <View style={styles.labelValueContainer}>
           <Text style={styles.boxLabel}>{label}</Text>
           <ScrollView>
@@ -32,8 +32,7 @@ const styles = StyleSheet.create({
     borderColor: '#7C7C7C',
     borderRadius: 15,
     paddingHorizontal: 10,    
-    paddingTop:5,
-    backgroundColor:'#FFFFFF',
+    paddingTop:5,   
   },
   labelValueContainer: {
     flex: 1,
