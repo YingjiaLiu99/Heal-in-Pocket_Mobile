@@ -7,24 +7,6 @@ import PastVisitReport from './components/PastVisitReport.js';
 
 export default function PastVisit( {navigation} ) {
 
-    const [clickDate, setClickedDate] = useState(null);
-    const [clickPeople, setClickedPeople] = useState(null);
-
-    const [isDateExpanded, setIsDateExpanded] = useState(false);
-    const [isPeopleExpanded, setIsPeopleExpanded] = useState(false);
-
-    const handleDate = (date) => {
-        setClickedDate(date);
-        setClickedPeople(null);
-        setIsDateExpanded(!isDateExpanded);
-    };
-
-    const handlePeople = (people) => {
-        setClickedPeople(people);
-        setIsPeopleExpanded(!isPeopleExpanded);
-    };
-
-
     const providerReport = [
         {   
             label: 'Reason For consultation', 
@@ -64,111 +46,70 @@ export default function PastVisit( {navigation} ) {
         {label: 'Glucose', value: '110'},        
     ];
 
+    const dummyNote = {
+        SOAPNote: providerReport,
+        medicalHistory: medicalData,
+        vitals: vitalData
+    };
+
     const FullData = [
         {
             date: "Nov, 12, 2022",
             people: [
-                { name: "James Doe", time: "10:00 am"},
-                { name: "Joey Price", time: "12:00 pm"},
-                { name: "Madison Powers", time: "4:00 pm"},
-            ],
-            providerReport: providerReport,
-            medicalData: medicalData,
-            vitalData: vitalData,
-
+                { name: "James Doe", time: "10:00 am", visitNote: dummyNote},
+                { name: "Joey Price", time: "12:00 pm",  visitNote: dummyNote},
+                { name: "Madison Powers", time: "4:00 pm",  visitNote: dummyNote},
+            ],    
         },   
 
         {
             date: "Nov, 11, 2022",
             people: [
-                { name: "James Zhang", time: "9:00 am"}, 
-                { name: "Bill B", time: "5:00 pm"},
-            ],
-            providerReport: providerReport,
-            medicalData: medicalData,
-            vitalData: vitalData,
+                { name: "James Zhang", time: "9:00 am", visitNote: dummyNote}, 
+                { name: "Bill B", time: "5:00 pm", visitNote: dummyNote},
+            ],            
         }
     ];
 
-    return(
-        <View style={styles.container}>
-            <View style={{marginTop: 20,marginBottom:30,width:'100%'}}>
-                <Text style={{fontSize:35, fontWeight:400}}>My Past Visits</Text>            
-            </View>
+    const [expandedDates, setExpandedDates] = useState([]);
 
-        <FlatList
-            style={{ width: "100%" }}
-            data={FullData}
-            keyExtractor={(item) => item.date}
-            renderItem={({ item }) => (
-                <View>
-                    <TouchableOpacity
-                        style={styles.header}
-                        onPress={() => handleDate(item.date)}>
-                        <Text
-                            style={[
-                                styles.dateText,
-                            ]}>
-                            {item.date}
-                        </Text>
-                        <Icon
-                            name={clickDate === item.date && isDateExpanded ? 'chevron-up' : 'chevron-down'} size={24} color="black"
-                        />
-                    </TouchableOpacity>
+  const toggleExpandedDate = (date) => {
+    if (expandedDates.includes(date)) {
+      setExpandedDates(expandedDates.filter(expandedDate => expandedDate !== date));
+    } else {
+      setExpandedDates([...expandedDates, date]);
+    }
+  }
 
-
-                    {clickDate === item.date && isDateExpanded && ( 
-                        <View>
-                            <FlatList
-                                data={item.people}
-                                //keyExtractor={(people) => people.name}
-                                renderItem={({ item1 }) => (
-                                    //<View>
-                                        <TouchableOpacity
-                                            style={styles.header}
-                                            onPress={() => handlePeople(item1)}>
-                                            <Text 
-                                                style={[
-                                                    styles.personText,
-                                                ]}>
-                                                {item1.name} - {item1.time}
-                                            </Text>
-                                            <Icon 
-                                                name={clickPeople === item1 && isPeopleExpanded ? "chevron-up" : "chevron-down"} size={20} color="black"
-                                            />
-                                            {/* {clickPeople === item1 && isPeopleExpanded && (
-                                                <FlatList
-                                                    style={{width:"100%"}}
-                                                    data={FullData}
-                                                    keyExtractor={ (item, index) => 'key' + index }
-                                                    renderItem={({item}) => <PastVisitReport width={"95%"} {...item} />} 
-                                                />  
-                                            )} */}
-
-                                            {/* {clickPerson === item1 && isPersonExpanded && (
-                                                <PastVisitReport
-                                                    name={item1.name}
-                                                    time={item1.time}
-                                                    providerReport={item.providerReport}
-                                                    medicalData={item.medicalData}
-                                                    vitalData={item.vitalData}
-                                                    width={'95%'}
-                                                />
-                                            )} */}
-                                        </TouchableOpacity>
-
-                                        
-                                )}
-                                
-                            /> 
-                        </View>
-                            
-                    )} 
-
-                </View>
-            )}
-        />
-        
+  return (
+    <View style={styles.container}>
+      <View style={{marginTop: 20,marginBottom:30,width:'100%'}}>
+          <Text style={{fontSize:35, fontWeight:400}}>My Past Visits</Text>            
+      </View>
+  
+      <FlatList
+          data={FullData}
+          renderItem={({ item }) => (
+              <View>
+                  <TouchableOpacity onPress={() => toggleExpandedDate(item.date)}>
+                      <Text style={styles.dateText}>{item.date}</Text>
+                      <Icon name={expandedDates.includes(item.date) ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
+                  </TouchableOpacity>
+                  {expandedDates.includes(item.date) && item.people.map((visit, index) => (
+                      <PastVisitReport
+                          key={index}
+                          name={visit.name}
+                          time={visit.time}
+                          providerReport={visit.visitNote.SOAPNote}
+                          medicalData={visit.visitNote.medicalHistory}
+                          vitalData={visit.visitNote.vitals}
+                          width={'95%'}
+                      />
+                  ))}
+              </View>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+      />
     </View>
-    );
+  );
 };
