@@ -34,12 +34,13 @@ const PastVisitReport = ({ title, chiefComplaint, providerReport, medicalData, v
       {isExpanded && (
         <View style={ {alignItems: 'center'} }>
         <BigShowcaseBoxWithLabel label={chiefComplaint.label} value={chiefComplaint.value} width={width}/>
-                
+        <Text style={styles.classifyText}>Medical Provider's Note:</Text>
         {/* render doctor's report */}
         {providerReport.map((item, index) => {            
-            return <BigShowcaseBoxWithLabel key={index} {...item} width={width} backgroundColor={'#FFFFD7'}/>;
+            return <BigShowcaseBoxWithLabel key={index} {...item} width={width}/>;
         })} 
         
+        <Text style={styles.classifyText}>Patient's Medical Infomation:</Text>
         {/* render patient's medical history */}
         <BigShowcaseBoxWithLabel label={medicalData[0].label} value={medicalData[0].value} width={width}/>
         <BigShowcaseBoxWithLabel label={"Current Medication/Allergies"} value={medicalData[1].value + ' [Allergies: ' + medicalData[2].value+']'} width={width}/>

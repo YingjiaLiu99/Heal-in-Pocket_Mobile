@@ -22,8 +22,8 @@ const VitalsFoldableList = ({ title, items, width }) => {
       </TouchableOpacity>
 
       {isExpanded && (
-        <View>
-          <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
+        <View style={ {alignItems: 'center'} }>
+          <View style={{width:'95%', flexDirection: 'row', justifyContent: 'space-between',}}>
             {rowOne.map((item, index) => {
               return (
                 <ShowcaseBoxWithLabel 
@@ -37,7 +37,7 @@ const VitalsFoldableList = ({ title, items, width }) => {
             })}
           </View>
 
-          <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
+          <View style={{width:'95%', flexDirection: 'row', justifyContent: 'space-between',}}>
             {rowTwo.map((item, index) => {
               return (
                 <ShowcaseBoxWithLabel
