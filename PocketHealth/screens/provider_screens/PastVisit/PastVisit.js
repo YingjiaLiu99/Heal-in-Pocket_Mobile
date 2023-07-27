@@ -39,10 +39,10 @@ export default function PastVisit( {navigation} ) {
 
     const vitalData = [
         // {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
-        {label: 'Temperature', value: '99'},
-        {label: 'Blood Pressure', value: '120/80'},
-        {label: 'Pulse', value: '70'},
+        {label: 'Temp', value: '99'},
         {label: 'Oxygen', value: '98'},
+        {label: 'Pulse', value: '70'},
+        {label: 'BP', value: '120/80'},
         {label: 'Glucose', value: '110'},        
     ];
 
@@ -89,9 +89,12 @@ export default function PastVisit( {navigation} ) {
   
       <FlatList
           data={FullData}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
               <View>
-                  <TouchableOpacity onPress={() => toggleExpandedDate(item.date)}>
+                  <TouchableOpacity 
+                        style={[styles.header, { backgroundColor: expandedDates.includes(item.date) ? 'white' : 'white' }]} 
+                        onPress={() => toggleExpandedDate(item.date)}>
                       <Text style={styles.dateText}>{item.date}</Text>
                       <Icon name={expandedDates.includes(item.date) ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
                   </TouchableOpacity>
@@ -108,7 +111,7 @@ export default function PastVisit( {navigation} ) {
                   ))}
               </View>
           )}
-          keyExtractor={(item, index) => index.toString()}
+          
       />
     </View>
   );

@@ -7,10 +7,10 @@ import ShowcaseBoxWithLabel from '../../../../components/ShowcaseBoxWithLabel';
 
 const labelProperties = {
     // 'Pain Level(0~10,0-no pain,10-worst pain)': { unit: '', width: '95%' },
-    'Temperature': { unit: 'F', width: '95%' },
-    'Blood Pressure': { unit: 'mmHg', width: '95%' },
-    'Pulse': { unit: 'bpm', width: '95%' },
+    'Temp': { unit: 'F', width: '95%' },
     'Oxygen': { unit: '%', width: '95%' },
+    'Pulse': { unit: 'bpm', width: '95%' },
+    'BP': { unit: 'mmHg', width: '95%' },
     'Glucose': { unit: 'mg/dl', width: '95%' },  
     'Weight': { unit: 'Lbs', width: '95%' },
     // Add more entries as needed
@@ -18,6 +18,9 @@ const labelProperties = {
 
 const PastVisitReport = ({ name, time, providerReport, medicalData, vitalData, width }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const firstLine = vitalData.slice(0, 3);
+  const secondLine = vitalData.slice(3);
 
   return (
     <View style={{ width: width}}>
@@ -43,13 +46,45 @@ const PastVisitReport = ({ name, time, providerReport, medicalData, vitalData, w
         })}
 
         {/* render patient's vital data with unit */}
-        {vitalData.map((item, index) => {            
+        {/* {vitalData.map((item, index) => {            
             const { unit, width } = labelProperties[item.label];            
-            return <ShowcaseBoxWithLabel key={index} {...item} unit={unit} width={width} />;
-        })}
+            return <ShowcaseBoxWithLabel 
+                      key={index} {...item} unit={unit} width={width} 
+                      
+                    />;
+        })} */}
+
+        <View style={{width: width, flexDirection: 'row', justifyContent: 'space-between',}}>
+          {firstLine.map((item, index) => {
+            const { unit, width } = labelProperties[item.label];
+            return (
+              <ShowcaseBoxWithLabel
+                key={index}
+                {...item}
+                unit={unit}
+                width='30%'
+              />
+            );
+          })}
         </View>
 
-      )}
+        <View style={{width: width, flexDirection: 'row', justifyContent: 'space-between',}}>
+          {secondLine.map((item, index) => {
+            const { unit, width } = labelProperties[item.label];
+            return (
+              <ShowcaseBoxWithLabel
+                key={index}
+                {...item}
+                unit={unit}
+                width='45%'
+              />
+            );
+          })}
+        </View>
+
+    </View>
+
+  )}
     </View>
   );
 };
