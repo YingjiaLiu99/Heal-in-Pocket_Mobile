@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         borderColor: '#C5D1F9',
         borderRadius: 15,
         marginBottom: 10,
+        marginHorizontal:10,
       },
 
       dateText: {

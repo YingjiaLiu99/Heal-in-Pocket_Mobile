@@ -159,9 +159,12 @@ export default function PatientPastVisit( {route, navigation} ) {
         {/* <Text>{user.firstName} {user.lastName}</Text>
         <Text>Date of Birth: {user.dateOfBirth}</Text> */}
 
+        <View style={{marginTop: 20,marginBottom:30,width:'100%', paddingTop:100}}>
+            <Text style={{fontSize:35, fontWeight:400}}>Patient Past Visits</Text>            
+        </View>
+
        <FlatList
-          contentContainerStyle={{ paddingTop: 100 }}
-          ListHeaderComponent={() => <Text>Patient Past Visit</Text>}
+          style={{width:"95%"}}
           data={FullData}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
@@ -184,13 +187,8 @@ export default function PatientPastVisit( {route, navigation} ) {
                   ))}
             </View>
           )}
-
-
-
         />
       
-
-
         {!lockerNewFeature ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}
 
         <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:30}}>
@@ -201,14 +199,7 @@ export default function PatientPastVisit( {route, navigation} ) {
           </TouchableOpacity>
         </View>
 
-        
-        
-
-
-
-        
       </View>
-
-        
+ 
   );
 };
