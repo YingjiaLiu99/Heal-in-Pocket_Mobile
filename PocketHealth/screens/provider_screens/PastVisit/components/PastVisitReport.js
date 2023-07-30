@@ -5,16 +5,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import BigShowcaseBoxWithLabel from '../../../../components/BigShowcaseBoxWithLabel';
 import ShowcaseBoxWithLabel from '../../../../components/ShowcaseBoxWithLabel';
 
-const labelProperties = {
-    // 'Pain Level(0~10,0-no pain,10-worst pain)': { unit: '', width: '95%' },
-    'Temp': { unit: 'F', width: '95%' },
-    'Oxygen': { unit: '%', width: '95%' },
-    'Pulse': { unit: 'bpm', width: '95%' },
-    'BP': { unit: 'mmHg', width: '95%' },
-    'Glucose': { unit: 'mg/dl', width: '95%' },  
-    'Weight': { unit: 'Lbs', width: '95%' },
-    // Add more entries as needed
-    };
 
 const PastVisitReport = ({ name, time, providerReport, medicalData, vitalData, width }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -45,23 +35,14 @@ const PastVisitReport = ({ name, time, providerReport, medicalData, vitalData, w
             return <BigShowcaseBoxWithLabel key={index} {...item} width={width} />;
         })}
 
-        {/* render patient's vital data with unit */}
-        {/* {vitalData.map((item, index) => {            
-            const { unit, width } = labelProperties[item.label];            
-            return <ShowcaseBoxWithLabel 
-                      key={index} {...item} unit={unit} width={width} 
-                      
-                    />;
-        })} */}
-
         <View style={{width: width, flexDirection: 'row', justifyContent: 'space-between',}}>
           {firstLine.map((item, index) => {
-            const { unit, width } = labelProperties[item.label];
             return (
               <ShowcaseBoxWithLabel
                 key={index}
-                {...item}
-                unit={unit}
+                label={item.label}
+                value={item.value}
+                unit={item.unit}
                 width='30%'
               />
             );
@@ -70,12 +51,12 @@ const PastVisitReport = ({ name, time, providerReport, medicalData, vitalData, w
 
         <View style={{width: width, flexDirection: 'row', justifyContent: 'space-between',}}>
           {secondLine.map((item, index) => {
-            const { unit, width } = labelProperties[item.label];
             return (
               <ShowcaseBoxWithLabel
                 key={index}
-                {...item}
-                unit={unit}
+                label={item.label}
+                value={item.value}
+                unit={item.unit}
                 width='45%'
               />
             );

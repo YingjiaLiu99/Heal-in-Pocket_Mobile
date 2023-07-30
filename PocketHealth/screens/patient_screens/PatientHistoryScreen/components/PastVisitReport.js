@@ -5,16 +5,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import BigShowcaseBoxWithLabel from '../../../../components/BigShowcaseBoxWithLabel';
 import ShowcaseBoxWithLabel from '../../../../components/ShowcaseBoxWithLabel';
 
-const labelProperties = {
-    // 'Pain Level(0~10,0-no pain,10-worst pain)': { unit: '', width: '95%' },
-    'Temperature': { unit: 'F', width: '95%' },
-    'Blood Pressure': { unit: 'mmHg', width: '95%' },
-    'Pulse': { unit: 'bpm', width: '95%' },
-    'Oxygen': { unit: '%', width: '95%' },
-    'Glucose': { unit: 'mg/dl', width: '95%' },  
-    'Weight': { unit: 'Lbs', width: '95%' },
-    // Add more entries as needed
-    };
 
 const PastVisitReport = ({ title, chiefComplaint, providerReport, medicalData, vitalData, width }) => {
   const [isExpanded, setIsExpanded] = useState(false);

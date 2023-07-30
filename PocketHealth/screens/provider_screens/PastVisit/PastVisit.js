@@ -88,6 +88,7 @@ export default function PastVisit( {navigation} ) {
       </View>
   
       <FlatList
+          style={{width:"100%"}}
           data={FullData}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
