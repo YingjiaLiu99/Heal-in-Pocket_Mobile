@@ -100,7 +100,6 @@ export default function PastVisit( {navigation} ) {
                       <Icon name={expandedDates.includes(item.date) ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
                   </TouchableOpacity>
                   {expandedDates.includes(item.date) && item.people.map((visit, index) => (
-                      
                       <PastVisitReport
                           key={index}
                           name={visit.name}

@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
     borderRadius: 20
   },
   confirmButton: {
-    backgroundColor: '#FF9248',
+    //backgroundColor: '#FF9248',
+    backgroundColor: '#FF6234',
     // ... other styles same as 'button' ...
     height: 55,
     width: '100%',
