@@ -10,21 +10,12 @@ const styles = StyleSheet.create({
         paddingVertical:0,      
         marginTop: 0,
         marginHorizontal:0,
+        marginBottom:10,
         // backgroundColor:'#FFFFFF'
       },
       
 
-      containerBottom: {
-        flex: 1,
-        alignItems: 'center',      
-        justifyContent: 'flex-start',
-        flexDirection: 'column',
-        paddingHorizontal: 20,
-        paddingVertical:0,      
-        marginTop: 0,
-        marginHorizontal:0,
-        // backgroundColor:'#FFFFFF'
-      },
+      
       header: {
         backgroundColor: '#C5D1F9',
         padding: 15,

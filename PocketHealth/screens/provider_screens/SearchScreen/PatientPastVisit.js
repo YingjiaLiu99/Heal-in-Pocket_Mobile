@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Keybo
 import { SearchBar } from '@rneui/themed';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 //import { useRoute } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles.js';
 import SearchPastVistReport from "./components/SearchPastVistReport.js"
@@ -157,9 +158,8 @@ export default function PatientPastVisit( {route, navigation} ) {
         {/* Change to user ID later */}
         {/* <Text>{user.firstName} {user.lastName}</Text>
         <Text>Date of Birth: {user.dateOfBirth}</Text> */}
-        
 
-        <FlatList>
+       <FlatList
           contentContainerStyle={{ paddingTop: 100 }}
           ListHeaderComponent={() => <Text>Patient Past Visit</Text>}
           data={FullData}
@@ -176,9 +176,9 @@ export default function PatientPastVisit( {route, navigation} ) {
                       <SearchPastVistReport
                           key={index}
                           time={visit.time}
-                          providerReport={visit.visitNote.providerReport}
+                          providerReport={visit.visitNote.ProviderNote}
                           medicalHistory={visit.visitNote.medicalHistory}
-                          vitalData={visit.visitNote.vitalData}
+                          vitalData={visit.visitNote.vitals}
                           width={'95%'}
                       />
                   ))}
@@ -187,7 +187,7 @@ export default function PatientPastVisit( {route, navigation} ) {
 
 
 
-        </FlatList>
+        />
       
 
 
