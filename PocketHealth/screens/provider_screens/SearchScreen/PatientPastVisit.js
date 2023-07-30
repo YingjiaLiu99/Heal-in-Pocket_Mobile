@@ -86,22 +86,6 @@ export default function PatientPastVisit( {route, navigation} ) {
   ];
 
 
-  // Assume all user has same fullData, data retrieve by user id. 
-  // const databaseByUser = [
-  //   {
-  //       name: "David Smith",
-  //       data: FullData 
-  //   },   
-
-  //   {
-  //     name: "Maria Rodriguez",
-  //     data: FullData          
-  //   },
-  // ];
-  
-
-
-
   const handleSubmit = () => {
       if (!lockerNewFeature) {
         setErrorMessage("New Feature is Coming :) ");
@@ -140,7 +124,7 @@ export default function PatientPastVisit( {route, navigation} ) {
           elevation: 3, 
           flexDirection: 'column',
           justifyContent: 'space-between',
-          height:100
+          height:70
         }}>
 
           <View style={{ flexDirection: 'row' }}>
@@ -148,23 +132,15 @@ export default function PatientPastVisit( {route, navigation} ) {
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {user.dateOfBirth}</Text>
-            <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOS: {DateOfService.value}</Text>
-          </View>
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>Site: {location.value}</Text>
           </View>
         </View>
 
-        {/* Change to user ID later */}
-        {/* <Text>{user.firstName} {user.lastName}</Text>
-        <Text>Date of Birth: {user.dateOfBirth}</Text> */}
-
-        <View style={{marginTop: 20,marginBottom:30,width:'100%', paddingTop:100}}>
+        <View style={{marginTop: 0,marginBottom:10,width:'100%', paddingTop:70}}>
             <Text style={{fontSize:35, fontWeight:400}}>Patient Past Visits</Text>            
         </View>
 
        <FlatList
-          style={{width:"95%"}}
+          style={{width:"100%"}}
           data={FullData}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
