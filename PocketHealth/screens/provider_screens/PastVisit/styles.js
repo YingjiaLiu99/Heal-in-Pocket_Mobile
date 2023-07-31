@@ -7,12 +7,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',      
     justifyContent: 'flex-start',
     flexDirection: 'column',
-    paddingHorizontal: 20,
-    paddingVertical:0,      
+    paddingHorizontal: 20,    
     marginTop: 0,
     marginHorizontal:0,
-    marginBottom:10,
-    // backgroundColor:'#FFFFFF'
+    marginBottom:20,    
   },
 
   header: {

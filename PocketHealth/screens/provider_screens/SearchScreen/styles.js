@@ -10,12 +10,9 @@ const styles = StyleSheet.create({
         paddingVertical:0,      
         marginTop: 0,
         marginHorizontal:0,
-        marginBottom:10,
-        // backgroundColor:'#FFFFFF'
+        marginBottom:20,
       },
-      
-
-      
+            
       header: {
         backgroundColor: '#C5D1F9',
         padding: 15,
@@ -62,11 +59,10 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 25
       },
-
       userShowcase: {
         height: 70,
         width: '100%',
-        marginVertical: 1,
+        marginVertical: 2,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#E4E3E9',

@@ -41,17 +41,16 @@ const styles = StyleSheet.create({
       color: '#fff',
       fontSize: 25
     },
-
     userShowcase: {
       height: 70,
       width: '100%',
-      marginVertical: 1,
+      marginVertical: 2,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: '#C5D1F9',
+      backgroundColor: '#E4E3E9',
       paddingVertical: 5,
       paddingHorizontal: 5,
-      borderRadius: 0,             
+      borderRadius: 15,             
     },
     userShowcaseText: {
       color: '#000000',

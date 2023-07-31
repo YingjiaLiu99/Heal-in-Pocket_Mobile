@@ -1,23 +1,13 @@
 import React, { useState, useRef } from "react";
-import { Text, View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Keyboard, ScrollView} from "react-native";
-import { SearchBar } from '@rneui/themed';
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-//import { useRoute } from '@react-navigation/native';
+import { Text, View, TouchableOpacity, FlatList,} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles.js';
 import SearchPastVistReport from "./components/SearchPastVistReport.js"
 
 
-
-
-
 export default function PatientPastVisit( {route, navigation} ) {
-    //const route = useRoute();
     const { user } = route.params;
-
-    const [errorMessage, setErrorMessage]= useState("");
-    const [lockerNewFeature, setLocker] = useState(false);
 
     const providerReport = [
       {   
@@ -49,51 +39,50 @@ export default function PatientPastVisit( {route, navigation} ) {
       },        
   ];
 
-  const vitalData = [
-      // {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
-      {label: 'Temp', value: '99'},
-      {label: 'Oxygen', value: '98'},
-      {label: 'Pulse', value: '70'},
-      {label: 'BP', value: '120/80'},
-      {label: 'Glucose', value: '110'},        
+  const vitalData = [     
+    {label: 'Temp', value: '99', unit: 'F'},
+    {label: 'Pulse', value: '70', unit:'bpm'},
+    {label: 'Oxygen', value: '98', unit:'%'},
+    {label: 'BP', value: '120/80', unit:'mmHg'},
+    {label: 'BG', value: '110', unit:'mg/dl'},        
   ];
 
-  const DateOfService = {label: 'Date of Service', value: '2023-07-21'};
-  const location = {label: 'Care Location', value: 'Street Corner Care'};
+  const patientInfo = [
+    {label:'Name', value: `${user.firstName} ${user.lastName}` },
+    {label:'DOB', value: user.dateOfBirth},
+    {label:'location', value:'Street Corner Care'},
+    {label:'DOS', value:'11/12/2022'},
+  ];
 
-
-  const dummyNote = {
-    ProviderNote: providerReport,
-    medicalHistory: medicalHistory,
-    vitals: vitalData
-  };
+  const chiefComplaint = {label: "Chief Complaint", value: 'Patient feels dizzy after diarrhea'};
 
   const FullData = [
     {
-        date: "Nov, 12, 2022",
-        record: [
-            { time: "10:00 am", visitNote: dummyNote},
-            { time: "12:00 pm", visitNote: dummyNote},
-        ],    
-    },   
+        title: "Nov, 12, 2022",
+        patientInfo:patientInfo,
+        chiefComplaint: chiefComplaint,
+        providerReport: providerReport,
+        medicalData: medicalHistory,
+        vitalData: vitalData,
 
+    },
     {
-        date: "Dec, 11, 2022",
-        record: [
-            { time: "9:00 am", visitNote: dummyNote},
-        ],            
-    }
-  ];
-
-
-  const handleSubmit = () => {
-      if (!lockerNewFeature) {
-        setErrorMessage("New Feature is Coming :) ");
-      }
-      else {
-        navigation.navigate('Create New Note');
-      }
-  }; 
+        title: "Nov, 8, 2022",
+        patientInfo:patientInfo,
+        chiefComplaint: chiefComplaint,
+        providerReport: providerReport,
+        medicalData: medicalHistory,
+        vitalData: vitalData,            
+    },
+    {
+        title: "Nov, 1, 2022",
+        patientInfo:patientInfo,
+        chiefComplaint: chiefComplaint,
+        providerReport: providerReport,
+        medicalData: medicalHistory,
+        vitalData: vitalData,            
+    },
+];
 
   const [expandedDates, setExpandedDates] = useState([]);
 
@@ -112,68 +101,33 @@ export default function PatientPastVisit( {route, navigation} ) {
 
 
   return (
-    <View style={styles.container}>
-        <View style={{
-          position: 'absolute', 
-          top: 0, 
-          left: 0, 
-          right: 0, 
-          padding: 10, 
-          backgroundColor: '#DDE5FD', 
-          zIndex: 999, 
-          elevation: 3, 
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          height:70
-        }}>
+    <View style={styles.container}>        
 
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={{fontSize: 25, fontWeight: '500', width: '100%'}}>Name: {user.firstName} {user.lastName}</Text>
-          </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {user.dateOfBirth}</Text>
-          </View>
+        <View style={{marginTop: 0,marginBottom:10,width:'100%', paddingTop:10}}>
+            <Text style={{fontSize:30, fontWeight:400}}>{user.firstName} {user.lastName}</Text> 
+            <Text style={{fontSize: 20}}>DOB: {user.dateOfBirth}</Text>           
         </View>
 
-        <View style={{marginTop: 0,marginBottom:10,width:'100%', paddingTop:70}}>
-            <Text style={{fontSize:35, fontWeight:400}}>Patient Past Visits</Text>            
+        <View style={{alignItems: 'center',}}>
+          <Text style={{fontSize: 25}}>Past Visits</Text>
         </View>
 
        <FlatList
           style={{width:"100%"}}
           data={FullData}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View>
-                <TouchableOpacity 
-                    style={[styles.header, { backgroundColor: expandedDates.includes(item.date) ? 'white' : 'white' }]} 
-                      onPress={() => toggleExpandedDate(item.date)}>
-                  <Text style={styles.dateText}>{item.date}</Text>
-                  <Icon name={expandedDates.includes(item.date) ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
-                </TouchableOpacity>
-                  {expandedDates.includes(item.date) && item.record.map((visit, index) => (
-                      <SearchPastVistReport
-                          key={index}
-                          time={visit.time}
-                          providerReport={visit.visitNote.ProviderNote}
-                          medicalHistory={visit.visitNote.medicalHistory}
-                          vitalData={visit.visitNote.vitals}
-                          width={'95%'}
-                      />
-                  ))}
-            </View>
-          )}
+          renderItem={({ item }) =>           
+            <SearchPastVistReport                
+                title={item.title}
+                patientInfo={item.patientInfo}
+                providerReport={item.providerReport}
+                medicalHistory={item.medicalData}
+                vitalData={item.vitalData}
+                chiefComplaint={item.chiefComplaint}
+                width={'95%'}
+            />}            
         />
       
-        {!lockerNewFeature ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}
-
-        <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:30}}>
-          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}>
-              {"Create New Note"}
-            </Text>
-          </TouchableOpacity>
-        </View>
 
       </View>
  

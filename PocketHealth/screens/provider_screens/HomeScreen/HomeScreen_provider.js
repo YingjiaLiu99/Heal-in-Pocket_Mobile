@@ -49,7 +49,7 @@ export default function HomeScreen({navigation}) {
         marginHorizontal:15,
         paddingTop:10,
         paddingHorizontal:0,
-        height:580
+        height:550
       }}>
         <ScrollView>
           {requests.length > 0 ? (

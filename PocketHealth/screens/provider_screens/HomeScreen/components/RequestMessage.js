@@ -1,22 +1,14 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 
 const RequestMessage= ({ buttonNoteText, subText, onPress}) => {
   return (
       <TouchableOpacity style={styles.ButtonOuterContainer} onPress={onPress}>
-      <View style={styles.requestContainer}>
-        <ScrollView>
-          <Text style={styles.ButtonNotesText}>{buttonNoteText}</Text>
-        </ScrollView>
-        <Text style={styles.SubText}>{subText}</Text>
-      </View>
-      {/* <TouchableOpacity
-        style={styles.buttonContainer}
-        // onPress={onPress}
-      > */}
-        {/* <Text style={{color:'#FFFFFF'}}>Accept</Text> */}
-      {/* </TouchableOpacity> */}
+        <View style={styles.requestContainer}>        
+          <Text numberOfLines={3} ellipsizeMode='tail' style={styles.ButtonNotesText}>{buttonNoteText}</Text>        
+          <Text style={styles.SubText}>{subText}</Text>
+        </View>      
       </TouchableOpacity>
   );
 };
@@ -27,7 +19,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     marginHorizontal: 10,
-    padding: 10,
+    paddingHorizontal:10,
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -36,7 +28,8 @@ const styles = StyleSheet.create({
     height:110,
   },
   requestContainer: {
-    alignItems: 'left',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
     flexDirection: 'column',
     flex: 1,
   },
@@ -44,10 +37,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     flexShrink: 1,
-    textAlign: 'left',    
+    textAlign: 'left',
   },
   SubText: {
-    fontSize: 16,
+    fontSize: 14,
     marginTop: 5,
     textAlign: 'left',
   },

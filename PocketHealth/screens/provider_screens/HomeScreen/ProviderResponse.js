@@ -75,11 +75,11 @@ return (
             elevation: 3, 
             flexDirection: 'column',
             justifyContent: 'space-between',
-            height:80
+            height:85
           }}>
             <View>
 
-            <View style={{ flexDirection: 'row', paddingTop:0, paddingLeft:5}}>
+            <View style={{ flexDirection: 'row', paddingLeft:5}}>
               <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{firstName.value} {lastName.value}</Text>
             </View>              
             
@@ -96,7 +96,7 @@ return (
         </View>
 
           <ScrollView>
-          <KeyboardAwareScrollView contentContainerStyle={{...styles.container, paddingTop: 80}}>
+          <KeyboardAwareScrollView contentContainerStyle={{...styles.container, paddingTop: 85}}>
             <Text style={{fontSize:27}}>Visit Note</Text>
 
             <BigShowcaseBoxWithLabel

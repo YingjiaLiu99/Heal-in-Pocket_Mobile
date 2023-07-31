@@ -5,22 +5,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import BigShowcaseBoxWithLabel from '../../../../components/BigShowcaseBoxWithLabel';
 import ShowcaseBoxWithLabel from '../../../../components/ShowcaseBoxWithLabel';
 
-const labelProperties = {
-    // 'Pain Level(0~10,0-no pain,10-worst pain)': { unit: '', width: '95%' },
-    'Temp': { unit: 'F', width: '95%' },
-    'Oxygen': { unit: '%', width: '95%' },
-    'Pulse': { unit: 'bpm', width: '95%' },
-    'BP': { unit: 'mmHg', width: '95%' },
-    'Glucose': { unit: 'mg/dl', width: '95%' },  
-    'Weight': { unit: 'Lbs', width: '95%' },
-    // Add more entries as needed
-    };
-
-
-const SearchPastVisitReport = ({ time, providerReport, medicalHistory, vitalData, width }) => {
+const SearchPastVisitReport = ({ title, patientInfo, chiefComplaint, providerReport, medicalHistory, vitalData, width }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-
-  // Customized settings depends on real case
   const firstLine = vitalData.slice(0, 3);
   const secondLine = vitalData.slice(3);
 
@@ -31,58 +17,67 @@ const SearchPastVisitReport = ({ time, providerReport, medicalHistory, vitalData
         style={styles.header} 
         onPress={() => setIsExpanded(!isExpanded)}
       >
-        <Text style={styles.headerText}>{time}</Text>
+        <Text style={styles.headerText}>{title}</Text>        
         <Icon name={isExpanded ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
       </TouchableOpacity>
 
       {isExpanded && (
         <View style={ {alignItems: 'center'} }>
-        <Text style={styles.classifyText}>Medical Provider's note:</Text> 
-
+        <Text style={styles.classifyText}>Patient's Infomation:</Text>
+        <ShowcaseBoxWithLabel                
+          label={patientInfo[0].label}
+          value={patientInfo[0].value}                
+          width={width}
+        />
+        <ShowcaseBoxWithLabel                
+          label={patientInfo[1].label}
+          value={patientInfo[1].value}                       
+          width={width}
+        />
+        <BigShowcaseBoxWithLabel label={"Site/DOS"} value={patientInfo[2].value + ' [' + patientInfo[3].value+']'} width={width}/>
+        <Text style={styles.classifyText}>Chief Complaint:</Text>
+        <BigShowcaseBoxWithLabel label={chiefComplaint.label} value={chiefComplaint.value} width={width}/>
+        <Text style={styles.classifyText}>Medical Provider's Note:</Text>
         {/* render doctor's report */}
         {providerReport.map((item, index) => {            
-            return <BigShowcaseBoxWithLabel key={index} {...item} width={width} />;
+            return <BigShowcaseBoxWithLabel key={index} {...item} width={width}/>;
         })} 
-        <Text style={styles.classifyText}>Patient's Infomation:</Text>
+        
+        <Text style={styles.classifyText}>Patient's Medical Infomation:</Text>
         {/* render patient's medical history */}
-        {medicalHistory.map((item, index) => {            
-            return <BigShowcaseBoxWithLabel key={index} {...item} width={width} />;
-        })}
+        <BigShowcaseBoxWithLabel label={medicalHistory[0].label} value={medicalHistory[0].value} width={width}/>
+        <BigShowcaseBoxWithLabel label={"Current Medication/Allergies"} value={medicalHistory[1].value + ' [Allergies: ' + medicalHistory[2].value+']'} width={width}/>
 
         {/* render patient's vital data with unit */}
-        {/* Current structures are: 
-          * a a a in first line and b b in second line
-          */}
-
-        <View style={{width: width, flexDirection: 'row', justifyContent: 'space-between',}}>
-          {firstLine.map((item, index) => {
-            const { unit, width } = labelProperties[item.label];
-            return (
-              <ShowcaseBoxWithLabel
-                key={index}
-                {...item}
-                unit={unit}
-                width='30%'
-              />
-            );
-          })}
+        <View style={{width:'95%', flexDirection: 'row', justifyContent: 'space-between',}}>
+            {firstLine.map((item, index) => {
+              return (
+                <ShowcaseBoxWithLabel 
+                  key={index}
+                  label={item.label}
+                  value={item.value}
+                  unit={item.unit}
+                  width='30%'
+                />
+              )
+            })}
+        </View>
+        <View style={{width:'95%', flexDirection: 'row', justifyContent: 'space-between',}}>
+            {secondLine.map((item, index) => {
+              return (
+                <ShowcaseBoxWithLabel
+                  key={index}
+                  label={item.label}
+                  value={item.value}
+                  unit={item.unit}
+                  width='45%'
+                />
+              )
+            })}
         </View>
 
-        <View style={{width: width, flexDirection: 'row', justifyContent: 'space-between',}}>
-          {secondLine.map((item, index) => {
-            const { unit, width } = labelProperties[item.label];
-            return (
-              <ShowcaseBoxWithLabel
-                key={index}
-                {...item}
-                unit={unit}
-                width='45%'
-              />
-            );
-          })}
         </View>
 
-      </View>
       )}
     </View>
   );

@@ -6,18 +6,24 @@ import styles from './styles.js';
 import PastVisitReport from './components/PastVisitReport.js';
 
 export default function PastVisit( {navigation} ) {
+    const patientInfo = [
+        {label:'Name', value:'James Doe'},
+        {label:'DOB', value:'11/11/1977'},
+        {label:'location', value:'Street Corner Care'},
+        {label:'DOS', value:'11/12/2022'},
+    ];
 
     const providerReport = [
         {   
-            label: 'Reason For consultation', 
+            label: 'Subjective', 
             value: 'Left hand wound leaking pus'
         },
         {   
-            label: 'Assessment', 
+            label: 'Objective', 
             value: 'Left hand wound infected, cleaned wound with saline and applied antibiotic ointment. Antibiotic ointment samples given to patients.'
         },
         {   
-            label: 'Future Plan', 
+            label: 'Assessment / Plan', 
             value: 'Use antibiotic ointment twice a day. Come back to street corner care next week.'
         },
     ];
@@ -37,16 +43,19 @@ export default function PastVisit( {navigation} ) {
         },        
     ];
 
-    const vitalData = [
-        // {label: 'Pain Level(0~10,0-no pain,10-worst pain)', value: '8'},
-        {label: 'Temp', value: '99'},
-        {label: 'Oxygen', value: '98'},
-        {label: 'Pulse', value: '70'},
-        {label: 'BP', value: '120/80'},
-        {label: 'Glucose', value: '110'},        
+    const vitalData = [        
+        {label: 'Temp', value: '99', unit: 'F'},
+        {label: 'Pulse', value: '70', unit:'bpm'},
+        {label: 'Oxygen', value: '98', unit:'%'},
+        {label: 'BP', value: '120/80', unit:'mmHg'},
+        {label: 'BG', value: '110', unit:'mg/dl'},        
     ];
 
+    const chiefComplaint = {label: "Chief Complaint", value: 'Patient feels dizzy after diarrhea'};
+
     const dummyNote = {
+        chiefComplaint: chiefComplaint,
+        patientInfo:patientInfo,
         SOAPNote: providerReport,
         medicalHistory: medicalData,
         vitals: vitalData
@@ -100,15 +109,19 @@ export default function PastVisit( {navigation} ) {
                       <Icon name={expandedDates.includes(item.date) ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
                   </TouchableOpacity>
                   {expandedDates.includes(item.date) && item.people.map((visit, index) => (
+                    <View key={index} style={{ alignItems: 'center' }}>
                       <PastVisitReport
                           key={index}
                           name={visit.name}
                           time={visit.time}
+                          chiefComplaint={chiefComplaint}
                           providerReport={visit.visitNote.SOAPNote}
                           medicalData={visit.visitNote.medicalHistory}
                           vitalData={visit.visitNote.vitals}
+                          patientInfo={visit.visitNote.patientInfo}
                           width={'95%'}
                       />
+                    </View>
                   ))}
               </View>
           )}

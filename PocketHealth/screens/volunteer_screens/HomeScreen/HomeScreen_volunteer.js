@@ -83,6 +83,8 @@ export default function HomeScreen({navigation}) {
 
         <View style={{width:'100%', marginTop:10}}>
           <SearchBar
+            containerStyle={{borderRadius: 15, borderWidth: 1, borderColor: "transparent", backgroundColor: "#E4E3E9",  borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
+            inputContainerStyle={{backgroundColor: '#E4E3E9'}}
             ref={searchRef}
             placeholder="Enter patient first name, last name"
             onChangeText={handleSearch}

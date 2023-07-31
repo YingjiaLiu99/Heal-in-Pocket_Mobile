@@ -79,8 +79,6 @@ import SettingsMainScreen_vol from './screens/volunteer_screens/SettingsScreen/S
 
 
 
-
-
 // the main stack:
 const Stack = createStackNavigator();
 // the login stack(which supports patients, providers, and admin login)

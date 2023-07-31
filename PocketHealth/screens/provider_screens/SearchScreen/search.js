@@ -84,7 +84,7 @@ export default function PatientPastVisit( {navigation} ) {
                 </View>
 
                 <View style={{alignItems:'center'}}>
-                    <Text style={{fontSize:18, fontWeight:300}}>Search Patient Profile</Text>          
+                    <Text style={{fontSize:18, fontWeight:300}}>Search Patient Past Visits</Text>          
                 </View>
 
                 <View style={{width:'100%', marginTop:10}}>
