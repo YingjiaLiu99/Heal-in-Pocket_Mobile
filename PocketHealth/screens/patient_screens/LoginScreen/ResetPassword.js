@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -10,6 +10,7 @@ export default function ResetPassword({navigation}) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const pwdRef = useRef();
 // The Backend code goes here
   const handleReset = () => {   
     if (!password || !confirmPassword) {
@@ -43,14 +44,20 @@ export default function ResetPassword({navigation}) {
         onChangeText={(text) => setPassword(text)}  
         placeholder="Please Enter Your New Password"   
         secureTextEntry={true}
+        autoFocus
+        returnKeyType='next'
+        onSubmitEditing={() => pwdRef.current.focus()}
       />
       <InputBoxWithLabel
+        ref={pwdRef}
         label="Confirm Password*"
         value={confirmPassword}        
         onChangeText={(text) => setConfirmPassword(text)}
         placeholder="Please Enter Your New Password Again"
         secureTextEntry={true}
+        returnKeyType='done'
       />
+
 
       <View style={{width:'100%',alignItems:'center',marginTop:50,marginBottom:40}}>
         <TouchableOpacity style={styles.button} onPress={handleReset}>

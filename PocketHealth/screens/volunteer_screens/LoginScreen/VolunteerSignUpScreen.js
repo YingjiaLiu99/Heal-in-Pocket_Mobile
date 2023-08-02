@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -12,6 +12,9 @@ export default function VolunteerSignUpScreen({navigation}) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const pwdRef1 = useRef();
+  const pwdRef2 = useRef();
+  const pwdRef3 = useRef();
 // The Backend code goes here
   const handleSignUp = () => {   
     if (!phoneNumber || !password || !confirmPassword) {
@@ -34,7 +37,7 @@ export default function VolunteerSignUpScreen({navigation}) {
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
-      <InputBoxWithLabel
+      {/* <InputBoxWithLabel
         label="Pocket Health Code*"    
         value={pocketHealthCode}  
         onChangeText={(text) => setCode(text)}  
@@ -61,6 +64,43 @@ export default function VolunteerSignUpScreen({navigation}) {
         onChangeText={(text) => setConfirmPassword(text)}
         placeholder="Please Enter Your Password Again"
         secureTextEntry={true}
+      /> */}
+      <InputBoxWithLabel
+        autoFocus
+        label="Pocket Health Code*"    
+        value={pocketHealthCode}  
+        onChangeText={(text) => setCode(text)}  
+        placeholder="Please Enter Your Invitation Code"    
+        keyboardType="phone-pad"   
+        onSubmitEditing={() => pwdRef1.current.focus()}       
+      />
+      <InputBoxWithLabel
+        ref={pwdRef1}
+        label="Phone Number*"    
+        value={phoneNumber}  
+        onChangeText={(text) => setPhoneNumber(text)}  
+        placeholder="Please Enter Your Phone Number"    
+        keyboardType="phone-pad" 
+        onSubmitEditing={() => pwdRef2.current.focus()}         
+      />
+      <InputBoxWithLabel
+        ref={pwdRef2}
+        label="Password*"   
+        value={password}   
+        onChangeText={(text) => setPassword(text)}  
+        placeholder="Please Enter Password"   
+        secureTextEntry={true}
+        returnKeyType='next'
+        onSubmitEditing={() => pwdRef3.current.focus()}  
+      />
+      <InputBoxWithLabel
+        ref={pwdRef3}
+        label="Confirm Password*"
+        value={confirmPassword}        
+        onChangeText={(text) => setConfirmPassword(text)}
+        placeholder="Please Enter Your Password Again"
+        secureTextEntry={true}
+        returnKeyType='done'
       />
 
       <View style={{width:'100%',alignItems:'center',marginTop:50,marginBottom:40}}>

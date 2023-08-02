@@ -32,6 +32,7 @@ export default function ProviderEnterPhoneNumToResetPass({navigation}) {
             {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
             <InputBoxWithLabel
+                autoFocus
                 label="Phone Number*"    
                 value={phoneNumber}  
                 onChangeText={(text) => setPhoneNumber(text)}  

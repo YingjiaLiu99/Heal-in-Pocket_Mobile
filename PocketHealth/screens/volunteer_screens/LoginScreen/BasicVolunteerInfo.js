@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -10,6 +10,8 @@ export default function BasicVolunteerInfo({navigation}) {
     const [errorMessage, setErrorMessage] = useState('');
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');   
+    const pwdRef1 = useRef();
+    const pwdRef2 = useRef();
     
 
     const handleSignUp = () => {
@@ -43,19 +45,25 @@ return (
         {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
         <InputBoxWithLabel
+            autoFocus
             label="First Name*"    
             value={firstName}  
             onChangeText={(text) => setFirstName(text)}  
             placeholder="Please Enter Your First Name"    
-            keyboardType="default"        
+            keyboardType="default"  
+            returnKeyType='next'
+            onSubmitEditing={() => pwdRef1.current.focus()}  
+
         />
 
         <InputBoxWithLabel
+            ref={pwdRef1}
             label="Last Name*"    
             value={lastName}  
             onChangeText={(text) => setLastName(text)}  
             placeholder="Please Enter Your Last Name"    
-            keyboardType="default"        
+            keyboardType="default"    
+            returnKeyType='done'
         />
 
         <View style={{width:'100%',alignItems:'flex-end',marginTop:30,marginBottom:40}}>

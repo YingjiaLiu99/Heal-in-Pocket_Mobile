@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -8,6 +8,8 @@ import styles from './styles';
 const MoreInfoProvider = ({navigation}) =>{    
     const [bio, setBio] = useState('');
     const [experience, setExperience] = useState('');
+    const pwdRef1 = useRef();
+    const pwdRef2 = useRef();
 
     const handleCreateAccount = () => {
         console.log(`Bio: ${bio}`);
@@ -33,21 +35,27 @@ const MoreInfoProvider = ({navigation}) =>{
 
             <View style={{width:'100%',alignItems:'center',marginTop:0,marginBottom:10}}>
                 <BigInputBoxWithLabel
+                    autoFocus
                     label="Bio"        
                     value={bio}
                     onChangeText={(text) => setBio(text)}
                     placeholder="Write a short introduction of yourself... (Optional) "
                     keyboardType="default"
                     width='100%'
+                    returnKeyType='next'
+                    onSubmitEditing={() => pwdRef1.current.focus()}  
+
                 />
 
                 <BigInputBoxWithLabel
+                    ref={pwdRef1}
                     label="Experience"        
                     value={experience}
                     onChangeText={(text) => setExperience(text)}
                     placeholder="Write down any experience you want to share... (Optional) "
                     keyboardType="default"
                     width='100%'
+                    returnKeyType='done'
                 />
             </View>
             

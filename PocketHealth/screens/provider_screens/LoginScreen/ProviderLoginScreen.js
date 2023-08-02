@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -9,6 +9,7 @@ export default function ProviderLoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const pwdRef = useRef();
 
 // The backend authentification should put inside handleLogin
 
@@ -48,7 +49,7 @@ export default function ProviderLoginScreen({ navigation }) {
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}      
       
-      <InputBoxWithLabel
+      {/* <InputBoxWithLabel
         label="Phone Number"
         value={phoneNumber}
         onChangeText={(text) => setPhoneNumber(text)}
@@ -61,6 +62,25 @@ export default function ProviderLoginScreen({ navigation }) {
         onChangeText={(text) => setPassword(text)}              
         placeholder="Please Enter Password"
         secureTextEntry
+      /> */}
+      <InputBoxWithLabel
+        label="Phone Number*"
+        value={phoneNumber}
+        onChangeText={(text) => setPhoneNumber(text)}
+        placeholder="Please Enter Your Phone Number"
+        keyboardType='phone-pad'
+        autoFocus
+        returnKeyType='next'
+        onSubmitEditing={() => pwdRef.current.focus()}
+      />
+      <InputBoxWithLabel
+        ref={pwdRef}
+        label="Password*"
+        value={password}
+        onChangeText={(text) => setPassword(text)}              
+        placeholder="Please Enter Password"
+        secureTextEntry
+        returnKeyType='done'
       />
 
       <TouchableOpacity onPress={handleForgetPassword}>

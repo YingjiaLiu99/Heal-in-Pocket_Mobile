@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 
-const BigInputBoxWithLabel = ({ label, value, onChangeText, placeholder, ...props }) => {
+const BigInputBoxWithLabel = ({ label, value, onChangeText, placeholder, width,...props },ref) => {
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.inputLabel}>{label}</Text>
       <TextInput
+        ref={ref}
         style={styles.inputField}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
+        width = {width}
         placeholderTextColor='#7C7C7C'
         multiline={true}  // allow multiple lines
         numberOfLines={4} // start off with 4 lines
+        blurOnSubmit={true} 
         {...props}
       />
     </View>
@@ -40,4 +43,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BigInputBoxWithLabel;
+export default forwardRef(BigInputBoxWithLabel);

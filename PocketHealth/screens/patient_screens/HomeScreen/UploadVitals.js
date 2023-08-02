@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, createRef, useEffect } from 'react';
 import { Text, View, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackActions } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import styles from './styles';
 
 
 export default function UploadVitals({ navigation }) {
+
 
   const labelProperties = {    
     'Temperature': { unit: 'F', width: '95%' },
@@ -22,6 +23,17 @@ export default function UploadVitals({ navigation }) {
     values[label] = '';
     return values;
   }, {});
+
+  const inputRefs = useRef([]);
+  inputRefs.current = Object.keys(labelProperties).map(
+    (_, index) => inputRefs.current[index] ?? createRef()
+  );
+
+  useEffect(() => {
+    if (inputRefs.current[0]) {
+      inputRefs.current[0].current.focus(); 
+    }
+  }, []);
 
   // function to check if the patient enter any vital
   const isInputEmpty = (inputValues) => {
@@ -80,6 +92,7 @@ export default function UploadVitals({ navigation }) {
       setConfirmSubmit(false);
     }    
   };
+  
 
   return (        
     <View style={{flex:1}}>
@@ -93,6 +106,7 @@ export default function UploadVitals({ navigation }) {
       <View style={{width:"100%"}}>
         {Object.entries(labelProperties).map(([label, properties], index) => (            
           <VitalsInputBoxWithLabel
+            ref={inputRefs.current[index]}
             key={index}
             label={label}
             value={inputValues[label] || ''}

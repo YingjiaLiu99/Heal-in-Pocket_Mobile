@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -9,6 +9,7 @@ export default function LoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const pwdRef = useRef();
 
 // The backend authentification should put inside handleLogin
 
@@ -39,7 +40,7 @@ export default function LoginScreen({ navigation }) {
   const handleForgetPassword = () => {
     navigation.navigate('Patient Enter Phone Num to Reset Password');    
   };  
-
+  
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
     
@@ -55,13 +56,18 @@ export default function LoginScreen({ navigation }) {
         onChangeText={(text) => setPhoneNumber(text)}
         placeholder="Please Enter Your Phone Number"
         keyboardType='phone-pad'
+        autoFocus
+        returnKeyType='next'
+        onSubmitEditing={() => pwdRef.current.focus()}
       />
       <InputBoxWithLabel
+        ref={pwdRef}
         label="Password*"
         value={password}
         onChangeText={(text) => setPassword(text)}              
         placeholder="Please Enter Password"
         secureTextEntry
+        returnKeyType='done'
       />
 
       <TouchableOpacity onPress={handleForgetPassword}>

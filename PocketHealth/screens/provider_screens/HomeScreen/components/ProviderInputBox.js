@@ -1,12 +1,11 @@
-import React, { useRef } from 'react';
+
+import React, { forwardRef } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-const ProviderInputBox = ({ label, value, width, placeholder, onChangeText, onFocus }) => {
-
-  const inputRef = useRef(null);
+const ProviderInputBox = forwardRef(({ label, value, width, placeholder, onChangeText, onFocus, autoFocus, onSubmitEditing, returnKeyType = "none" }, ref) => {
 
   const handlePress = () => {
-    inputRef.current.focus();
+    ref.current.focus();
   };
 
   return (
@@ -16,20 +15,24 @@ const ProviderInputBox = ({ label, value, width, placeholder, onChangeText, onFo
           <View style={styles.labelValueContainer}>
             <Text style={styles.boxLabel}>{label}</Text>              
               <TextInput
-                ref={inputRef}
-                style={styles.boxField}
+                ref={ref}
+                style={[styles.boxField, { width: width }]}
                 value={value}
                 onChangeText={onChangeText}
                 onFocus={onFocus}
                 placeholder={placeholder}
-                multiline                
+                multiline={true}
+                autoFocus={autoFocus}
+                returnKeyType={returnKeyType}
+                onSubmitEditing={onSubmitEditing}  
+                blurOnSubmit={true}             
               />
           </View>
         </View>
       </View>
     </TouchableOpacity>
   );
-};
+});
 
 const styles = StyleSheet.create({
   boxContainer: {

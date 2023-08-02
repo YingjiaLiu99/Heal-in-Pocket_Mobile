@@ -70,6 +70,7 @@ export default function PhoneVerification({route, navigation}) {
             {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
             <InputBoxWithLabel
+                autoFocus
                 label="Verification Code"    
                 value={verificationCode}  
                 onChangeText={(text) => setverificationCode(text)}  

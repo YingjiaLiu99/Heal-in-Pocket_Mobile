@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -9,6 +9,7 @@ import styles from './styles.js';
 export default function EnterPhoneNumber({navigation}) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [errorMessage, setErrorMessage] = useState('');  
+
 
 // The Backend code goes here
   const handleReset = () => {   
@@ -34,6 +35,7 @@ export default function EnterPhoneNumber({navigation}) {
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
       <InputBoxWithLabel
+        autoFocus
         label="Phone Number*"    
         value={phoneNumber}  
         onChangeText={(text) => setPhoneNumber(text)}  
