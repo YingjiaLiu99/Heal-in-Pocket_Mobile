@@ -15,7 +15,7 @@ const WelcomeScreen = ({navigation}) => {
     };
 
   return (
-    <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor:'#FFFFFF', paddingHorizontal: 20, paddingTop:60}}>
+    <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor:'#FFFFFF', paddingHorizontal: 20, paddingTop:'10%'}}>
         
         <View style={{width:'100%', alignItems:'flex-end'}}>        
             <Image
@@ -26,7 +26,7 @@ const WelcomeScreen = ({navigation}) => {
 
         <View style={{alignItems:'flex-start', width:'100%'}}>
             <Text style={{fontSize: 45, fontWeight: '400', textAlign: 'left', marginBottom:5}}>Welcome,</Text>
-            <Text style={{fontSize: 45, fontWeight: '400', textAlign: 'left',  marginBottom:50}}>to Pocket Health!</Text>            
+            <Text style={{fontSize: 45, fontWeight: '400', textAlign: 'left',  marginBottom:"10%"}}>to Pocket Health!</Text>            
         </View>   
 
         <Text style={{fontSize: 35, fontWeight: '400', textAlign: 'left'}}>Are You a...</Text>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     button: {
       height: 80,
       width: '100%',
-      marginBottom: 25,
+      marginBottom: "5%",
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: '#395BCD',

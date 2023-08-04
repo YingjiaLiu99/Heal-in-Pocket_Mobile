@@ -1,42 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 
 import styles from './styles';
 import RequestMessage from './components/RequestMessage'; 
+import RequestMessContext from "../../../context/context_requestMess";
 
-export default function HomeScreen({navigation}) { 
 
-  const initialRequests = [
+export default function HomeScreen({navigation}) {
 
-    { buttonNoteText: "Persistent sore throat and difficulty swallowing", subText: "Jessica Young   07/15 05:20PM   New Patient" },
-    { buttonNoteText: "Feeling nauseous with occasional vomiting", subText: "Jennifer Hall   07/17 08:45AM   Follow up" },
-    { buttonNoteText: "Swelling and pain in the right knee, Shortness of breath and chest tightness", subText: "Robert Nelson   07/18 01:30PM   New Patient" },
-    { buttonNoteText: "Frequent headaches and blurred vision", subText: "James White   07/19 02:10PM  Follow up" },
-    { buttonNoteText: "Unexplained weight loss and fatigue", subText: "Mary Lewis   07/20 11:00AM  Follow up" },
-    { buttonNoteText: "Sharp chest pain after physical exertion, Sharp lower back pain radiating to legs", subText: "Sarah Clark   07/21 12:55PM  Follow up" },
-    { buttonNoteText: "Persistent cough and runny nose", subText: "Alice Thompson   07/23 03:25PM   New Patient" },
-    { buttonNoteText: "Severe abdominal pain,Sudden rash and itching on the arms", subText: "Bob Martin   07/23 02:15PM   New Patient" },
-    { buttonNoteText: "Experiencing constant dizziness, High fever and chills for two days, Feeling unusually thirsty and frequent urination", subText: "Jane Smith   07/24 10:30AM   Follow up" },
-
-  ];
-
-  const [requests, setRequests] = useState(initialRequests);
-
-  const handleAccept = (index) => {    
-    // navigation.navigate("Provider Response");
-    // const newRequests = [...requests];
-    // newRequests.splice(index, 1);
-    // setRequests(newRequests);
-    navigation.navigate("Provider Response", { 
-      index,
-      requests, 
-      setRequests 
-    })
+  const {requests, setRequests} = useContext(RequestMessContext);
+  const handleAccept = (visit_id) => {
+    navigation.navigate("Provider Response", { visit_id })
   };
 
   return (
     <View style={{flex: 1}}>
-      <Text style={styles.heading}>Welcome, Dr. Aram</Text>
+      <Text style={styles.heading}>Welcome, Doctor</Text>
       <Text style={{fontSize:25,textAlign: 'center', }}>Current Request </Text>
       <Text style={{fontSize:18,color:'gray', textAlign: 'center' }}>{requests.length} patient(s) are waiting</Text>
       
@@ -56,9 +35,11 @@ export default function HomeScreen({navigation}) {
             requests.map((request, index) => (
               <RequestMessage
                 key={index}
-                buttonNoteText={request.buttonNoteText}
-                subText={request.subText}
-                onPress={() => handleAccept(index)}
+                chiefComplaint={request.chiefComplaint}
+                name={request.name}
+                time={request.time}
+                tag={request.tag}
+                onPress={() => handleAccept(request.visit_id)}
               />
             ))
           ) : (

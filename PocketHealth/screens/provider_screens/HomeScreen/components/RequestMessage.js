@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 
-const RequestMessage= ({ buttonNoteText, subText, onPress}) => {
+const RequestMessage= ({ chiefComplaint, name, time, tag, onPress}) => {
   return (
       <TouchableOpacity style={styles.ButtonOuterContainer} onPress={onPress}>
         <View style={styles.requestContainer}>        
-          <Text numberOfLines={3} ellipsizeMode='tail' style={styles.ButtonNotesText}>{buttonNoteText}</Text>        
-          <Text style={styles.SubText}>{subText}</Text>
+          <Text numberOfLines={3} ellipsizeMode='tail' style={styles.ButtonNotesText}>{chiefComplaint}</Text>        
+          <Text style={styles.SubText}>{name} {time} {tag}</Text>
         </View>      
       </TouchableOpacity>
   );

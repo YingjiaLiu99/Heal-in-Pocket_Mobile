@@ -12,7 +12,7 @@ const SearchPastVisitReport = ({ title, patientInfo, chiefComplaint, providerRep
 
 
   return (
-    <View style={{ width: width}}>
+    <View style={{ width: '100%'}}>
       <TouchableOpacity 
         style={styles.header} 
         onPress={() => setIsExpanded(!isExpanded)}
