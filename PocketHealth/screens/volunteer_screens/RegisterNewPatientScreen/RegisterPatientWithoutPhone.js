@@ -1,7 +1,10 @@
 // react native library：
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+// the visitdata context
+
+
 // own components and styles
 import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
 import InputBoxWithLabel from '../../../components/InputBoxWithLabel';
@@ -51,7 +54,14 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
     }
     else {
       console.log(`First Name: ${firstName}, Last Name: ${lastName}, DOB: ${dateofbirth}, Sex: ${genderSelection}`);
-      navigation.navigate("Home");
+
+      navigation.navigate("Upload New Record", 
+      {
+        firstName: firstName,
+        lastName: lastName,
+        DOB: dateofbirth,
+        gender: genderSelection
+      });
     }   
   };
 

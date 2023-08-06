@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Text, View, TouchableOpacity, Alert, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackActions } from '@react-navigation/native';
+import uuid from 'react-native-uuid';
 
 import InputBoxWithInnerLabel from '../../../components/InputBoxWithInnerLabel';
 import BigInputBoxWithInnerLabel from '../../../components/BigInputBoxWithInnerLabel';
 import styles from './styles';
+// import the context:
+import VisitDataContext from '../../../context/context_VisitData';
+import RequestMessContext from '../../../context/context_requestMess';
 
-export default function UploadMedicalInfo({ navigation }) {
+export default function UploadMedicalInfo({ route, navigation }) {
+  const visit_id = uuid.v4();
+  const { visitData, setVisitData } = useContext(VisitDataContext);
+  const { requests, setRequests } = useContext(RequestMessContext);
+  const { firstName, lastName, DOB, genderSelection } = route.params;
   const labelProperties = {    
-    'Temperature': { unit: 'F', width: '95%' },
-    'Blood Pressure': { unit: 'mmHg', width: '95%' },
+    'Temp': { unit: 'F', width: '95%' },
     'Pulse': { unit: 'bpm', width: '95%' },
     'Oxygen': { unit: '%', width: '95%' },
-    'Glucose': { unit: 'mg/dl', width: '95%' },    
-    // Add more entries as needed
+    'BG': { unit: 'mg/dl', width: '95%' },
+    'BP': { unit: 'mmHg', width: '95%' },
   };
 
   const initialInputValues = Object.keys(labelProperties).reduce((values, label) => {
@@ -22,16 +29,13 @@ export default function UploadMedicalInfo({ navigation }) {
     return values;
   }, {});
 
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [reason, setReason] = useState('');
   const [vitalValues, setVitalValues] = useState(initialInputValues);
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [medHistoryValues, setMedHistoryValues] = useState({
-    chronicIllness: '',
-    currentMedication: '',
-    allergies: '',
-  });
-
-  const [reason, setReason] = useState('');
+  const [medHistoryValues, setMedHistoryValues] = useState({chronicIllness: 'N.A.', currentMedication: 'N.A.', allergies: 'N.A.'});
 
 
   const handleInputChange = (type, label, value) => {
@@ -46,21 +50,9 @@ export default function UploadMedicalInfo({ navigation }) {
         [label]: value,
       });
     }
-
-    // input is on going, so set it false
     if (confirmSubmit) {
       setConfirmSubmit(false);
     }
-  };
-
-
-  const isInputEmpty = (inputValues) => {
-    for (let key in inputValues) {
-      if (inputValues[key] !== '') {
-        return false;
-      }
-    }
-    return true;
   };
 
   const handleSubmit = () => {    
@@ -69,22 +61,71 @@ export default function UploadMedicalInfo({ navigation }) {
       setErrorMessage('Please fill in reason for consultation');  
     }
     else{
+      if (confirmSubmit) {   
+        // create new record and put it in the context         
+        const existingRecordIndex = visitData.findIndex(record => record.date === date);
 
-      if (confirmSubmit) {
-              
-        // Go to success, while click confirm
-        console.log({vitalValues, medHistoryValues, reason});
+        const patientData = {
+          firstName: firstName,
+          lastName: lastName,
+          DOB: DOB,
+          site: "Street Corner Care",
+          DOS: date,
+          time: time,
+          visitNote: {
+            patientInfo: [
+              {label:'Name', value:`${firstName} ${lastName}`},
+              {label:'DOB', value:DOB},
+              {label:'location', value:'Street Corner Care'},
+              {label:'DOS', value:date},
+            ],
+            chiefComplaint: reason,
+            providerReport: [],
+            medicalHistory: [
+              { label: "Chronic Illness", value: medHistoryValues.chronicIllness },
+              { label: "Current Medication", value: medHistoryValues.currentMedication },
+              { label: "Allergies", value: medHistoryValues.allergies },
+            ],
+            vitalData: Object.entries(vitalValues).map(([label, value]) => ({
+              label,
+              value,
+              unit: labelProperties[label].unit,
+            })),
+          },
+          visit_id:visit_id,
+          published:false,
+        };
+
+        if (existingRecordIndex >= 0) {
+          // add patient data to existing record
+          const updatedVisitData = [...visitData];
+          updatedVisitData[existingRecordIndex].patients.push(patientData);
+          setVisitData(updatedVisitData);
+        } else {
+          // create new record
+          const newRecord = {
+            date: date,
+            patients: [patientData],
+          };
+          setVisitData([...visitData, newRecord]);
+        }
+        // create new request and put it in the context
+        const newRequest = {
+          chiefComplaint:reason,
+          time:time,
+          name:`${firstName} ${lastName}`,
+          tag:'New Patient',
+          visit_id:visit_id,
+        };
+        setRequests([...requests, newRequest]);
+        console.log(visit_id);
         navigation.dispatch(StackActions.replace('Success'));
-        setConfirmSubmit(false);
-    
       } 
       else {
-        // Press first time, input is done, so set it true
         setConfirmSubmit(true);  
       }
     }
   };
-
 
   const handleOutsidePress = () => {
     if(confirmSubmit) {
@@ -100,6 +141,28 @@ export default function UploadMedicalInfo({ navigation }) {
       
         <View style={{marginTop: 20, marginBottom: 20, width: '100%', alignItems: 'center',}}>
             <Text style={{fontSize: 35, fontWeight: 400}}>Create New Record</Text>          
+        </View>
+
+        <View style={{width:"100%"}}>
+          <InputBoxWithInnerLabel
+            label="Date"
+            value={date}
+            width="95%"
+            height={60}
+            placeholder={"Click to Enter Date..."}
+            onChange={(text) => {setDate(text)}}
+            onFocus = {handleOutsidePress}
+          />
+
+          <InputBoxWithInnerLabel
+            label="Time"
+            value={time}
+            width="95%"
+            height={60}
+            placeholder={"Click to Enter Time..."}
+            onChange={(text) => {setTime(text)}}
+            onFocus = {handleOutsidePress}
+          />
         </View>
 
         <View style={{ marginBottom: 5, width:'100%'}}>

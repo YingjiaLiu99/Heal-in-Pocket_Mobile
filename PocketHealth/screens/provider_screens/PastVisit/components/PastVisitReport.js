@@ -36,7 +36,7 @@ const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerRepo
         />
         <BigShowcaseBoxWithLabel label={"Site/DOS"} value={patientInfo[2].value + ' [' + patientInfo[3].value+']'} width={width}/>
         <Text style={styles.classifyText}>Chief Complaint:</Text>
-        <BigShowcaseBoxWithLabel label={chiefComplaint.label} value={chiefComplaint.value} width={width}/>
+        <BigShowcaseBoxWithLabel label={'Chief Complaint'} value={chiefComplaint} width={width}/>
         <Text style={styles.classifyText}>Medical Provider's note:</Text>
         {/* render doctor's report */}
         {providerReport.map((item, index) => {            

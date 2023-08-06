@@ -6,7 +6,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import  Feather from 'react-native-vector-icons/Feather';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
-
+// import the context of VisitData
+import { VisitDataContextProvider } from './context/context_VisitData_function';
+import { RequestMessContextProvider } from './context/context_requestMess_function';
 // Welcome Page:
 import WelcomeScreen from './screens/WelcomeScreen';
 // Entry screen of the app: general login page:
@@ -362,6 +364,8 @@ function SettingsNavigator_vol() {
 //-------------------------------------------------Entry Point of App.js----------------------------------------------------------------//
 function App() {
   return (
+    <VisitDataContextProvider>
+    <RequestMessContextProvider>
     <NavigationContainer>
       <Stack.Navigator options={{ headerShown: false }}>
         <Stack.Screen name="Login Section" options={{ headerShown: false }} component={LoginNavigator} />
@@ -370,6 +374,8 @@ function App() {
         <Stack.Screen name="Volunteer Main Tab" options={{ headerShown: false }} component={HomeTab_vol} />
       </Stack.Navigator>
     </NavigationContainer>
+    </RequestMessContextProvider>
+    </VisitDataContextProvider>
   );
 }
 
