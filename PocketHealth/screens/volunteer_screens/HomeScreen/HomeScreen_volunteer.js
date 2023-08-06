@@ -73,12 +73,12 @@ export default function HomeScreen({navigation}) {
     <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(); if(searchInput === ''){handleSearchFocus(false);}}} accessible={false}>
         <View style={styles.container}>
 
-        <View style={{marginTop:10,marginBottom:10,width:'100%',}}>
-          <Text style={{fontSize:30, fontWeight:400}}>Welcome, David</Text>          
+        <View style={{marginTop:10,marginBottom:10,width:'100%',alignItems:'center'}}>
+          <Text style={{fontSize:30, fontWeight:400}}>Search Patient Profile</Text>          
         </View>
 
         <View style={{alignItems:'center'}}>
-          <Text style={{fontSize:18, fontWeight:300}}>Search Patient Profile</Text>          
+          <Text style={{fontSize:18, fontWeight:300}}>This feature is still under development, all the search results are fake data. Please use the register function instead.</Text>        
         </View>
 
         <View style={{width:'100%', marginTop:10}}>
@@ -86,7 +86,7 @@ export default function HomeScreen({navigation}) {
             containerStyle={{borderRadius: 15, borderWidth: 1, borderColor: "transparent", backgroundColor: "#E4E3E9",  borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
             inputContainerStyle={{backgroundColor: '#E4E3E9'}}
             ref={searchRef}
-            placeholder="Enter patient first name, last name"
+            placeholder="Enter first name, last name"
             onChangeText={handleSearch}
             onClear={handleClear}
             value={searchInput}

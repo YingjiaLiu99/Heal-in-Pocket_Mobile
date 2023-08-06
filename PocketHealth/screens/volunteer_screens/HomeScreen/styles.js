@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     },
 
     dropdownContainer: {
-      height: 400, // Adjust to suitable value
-      marginBottom: 40 // Add some space at the end of the list
+      height: 260, // Adjust to suitable value
+      marginBottom: 10 // Add some space at the end of the list
     },
 
     error: {

@@ -23,8 +23,6 @@ export default function VolunteerLoginScreen({ navigation }) {
   //   return unsubscribe;
   // }, [navigation]);
 
-// The backend authentification should put inside handleLogin
-
   const handleLogin = () => {
     if (!phoneNumber || !password) {
       setErrorMessage('Please fill in all fields');
@@ -57,26 +55,12 @@ export default function VolunteerLoginScreen({ navigation }) {
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
     
-      <View style={{marginTop: 75,marginBottom:80}}>
+      <View style={{marginTop: 25,marginBottom:30}}>
         <Text style={styles.titleText}>Volunteer Login</Text>
       </View>
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}      
-      
-      {/* <InputBoxWithLabel
-        label="Phone Number"
-        value={phoneNumber}
-        onChangeText={(text) => setPhoneNumber(text)}
-        placeholder="Please Enter Your Phone Number"
-        keyboardType='phone-pad'
-      />
-      <InputBoxWithLabel
-        label="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}              
-        placeholder="Please Enter Password"
-        secureTextEntry
-      /> */}
+  
       <InputBoxWithLabel
         ref={phoneRef}
         label="Phone Number*"

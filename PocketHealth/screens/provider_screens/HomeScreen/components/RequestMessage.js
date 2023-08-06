@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor:'#DDE5FD',    
-    height:110,
+    height:90,
   },
   requestContainer: {
     alignItems: 'flex-start',

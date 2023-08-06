@@ -16,7 +16,7 @@ export default function RegisterNewPatient_volunteer({navigation}) {
     return(
         <View style={styles.container}>
 
-            <View style={{width:'100%',alignItems:'center',marginTop:150,marginBottom:100}}>
+            <View style={{width:'100%',alignItems:'center',marginTop:100,marginBottom:50}}>
                 <TouchableOpacity style={styles.button} onPress={handleRegisterPhone}>
                     <Text style={styles.buttonText}>Register with Phone Number (recommended) </Text>
                 </TouchableOpacity>
@@ -24,7 +24,7 @@ export default function RegisterNewPatient_volunteer({navigation}) {
 
             <Text style={{fontSize: 40, fontWeight:400}}> OR </Text>
 
-            <View style={{width:'100%',alignItems:'center',marginTop:100,marginBottom:150}}>
+            <View style={{width:'100%',alignItems:'center',marginTop:50,marginBottom:150}}>
                 <TouchableOpacity style={styles.button} onPress={handleRegisterNoPhone}>
                     <Text style={styles.buttonText}>Register without Phone Number</Text>
                 </TouchableOpacity>

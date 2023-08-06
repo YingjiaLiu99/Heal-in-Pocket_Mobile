@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   upperLabel: {
     marginBottom: 10,
-    marginLeft:15,
+    marginLeft:100,
     fontSize: 16,
     fontWeight: 'bold',
   },

@@ -15,7 +15,7 @@ export default function HomeScreen({navigation}) {
 
   return (
     <View style={{flex: 1}}>
-      <Text style={styles.heading}>Welcome, Doctor</Text>
+      <Text style={styles.heading}>Welcome!</Text>
       <Text style={{fontSize:25,textAlign: 'center', }}>Current Request </Text>
       <Text style={{fontSize:18,color:'gray', textAlign: 'center' }}>{requests.length} patient(s) are waiting</Text>
       
@@ -28,7 +28,7 @@ export default function HomeScreen({navigation}) {
         marginHorizontal:15,
         paddingTop:10,
         paddingHorizontal:0,
-        height:550
+        height:430
       }}>
         <ScrollView>
           {requests.length > 0 ? (

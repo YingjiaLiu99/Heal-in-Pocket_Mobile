@@ -1,5 +1,5 @@
 // react native library：
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -15,6 +15,10 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
   const [lastName, setLastName] = useState('');
   const [dateofbirth, setDateofBirth] = useState('');
   const [genderSelection, setGenderSelection] = useState(null);
+
+  const firstNameRef = useRef(null);
+  const lastNameRef = useRef(null);
+  const dobRef = useRef(null);
 
   const genderOptions = [
     {value: 'male', choiceLabel: 'Male'},
@@ -76,32 +80,41 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
       <InputBoxWithLabel
         label="First Name*"        
         value={firstName}
+        ref={firstNameRef}
         onChangeText={(text) => setFirstName(text)}
         placeholder="Please enter patient first name"
         keyboardType="default"
         width='100%'
+        onSubmitEditing={() => lastNameRef.current.focus()}
+        returnKeyType='next'
+        autoFocus
       />
 
       <InputBoxWithLabel
         label="Last Name"        
         value={lastName}
+        ref={lastNameRef}
         onChangeText={(text) => setLastName(text)}
         placeholder="Please enter patient Last name"
         keyboardType="default"
         width='100%'
+        onSubmitEditing={() => dobRef.current.focus()}
+        returnKeyType='next'
       />
       
-      <View style={{width:'100%',flexDirection:'row'}}>
+      <View style={{width:'100%'}}>
         <InputBoxWithLabel
           label="Date of Birth*"        
           value={dateofbirth}
+          ref={dobRef}
           onChangeText={(text) => handleDateChange(text)}
           placeholder="MM/DD/YYYY"        
-          width='40%'
+          width='100%'
           keyboardType="phone-pad"
+          returnKeyType='done'
         />
 
-        <View style={{marginTop:-10}}>
+        <View style={{marginTop:-10, marginLeft:-105}}>
           <RadioMutipleChoice
             options={genderOptions}
             onSelectionChange={setGenderSelection}

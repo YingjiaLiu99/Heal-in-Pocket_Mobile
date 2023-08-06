@@ -29,7 +29,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
     return values;
   }, {});
 
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState('08/06/2023');
   const [time, setTime] = useState('');
   const [reason, setReason] = useState('');
   const [vitalValues, setVitalValues] = useState(initialInputValues);
@@ -171,7 +171,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
         value={time}
         width="100%"
         height={60}
-        placeholder={"Click to Enter Time..."}
+        placeholder={"e.g. 01:35 pm"}
         onChange={(text) => {setTime(text)}}
         onFocus = {handleOutsidePress}
       />
@@ -249,7 +249,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
     {errorMessage ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}  
 
-      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:30}}>
+      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:60}}>
         <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>
             {confirmSubmit ? 'Submit' : 'Confirm'}

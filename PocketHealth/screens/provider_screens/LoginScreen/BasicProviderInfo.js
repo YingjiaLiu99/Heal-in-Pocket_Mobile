@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import InputBoxWithLabel from './components/InputBoxWithLabel';
@@ -35,9 +35,10 @@ export default function BasicProviderInfo({navigation}) {
 
 
 return (
+    <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <View style={{marginTop:25,marginBottom:40,width:'100%'}}>
-            <Text style={{fontSize:40,fontWeight:400}}>Welcome,{'\n'}Set Up Your Account</Text>
+            <Text style={{fontSize:30,fontWeight:400}}>Welcome,{'\n'}Set Up Your Account</Text>
             <Text style={{marginTop:10,fontSize:17}}>* is Required</Text>
         </View>
 
@@ -103,5 +104,6 @@ return (
       </View>
 
     </KeyboardAwareScrollView>
+    </ScrollView>
     );
 };
