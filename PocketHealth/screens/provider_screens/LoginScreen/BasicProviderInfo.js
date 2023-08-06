@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -12,6 +12,10 @@ export default function BasicProviderInfo({navigation}) {
     const [firstName, setFirstName] = useState('');
     const [title, setTitle] = useState('');
     const [affiliation, setAffiliation] = useState('');
+
+    const pwdRef1 = useRef();
+    const pwdRef2 = useRef();
+    const pwdRef3 = useRef();
 
     const handleSignUp = () => {
         if (!firstName) {
@@ -40,35 +44,47 @@ return (
         {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
         <InputBoxWithLabel
+            autoFocus
             label="First Name*"    
             value={firstName}  
             onChangeText={(text) => setFirstName(text)}  
             placeholder="Please Enter Your First Name"    
-            keyboardType="default"        
+            keyboardType="default"  
+            returnKeyType='next'
+            onSubmitEditing={() => pwdRef1.current.focus()}   
+
         />
 
         <InputBoxWithLabel
+           ref={pwdRef1}
             label="Last Name*"    
             value={lastName}  
             onChangeText={(text) => setLastName(text)}  
             placeholder="Please Enter Your Last Name"    
-            keyboardType="default"        
+            keyboardType="default"   
+            returnKeyType='next'
+            onSubmitEditing={() => pwdRef2.current.focus()}        
         />
 
         <InputBoxWithLabel
+            ref={pwdRef2}
             label="Title*"    
             value={title}  
             onChangeText={(text) => setTitle(text)}  
             placeholder="Please Enter Your title (eg. MD, NP, etc.)"    
-            keyboardType="default"        
+            keyboardType="default"   
+            returnKeyType='next'  
+            onSubmitEditing={() => pwdRef3.current.focus()}       
         />
 
         <InputBoxWithLabel
+            ref={pwdRef3}
             label="Affiliation"    
             value={affiliation}  
             onChangeText={(text) => setAffiliation(text)}  
             placeholder="Please Enter Your Affiliation (optional)"    
-            keyboardType="default"        
+            keyboardType="default"  
+            returnKeyType='done'    
         />
 
         <View style={{width:'100%',alignItems:'flex-end',marginTop:30,marginBottom:40}}>

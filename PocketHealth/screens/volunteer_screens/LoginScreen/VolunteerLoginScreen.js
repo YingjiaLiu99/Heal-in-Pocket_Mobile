@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -9,6 +9,19 @@ export default function VolunteerLoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const pwdRef = useRef();
+  const phoneRef = useRef(null);
+
+  //my attempt to fix losing focus after navigations. don't work yet
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     // The screen is focused, you can call your function here.
+  //     if (phoneRef.current) phoneRef.current.focus();
+  //   });
+
+  //   // Return the function to unsubscribe from the event so it gets removed on unmount
+  //   return unsubscribe;
+  // }, [navigation]);
 
 // The backend authentification should put inside handleLogin
 
@@ -50,7 +63,7 @@ export default function VolunteerLoginScreen({ navigation }) {
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}      
       
-      <InputBoxWithLabel
+      {/* <InputBoxWithLabel
         label="Phone Number"
         value={phoneNumber}
         onChangeText={(text) => setPhoneNumber(text)}
@@ -63,6 +76,26 @@ export default function VolunteerLoginScreen({ navigation }) {
         onChangeText={(text) => setPassword(text)}              
         placeholder="Please Enter Password"
         secureTextEntry
+      /> */}
+      <InputBoxWithLabel
+        ref={phoneRef}
+        label="Phone Number*"
+        value={phoneNumber}
+        onChangeText={(text) => setPhoneNumber(text)}
+        placeholder="Please Enter Your Phone Number"
+        keyboardType='phone-pad'
+        autoFocus
+        returnKeyType='next'
+        onSubmitEditing={() => pwdRef.current.focus()}
+      />
+      <InputBoxWithLabel
+        ref={pwdRef}
+        label="Password*"
+        value={password}
+        onChangeText={(text) => setPassword(text)}              
+        placeholder="Please Enter Password"
+        secureTextEntry
+        returnKeyType='done'
       />
 
       <TouchableOpacity onPress={handleForgetPassword}>

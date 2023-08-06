@@ -1,5 +1,5 @@
 // react native library：
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 // own components and styles
@@ -14,6 +14,10 @@ const BasicPatientInfoForm = ({navigation}) => {
   const [lastName, setLastName] = useState('');
   const [dateofbirth, setDateofBirth] = useState('');
   const [genderSelection, setGenderSelection] = useState(null);
+  const pwdRef1 = useRef();
+  const pwdRef2 = useRef();
+  const pwdRef3 = useRef();
+
 
   const genderOptions = [
     {value: 'male', choiceLabel: 'Male'},
@@ -69,25 +73,32 @@ const BasicPatientInfoForm = ({navigation}) => {
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
       <InputBoxWithLabel
+        autoFocus
         label="First Name*"        
         value={firstName}
         onChangeText={(text) => setFirstName(text)}
         placeholder="Please enter your first name"
         keyboardType="default"
         width='100%'
+        returnKeyType='next'
+        onSubmitEditing={() => pwdRef1.current.focus()}  
       />
 
       <InputBoxWithLabel
+        ref={pwdRef1}
         label="Last Name"        
         value={lastName}
         onChangeText={(text) => setLastName(text)}
         placeholder="Please enter your Last name"
         keyboardType="default"
         width='100%'
+        returnKeyType='next'
+        onSubmitEditing={() => pwdRef2.current.focus()}  
       />
       
       <View style={{width:'100%',flexDirection:'row'}}>
         <InputBoxWithLabel
+          ref={pwdRef2}
           label="Date of Birth*"        
           value={dateofbirth}
           onChangeText={(text) => handleDateChange(text)}

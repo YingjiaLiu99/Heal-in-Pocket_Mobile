@@ -1,14 +1,9 @@
-import React, { useRef } from 'react';
+import React, { forwardRef} from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-
-const VitalsInputBoxWithLabel = ({ label, value, unit, width, onChange, onFocus }) => {
-
-  const inputRef = useRef(null);
-  
+const VitalsInputBoxWithLabel = forwardRef(({ label, value, unit, width, onChange, onFocus, onEndEditing }, ref) => {
   const handlePress = () => {
-    inputRef.current.focus();
+    ref.current.focus();
   };
-
   return (
     <TouchableOpacity onPress={handlePress} activeOpacity={1}>
       <View style={[styles.boxContainer, { width: width }]}>
@@ -16,13 +11,15 @@ const VitalsInputBoxWithLabel = ({ label, value, unit, width, onChange, onFocus 
           <View>
             <Text style={styles.boxLabel}>{label}</Text>
             <TextInput
-              ref={inputRef}
+              ref={ref}
               style={styles.boxField}
               value={value}
               onChangeText={onChange}
+              onEndEditing={onEndEditing}
               onFocus={onFocus}
               placeholder='Click to Enter Your Vital ...'
               keyboardType="numeric"
+      
             />
           </View>
           <Text style={styles.unit}>{unit}</Text>
@@ -30,7 +27,7 @@ const VitalsInputBoxWithLabel = ({ label, value, unit, width, onChange, onFocus 
       </View>
     </TouchableOpacity>
   );
-};
+});
 
 const styles = StyleSheet.create({
   boxContainer: {

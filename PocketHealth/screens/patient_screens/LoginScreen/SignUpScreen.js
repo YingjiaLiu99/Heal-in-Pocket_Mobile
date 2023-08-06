@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useRef, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -11,6 +12,8 @@ export default function SignUpScreen({navigation}) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const pwdRef1 = useRef();
+  const pwdRef2 = useRef();
 // The Backend code goes here
   const handleSignUp = () => {   
     if (!phoneNumber || !password || !confirmPassword) {
@@ -34,25 +37,33 @@ export default function SignUpScreen({navigation}) {
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
       <InputBoxWithLabel
+        autoFocus
         label="Phone Number*"    
         value={phoneNumber}  
         onChangeText={(text) => setPhoneNumber(text)}  
         placeholder="Please Enter Your Phone Number"    
-        keyboardType="phone-pad"        
+        keyboardType="phone-pad"      
+        onSubmitEditing={() => pwdRef1.current.focus()}  
       />
       <InputBoxWithLabel
+        ref={pwdRef1}
         label="Password*"   
         value={password}   
         onChangeText={(text) => setPassword(text)}  
         placeholder="Please Enter Password"   
         secureTextEntry={true}
+        returnKeyType='next'
+        onSubmitEditing={() => pwdRef2.current.focus()}  
       />
       <InputBoxWithLabel
+        ref={pwdRef2}
         label="Confirm Password*"
         value={confirmPassword}        
         onChangeText={(text) => setConfirmPassword(text)}
         placeholder="Please Enter Your Password Again"
         secureTextEntry={true}
+        returnKeyType='done'
+        onSubmitEditing={() => pwdRef2.current.focus()}  
       />
 
       <View style={{width:'100%',alignItems:'center',marginTop:20,marginBottom:40}}>

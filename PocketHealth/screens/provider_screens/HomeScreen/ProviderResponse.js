@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { View, TouchableOpacity, Text, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -25,6 +25,16 @@ export default function ProviderResponseScreen({route, navigation}) {
   const [subjective, setSubjective] = useState('');
   const [objective, setObjective] = useState('');
   const [assessment, setAssessment] = useState(''); 
+  const subjectiveRef = useRef(null);
+  const objectiveRef = useRef(null);
+  const assessmentRef = useRef(null);
+  // const scrollRef = useRef(null);
+  
+  
+  // const handleInputSubmit = (ref) => {
+  //   ref.current.focus();
+  //   scrollRef.current.scrollToPosition(0, ref.current.offsetTop - 20);
+  // }
 
 const handleSubmit = () => {
   // if(assessment === '' || subjective === '' || objective === ''){
@@ -67,7 +77,7 @@ const handleSubmit = () => {
     }    
   }; 
 
-return (    
+return (
   <View style={{flex:1}}>
     <View style={{
       position: 'absolute',              
@@ -116,6 +126,10 @@ return (
           placeholder="Click to Enter Your Subjective ..."
           onChangeText={(text) => setSubjective(text)}
           onFocus={handleOutsidePress}
+          autoFocus={true}
+          returnKeyType={"next"}
+          onSubmitEditing={() => objectiveRef.current.focus()}
+          ref={subjectiveRef}
         />
 
         <BigShowcaseBoxWithLabel            
@@ -177,6 +191,9 @@ return (
           placeholder="Click to Enter Your Objective ..."
           onChangeText={(text) => setObjective(text)}
           onFocus={handleOutsidePress}
+          ref={objectiveRef}
+          returnKeyType={"next"}
+          onSubmitEditing={() => assessmentRef.current.focus()}
         />
 
         <ProviderInputBox 
@@ -186,6 +203,8 @@ return (
           placeholder="Click to Enter Your Assessment/Future Plan ..."
           onChangeText={(text) => setAssessment(text)}
           onFocus={handleOutsidePress}
+          ref={assessmentRef}
+          returnKeyType={"done"}
         />
       </View>
 
@@ -202,7 +221,6 @@ return (
     
     </KeyboardAwareScrollView>
     </ScrollView>          
-  </View>
-    
+  </View>    
   );
 };

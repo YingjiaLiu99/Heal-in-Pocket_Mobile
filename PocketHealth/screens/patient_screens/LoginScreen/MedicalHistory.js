@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -9,6 +9,9 @@ const PatientHistoryForm = ({navigation}) => {
   const [allergies, setAllergies] = useState('');
   const [illness, setIllness] = useState('');
   const [medications, setMedications] = useState('');
+  const pwdRef1 = useRef();
+  const pwdRef2 = useRef();
+  const pwdRef3 = useRef();
 
   const handleCreateAccount = () => {
     console.log(`Chronical Illness: ${illness}`);    
@@ -35,28 +38,36 @@ const PatientHistoryForm = ({navigation}) => {
 
         <View style={{width:'100%',alignItems:'center',marginTop:0,marginBottom:10}}>
             <BigInputBoxWithLabel
+                autoFocus
                 label="Chronic Illness"        
                 value={illness}
                 onChangeText={(text) => setIllness(text)}
                 placeholder="Any known chronic Illness"
                 keyboardType="default"
                 width='100%'
+                returnKeyType='next'
+                onSubmitEditing={() => pwdRef1.current.focus()}  
             />
             <BigInputBoxWithLabel
+                ref={pwdRef1}
                 label="Current Medication"        
                 value={medications}
                 onChangeText={(text) => setMedications(text)}
                 placeholder="Please write down any medication you currently take"
                 keyboardType="default"
                 width='100%'
+                returnKeyType='next'
+                onSubmitEditing={() => pwdRef2.current.focus()}  
             />
             <BigInputBoxWithLabel
+                ref={pwdRef2}
                 label="Allergies"        
                 value={allergies}
                 onChangeText={(text) => setAllergies(text)}
                 placeholder="Any known allergies"
                 keyboardType="default"
                 width='100%'
+                returnKeyType='done'
             />
         </View>
 

@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 
-const InputBoxWithLabel = ({ label, value, onChangeText, placeholder, ...props }) => {
+const InputBoxWithLabel = forwardRef(({ label, value, onChangeText, placeholder, ...props }, ref) => {
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.inputLabel}>{label}</Text>
       <TextInput
+        ref={ref}
         style={styles.inputField}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
         placeholderTextColor='#7C7C7C'
-        
         {...props}
       />
     </View>
   );
-};
+});
+
 
 const styles = StyleSheet.create({
   inputContainer: {

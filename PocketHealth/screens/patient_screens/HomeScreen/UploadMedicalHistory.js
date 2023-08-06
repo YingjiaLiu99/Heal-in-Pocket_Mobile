@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Text, View, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -12,6 +12,8 @@ const UploadMedicalHistory = ({navigation}) => {
     value2: '',
     value3: '',
   });
+  const refInput2 = useRef();
+  const refInput3 = useRef();
 
 // function to check if the patient enter any vital
 const isInputEmpty = (values) => {
@@ -84,25 +86,34 @@ const [errorMessage, setErrorMessage] = useState('');
       
       <View style={{width:"100%"}}>
         <MedHisInputBoxWithLabel
+          autoFocus
           label="Chronic Illness"
           value={values.value1}          
           width="95%"
           onChangeText={(text) => handleValueChange('value1', text)}
           onFocus={handleOutsidePress}
+          returnKeyType="next"
+          onSubmitEditing={() => refInput2.current.focus()}
         />
         <MedHisInputBoxWithLabel
+          ref={refInput2}
           label="Current Medication"
           value={values.value2}          
           width="95%"
           onChangeText={(text) => handleValueChange('value2', text)}
           onFocus={handleOutsidePress}
+          returnKeyType="next"
+          onSubmitEditing={() => refInput3.current.focus()}
+          
         />
         <MedHisInputBoxWithLabel
+          ref={refInput3}
           label="Allergies"
           value={values.value3}   
           width="95%"
           onChangeText={(text) => handleValueChange('value3', text)}
           onFocus={handleOutsidePress}
+          returnKeyType="done"
         />
       </View>
 
