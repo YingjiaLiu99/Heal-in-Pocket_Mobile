@@ -6,11 +6,14 @@ import InputBoxWithLabel from './components/InputBoxWithLabel';
 import styles from './styles.js';
 
 export default function PhoneVerification({route, navigation}) {
+
     const [verificationCode, setverificationCode] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [counter, setCounter] = useState(60);
     const [disableResend, setDisableResend] = useState(true);
     const [isNewCodeSent, setIsNewCodeSent] = useState(false);
+
+    const {firstName, lastName, DOB, gender} = route.params;
 
     useEffect(() => {
         if(counter > 0) {
@@ -26,7 +29,13 @@ export default function PhoneVerification({route, navigation}) {
             setErrorMessage('Please Enter Your Verification Code');
         }
         else{
-            navigation.navigate("Home");
+            navigation.navigate("Upload New Record", 
+            {
+                firstName: firstName,
+                lastName: lastName,
+                DOB: DOB,
+                gender: gender
+            });        
         }      
     };
 

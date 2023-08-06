@@ -15,9 +15,10 @@ const styles = StyleSheet.create({
     
     titleText: {
       alignItems: 'center',      
-      fontSize: 45,
+      fontSize: 40,
       fontWeight: 400  
     },
+
     error: {
       color: 'red',
       marginBottom: 20
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
       color: '#333232',      
       textDecorationLine: 'underline'
     },
+
     resend: {
       fontSize: 15,
       color: '#333232',      
@@ -46,6 +48,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 5,
       borderRadius: 20
     },
+    
     buttonText: {
       color: '#fff',
       fontSize: 22

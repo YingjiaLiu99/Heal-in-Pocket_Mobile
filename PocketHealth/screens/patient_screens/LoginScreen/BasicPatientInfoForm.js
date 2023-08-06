@@ -39,9 +39,6 @@ const BasicPatientInfoForm = ({navigation}) => {
     }
   };
 
-
-  
-
   // Backend api call GOES INSIDE
   const handleSubmit = () => {
     if (!firstName) {
@@ -65,7 +62,7 @@ const BasicPatientInfoForm = ({navigation}) => {
   return (
     <ScrollView style={{flex: 1}}>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <View style={{marginTop: 75,marginBottom:70,width:'100%'}}>
+      <View style={{marginTop: 20,marginBottom:20,width:'100%'}}>
         <Text style={styles.titleText}>Welcome,{'\n'}Set Up Your Account</Text>
         <Text style={{marginTop:10,fontSize:17}}>* is Required</Text>
       </View>    
@@ -103,11 +100,11 @@ const BasicPatientInfoForm = ({navigation}) => {
           value={dateofbirth}
           onChangeText={(text) => handleDateChange(text)}
           placeholder="MM/DD/YYYY"        
-          width='30%'
+          width='40%'
           keyboardType="phone-pad"
         />
 
-        <View style={{marginLeft:30,marginTop:-10}}>
+        <View style={{marginTop:-10}}>
           <RadioMutipleChoice
             options={genderOptions}
             onSelectionChange={setGenderSelection}
@@ -116,7 +113,6 @@ const BasicPatientInfoForm = ({navigation}) => {
         </View>
       </View>      
       
-
       <View style={{width:'100%',alignItems:'flex-end',marginTop:30,marginBottom:40}}>
         <TouchableOpacity 
         style={{

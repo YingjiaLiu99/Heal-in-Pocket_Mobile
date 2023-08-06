@@ -6,7 +6,8 @@ import styles from "./styles";
 export default function OptionScreen({navigation}) {
 
     const handleCreateNewRecord = () => {
-        navigation.navigate('Upload New Record');
+        // Disable this function for beta testing
+        // navigation.navigate('Upload New Record');
     };
 
     const handleUploadRecord = () => {

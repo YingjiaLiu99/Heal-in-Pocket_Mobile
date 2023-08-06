@@ -5,7 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 // own components and styles
 import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
 import InputBoxWithLabel from '../../../components/InputBoxWithLabel';
-import styles from '../../patient_screens/Forms/styles';
+import styles from './styles';
 
 const RegisterPatientWithPhone = ({navigation}) => {
 
@@ -54,15 +54,18 @@ const RegisterPatientWithPhone = ({navigation}) => {
       setErrorMessage('Please enter a valid name');
     }
     else {
-      console.log(`First Name: ${firstName}, Last Name: ${lastName}, DOB: ${dateofbirth}, Sex: ${genderSelection}, Phone: ${phoneNumber}`);
-      navigation.navigate("Register Patient Phone Verification",{phoneNumber:phoneNumber});
+      navigation.navigate("Register Patient Phone Verification",
+      {
+        phoneNumber:phoneNumber,
+        firstName: firstName,
+        lastName: lastName,
+        DOB: dateofbirth,
+        gender: genderSelection
+      });
     }   
   };
 
   return (
-// <<<<<<< qzh_General5
-//     <ScrollView style={{flex: 1}}>
-// =======
     <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <View style={{marginTop: 20,marginBottom:10,width:'100%'}}>
@@ -105,11 +108,11 @@ const RegisterPatientWithPhone = ({navigation}) => {
           value={dateofbirth}
           onChangeText={(text) => handleDateChange(text)}
           placeholder="MM/DD/YYYY"        
-          width='30%'
+          width='40%'
           keyboardType="phone-pad"
         />
 
-        <View style={{marginLeft:30,marginTop:-10}}>
+        <View style={{marginTop:-10}}>
           <RadioMutipleChoice
             options={genderOptions}
             onSelectionChange={setGenderSelection}

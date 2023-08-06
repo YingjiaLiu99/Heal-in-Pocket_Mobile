@@ -2,13 +2,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-// the visitdata context
-
 
 // own components and styles
 import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
 import InputBoxWithLabel from '../../../components/InputBoxWithLabel';
-import styles from '../../patient_screens/Forms/styles';
+import styles from './styles';
 
 const RegisterPatientWithoutPhone = ({navigation}) => {
 
@@ -32,7 +30,7 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
     } else if (formattedText.length >= 3) {
       text = text.split('/').join('').replace(/(\d{2})(\d{1,2})/, "$1/$2");
     }
-  
+    
     if (formattedText.length <= 8) {
       setDateofBirth(text);
     }
@@ -66,9 +64,9 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <View style={{marginTop: 25,marginBottom:10,width:'100%'}}>
+      <View style={{marginTop: 35,marginBottom:30,width:'100%'}}>
         <Text style={styles.titleText}>Enter Patient Information To Set Up Account</Text>
         <Text style={{marginTop:10,fontSize:17}}>* is Required</Text>
       </View>    
@@ -99,11 +97,11 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
           value={dateofbirth}
           onChangeText={(text) => handleDateChange(text)}
           placeholder="MM/DD/YYYY"        
-          width='30%'
+          width='40%'
           keyboardType="phone-pad"
         />
 
-        <View style={{marginLeft:30,marginTop:-10}}>
+        <View style={{marginTop:-10}}>
           <RadioMutipleChoice
             options={genderOptions}
             onSelectionChange={setGenderSelection}

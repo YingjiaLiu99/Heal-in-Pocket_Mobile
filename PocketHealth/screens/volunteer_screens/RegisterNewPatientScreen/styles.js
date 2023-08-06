@@ -15,8 +15,13 @@ const styles = StyleSheet.create({
     
     titleText: {
       alignItems: 'center',      
-      fontSize: 40,
+      fontSize: 35,
       fontWeight: 400  
+    },
+
+    error: {
+      color: 'red',
+      marginBottom: 20
     },
 
     buttonContainer: {
@@ -37,6 +42,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
       borderRadius: 20
     },
+    
     buttonText: {
       color: '#fff',
       fontSize: 22

@@ -17,11 +17,11 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const { requests, setRequests } = useContext(RequestMessContext);
   const { firstName, lastName, DOB, genderSelection } = route.params;
   const labelProperties = {    
-    'Temp': { unit: 'F', width: '95%' },
-    'Pulse': { unit: 'bpm', width: '95%' },
-    'Oxygen': { unit: '%', width: '95%' },
-    'BG': { unit: 'mg/dl', width: '95%' },
-    'BP': { unit: 'mmHg', width: '95%' },
+    'Temp': { unit: 'F', width: '100%' },
+    'Pulse': { unit: 'bpm', width: '100%' },
+    'Oxygen': { unit: '%', width: '100%' },
+    'BG': { unit: 'mg/dl', width: '100%' },
+    'BP': { unit: 'mmHg', width: '100%' },
   };
 
   const initialInputValues = Object.keys(labelProperties).reduce((values, label) => {
@@ -37,6 +37,19 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [medHistoryValues, setMedHistoryValues] = useState({chronicIllness: 'N.A.', currentMedication: 'N.A.', allergies: 'N.A.'});
 
+  // Handle date of birth with "/"
+  const handleDateChange = (text) => {
+    const formattedText = text.split('/').join('');
+    if (formattedText.length >= 5) {
+      text = text.split('/').join('').replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
+    } else if (formattedText.length >= 3) {
+      text = text.split('/').join('').replace(/(\d{2})(\d{1,2})/, "$1/$2");
+    }
+    
+    if (formattedText.length <= 8) {
+      setDate(text);
+    }
+  };
 
   const handleInputChange = (type, label, value) => {
     if (type === "vital") {
@@ -134,121 +147,117 @@ export default function UploadMedicalInfo({ route, navigation }) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
-    <View style={{flex:1}}>
-    <ScrollView style={{flex: 1}}>
+    <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       
-        <View style={{marginTop: 20, marginBottom: 20, width: '100%', alignItems: 'center',}}>
-            <Text style={{fontSize: 35, fontWeight: 400}}>Create New Record</Text>          
-        </View>
+      <View style={{marginTop: 5, marginBottom: 10, width: '100%', alignItems: 'center',}}>
+          <Text style={{fontSize: 35, fontWeight: 400}}>Create New Record</Text>          
+      </View>
 
-        <View style={{width:"100%"}}>
+      <View style={{width: "100%"}}>
+      <InputBoxWithInnerLabel
+        label="Date"
+        value={date}
+        width="100%"
+        height={60}
+        placeholder="MM/DD/YYYY"
+        keyboardType="phone-pad"
+        onChange={(text) => handleDateChange(text)}
+        onFocus = {handleOutsidePress}
+      />
+
+      <InputBoxWithInnerLabel
+        label="Time"
+        value={time}
+        width="100%"
+        height={60}
+        placeholder={"Click to Enter Time..."}
+        onChange={(text) => {setTime(text)}}
+        onFocus = {handleOutsidePress}
+      />
+      </View>
+
+      <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Vitals</Text>          
+      
+
+      <View style={{width: "100%"}}>
+          {Object.entries(labelProperties).map(([label, properties], index) => (
           <InputBoxWithInnerLabel
-            label="Date"
-            value={date}
-            width="95%"
-            height={60}
-            placeholder={"Click to Enter Date..."}
-            onChange={(text) => {setDate(text)}}
-            onFocus = {handleOutsidePress}
+              key={index}
+              label={label}
+              value={vitalValues[label] || ''}
+              unit={properties.unit}
+              width={properties.width}
+              height={60}
+              placeholder={'Click to Enter...'}
+              onChange={(value) => handleInputChange("vital", label, value)}
+              onFocus = {handleOutsidePress}
+              keyboardType={'numeric'}
           />
+          ))}
+      </View>
 
-          <InputBoxWithInnerLabel
-            label="Time"
-            value={time}
-            width="95%"
-            height={60}
-            placeholder={"Click to Enter Time..."}
-            onChange={(text) => {setTime(text)}}
-            onFocus = {handleOutsidePress}
+      
+      <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Medical History</Text>          
+      
+
+      <View style={{width: "100%"}}>
+          <BigInputBoxWithInnerLabel
+              label="Chronic Illness"
+              value={medHistoryValues.chronicIllness}
+              width='100%'
+              height={100}
+              onChangeText={(text) => handleInputChange('medHistory', 'chronicIllness', text)}
+              placeholder={'Please enter chronic illness...'}
+              onFocus = {handleOutsidePress}
           />
-        </View>
+          <BigInputBoxWithInnerLabel
+              label="Current Medication"
+              value={medHistoryValues.currentMedication}
+              width='100%'
+              height={100}
+              onChangeText={(text) => handleInputChange('medHistory', 'currentMedication', text)}
+              placeholder={'Please enter current medication...'}
+              onFocus = {handleOutsidePress}
+          />
+          <BigInputBoxWithInnerLabel
+              label="Allergies"
+              value={medHistoryValues.allergies}
+              width='100%'
+              height={100}
+              onChangeText={(text) => handleInputChange('medHistory', 'allergies', text)}
+              placeholder={'Please enter allergies...'}
+              onFocus = {handleOutsidePress}
+          />
+      </View>
 
-        <View style={{ marginBottom: 5, width:'100%'}}>
-            <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Vitals</Text>          
-        </View>
+      
+      <Text style={{fontSize:20, fontWeight:400}}>Reason For Consultation</Text>          
+      
 
-        <View style={{width: "100%"}}>
-            {Object.entries(labelProperties).map(([label, properties], index) => (
-            <InputBoxWithInnerLabel
-                key={index}
-                label={label}
-                value={vitalValues[label] || ''}
-                unit={properties.unit}
-                width={properties.width}
-                height={60}
-                placeholder={'Click to Enter...'}
-                onChange={(value) => handleInputChange("vital", label, value)}
-                onFocus = {handleOutsidePress}
-                keyboardType={'numeric'}
-            />
-            ))}
-        </View>
+      <View style={{ marginBottom: 10, width:'100%'}}>
+          <BigInputBoxWithInnerLabel
+              label="Resaon For Consultation*"
+              value={reason}
+              width="95%"
+              height={100}
+              onChangeText={(text) => setReason(text)}
+              placeholder={'Please enter patient reason for consultation...'}
+              onFocus = {handleOutsidePress}
+          />
+      </View>
 
-        <View style={{ marginBottom: 5, width:'100%'}}>
-            <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Medical History</Text>          
-        </View>
+    {errorMessage ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}  
 
-        <View style={{width: "100%"}}>
-            <BigInputBoxWithInnerLabel
-                label="Chronic Illness"
-                value={medHistoryValues.chronicIllness}
-                width="95%"
-                height={100}
-                onChangeText={(text) => handleInputChange('medHistory', 'chronicIllness', text)}
-                placeholder={'Please enter chronic illness...'}
-                onFocus = {handleOutsidePress}
-            />
-            <BigInputBoxWithInnerLabel
-                label="Current Medication"
-                value={medHistoryValues.currentMedication}
-                width="95%"
-                height={100}
-                onChangeText={(text) => handleInputChange('medHistory', 'currentMedication', text)}
-                placeholder={'Please enter current medication...'}
-                onFocus = {handleOutsidePress}
-            />
-            <BigInputBoxWithInnerLabel
-                label="Allergies"
-                value={medHistoryValues.allergies}
-                width="95%"
-                height={100}
-                onChangeText={(text) => handleInputChange('medHistory', 'allergies', text)}
-                placeholder={'Please enter allergies...'}
-                onFocus = {handleOutsidePress}
-            />
-        </View>
-
-        <View style={{ marginBottom: 5, width:'100%'}}>
-            <Text style={{fontSize:20, fontWeight:400}}>Reason For Consultation</Text>          
-        </View>
-
-        <View style={{ marginBottom: 10, width:'100%'}}>
-            <BigInputBoxWithInnerLabel
-                label="Resaon For Consultation*"
-                value={reason}
-                width="95%"
-                height={100}
-                onChangeText={(text) => setReason(text)}
-                placeholder={'Please enter patient reason for consultation...'}
-                onFocus = {handleOutsidePress}
-            />
-        </View>
-
-      {errorMessage ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}  
-
-        <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:30}}>
-          <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}>
-              {confirmSubmit ? 'Submit' : 'Confirm'}
-            </Text>
-          </TouchableOpacity>
-        </View>
+      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:30}}>
+        <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>
+            {confirmSubmit ? 'Submit' : 'Confirm'}
+          </Text>
+        </TouchableOpacity>
+      </View>
 
     </KeyboardAwareScrollView>
     </ScrollView>
-    </View>
-    </TouchableWithoutFeedback>
   );
 }

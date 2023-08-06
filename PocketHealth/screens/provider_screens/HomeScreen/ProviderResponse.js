@@ -28,13 +28,6 @@ export default function ProviderResponseScreen({route, navigation}) {
   const subjectiveRef = useRef(null);
   const objectiveRef = useRef(null);
   const assessmentRef = useRef(null);
-  // const scrollRef = useRef(null);
-  
-  
-  // const handleInputSubmit = (ref) => {
-  //   ref.current.focus();
-  //   scrollRef.current.scrollToPosition(0, ref.current.offsetTop - 20);
-  // }
 
 const handleSubmit = () => {
   // if(assessment === '' || subjective === '' || objective === ''){
