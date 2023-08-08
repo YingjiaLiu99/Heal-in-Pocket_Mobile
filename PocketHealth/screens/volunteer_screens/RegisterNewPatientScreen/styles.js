@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     
     titleText: {
       alignItems: 'center',      
-      fontSize: 35,
+      fontSize: 26,
       fontWeight: 400  
     },
 
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     
     buttonText: {
       color: '#fff',
-      fontSize: 22
+      fontSize: 20
     },
 
     userShowcase: {

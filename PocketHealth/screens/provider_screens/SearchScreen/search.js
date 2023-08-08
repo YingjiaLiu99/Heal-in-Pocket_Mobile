@@ -73,18 +73,16 @@ export default function PatientPastVisit( {navigation} ) {
       };
 
 
-
-
-
     return(
         <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(); if(searchInput === ''){handleSearchFocus(false);}}} accessible={false}>
             <View style={styles.container}>
                 <View style={{marginTop:10,marginBottom:10,width:'100%',}}>
-                    <Text style={{fontSize:30, fontWeight:400}}>Welcome, Dr.</Text>          
+                    <Text style={{fontSize:25, fontWeight:400}}>Search Patient Past Visits</Text>          
                 </View>
 
                 <View style={{alignItems:'center'}}>
-                    <Text style={{fontSize:18, fontWeight:300}}>Search Patient Past Visits</Text>          
+                    {/* <Text style={{fontSize:18, fontWeight:300}}>Search Patient Past Visits</Text> */}
+                    <Text style={{fontSize:18, fontWeight:300}}>This feature is still under development, all the search results are fake data</Text>       
                 </View>
 
                 <View style={{width:'100%', marginTop:10}}>

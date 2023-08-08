@@ -28,8 +28,8 @@ const MoreInfoProvider = ({navigation}) =>{
 
     return (
         <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-            <View style={{marginTop: 40,marginBottom:40,width:'100%'}}>
-                <Text style={{alignItems:'center',fontSize:45,fontWeight: 400}}>One More Step...</Text>  
+            <View style={{marginTop: 35,marginBottom:20,width:'100%'}}>
+                <Text style={{alignItems:'center',fontSize:35,fontWeight: 400}}>One More Step...</Text>  
                 <Text style={{color:'#BDBDBD',fontSize:19,marginTop:0,marginLeft:5}}>Write a little bit about yourself</Text>          
             </View>
 

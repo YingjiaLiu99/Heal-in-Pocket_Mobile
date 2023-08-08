@@ -43,26 +43,12 @@ export default function ProviderLoginScreen({ navigation }) {
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
     
-      <View style={{marginTop: 75,marginBottom:80}}>
+      <View style={{marginTop: 35,marginBottom:40}}>
         <Text style={styles.titleText}>Provider Login</Text>
       </View>
       
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}      
       
-      {/* <InputBoxWithLabel
-        label="Phone Number"
-        value={phoneNumber}
-        onChangeText={(text) => setPhoneNumber(text)}
-        placeholder="Please Enter Your Phone Number"
-        keyboardType='phone-pad'
-      />
-      <InputBoxWithLabel
-        label="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}              
-        placeholder="Please Enter Password"
-        secureTextEntry
-      /> */}
       <InputBoxWithLabel
         label="Phone Number*"
         value={phoneNumber}

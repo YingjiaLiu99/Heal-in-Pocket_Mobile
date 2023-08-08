@@ -49,11 +49,11 @@ export default function PhoneVerification({route, navigation}) {
     return (
         <KeyboardAwareScrollView contentContainerStyle={styles.container}>
 
-            <View style={{alignItems:'center',marginTop: 75,marginBottom:90}}>
+            <View style={{alignItems:'center',marginTop: 35,marginBottom:40}}>
                 <Text style={styles.titleText}>Phone Verification</Text>
             </View>
 
-            <View style={{width:'100%',alignItems:'center',marginTop:20,marginBottom:20}}>                
+            <View style={{width:'100%',alignItems:'center',marginTop:10,marginBottom:20}}>                
 
                 <Text style={{color:'#7C7C7C',fontSize:15}}>
                 {

@@ -20,13 +20,13 @@ const WelcomeScreen = ({navigation}) => {
         <View style={{width:'100%', alignItems:'flex-end'}}>        
             <Image
                 style={{width: 120, height: 120}}
-                source={require('../assets/images/pocket_health.png')}
+                source={require('../assets/images/PH_logo.jpg')}
             />
         </View>
 
         <View style={{alignItems:'flex-start', width:'100%'}}>
-            <Text style={{fontSize: 45, fontWeight: '400', textAlign: 'left', marginBottom:5}}>Welcome,</Text>
-            <Text style={{fontSize: 45, fontWeight: '400', textAlign: 'left',  marginBottom:"10%"}}>to Pocket Health!</Text>            
+            <Text style={{fontSize: 35, fontWeight: '400', textAlign: 'left', marginBottom:5}}>Welcome,</Text>
+            <Text style={{fontSize: 35, fontWeight: '400', textAlign: 'left',  marginBottom:"10%"}}>to Pocket Health!</Text>            
         </View>   
 
         <Text style={{fontSize: 35, fontWeight: '400', textAlign: 'left'}}>Are You a...</Text>
@@ -45,9 +45,6 @@ const WelcomeScreen = ({navigation}) => {
             </TouchableOpacity>
 
         </View>
-        
-
-
 
     </View>
   );

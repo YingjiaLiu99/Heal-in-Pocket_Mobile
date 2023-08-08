@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import InputBoxWithLabel from './components/InputBoxWithLabel';
@@ -29,9 +29,10 @@ export default function ProviderSignUpScreen({navigation}) {
   };
 
   return (
+    <ScrollView>
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
 
-      <View style={{alignItems:'center',marginTop:55,marginBottom:60}}>
+      <View style={{alignItems:'center',marginTop:35,marginBottom:40}}>
         <Text style={styles.titleText}>Create Account</Text>
       </View>
       
@@ -82,6 +83,7 @@ export default function ProviderSignUpScreen({navigation}) {
       </View>      
 
       </KeyboardAwareScrollView>
+      </ScrollView>
   );
 }
 

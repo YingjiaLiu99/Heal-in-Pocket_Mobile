@@ -37,8 +37,8 @@ export default function BasicVolunteerInfo({navigation}) {
 
 return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-        <View style={{marginTop:25,marginBottom:40,width:'100%'}}>
-            <Text style={{fontSize:40,fontWeight:400}}>Welcome,{'\n'}Set Up Your Account</Text>
+        <View style={{marginTop:15,marginBottom:20,width:'100%'}}>
+            <Text style={{fontSize:32,fontWeight:400}}>Welcome,{'\n'}Set Up Your Account</Text>
             <Text style={{marginTop:10,fontSize:17}}>* is Required</Text>
         </View>
 

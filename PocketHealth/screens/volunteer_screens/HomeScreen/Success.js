@@ -13,9 +13,13 @@ export default function SuccessScreen({navigation}) {
     return (
         <View style={styles.container}>
 
-        <View style={{width:'100%',alignItems:'center',marginTop:150,marginBottom:100}}>
+        <View style={{width:'100%',alignItems:'center',marginTop:50,marginBottom:50}}>
           
-            <Text style={styles.titleText}>Success! Request has been sent to a provider</Text>
+          <Text style={{
+            alignItems: 'center',      
+            fontSize: 35,
+            fontWeight: 400  
+          }}>Success! Request has been sent to a provider</Text>
         
         </View>
 
