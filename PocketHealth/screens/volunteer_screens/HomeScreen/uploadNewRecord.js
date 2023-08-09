@@ -252,7 +252,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
       <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:60}}>
         <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>
-            {confirmSubmit ? 'Submit' : 'Confirm'}
+            {confirmSubmit ? 'Submit Request' : 'Confirm Request'}
           </Text>
         </TouchableOpacity>
       </View>
