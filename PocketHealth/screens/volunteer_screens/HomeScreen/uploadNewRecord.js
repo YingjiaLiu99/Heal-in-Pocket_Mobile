@@ -21,7 +21,9 @@ export default function UploadMedicalInfo({ route, navigation }) {
     'Pulse': { unit: 'bpm', width: '100%' },
     'Oxygen': { unit: '%', width: '100%' },
     'BG': { unit: 'mg/dl', width: '100%' },
-    'BP': { unit: 'mmHg', width: '100%' },
+    'Systolic BP': { unit: 'mmHg', width: '100%' },
+    'Diastolic BP': { unit: 'mmHg', width: '100%' },
+
   };
 
   const initialInputValues = Object.keys(labelProperties).reduce((values, label) => {

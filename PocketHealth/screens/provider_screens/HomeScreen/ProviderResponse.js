@@ -165,13 +165,19 @@ return (
           label={vitalData[3].label}
           value={vitalData[3].value}
           unit={vitalData[3].unit}
-          width='45%'
+          width='30%'
         />
         <ShowcaseBoxWithLabel
           label={vitalData[4].label}
           value={vitalData[4].value}
           unit={vitalData[4].unit}
-          width='45%'
+          width='30%'
+        />
+        <ShowcaseBoxWithLabel
+          label={vitalData[5].label}
+          value={vitalData[5].value}
+          unit={vitalData[5].unit}
+          width='30%'
         />
       </View>
 
