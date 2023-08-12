@@ -55,7 +55,7 @@ const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerRepo
                 label={item.label}
                 value={item.value}
                 unit={item.unit}
-                width='30%'
+                width='33%'
               />
             );
           })}
@@ -69,7 +69,7 @@ const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerRepo
                 label={item.label}
                 value={item.value}
                 unit={item.unit}
-                width='45%'
+                width='33%'
               />
             );
           })}

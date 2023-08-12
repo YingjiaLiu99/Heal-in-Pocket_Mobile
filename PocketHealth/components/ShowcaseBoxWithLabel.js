@@ -1,6 +1,4 @@
-// import React from 'react';
 // import { View, Text, StyleSheet } from 'react-native';
-
 // const ShowcaseBoxWithLabel = ({ label, value, unit, width, marginLeft, marginRight, ...props }) => {
 //   return (
 //     <View style={[styles.boxContainer, {width:width}, {marginLeft:marginLeft}, {marginRight:marginRight}]}>
@@ -41,10 +39,10 @@
 //     marginBottom: 5,
 //   },
 //   boxField: {
-//     fontSize: 20,
+//     fontSize: 19,
 //   },
 //   unit: {
-//     fontSize: 20,
+//     fontSize: 15,
 //     alignSelf: 'center',
 //     marginTop:18,
 //   },
@@ -100,7 +98,7 @@ const styles = StyleSheet.create({
   boxField: {
     fontSize: 19,
     flex: 1,
-    paddingRight: 5, // some padding to ensure text doesn't touch the unit
+    paddingRight: 3, // some padding to ensure text doesn't touch the unit
   },
   unit: {
     fontSize: 15,

@@ -1,19 +1,27 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
 
-const BigShowcaseBoxWithLabel = ({ label, value, onChange,width, backgroundColor = '#FFFFFF', ...props }) => {
+const BigInputBoxWithLabel = ({ 
+  label, 
+  value, 
+  onChange, 
+  width, 
+  backgroundColor = '#FFFFFF', 
+  ...props 
+}) => {
   return (
     <View style={[styles.boxContainer, {width:width}]}>
       <View style={[styles.valueContainer, {backgroundColor: backgroundColor}]}>
         <View style={styles.labelValueContainer}>
           <Text style={styles.boxLabel}>{label}</Text>
           <ScrollView>
-            <Text
+            <TextInput
               style={styles.boxField}
+              value={value}
+              onChangeText={onChange}
+              multiline
               {...props}
-            >
-              {value}
-            </Text>
+            />
           </ScrollView>
         </View>        
       </View>
@@ -46,6 +54,9 @@ const styles = StyleSheet.create({
   },
   boxField: {
     fontSize: 20,
+    borderWidth: 0,  // Ensure no border shows
+    color: 'black'   // Set text color
   },  
 });
-export default BigShowcaseBoxWithLabel;
+
+export default BigInputBoxWithLabel;

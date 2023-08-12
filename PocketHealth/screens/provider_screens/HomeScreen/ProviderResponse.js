@@ -3,8 +3,8 @@ import { View, TouchableOpacity, Text, ScrollView, TouchableWithoutFeedback, Key
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import ShowcaseBoxWithLabel from '../../../components/ShowcaseBoxWithLabel';
-import BigShowcaseBoxWithLabel from '../../../components/BigShowcaseBoxWithLabel';
+import InputBoxWithLabel from './components/InputBoxWithLabel';
+import BigInputBoxWithLabel from './components/BigInputBoxWithLabel';
 import ProviderInputBox from './components/ProviderInputBox';
 import VisitDataContext from '../../../context/context_VisitData';
 import RequestMessContext from '../../../context/context_requestMess';
@@ -28,6 +28,19 @@ export default function ProviderResponseScreen({route, navigation}) {
   const subjectiveRef = useRef(null);
   const objectiveRef = useRef(null);
   const assessmentRef = useRef(null);
+
+  const [chiefComplaint, setChiefComplaint] = useState(patient.visitNote.chiefComplaint);
+  const [medicalHistoryValue, setMedicalHistoryValue] = useState(medicalHistory[0].value);
+  const [medicationAllergies, setMedicationAllergies] = useState(medicalHistory[1].value + ' [Allergies: ' + medicalHistory[2].value + ']');
+
+  const [vitalValue1, setVitalValue1] = useState(vitalData[0].value);
+  const [vitalValue2, setVitalValue2] = useState(vitalData[1].value);
+  const [vitalValue3, setVitalValue3] = useState(vitalData[2].value);
+  const [vitalValue4, setVitalValue4] = useState(vitalData[3].value);
+  const [vitalValue5, setVitalValue5] = useState(vitalData[4].value);
+  const [vitalValue6, setVitalValue6] = useState(vitalData[5].value);
+
+
 
 const handleSubmit = () => {
   // if(assessment === '' || subjective === '' || objective === ''){
@@ -104,12 +117,19 @@ return (
     <KeyboardAwareScrollView contentContainerStyle={{...styles.container, paddingTop: 85}}>
       <Text style={{fontSize:27}}>Visit Note</Text>
 
-      <BigShowcaseBoxWithLabel
+      {/* <BigShowcaseBoxWithLabel
         label='Chief Complaint'
         value={patient.visitNote.chiefComplaint}
         unit=''
         width="100%"
-      />            
+      />       */}
+
+      <BigInputBoxWithLabel
+        label='Chief Complaint'
+        value={chiefComplaint}
+        width="100%"
+        onChange={(text) => setChiefComplaint(text)}
+      />      
 
       <View style={{width:'100%'}}>
         <ProviderInputBox 
@@ -125,22 +145,41 @@ return (
           ref={subjectiveRef}
         />
 
-        <BigShowcaseBoxWithLabel            
+        {/* <BigShowcaseBoxWithLabel            
             label='Medical History'
             value={medicalHistory[0].value}
             unit= ''
             width="100%"
-        />
-        <BigShowcaseBoxWithLabel            
+        /> */}
+
+        <BigInputBoxWithLabel
+          label='Medical History'
+          value={medicalHistoryValue}
+          width="100%"
+          onChange={(text) => setMedicalHistoryValue(text)}
+      />
+        {/* <BigShowcaseBoxWithLabel            
             label='Current Medication/Allergies'
             value={[medicalHistory[1].value, ' [Allergies: ' , medicalHistory[2].value, ']' ]}
             unit= ''
             width="100%"
-        />
+        /> */}
+
+      <BigInputBoxWithLabel
+        label='Current Medication/Allergies'
+        value={medicationAllergies}
+        width="100%"
+        onChange={(text) => {
+          // This is a bit more complex due to the formatting. If you simply want to edit the medications or allergies separately, consider splitting this into two fields.
+          setMedicationAllergies(text);
+        }}
+      />
       </View>
 
+
+
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
-        <ShowcaseBoxWithLabel 
+        {/* <ShowcaseBoxWithLabel 
           label={vitalData[0].label}
           value={vitalData[0].value}
           unit={vitalData[0].unit}
@@ -157,11 +196,34 @@ return (
           value={vitalData[2].value}
           unit={vitalData[2].unit}
           width='30%'
-        />
+        /> */}
+        <InputBoxWithLabel 
+        label={vitalData[0].label}
+        value={vitalValue1}
+        onChange={(text) => setVitalValue1(text)}
+        unit={vitalData[0].unit}
+        width='30%'
+      />
+
+      <InputBoxWithLabel 
+        label={vitalData[1].label}
+        value={vitalValue2}
+        onChange={(text) => setVitalValue2(text)}
+        unit={vitalData[1].unit}
+        width='30%'
+      />
+
+      <InputBoxWithLabel 
+        label={vitalData[2].label}
+        value={vitalValue3}
+        onChange={(text) => setVitalValue3(text)}
+        unit={vitalData[2].unit}
+        width='30%'
+      />
       </View>
 
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
-        <ShowcaseBoxWithLabel
+        {/* <ShowcaseBoxWithLabel
           label={vitalData[3].label}
           value={vitalData[3].value}
           unit={vitalData[3].unit}
@@ -178,7 +240,30 @@ return (
           value={vitalData[5].value}
           unit={vitalData[5].unit}
           width='30%'
-        />
+        /> */}
+        <InputBoxWithLabel 
+        label={vitalData[3].label}
+        value={vitalValue4}
+        onChange={(text) => setVitalValue4(text)}
+        unit={vitalData[3].unit}
+        width='30%'
+      />
+
+      <InputBoxWithLabel 
+        label={vitalData[4].label}
+        value={vitalValue5}
+        onChange={(text) => setVitalValue5(text)}
+        unit={vitalData[4].unit}
+        width='30%'
+      />
+
+      <InputBoxWithLabel 
+        label={vitalData[5].label}
+        value={vitalValue6}
+        onChange={(text) => setVitalValue6(text)}
+        unit={vitalData[5].unit}
+        width='30%'
+      />
       </View>
 
 
