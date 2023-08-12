@@ -113,16 +113,9 @@ return (
 
   </View>
 
-    <ScrollView>
-    <KeyboardAwareScrollView contentContainerStyle={{...styles.container, paddingTop: 85}}>
+    <ScrollView keyboardShouldPersistTaps='handled'>
+    <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={{...styles.container, paddingTop: 85}}>
       <Text style={{fontSize:27}}>Visit Note</Text>
-
-      {/* <BigShowcaseBoxWithLabel
-        label='Chief Complaint'
-        value={patient.visitNote.chiefComplaint}
-        unit=''
-        width="100%"
-      />       */}
 
       <BigInputBoxWithLabel
         label='Chief Complaint'
@@ -145,25 +138,12 @@ return (
           ref={subjectiveRef}
         />
 
-        {/* <BigShowcaseBoxWithLabel            
-            label='Medical History'
-            value={medicalHistory[0].value}
-            unit= ''
-            width="100%"
-        /> */}
-
         <BigInputBoxWithLabel
           label='Medical History'
           value={medicalHistoryValue}
           width="100%"
           onChange={(text) => setMedicalHistoryValue(text)}
       />
-        {/* <BigShowcaseBoxWithLabel            
-            label='Current Medication/Allergies'
-            value={[medicalHistory[1].value, ' [Allergies: ' , medicalHistory[2].value, ']' ]}
-            unit= ''
-            width="100%"
-        /> */}
 
       <BigInputBoxWithLabel
         label='Current Medication/Allergies'
@@ -179,30 +159,13 @@ return (
 
 
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
-        {/* <ShowcaseBoxWithLabel 
-          label={vitalData[0].label}
-          value={vitalData[0].value}
-          unit={vitalData[0].unit}
-          width='30%'
-        />
-        <ShowcaseBoxWithLabel 
-          label={vitalData[1].label}
-          value={vitalData[1].value}
-          unit={vitalData[1].unit}
-          width='30%'
-        />
-        <ShowcaseBoxWithLabel 
-          label={vitalData[2].label}
-          value={vitalData[2].value}
-          unit={vitalData[2].unit}
-          width='30%'
-        /> */}
+
         <InputBoxWithLabel 
         label={vitalData[0].label}
         value={vitalValue1}
         onChange={(text) => setVitalValue1(text)}
         unit={vitalData[0].unit}
-        width='30%'
+        width='32%'
       />
 
       <InputBoxWithLabel 
@@ -210,7 +173,7 @@ return (
         value={vitalValue2}
         onChange={(text) => setVitalValue2(text)}
         unit={vitalData[1].unit}
-        width='30%'
+        width='32%'
       />
 
       <InputBoxWithLabel 
@@ -218,35 +181,18 @@ return (
         value={vitalValue3}
         onChange={(text) => setVitalValue3(text)}
         unit={vitalData[2].unit}
-        width='30%'
+        width='32%'
       />
       </View>
 
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
-        {/* <ShowcaseBoxWithLabel
-          label={vitalData[3].label}
-          value={vitalData[3].value}
-          unit={vitalData[3].unit}
-          width='30%'
-        />
-        <ShowcaseBoxWithLabel
-          label={vitalData[4].label}
-          value={vitalData[4].value}
-          unit={vitalData[4].unit}
-          width='30%'
-        />
-        <ShowcaseBoxWithLabel
-          label={vitalData[5].label}
-          value={vitalData[5].value}
-          unit={vitalData[5].unit}
-          width='30%'
-        /> */}
+
         <InputBoxWithLabel 
         label={vitalData[3].label}
         value={vitalValue4}
         onChange={(text) => setVitalValue4(text)}
         unit={vitalData[3].unit}
-        width='30%'
+        width='32%'
       />
 
       <InputBoxWithLabel 
@@ -254,7 +200,7 @@ return (
         value={vitalValue5}
         onChange={(text) => setVitalValue5(text)}
         unit={vitalData[4].unit}
-        width='30%'
+        width='32%'
       />
 
       <InputBoxWithLabel 
@@ -262,7 +208,7 @@ return (
         value={vitalValue6}
         onChange={(text) => setVitalValue6(text)}
         unit={vitalData[5].unit}
-        width='30%'
+        width='32%'
       />
       </View>
 
@@ -305,6 +251,6 @@ return (
     
     </KeyboardAwareScrollView>
     </ScrollView>          
-  </View>    
+  </View>
   );
 };

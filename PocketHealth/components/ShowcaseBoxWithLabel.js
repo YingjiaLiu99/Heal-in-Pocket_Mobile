@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   boxField: {
-    fontSize: 19,
+    fontSize: 15,
     flex: 1,
     paddingRight: 3, // some padding to ensure text doesn't touch the unit
   },

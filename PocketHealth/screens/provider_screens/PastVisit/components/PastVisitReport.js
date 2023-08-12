@@ -12,7 +12,7 @@ const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerRepo
   const secondLine = vitalData.slice(3);
 
   return (
-    <View style={{ width: width}}>
+    <View style={{ width: '95%'}}>
       <TouchableOpacity 
         style={styles.header} 
         onPress={() => setIsExpanded(!isExpanded)}
@@ -47,7 +47,7 @@ const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerRepo
         <BigShowcaseBoxWithLabel label={medicalData[0].label} value={medicalData[0].value} width={width}/>
         <BigShowcaseBoxWithLabel label={"Current Medication/Allergies"} value={medicalData[1].value + ' [Allergies: ' + medicalData[2].value+']'} width={width}/>
 
-        <View style={{width:'95%', flexDirection: 'row', justifyContent: 'space-between',}}>
+        <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
           {firstLine.map((item, index) => {
             return (
               <ShowcaseBoxWithLabel
@@ -61,7 +61,7 @@ const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerRepo
           })}
         </View>
 
-        <View style={{width:'95%', flexDirection: 'row', justifyContent: 'space-between',}}>
+        <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
           {secondLine.map((item, index) => {
             return (
               <ShowcaseBoxWithLabel
