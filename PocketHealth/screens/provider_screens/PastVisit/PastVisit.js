@@ -48,6 +48,8 @@ export default function PastVisit( {navigation} ) {
                             medicalData={visit.visitNote.medicalHistory}
                             vitalData={visit.visitNote.vitalData}
                             patientInfo={visit.visitNote.patientInfo}
+                            providerName = {visit.visitNote.provider_name}
+                            scribeName = {visit.visitNote.scribe_name}
                             width={'100%'}
                         />
                         }

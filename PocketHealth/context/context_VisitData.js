@@ -58,6 +58,8 @@ export default VisitDataContext;
 //             },
 //             visit_id: 'xxxxx',
 //             published: 'false',
+//             provider_name: 'xxxx',
+//             scribe_name: 'xxxx'
 //         },
 //     ],
 // };
