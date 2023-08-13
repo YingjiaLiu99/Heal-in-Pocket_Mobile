@@ -31,6 +31,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
     return values;
   }, {});
 
+
   const [date, setDate] = useState('08/06/2023');
   const [time, setTime] = useState('');
   const [reason, setReason] = useState('');
@@ -149,6 +150,35 @@ export default function UploadMedicalInfo({ route, navigation }) {
   };
 
   return (
+    <View style={{flex:1}}>
+    <View style={{
+      position: 'absolute',              
+      paddingTop: 0, 
+      backgroundColor: '#DDE5FD', 
+      zIndex: 999, 
+      elevation: 3, 
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      height:85
+    }}>
+      <View>
+
+      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{firstName} {lastName}</Text>
+      </View>              
+      
+      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {DOB}</Text>
+      </View>
+
+      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>Street Corner Care {'['} {date} {']'}</Text>
+      </View>
+
+      </View>
+
+  </View>
+
     <ScrollView keyboardShouldPersistTaps='handled'>
     <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
       
@@ -261,5 +291,6 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
     </KeyboardAwareScrollView>
     </ScrollView>
+    </View>
   );
 }
