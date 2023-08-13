@@ -6,7 +6,7 @@ import BigShowcaseBoxWithLabel from '../../../../components/BigShowcaseBoxWithLa
 import ShowcaseBoxWithLabel from '../../../../components/ShowcaseBoxWithLabel';
 
 
-const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerReport, medicalData, vitalData, width }) => {
+const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerReport, medicalData, vitalData, providerName, scribeName, width }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const firstLine = vitalData.slice(0, 3);
   const secondLine = vitalData.slice(3);
@@ -75,6 +75,18 @@ const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerRepo
           })}
         </View>
 
+        <Text style={styles.classifyText}> Provider's Infomation:</Text>
+        <ShowcaseBoxWithLabel                
+          label={'Provider Name'}
+          value={providerName}                       
+          width={width}
+        />
+        <ShowcaseBoxWithLabel                
+          label={'Scribe Name'}
+          value={scribeName}                       
+          width={width}
+        />
+        
     </View>
 
   )}

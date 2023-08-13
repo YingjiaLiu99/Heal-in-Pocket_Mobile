@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext,useEffect } from 'react';
 import { View, TouchableOpacity, Text, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -32,6 +32,9 @@ export default function ProviderResponseScreen({route, navigation}) {
   const [chiefComplaint, setChiefComplaint] = useState(patient.visitNote.chiefComplaint);
   const [medicalHistoryValue, setMedicalHistoryValue] = useState(medicalHistory[0].value);
   const [medicationAllergies, setMedicationAllergies] = useState(medicalHistory[1].value + ' [Allergies: ' + medicalHistory[2].value + ']');
+  const [providerName, setProviderName] = useState(''); 
+  const [scribeName, setScribeName] = useState('');
+
 
   const [vitalValue1, setVitalValue1] = useState(vitalData[0].value);
   const [vitalValue2, setVitalValue2] = useState(vitalData[1].value);
@@ -55,11 +58,31 @@ const handleSubmit = () => {
           ...patient,
           published: true,
           visitNote: {
+            // ...patient.visitNote,
             ...patient.visitNote,
+            provider_name: providerName,
+            scribe_name:scribeName,
+            chiefComplaint: chiefComplaint,
+            medicalHistory: [
+              ...patient.visitNote.medicalHistory.slice(0, 1), // Keep the initial data
+              { ...patient.visitNote.medicalHistory[0], value: medicalHistoryValue }, // Update the first value
+              { ...patient.visitNote.medicalHistory[1], value: medicationAllergies.split(' [Allergies: ')[0] }, // Update the second value by splitting the combined field
+              { ...patient.visitNote.medicalHistory[2], value: medicationAllergies.split(' [Allergies: ')[1].split(']')[0] }, // Update the third value by splitting the combined field
+            ],
+            vitalData: [
+              { ...patient.visitNote.vitalData[0], value: vitalValue1 },
+              { ...patient.visitNote.vitalData[1], value: vitalValue2 },
+              { ...patient.visitNote.vitalData[2], value: vitalValue3 },
+              { ...patient.visitNote.vitalData[3], value: vitalValue4 },
+              { ...patient.visitNote.vitalData[4], value: vitalValue5 },
+              { ...patient.visitNote.vitalData[5], value: vitalValue6 },
+            ],
             providerReport: [
+    
               {label: 'Subjective', value: subjective},
               {label: 'Objective', value: objective},
               {label: 'Assessment / Plan', value: assessment},
+           
             ]
           }
         } : patient
@@ -236,7 +259,23 @@ return (
           ref={assessmentRef}
           returnKeyType={"done"}
         />
+
+        <BigInputBoxWithLabel
+        label='Provider Name'
+        value={providerName}  // You'll need to manage this state variable similarly as others
+        width="100%"
+        onChange={(text) => setProviderName(text)}
+      />
+
+      <BigInputBoxWithLabel
+        label='Scribe Name'
+        value={scribeName}  // You'll need to manage this state variable similarly as others
+        width="100%"
+        onChange={(text) => setScribeName(text)}
+      />
       </View>
+      
+
 
       {errorMessage ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}
 
