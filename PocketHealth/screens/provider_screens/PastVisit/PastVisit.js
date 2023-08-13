@@ -48,7 +48,7 @@ export default function PastVisit( {navigation} ) {
                             medicalData={visit.visitNote.medicalHistory}
                             vitalData={visit.visitNote.vitalData}
                             patientInfo={visit.visitNote.patientInfo}
-                            width={'95%'}
+                            width={'100%'}
                         />
                         }
                         </View>

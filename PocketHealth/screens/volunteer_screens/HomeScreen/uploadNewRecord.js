@@ -21,7 +21,9 @@ export default function UploadMedicalInfo({ route, navigation }) {
     'Pulse': { unit: 'bpm', width: '100%' },
     'Oxygen': { unit: '%', width: '100%' },
     'BG': { unit: 'mg/dl', width: '100%' },
-    'BP': { unit: 'mmHg', width: '100%' },
+    'Sys BP': { unit: 'mmHg', width: '100%' },
+    'Dia BP': { unit: 'mmHg', width: '100%' },
+
   };
 
   const initialInputValues = Object.keys(labelProperties).reduce((values, label) => {
@@ -147,8 +149,8 @@ export default function UploadMedicalInfo({ route, navigation }) {
   };
 
   return (
-    <ScrollView>
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+    <ScrollView keyboardShouldPersistTaps='handled'>
+    <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
       
       <View style={{marginTop: 5, marginBottom: 10, width: '100%', alignItems: 'center',}}>
           <Text style={{fontSize: 35, fontWeight: 400}}>Create New Record</Text>          

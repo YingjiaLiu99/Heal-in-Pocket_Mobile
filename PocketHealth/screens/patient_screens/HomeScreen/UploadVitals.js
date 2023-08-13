@@ -12,7 +12,8 @@ export default function UploadVitals({ navigation }) {
 
   const labelProperties = {    
     'Temperature': { unit: 'F', width: '95%' },
-    'Blood Pressure': { unit: 'mmHg', width: '95%' },
+    'Systolic BP': { unit: 'mmHg', width: '95%' },
+    'Diastolic BP': { unit: 'mmHg', width: '95%' },
     'Pulse': { unit: 'bpm', width: '95%' },
     'Oxygen': { unit: '%', width: '95%' },
     'Glucose': { unit: 'mg/dl', width: '95%' },    
