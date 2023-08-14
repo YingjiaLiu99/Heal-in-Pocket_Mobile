@@ -1,6 +1,14 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  heading: {
+    fontSize: 32,
+    textAlign: 'left',
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    fontWeight: 400
+  },
   
   container: {
     flex: 1,

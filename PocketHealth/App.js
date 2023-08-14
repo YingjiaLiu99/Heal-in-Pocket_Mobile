@@ -77,7 +77,9 @@ import RegisterPatientPhoneVerification_volunteer from './screens/volunteer_scre
 import UploadNewRecord_vol from './screens/volunteer_screens/HomeScreen/uploadNewRecord';
 import SuccessScreen_vol from './screens/volunteer_screens/HomeScreen/Success';
 // volunteer settings related screens:
-import WaitlistMainScreen_vol from './screens/volunteer_screens/WaitlistScreen/WaitlistMainScreen.js';
+import WaitlistMainScreen_vol from './screens/volunteer_screens/WaitlistScreen/WaitlistMainScreen';
+import WaitlistResponseScreen from './screens/volunteer_screens/WaitlistScreen/WaitlistResponse';
+import SuccessWaitlistScreen_vol from './screens/volunteer_screens/WaitlistScreen/Success';
 import SettingsMainScreen_vol from './screens/volunteer_screens/SettingsScreen/SettingsMainScreen';
 
 
@@ -365,6 +367,8 @@ function WaitlistNavigator_vol() {
   return (
     <WaitlistStack_vol.Navigator>
       <WaitlistStack_vol.Screen name="Waitlist" component={WaitlistMainScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <WaitlistStack_vol.Screen name="Waitlist Response" component={WaitlistResponseScreen} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <WaitlistStack_vol.Screen name="Success" component={SuccessWaitlistScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       {/* any follow up screens goes from here */}
     </WaitlistStack_vol.Navigator>
   );

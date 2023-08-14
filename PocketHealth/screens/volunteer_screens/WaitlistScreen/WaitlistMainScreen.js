@@ -1,64 +1,54 @@
 import React, { useState, useContext } from "react";
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, TouchableOpacity, View, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles.js';
-import VisitDataContext from "../../../context/context_VisitData.js";
-import WaitlistReport from './components/WaitlistReport.js';
+import RequestMessage from './components/RequestMessage.js'; 
+import RequestMessContext from "../../../context/context_requestMess.js";
 
-export default function Waitlist( {navigation} ) {
-    const { visitData, setVisitData } = useContext(VisitDataContext);
-    const [expandedDates, setExpandedDates] = useState([]);
+export default function WaitlistMainScreen({navigation}) {
 
-    const toggleExpandedDate = (date) => {
-        if (expandedDates.includes(date)) {
-        setExpandedDates(expandedDates.filter(expandedDate => expandedDate !== date));
-        } else {
-        setExpandedDates([...expandedDates, date]);
-        }
-    }
-
+    const {requests, setRequests} = useContext(RequestMessContext);
+    const handleAccept = (visit_id) => {
+      navigation.navigate("Waitlist Response", { visit_id })
+    };
+  
     return (
-        <View style={styles.container}>
-        <View style={{marginTop: 20,marginBottom:30,width:'100%'}}>
-            <Text style={{fontSize:35, fontWeight:400}}>My Waitlist</Text>            
-        </View>
-    
-        <FlatList
-            style={{width:"100%"}}
-            data={visitData}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-                <View>
-                    <TouchableOpacity 
-                            style={[styles.header, { backgroundColor: expandedDates.includes(item.date) ? 'white' : 'white' }]} 
-                            onPress={() => toggleExpandedDate(item.date)}>
-                        <Text style={styles.dateText}>{item.date}</Text>
-                        <Icon name={expandedDates.includes(item.date) ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
-                    </TouchableOpacity>
-                    {expandedDates.includes(item.date) && item.patients.map((visit, index) => (    
-                        <View key={index} style={{ alignItems: 'center' }}>
-                        { (visit.published === true) &&
-                        <WaitlistReport
-                            key={index}
-                            name={`${visit.firstName} ${visit.lastName}`}
-                            time={visit.time}
-                            chiefComplaint={visit.visitNote.chiefComplaint}
-                            providerReport={visit.visitNote.providerReport}
-                            medicalData={visit.visitNote.medicalHistory}
-                            vitalData={visit.visitNote.vitalData}
-                            patientInfo={visit.visitNote.patientInfo}
-                            providerName = {visit.visitNote.provider_name}
-                            scribeName = {visit.visitNote.scribe_name}
-                            width={'100%'}
-                        />
-                        }
-                        </View>
-                    ))}
-                </View>
+      <View style={{flex: 1}}>
+        <Text style={styles.heading}>Welcome!</Text>
+        <Text style={{fontSize:25,textAlign: 'center', }}>Current Request </Text>
+        <Text style={{fontSize:18,color:'gray', textAlign: 'center' }}>{requests.length} patient(s) are waiting</Text>
+        
+        {/* This is the waiting line container: */}
+        <View style={{
+          borderRadius:20,
+          borderWidth:2,
+          backgroundColor:'#FFFFFF',
+          marginTop:5,
+          marginHorizontal:15,
+          paddingTop:10,
+          paddingHorizontal:0,
+          height:430
+        }}>
+          <ScrollView>
+            {requests.length > 0 ? (
+              requests.map((request, index) => (
+                <RequestMessage
+                  key={index}
+                  chiefComplaint={request.chiefComplaint}
+                  name={request.name}
+                  time={request.time}
+                  tag={request.tag}
+                  onPress={() => handleAccept(request.visit_id)}
+                />
+              ))
+            ) : (
+              <View style={{ alignItems: 'center', justifyContent: 'center',marginTop:30 }}>
+                <Text style={{fontSize: 30, color: '#000000'}}>No patient request yet...</Text>
+              </View>
             )}
-            
-        />
+          </ScrollView>
         </View>
+      </View>
     );
-};
+  };
