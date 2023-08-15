@@ -89,9 +89,9 @@ const handleSubmit = () => {
       )
     }));
     setVisitData(updatedVisitData);
-    // delete the request:
-    const updatedRequests = requests.filter(request => request.visit_id !== visit_id);
-    setRequests(updatedRequests);
+    // // delete the request:
+    // const updatedRequests = requests.filter(request => request.visit_id !== visit_id);
+    // setRequests(updatedRequests);
     navigation.navigate('Success');
   } 
   else {

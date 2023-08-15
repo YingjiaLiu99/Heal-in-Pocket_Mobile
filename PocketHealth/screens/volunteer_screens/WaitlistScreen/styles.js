@@ -67,6 +67,38 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 25
   },
-
+  confirmButton: {
+    backgroundColor: '#FF9248',    
+    height: 50,
+    width: '70%',
+    marginVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    borderRadius: 20,
+  },
+  normalButton: {
+    backgroundColor: '#395BCD',    
+    height: 50,
+    width: '70%',
+    marginVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    borderRadius: 20,
+  },      
+  buttonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#395BCD',
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginLeft: 10,
+    width:'80%',
+    height:50,    
+  },
 });
   export default styles;
