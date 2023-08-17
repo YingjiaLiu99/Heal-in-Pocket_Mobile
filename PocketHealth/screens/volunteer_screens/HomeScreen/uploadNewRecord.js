@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useRef, createRef, useEffect } from 'react';
 import { Text, View, TouchableOpacity, Alert, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackActions } from '@react-navigation/native';
@@ -176,6 +176,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
         placeholder={"e.g. 01:35 pm"}
         onChange={(text) => {setTime(text)}}
         onFocus = {handleOutsidePress}
+        autoFocus
       />
       </View>
 

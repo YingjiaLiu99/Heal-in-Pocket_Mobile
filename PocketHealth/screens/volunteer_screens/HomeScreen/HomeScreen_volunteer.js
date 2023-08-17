@@ -90,7 +90,8 @@ export default function HomeScreen({navigation}) {
             onChangeText={handleSearch}
             onClear={handleClear}
             value={searchInput}
-            onFocus={() => handleSearchFocus(true)}            
+            onFocus={() => handleSearchFocus(true)}    
+            autoFocus
           />
 
           {(searchInput !== '') && (
