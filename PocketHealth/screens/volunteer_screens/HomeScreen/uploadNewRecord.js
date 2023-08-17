@@ -15,6 +15,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const visit_id = uuid.v4();
   const { visitData, setVisitData } = useContext(VisitDataContext);
   const { requests, setRequests } = useContext(RequestMessContext);
+  // This date is today's date
   const { firstName, lastName, DOB, gender, date} = route.params;
   const labelProperties = {    
     'Temp': { unit: 'F', width: '100%' },
@@ -148,6 +149,10 @@ export default function UploadMedicalInfo({ route, navigation }) {
     }    
   };
 
+  const handleVitalOnlySubmit = () => {
+    navigation.navigate('Home');
+  }
+
   return (
     <ScrollView keyboardShouldPersistTaps='handled'>
     <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
@@ -251,11 +256,17 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
     {errorMessage ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}  
 
-      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:60}}>
-        <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
+      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:20}}>
+        <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.normalButton} onPress={handleSubmit}>
           <Text style={styles.buttonText}>
             {confirmSubmit ? 'Submit Request' : 'Confirm Request'}
           </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:60}}>
+        <TouchableOpacity style={styles.vitalOnlyButton} onPress={handleVitalOnlySubmit}>
+          <Text style={styles.buttonText}>Vital Check Only</Text>
         </TouchableOpacity>
       </View>
 
