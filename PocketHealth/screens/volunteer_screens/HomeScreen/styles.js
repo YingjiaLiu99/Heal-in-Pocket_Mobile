@@ -77,6 +77,11 @@ const styles = StyleSheet.create({
       paddingHorizontal: 5,
       borderRadius: 20
     },
+    selectedText: {
+      alignItems: 'center', 
+      marginTop: 20,
+      fontSize: 18,
+    },
 
   });
 

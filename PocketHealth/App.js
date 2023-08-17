@@ -76,6 +76,7 @@ import RegisterPatientWithPhone_volunteer from './screens/volunteer_screens/Regi
 import RegisterPatientPhoneVerification_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientPhoneVerification';
 import UploadNewRecord_vol from './screens/volunteer_screens/HomeScreen/uploadNewRecord';
 import SuccessScreen_vol from './screens/volunteer_screens/HomeScreen/Success';
+import RecordPatientInfo from './screens/volunteer_screens/HomeScreen/RecordPatientInfo';
 // volunteer settings related screens:
 import SettingsMainScreen_vol from './screens/volunteer_screens/SettingsScreen/SettingsMainScreen';
 
@@ -346,6 +347,7 @@ function HomeNavigator_vol() {
       <HomeStack_vol.Screen name="Options" component={OptionScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <HomeStack_vol.Screen name="Upload New Record" component={UploadNewRecord_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <HomeStack_vol.Screen name='Success' component={SuccessScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HomeStack_vol.Screen name='Record Patient Info' component={RecordPatientInfo} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
 
     </HomeStack_vol.Navigator>
   );
