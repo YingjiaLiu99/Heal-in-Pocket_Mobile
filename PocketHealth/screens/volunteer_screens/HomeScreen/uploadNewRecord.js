@@ -206,7 +206,6 @@ export default function UploadMedicalInfo({ route, navigation }) {
         placeholder={"e.g. 01:35 pm"}
         onChange={(text) => {setTime(text)}}
         onFocus = {handleOutsidePress}
-        autoFocus
       />
       </View>
 
@@ -215,6 +214,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
       <View style={{width: "100%"}}>
           {Object.entries(labelProperties).map(([label, properties], index) => (
+            
           <InputBoxWithInnerLabel
               key={index}
               label={label}
@@ -226,9 +226,12 @@ export default function UploadMedicalInfo({ route, navigation }) {
               onChange={(value) => handleInputChange("vital", label, value)}
               onFocus = {handleOutsidePress}
               keyboardType={'numeric'}
+              autoFocus={label === 'Temp'} // this line is added
+              
           />
           ))}
       </View>
+      
 
       
       <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Medical History</Text>          
