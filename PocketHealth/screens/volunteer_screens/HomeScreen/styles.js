@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 5,
       borderRadius: 20
     },
+    // Only used for vital check
     vitalOnlyButton: {
       backgroundColor: '#ceaea3',
       // ... other styles same as 'button' ...
