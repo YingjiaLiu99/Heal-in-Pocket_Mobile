@@ -82,6 +82,11 @@ const styles = StyleSheet.create({
       marginTop: 20,
       fontSize: 18,
     },
+    dateText: {
+      fontSize: 18,
+      color: '#333333',
+      fontWeight: 'bold',
+    },
 
   });
 

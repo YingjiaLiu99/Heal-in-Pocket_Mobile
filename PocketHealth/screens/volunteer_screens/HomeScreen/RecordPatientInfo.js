@@ -10,24 +10,20 @@ import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
 import InputBoxWithLabel from '../../../components/InputBoxWithLabel';
 import RadioMutipleChoiceCenter from '../../../components/RadioMultipleChoiceCenter';
 import styles from './styles';
-// import the context:
-import VisitDataContext from '../../../context/context_VisitData';
-import RequestMessContext from '../../../context/context_requestMess';
+
 
 export default function RecordPatientInfo({ route, navigation }) {
 
-    const { firstName, lastName, DOB, genderSelection } = route.params;
+    const { firstName, lastName, DOB, gender } = route.params;
     const [insurance, setInsurance] = useState('');
     const [pcps, setPcPs] = useState('');
     const [caseHistory, setCaseHistory] = useState('');
-    const [smoking, setSmoking] = useState('');
-    const [pregnancy, setPregnancy] = useState('');
+    const [smoking, setSmoking] = useState(null);
+    const [pregnancy, setPregnancy] = useState(null);
 
     const insuranceRef = useRef(null);
     const pcpsRef = useRef(null);
     const caseHistoryRef = useRef(null);
-    const smokingRef = useRef(null);
-    const pregnancyRef = useRef(null);
 
     const smokingOption = [
         { value: 'yes', choiceLabel: 'Yes' },
@@ -35,11 +31,22 @@ export default function RecordPatientInfo({ route, navigation }) {
         { value: 'na', choiceLabel: 'NA' },
     ];
 
-    const pregnancyStatus = [
+    const pregnancyOption = [
         { value: 'yes', choiceLabel: 'Yes' },
         { value: 'no', choiceLabel: 'No' },
         { value: 'na', choiceLabel: 'NA' },
     ];
+
+    // Generated today's date
+    const getCurrentDate = () => {
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+        const year = date.getFullYear();
+        // setDate(`${month}/${day}/${year}`);
+        
+        return `${month}/${day}/${year}`;
+    }
 
 
     // Backend api call GOES INSIDE
@@ -49,36 +56,34 @@ export default function RecordPatientInfo({ route, navigation }) {
             setErrorMessage('Please enter a valid name');
         }
         else {
-            console.log(`First Name: ${firstName}, Last Name: ${lastName}, DOB: ${DOB}, Sex: ${genderSelection}
-            , Insurance: ${insurance}, PcPs: ${pcps}, caseHistory: ${caseHistory}, smoking: ${smoking}, pregnancy: ${pregnancy}`);
+            console.log(`First Name: ${firstName}, Last Name: ${lastName}, DOB: ${DOB}, Sex: ${gender}
+            , Insurance: ${insurance}, PcPs: ${pcps}, caseHistory: ${caseHistory}, smoking: ${smoking}
+            , pregnancy: ${pregnancy}, date: ${getCurrentDate()} `);
 
         navigation.navigate("Upload New Record", 
         {
             firstName: firstName,
             lastName: lastName,
             DOB: DOB,
-            gender: genderSelection,
+            gender: gender,
             insurance: insurance,
             pcps: pcps,
             caseHistory: caseHistory,
             smoking: smoking,
-            pregnancy: pregnancy
+            pregnancy: pregnancy,
+            date:getCurrentDate(),
         });
     }   
   };
-
-
-   
-
 
     return(
         <ScrollView>
             <KeyboardAwareScrollView contentContainerStyle={styles.container}>
 
                 <View style={{marginTop: 35,marginBottom:30,width:'100%'}}>
+                    <Text style={styles.dateText}>Date: {getCurrentDate()}</Text>
 
                 </View>
-                {/* <Text>Enter Patient Information To Set Up Account</Text> */}
 
                 <InputBoxWithLabel
                     label="Insurance"        
@@ -114,8 +119,6 @@ export default function RecordPatientInfo({ route, navigation }) {
                     placeholder="Please enter the hospitalized history"
                     keyboardType="default"
                     width='100%'
-                    onSubmitEditing={() => smokingRef.current.focus()}
-                    returnKeyType="next"
                     autoFocus
                 />
                 <View>
@@ -128,8 +131,8 @@ export default function RecordPatientInfo({ route, navigation }) {
 
                 <View>
                     <RadioMutipleChoiceCenter
-                        options={pregnancyStatus}
-                        onSelectionChange={(selectPregnancy) => setSmoking(selectPregnancy)}
+                        options={pregnancyOption}
+                        onSelectionChange={(selectPregnancy) => setPregnancy(selectPregnancy)}
                         upperLabel="Pregancy Status"
                     />
                 </View>

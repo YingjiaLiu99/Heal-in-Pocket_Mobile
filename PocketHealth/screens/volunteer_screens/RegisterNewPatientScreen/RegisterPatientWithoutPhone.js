@@ -114,7 +114,7 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
           returnKeyType='done'
         />
 
-        <View style={{marginTop:-10, marginLeft:0}}>
+        <View style={{marginTop:-10, marginLeft:-105}}>
           <RadioMutipleChoice
             options={genderOptions}
             onSelectionChange={setGenderSelection}

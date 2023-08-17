@@ -15,7 +15,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const visit_id = uuid.v4();
   const { visitData, setVisitData } = useContext(VisitDataContext);
   const { requests, setRequests } = useContext(RequestMessContext);
-  const { firstName, lastName, DOB, genderSelection } = route.params;
+  const { firstName, lastName, DOB, gender, date} = route.params;
   const labelProperties = {    
     'Temp': { unit: 'F', width: '100%' },
     'Pulse': { unit: 'bpm', width: '100%' },
@@ -31,7 +31,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
     return values;
   }, {});
 
-  const [date, setDate] = useState('08/06/2023');
+  // const [date, setDate] = useState(date);
   const [time, setTime] = useState('');
   const [reason, setReason] = useState('');
   const [vitalValues, setVitalValues] = useState(initialInputValues);
@@ -40,18 +40,18 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const [medHistoryValues, setMedHistoryValues] = useState({chronicIllness: 'N.A.', currentMedication: 'N.A.', allergies: 'N.A.'});
 
   // Handle date of birth with "/"
-  const handleDateChange = (text) => {
-    const formattedText = text.split('/').join('');
-    if (formattedText.length >= 5) {
-      text = text.split('/').join('').replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
-    } else if (formattedText.length >= 3) {
-      text = text.split('/').join('').replace(/(\d{2})(\d{1,2})/, "$1/$2");
-    }
+  // const handleDateChange = (text) => {
+  //   const formattedText = text.split('/').join('');
+  //   if (formattedText.length >= 5) {
+  //     text = text.split('/').join('').replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
+  //   } else if (formattedText.length >= 3) {
+  //     text = text.split('/').join('').replace(/(\d{2})(\d{1,2})/, "$1/$2");
+  //   }
     
-    if (formattedText.length <= 8) {
-      setDate(text);
-    }
-  };
+  //   if (formattedText.length <= 8) {
+  //     setDate(text);
+  //   }
+  // };
 
   const handleInputChange = (type, label, value) => {
     if (type === "vital") {
@@ -157,7 +157,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
       </View>
 
       <View style={{width: "100%"}}>
-      <InputBoxWithInnerLabel
+      {/* <InputBoxWithInnerLabel
         label="Date"
         value={date}
         width="100%"
@@ -166,7 +166,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
         keyboardType="phone-pad"
         onChange={(text) => handleDateChange(text)}
         onFocus = {handleOutsidePress}
-      />
+      /> */}
 
       <InputBoxWithInnerLabel
         label="Time"
