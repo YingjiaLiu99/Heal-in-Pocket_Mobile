@@ -16,7 +16,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const { visitData, setVisitData } = useContext(VisitDataContext);
   const { requests, setRequests } = useContext(RequestMessContext);
   // This date is today's date
-  const { firstName, lastName, DOB, gender, date} = route.params;
+  const { firstName, lastName, DOB, gender, time, date} = route.params;
   const labelProperties = {    
     'Temp': { unit: 'F', width: '100%' },
     'Pulse': { unit: 'bpm', width: '100%' },
@@ -33,7 +33,6 @@ export default function UploadMedicalInfo({ route, navigation }) {
   }, {});
 
   // const [date, setDate] = useState(date);
-  const [time, setTime] = useState('');
   const [reason, setReason] = useState('');
   const [vitalValues, setVitalValues] = useState(initialInputValues);
   const [confirmSubmit, setConfirmSubmit] = useState(false);
@@ -161,8 +160,8 @@ export default function UploadMedicalInfo({ route, navigation }) {
           <Text style={{fontSize: 35, fontWeight: 400}}>Create New Record</Text>          
       </View>
 
-      <View style={{width: "100%"}}>
-      {/* <InputBoxWithInnerLabel
+      {/* <View style={{width: "100%"}}>
+      <InputBoxWithInnerLabel
         label="Date"
         value={date}
         width="100%"
@@ -171,7 +170,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
         keyboardType="phone-pad"
         onChange={(text) => handleDateChange(text)}
         onFocus = {handleOutsidePress}
-      /> */}
+      />
 
       <InputBoxWithInnerLabel
         label="Time"
@@ -182,7 +181,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
         onChange={(text) => {setTime(text)}}
         onFocus = {handleOutsidePress}
       />
-      </View>
+      </View> */}
 
       <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Vitals</Text>          
       

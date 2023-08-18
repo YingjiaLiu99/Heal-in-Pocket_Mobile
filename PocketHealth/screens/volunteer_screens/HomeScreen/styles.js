@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     },
     // Only used for vital check
     vitalOnlyButton: {
-      backgroundColor: '#ceaea3',
+      backgroundColor: '#f16981',
       // ... other styles same as 'button' ...
       height: 70,
       width: '90%',      
