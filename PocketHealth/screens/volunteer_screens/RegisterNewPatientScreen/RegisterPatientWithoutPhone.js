@@ -57,7 +57,7 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
     else {
       console.log(`First Name: ${firstName}, Last Name: ${lastName}, DOB: ${dateofbirth}, Sex: ${genderSelection}`);
 
-      navigation.navigate("Upload New Record", 
+      navigation.navigate("Record Patient Info", 
       {
         firstName: firstName,
         lastName: lastName,
