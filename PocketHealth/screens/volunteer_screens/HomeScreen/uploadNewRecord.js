@@ -153,7 +153,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
   }
 
   return (
-    <View style={{flex:1}}>
+  <View style={{flex:1}}>
     <View style={{
       position: 'absolute',              
       paddingTop: 0, 
@@ -182,37 +182,9 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
   </View>
 
-    {/* <ScrollView keyboardShouldPersistTaps='handled'> */}
-    <ScrollView keyboardShouldPersistTaps='handled' style={{ paddingTop: 85 }}>
-
-    <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
-      
-      <View style={{marginTop: 5, marginBottom: 10, width: '100%', alignItems: 'center',}}>
-          <Text style={{fontSize: 35, fontWeight: 400}}>Create New Record</Text>          
-      </View>
-
-      {/* <View style={{width: "100%"}}>
-      <InputBoxWithInnerLabel
-        label="Date"
-        value={date}
-        width="100%"
-        height={60}
-        placeholder="MM/DD/YYYY"
-        keyboardType="phone-pad"
-        onChange={(text) => handleDateChange(text)}
-        onFocus = {handleOutsidePress}
-      />
-
-      <InputBoxWithInnerLabel
-        label="Time"
-        value={time}
-        width="100%"
-        height={60}
-        placeholder={"e.g. 01:35 pm"}
-        onChange={(text) => {setTime(text)}}
-        onFocus = {handleOutsidePress}
-      />
-      </View> */}
+  <ScrollView keyboardShouldPersistTaps='handled'>
+  <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={{...styles.container, paddingTop: 85}}>
+      <Text style={{fontSize:27}}>Create New Record</Text>
 
       <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Vitals</Text>          
       
@@ -280,7 +252,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
           <BigInputBoxWithInnerLabel
               label="Resaon For Consultation*"
               value={reason}
-              width="95%"
+              width="100%"
               height={100}
               onChangeText={(text) => setReason(text)}
               placeholder={'Please enter patient reason for consultation...'}
@@ -306,6 +278,6 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
     </KeyboardAwareScrollView>
     </ScrollView>
-    </View>
+  </View>
   );
 }

@@ -15,7 +15,7 @@ export default function SuccessScreen({navigation}) {
 
         <View style={{width:'100%',alignItems:'center',marginTop:150,marginBottom:100}}>
           
-            <Text style={styles.heading}>Success! Record has been published! You can also find it in Waitlist</Text>
+            <Text style={styles.heading}>Success! Request has been updated!</Text>
         
         </View>
 
