@@ -273,7 +273,7 @@ function HomeTab_provider() {
 function HomeNavigator_provider() {
   return (
     <HomeStack_provider.Navigator>
-      <HomeStack_provider.Screen name="Home" component={HomeScreen_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}} />
+      <HomeStack_provider.Screen name="Home" component={HomeScreen_provider} options={{headerBackTitle:'Back', headerTitle: '', headerStyle:{backgroundColor:'#DDE5FD'}}} />
       <HomeStack_provider.Screen name="Provider Response" component={ProviderResponseScreen} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}} />
       <HomeStack_provider.Screen name="Success" component={SuccessScreen_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD',}}} />
       
@@ -326,7 +326,7 @@ function HomeTab_vol() {
           ),
          }}
       />  
-      <Tab_vol.Screen name="Waitlist" component={WaitlistNavigator_vol} options={{
+      <Tab_vol.Screen name="My Waitlist" component={WaitlistNavigator_vol} options={{
          headerShown: false,
          tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Waitlist</Text>,         
          tabBarIcon: ({ color }) => (
@@ -350,7 +350,7 @@ function HomeTab_vol() {
 function HomeNavigator_vol() {
   return(
     <HomeStack_vol.Navigator>
-      <HomeStack_vol.Screen name="Home" component={HomeScreen_volunteer} />  
+      <HomeStack_vol.Screen name="Home" component={HomeScreen_volunteer} options={{headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}} />  
       {/* any follow up screens from home goes from here */}  
       <HomeStack_vol.Screen name="Register A New Patient" component={RegisterNewPatient_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <HomeStack_vol.Screen name="Register Patient With Phone" component={RegisterPatientWithPhone_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>

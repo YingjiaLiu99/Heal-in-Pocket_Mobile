@@ -56,7 +56,7 @@ const handleSubmit = () => {
       patients: visit.patients.map(patient => 
         patient.visit_id === visit_id ? {
           ...patient,
-          published: true,
+          published: false,
           visitNote: {
             // ...patient.visitNote,
             ...patient.visitNote,
@@ -89,9 +89,6 @@ const handleSubmit = () => {
       )
     }));
     setVisitData(updatedVisitData);
-    // // delete the request:
-    // const updatedRequests = requests.filter(request => request.visit_id !== visit_id);
-    // setRequests(updatedRequests);
     navigation.navigate('Success');
   } 
   else {
