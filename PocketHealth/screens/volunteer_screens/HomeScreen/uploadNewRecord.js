@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, createRef, useEffect } from 'react';
 import { Text, View, TouchableOpacity, Alert, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackActions } from '@react-navigation/native';
@@ -15,7 +15,8 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const visit_id = uuid.v4();
   const { visitData, setVisitData } = useContext(VisitDataContext);
   const { requests, setRequests } = useContext(RequestMessContext);
-  const { firstName, lastName, DOB, genderSelection } = route.params;
+  // This date is today's date
+  const { firstName, lastName, DOB, gender, time, date} = route.params;
   const labelProperties = {    
     'Temp': { unit: 'F', width: '100%' },
     'Pulse': { unit: 'bpm', width: '100%' },
@@ -31,8 +32,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
     return values;
   }, {});
 
-  const [date, setDate] = useState('08/06/2023');
-  const [time, setTime] = useState('');
+  // const [date, setDate] = useState(date);
   const [reason, setReason] = useState('');
   const [vitalValues, setVitalValues] = useState(initialInputValues);
   const [confirmSubmit, setConfirmSubmit] = useState(false);
@@ -40,18 +40,18 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const [medHistoryValues, setMedHistoryValues] = useState({chronicIllness: 'N.A.', currentMedication: 'N.A.', allergies: 'N.A.'});
 
   // Handle date of birth with "/"
-  const handleDateChange = (text) => {
-    const formattedText = text.split('/').join('');
-    if (formattedText.length >= 5) {
-      text = text.split('/').join('').replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
-    } else if (formattedText.length >= 3) {
-      text = text.split('/').join('').replace(/(\d{2})(\d{1,2})/, "$1/$2");
-    }
+  // const handleDateChange = (text) => {
+  //   const formattedText = text.split('/').join('');
+  //   if (formattedText.length >= 5) {
+  //     text = text.split('/').join('').replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
+  //   } else if (formattedText.length >= 3) {
+  //     text = text.split('/').join('').replace(/(\d{2})(\d{1,2})/, "$1/$2");
+  //   }
     
-    if (formattedText.length <= 8) {
-      setDate(text);
-    }
-  };
+  //   if (formattedText.length <= 8) {
+  //     setDate(text);
+  //   }
+  // };
 
   const handleInputChange = (type, label, value) => {
     if (type === "vital") {
@@ -148,15 +148,50 @@ export default function UploadMedicalInfo({ route, navigation }) {
     }    
   };
 
+  const handleVitalOnlySubmit = () => {
+    navigation.navigate('Home');
+  }
+
   return (
-    <ScrollView keyboardShouldPersistTaps='handled'>
+    <View style={{flex:1}}>
+    <View style={{
+      position: 'absolute',              
+      paddingTop: 0, 
+      backgroundColor: '#DDE5FD', 
+      zIndex: 999, 
+      elevation: 3, 
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      height:85
+    }}>
+      <View>
+
+      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{firstName} {lastName}</Text>
+      </View>              
+      
+      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {DOB}</Text>
+      </View>
+
+      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>Street Corner Care {'['} {date} {']'}</Text>
+      </View>
+
+      </View>
+
+  </View>
+
+    {/* <ScrollView keyboardShouldPersistTaps='handled'> */}
+    <ScrollView keyboardShouldPersistTaps='handled' style={{ paddingTop: 85 }}>
+
     <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
       
       <View style={{marginTop: 5, marginBottom: 10, width: '100%', alignItems: 'center',}}>
           <Text style={{fontSize: 35, fontWeight: 400}}>Create New Record</Text>          
       </View>
 
-      <View style={{width: "100%"}}>
+      {/* <View style={{width: "100%"}}>
       <InputBoxWithInnerLabel
         label="Date"
         value={date}
@@ -177,13 +212,14 @@ export default function UploadMedicalInfo({ route, navigation }) {
         onChange={(text) => {setTime(text)}}
         onFocus = {handleOutsidePress}
       />
-      </View>
+      </View> */}
 
       <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Vitals</Text>          
       
 
       <View style={{width: "100%"}}>
           {Object.entries(labelProperties).map(([label, properties], index) => (
+            
           <InputBoxWithInnerLabel
               key={index}
               label={label}
@@ -195,9 +231,12 @@ export default function UploadMedicalInfo({ route, navigation }) {
               onChange={(value) => handleInputChange("vital", label, value)}
               onFocus = {handleOutsidePress}
               keyboardType={'numeric'}
+              autoFocus={label === 'Temp'} // this line is added
+              
           />
           ))}
       </View>
+      
 
       
       <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Medical History</Text>          
@@ -251,15 +290,22 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
     {errorMessage ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}  
 
-      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:60}}>
-        <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.button} onPress={handleSubmit}>
+      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:20}}>
+        <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.normalButton} onPress={handleSubmit}>
           <Text style={styles.buttonText}>
             {confirmSubmit ? 'Submit Request' : 'Confirm Request'}
           </Text>
         </TouchableOpacity>
       </View>
 
+      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:60}}>
+        <TouchableOpacity style={styles.vitalOnlyButton} onPress={handleVitalOnlySubmit}>
+          <Text style={styles.buttonText}>Vital Check Only</Text>
+        </TouchableOpacity>
+      </View>
+
     </KeyboardAwareScrollView>
     </ScrollView>
+    </View>
   );
 }

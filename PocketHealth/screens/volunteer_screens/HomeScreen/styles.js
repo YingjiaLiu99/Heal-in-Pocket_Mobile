@@ -70,12 +70,45 @@ const styles = StyleSheet.create({
       backgroundColor: '#FF9248',
       // ... other styles same as 'button' ...
       height: 70,
-      width: '100%',      
+      width: '90%',      
       alignItems: 'center',
       justifyContent: 'center',
       paddingVertical: 5,
       paddingHorizontal: 5,
       borderRadius: 20
+    },
+    normalButton: {
+      backgroundColor: '#395BCD',
+      // ... other styles same as 'button' ...
+      height: 70,
+      width: '90%',      
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 5,
+      paddingHorizontal: 5,
+      borderRadius: 20
+    },
+    // Only used for vital check
+    vitalOnlyButton: {
+      backgroundColor: '#f16981',
+      // ... other styles same as 'button' ...
+      height: 70,
+      width: '90%',      
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 5,
+      paddingHorizontal: 5,
+      borderRadius: 20
+    },
+    selectedText: {
+      alignItems: 'center', 
+      marginTop: 20,
+      fontSize: 18,
+    },
+    dateText: {
+      fontSize: 18,
+      color: '#333333',
+      fontWeight: 'bold',
     },
 
   });

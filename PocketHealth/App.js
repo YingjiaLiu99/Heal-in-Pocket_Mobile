@@ -76,7 +76,11 @@ import RegisterPatientWithPhone_volunteer from './screens/volunteer_screens/Regi
 import RegisterPatientPhoneVerification_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientPhoneVerification';
 import UploadNewRecord_vol from './screens/volunteer_screens/HomeScreen/uploadNewRecord';
 import SuccessScreen_vol from './screens/volunteer_screens/HomeScreen/Success';
+import RecordPatientInfo from './screens/volunteer_screens/HomeScreen/RecordPatientInfo';
 // volunteer settings related screens:
+import WaitlistMainScreen_vol from './screens/volunteer_screens/WaitlistScreen/WaitlistMainScreen';
+import WaitlistResponseScreen from './screens/volunteer_screens/WaitlistScreen/WaitlistResponse';
+import SuccessWaitlistScreen_vol from './screens/volunteer_screens/WaitlistScreen/Success';
 import SettingsMainScreen_vol from './screens/volunteer_screens/SettingsScreen/SettingsMainScreen';
 
 
@@ -102,6 +106,7 @@ const SettingStack_provider = createStackNavigator();
 const Tab_vol = createMaterialBottomTabNavigator();
 const HomeStack_vol = createStackNavigator();
 const RecordManagerStack_vol = createStackNavigator();
+const WaitlistStack_vol = createStackNavigator();
 const SettingStack_vol = createStackNavigator();
 
 
@@ -320,7 +325,15 @@ function HomeTab_vol() {
             <MaterialCommunityIcons name="home" color={color} size={30} />
           ),
          }}
-      />      
+      />  
+      <Tab_vol.Screen name="Waitlist" component={WaitlistNavigator_vol} options={{
+         headerShown: false,
+         tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Waitlist</Text>,         
+         tabBarIcon: ({ color }) => (
+          <MaterialCommunityIcons name="clipboard-text-outline" color={color} size={30} />
+          ),
+         }}
+      />        
       <Tab_vol.Screen name="My Settings" component={SettingsNavigator_vol} options={{
          headerShown: false,
          tabBarLabel: <Text style={{fontSize:15, marginTop:5}}>Settings</Text>,         
@@ -346,8 +359,20 @@ function HomeNavigator_vol() {
       <HomeStack_vol.Screen name="Options" component={OptionScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <HomeStack_vol.Screen name="Upload New Record" component={UploadNewRecord_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <HomeStack_vol.Screen name='Success' component={SuccessScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HomeStack_vol.Screen name='Record Patient Info' component={RecordPatientInfo} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
 
     </HomeStack_vol.Navigator>
+  );
+}
+
+function WaitlistNavigator_vol() {
+  return (
+    <WaitlistStack_vol.Navigator>
+      <WaitlistStack_vol.Screen name="Waitlist" component={WaitlistMainScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <WaitlistStack_vol.Screen name="Waitlist Response" component={WaitlistResponseScreen} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <WaitlistStack_vol.Screen name="Success" component={SuccessWaitlistScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      {/* any follow up screens goes from here */}
+    </WaitlistStack_vol.Navigator>
   );
 }
 

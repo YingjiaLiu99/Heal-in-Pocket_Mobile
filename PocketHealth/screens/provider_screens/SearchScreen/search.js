@@ -94,7 +94,8 @@ export default function PatientPastVisit( {navigation} ) {
                         onChangeText={handleSearch}
                         onClear={handleClear}
                         value={searchInput}
-                        onFocus={() => handleSearchFocus(true)}            
+                        onFocus={() => handleSearchFocus(true)}
+                        autoFocus            
                     />
 
                     {(searchInput !== '') && (
