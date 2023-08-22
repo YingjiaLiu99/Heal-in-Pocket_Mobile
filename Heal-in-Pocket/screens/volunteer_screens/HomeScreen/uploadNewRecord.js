@@ -1,6 +1,5 @@
 import React, { useState, useContext, useRef, createRef, useEffect } from 'react';
 import { Text, View, TouchableOpacity, Alert, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackActions } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 
@@ -38,20 +37,6 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [medHistoryValues, setMedHistoryValues] = useState({chronicIllness: 'N.A.', currentMedication: 'N.A.', allergies: 'N.A.'});
-
-  // Handle date of birth with "/"
-  // const handleDateChange = (text) => {
-  //   const formattedText = text.split('/').join('');
-  //   if (formattedText.length >= 5) {
-  //     text = text.split('/').join('').replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
-  //   } else if (formattedText.length >= 3) {
-  //     text = text.split('/').join('').replace(/(\d{2})(\d{1,2})/, "$1/$2");
-  //   }
-    
-  //   if (formattedText.length <= 8) {
-  //     setDate(text);
-  //   }
-  // };
 
   const handleInputChange = (type, label, value) => {
     if (type === "vital") {
@@ -182,8 +167,18 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
   </View>
 
-  <ScrollView keyboardShouldPersistTaps='handled'>
-  <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={{...styles.container, paddingTop: 85}}>
+    <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={
+      {
+        alignItems: 'center',      
+        justifyContent: 'flex-start',
+        flexDirection: 'column',
+        paddingHorizontal: 20,
+        paddingVertical:0,      
+        marginTop: 0,
+        marginHorizontal:0, 
+        paddingTop: 85
+      }}>
+
       <Text style={{fontSize:27}}>Create New Record</Text>
 
       <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Vitals</Text>          
@@ -275,8 +270,10 @@ export default function UploadMedicalInfo({ route, navigation }) {
           <Text style={styles.buttonText}>Vital Check Only</Text>
         </TouchableOpacity>
       </View>
+      
+      {/* reserve empty space for keyboard: */}
+      <View style={{ height: 300 }} />
 
-    </KeyboardAwareScrollView>
     </ScrollView>
   </View>
   );

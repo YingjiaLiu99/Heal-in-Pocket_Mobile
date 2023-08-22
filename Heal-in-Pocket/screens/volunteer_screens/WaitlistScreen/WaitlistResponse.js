@@ -1,7 +1,6 @@
-import React, { useState, useRef, useContext,useEffect } from 'react';
-import { View, TouchableOpacity, Text, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import React, { useState, useRef, useContext } from 'react';
+import { View, TouchableOpacity, Text, ScrollView} from 'react-native';
 import styles from './styles';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import InputBoxWithLabel from './components/InputBoxWithLabel';
 import BigInputBoxWithLabel from './components/BigInputBoxWithLabel';
@@ -131,10 +130,20 @@ return (
 
       </View>
 
-  </View>
+    </View>
 
-    <ScrollView keyboardShouldPersistTaps='handled'>
-    <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={{...styles.container, paddingTop: 85}}>
+    <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={
+      {
+        alignItems: 'center',      
+        justifyContent: 'flex-start',
+        flexDirection: 'column',
+        paddingHorizontal: 20,
+        paddingVertical:0,      
+        marginTop: 0,
+        marginHorizontal:0, 
+        paddingTop: 85
+      }}>
+    
       <Text style={{fontSize:27}}>Visit Note</Text>
 
       <BigInputBoxWithLabel
@@ -175,8 +184,6 @@ return (
         }}
       />
       </View>
-
-
 
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
 
@@ -286,8 +293,9 @@ return (
         </TouchableOpacity>
       </View>
 
-    
-    </KeyboardAwareScrollView>
+      {/* reserve empty space for keyboard: */}
+      <View style={{ height: 300 }} />
+
     </ScrollView>          
   </View>
   );
