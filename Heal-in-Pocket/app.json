@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "PocketHealth",
-    "slug": "PocketHealth",
+    "name": "Heal-in-Pocket",
+    "slug": "Heal-in-Pocket",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/HIP_logo.jpg",

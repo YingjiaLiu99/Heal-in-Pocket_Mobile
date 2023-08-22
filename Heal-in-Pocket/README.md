@@ -1,4 +1,4 @@
-# PocketHealth
+# Heal in Pocket
 
 ## Current stage: Dev
 

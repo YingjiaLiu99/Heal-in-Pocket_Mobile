@@ -20,7 +20,7 @@ const WelcomeScreen = ({navigation}) => {
         <View style={{width:'100%', alignItems:'flex-end'}}>        
             <Image
                 style={{width: 120, height: 120}}
-                source={require('../assets/images/PH_logo.jpg')}
+                source={require('../assets/images/HIP_logo.jpg')}
             />
         </View>
 
