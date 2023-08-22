@@ -2,16 +2,16 @@
 
 ## Product Preview
 
-![product-screenshot1](./PocketHealth/assets/images/promotion/ph1.png)
+![product-screenshot1](./Heal-in-Pocket/assets/images/promotion/ph1.png)
 
-![product-screenshot2](./PocketHealth/assets/images/promotion/ph2.png)
+![product-screenshot2](./Heal-in-Pocket/assets/images/promotion/ph2.png)
 
 <details>
   <summary><font size="5">Click to See More!</font></summary>
 
-![product-screenshot3](./PocketHealth/assets/images/promotion/ph3.png)
-![product-screenshot4](./PocketHealth/assets/images/promotion/ph4.png)
-![product-screenshot5](./PocketHealth/assets/images/promotion/ph5.png)
+![product-screenshot3](./Heal-in-Pocket/assets/images/promotion/ph3.png)
+![product-screenshot4](./Heal-in-Pocket/assets/images/promotion/ph4.png)
+![product-screenshot5](./Heal-in-Pocket/assets/images/promotion/ph5.png)
 
 </details>
 
