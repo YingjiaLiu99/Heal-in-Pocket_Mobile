@@ -80,99 +80,107 @@ export default function RecordPatientInfo({ route, navigation }) {
   };
 
     return(
-        <ScrollView>
-            <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+        <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={
+            {
+              alignItems: 'center',      
+              justifyContent: 'flex-start',
+              flexDirection: 'column',
+              paddingHorizontal: 20,
+              paddingVertical:0,      
+              marginTop: 0,
+              marginHorizontal:0,              
+            }}>
 
-                <View style={{marginTop: 35,marginBottom:30,width:'100%'}}>
-                    <Text style={styles.dateText}>Date: {getCurrentDate()}</Text>
+        <View style={{marginTop: 35,marginBottom:30,width:'100%'}}>
+            <Text style={styles.dateText}>Date: {getCurrentDate()}</Text>
 
-                </View>
+        </View>
 
-                <View style={{width: "100%"}}>
-                    <InputBoxWithLabel
-                        label="Time"
-                        value={time}
-                        ref={timeRef}
-                        onChangeText={(text) => {setTime(text)}}
-                        width="100%"
-                        keyboardType="default"
-                        placeholder={"e.g. 01:35 pm"}
-                        onSubmitEditing={() => insuranceRef.current.focus()}
-                        returnKeyType='next'
-                        autoFocus
-                    />
+        <View style={{width: "100%"}}>
+            <InputBoxWithLabel
+                label="Time"
+                value={time}
+                ref={timeRef}
+                onChangeText={(text) => {setTime(text)}}
+                width="100%"
+                keyboardType="default"
+                placeholder={"e.g. 01:35 pm"}
+                onSubmitEditing={() => insuranceRef.current.focus()}
+                returnKeyType='next'
+                autoFocus
+            />
 
-                    <InputBoxWithLabel
-                        label="Insurance"        
-                        value={insurance}
-                        ref={insuranceRef}
-                        onChangeText={(text) => setInsurance(text)}
-                        placeholder="Please enter insurance"
-                        keyboardType="default"
-                        width='100%'
-                        onSubmitEditing={() => pcpsRef.current.focus()}
-                        returnKeyType='next'
-                        
-                    />
+            <InputBoxWithLabel
+                label="Insurance"        
+                value={insurance}
+                ref={insuranceRef}
+                onChangeText={(text) => setInsurance(text)}
+                placeholder="Please enter insurance"
+                keyboardType="default"
+                width='100%'
+                onSubmitEditing={() => pcpsRef.current.focus()}
+                returnKeyType='next'
+                
+            />
 
-                    <InputBoxWithLabel
-                        label="Primary Care Provider"        
-                        value={pcps}
-                        ref={pcpsRef}
-                        onChangeText={(text) => setPcPs(text)}
-                        placeholder="Please enter primary care provider"
-                        keyboardType="default"
-                        width='100%'
-                        onSubmitEditing={() => caseHistoryRef.current.focus()}
-                        returnKeyType='next'
-                        
-                    />
+            <InputBoxWithLabel
+                label="Primary Care Provider"        
+                value={pcps}
+                ref={pcpsRef}
+                onChangeText={(text) => setPcPs(text)}
+                placeholder="Please enter primary care provider"
+                keyboardType="default"
+                width='100%'
+                onSubmitEditing={() => caseHistoryRef.current.focus()}
+                returnKeyType='next'
+                
+            />
 
-                    <InputBoxWithLabel
-                        label = "Last Seen/Hospitalized"
-                        value={caseHistory}
-                        ref={caseHistoryRef}
-                        onChangeText={(text) => setCaseHistory(text)}
-                        placeholder="Please enter the hospitalized history"
-                        keyboardType="default"
-                        width='100%'
-                        
-                    />
-                    
-                    <View>
-                        <RadioMutipleChoiceCenter
-                            options={smokingOption}
-                            onSelectionChange={(selectSmoking) => setSmoking(selectSmoking)}
-                            upperLabel="Smoking Status"
-                        />
-        
-                        <RadioMutipleChoiceCenter
-                            options={pregnancyOption}
-                            onSelectionChange={(selectPregnancy) => setPregnancy(selectPregnancy)}
-                            upperLabel="Pregancy Status"
-                        />
-                    </View>
-                </View>
-
-                <View style={{width:'100%',alignItems:'flex-end',marginTop:20,marginBottom:20}}>
-                    <TouchableOpacity 
-                        style={{
-                        height: 70,
-                        width: '30%',
-                        marginVertical: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: '#395BCD',
-                        borderRadius:20           
-                     }} onPress={handleSubmit}>
-                        <Text style={{color:'#fff',fontSize: 25}}>Next</Text>
-                    </TouchableOpacity>
-                </View>
-
-            </KeyboardAwareScrollView>
+            <InputBoxWithLabel
+                label = "Last Seen/Hospitalized"
+                value={caseHistory}
+                ref={caseHistoryRef}
+                onChangeText={(text) => setCaseHistory(text)}
+                placeholder="Please enter the hospitalized history"
+                keyboardType="default"
+                width='100%'
+                
+            />
             
-        </ScrollView>
-        
+            <View>
+                <RadioMutipleChoiceCenter
+                    options={smokingOption}
+                    onSelectionChange={(selectSmoking) => setSmoking(selectSmoking)}
+                    upperLabel="Smoking Status"
+                />
+
+                <RadioMutipleChoiceCenter
+                    options={pregnancyOption}
+                    onSelectionChange={(selectPregnancy) => setPregnancy(selectPregnancy)}
+                    upperLabel="Pregancy Status"
+                />
+            </View>
+        </View>
+
+        <View style={{width:'100%',alignItems:'flex-end',marginTop:20,marginBottom:20}}>
+            <TouchableOpacity 
+                style={{
+                height: 70,
+                width: '30%',
+                marginVertical: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#395BCD',
+                borderRadius:20           
+                }} onPress={handleSubmit}>
+                <Text style={{color:'#fff',fontSize: 25}}>Next</Text>
+            </TouchableOpacity>
+        </View>
+
+        {/* reserve empty space for keyboard: */}
+        <View style={{ height: 300 }} />            
+            
+        </ScrollView>        
     );
 
 }
