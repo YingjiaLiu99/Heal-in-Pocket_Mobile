@@ -4,10 +4,10 @@
     "slug": "PocketHealth",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/PH_logo.jpg",
+    "icon": "./assets/images/HIP_logo.jpg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/PH_logo.jpg",
+      "image": "./assets/images/HIP_logo.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,12 +19,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/PH_logo.jpg",
+        "foregroundImage": "./assets/images/HIP_logo.jpg",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/images/PH_logo.jpg"
+      "favicon": "./assets/images/HIP_logo.jpg"
     }
   }
 }
