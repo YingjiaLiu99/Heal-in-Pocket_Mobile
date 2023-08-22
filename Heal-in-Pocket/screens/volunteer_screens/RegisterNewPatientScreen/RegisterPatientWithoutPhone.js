@@ -68,8 +68,17 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
   };
 
   return (
-    <ScrollView>
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+    <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={
+      {
+        alignItems: 'center',      
+        justifyContent: 'flex-start',
+        flexDirection: 'column',
+        paddingHorizontal: 20,
+        paddingVertical:0,      
+        marginTop: 0,
+        marginHorizontal:0,
+      }}>
+    
       <View style={{marginTop: 35,marginBottom:30,width:'100%'}}>
         <Text style={styles.titleText}>Enter Patient Information To Set Up Account</Text>
         <Text style={{marginTop:10,fontSize:17}}>* is Required</Text>
@@ -139,7 +148,9 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-    </KeyboardAwareScrollView>
+      {/* reserve empty space for keyboard: */}
+      <View style={{ height: 300 }} />  
+
     </ScrollView>
   );
 };

@@ -6,12 +6,10 @@ import InputBoxWithLabel from './components/InputBoxWithLabel';
 import BigInputBoxWithLabel from './components/BigInputBoxWithLabel';
 import ProviderInputBox from './components/ProviderInputBox';
 import VisitDataContext from '../../../context/context_VisitData';
-import RequestMessContext from '../../../context/context_requestMess';
 
 export default function WaitlistResponseScreen({route, navigation}) { 
   const { visit_id } = route.params;
   const { visitData, setVisitData } = useContext(VisitDataContext);
-  const { requests, setRequests } = useContext(RequestMessContext);
 
   const visit = visitData.find(visit => visit.patients.find(patient => patient.visit_id === visit_id));
   const patient = visit ? visit.patients.find(patient => patient.visit_id === visit_id) : null;
