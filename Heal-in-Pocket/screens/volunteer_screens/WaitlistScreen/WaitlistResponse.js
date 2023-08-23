@@ -46,6 +46,11 @@ const handleSubmit = () => {
   // if(assessment === '' || subjective === '' || objective === ''){
   //   setErrorMessage('Please fill in fields.');      
   // }
+  // console.log(patient.visitNote.medicalHistory.slice(0, 1));
+  // console.log(medicationAllergies.split(' [Allergies: ')[0]);
+  // console.log(medicalHistoryValue );
+  // console.log(medicationAllergies.split(' [Allergies: ')[1].split(']')[0]);
+
   if (confirmSubmit) {            
     // publish the visit 
     const updatedVisitData = visitData.map(visit => ({
@@ -61,7 +66,7 @@ const handleSubmit = () => {
             scribe_name:scribeName,
             chiefComplaint: chiefComplaint,
             medicalHistory: [
-              ...patient.visitNote.medicalHistory.slice(0, 1), // Keep the initial data
+              // ...patient.visitNote.medicalHistory.slice(0, 1), // Keep the initial data
               { ...patient.visitNote.medicalHistory[0], value: medicalHistoryValue }, // Update the first value
               { ...patient.visitNote.medicalHistory[1], value: medicationAllergies.split(' [Allergies: ')[0] }, // Update the second value by splitting the combined field
               { ...patient.visitNote.medicalHistory[2], value: medicationAllergies.split(' [Allergies: ')[1].split(']')[0] }, // Update the third value by splitting the combined field

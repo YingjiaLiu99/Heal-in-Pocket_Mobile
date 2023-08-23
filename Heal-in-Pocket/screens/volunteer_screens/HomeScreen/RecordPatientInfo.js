@@ -80,6 +80,34 @@ export default function RecordPatientInfo({ route, navigation }) {
   };
 
     return(
+    <View style={{flex:1}}>
+    <View style={{
+      position: 'absolute',              
+      paddingTop: 0, 
+      backgroundColor: '#DDE5FD', 
+      zIndex: 999, 
+      elevation: 3, 
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      height:85
+    }}>
+      <View>
+
+      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{firstName} {lastName}</Text>
+      </View>              
+      
+      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {DOB}</Text>
+      </View>
+
+      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>Street Corner Care {'['} {getCurrentDate()} {']'}</Text>
+      </View>
+
+      </View>
+
+  </View>
         <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={
             {
               alignItems: 'center',      
@@ -88,13 +116,15 @@ export default function RecordPatientInfo({ route, navigation }) {
               paddingHorizontal: 20,
               paddingVertical:0,      
               marginTop: 0,
-              marginHorizontal:0,              
+              marginHorizontal:0,    
+            paddingTop: 85          
             }}>
 
-        <View style={{marginTop: 35,marginBottom:30,width:'100%'}}>
+        {/* <View style={{marginTop: 35,marginBottom:30,width:'100%'}}>
             <Text style={styles.dateText}>Date: {getCurrentDate()}</Text>
 
-        </View>
+        </View> */}
+
 
         <View style={{width: "100%"}}>
             <InputBoxWithLabel
@@ -180,7 +210,8 @@ export default function RecordPatientInfo({ route, navigation }) {
         {/* reserve empty space for keyboard: */}
         <View style={{ height: 300 }} />            
             
-        </ScrollView>        
+        </ScrollView>  
+     </View>      
     );
 
 }
