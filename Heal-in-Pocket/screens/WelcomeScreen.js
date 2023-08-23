@@ -26,7 +26,7 @@ const WelcomeScreen = ({navigation}) => {
 
         <View style={{alignItems:'flex-start', width:'100%'}}>
             <Text style={{fontSize: 35, fontWeight: '400', textAlign: 'left', marginBottom:5}}>Welcome,</Text>
-            <Text style={{fontSize: 35, fontWeight: '400', textAlign: 'left',  marginBottom:"10%"}}>to Pocket Health!</Text>            
+            <Text style={{fontSize: 35, fontWeight: '400', textAlign: 'left',  marginBottom:"10%"}}>to Heal in Pocket!</Text>            
         </View>   
 
         <Text style={{fontSize: 35, fontWeight: '400', textAlign: 'left'}}>Are You a...</Text>
