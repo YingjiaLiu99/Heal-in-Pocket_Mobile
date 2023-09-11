@@ -181,34 +181,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
       <Text style={{fontSize:27}}>Create New Record</Text>
 
-      <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Vitals</Text>          
-      
-
-      <View style={{width: "100%"}}>
-          {Object.entries(labelProperties).map(([label, properties], index) => (
-            
-          <InputBoxWithInnerLabel
-              key={index}
-              label={label}
-              value={vitalValues[label] || ''}
-              unit={properties.unit}
-              width={properties.width}
-              height={60}
-              placeholder={'Click to Enter...'}
-              onChange={(value) => handleInputChange("vital", label, value)}
-              onFocus = {handleOutsidePress}
-              keyboardType={'numeric'}
-              autoFocus={label === 'Temp'} // this line is added
-              
-          />
-          ))}
-      </View>
-      
-
-      
-      <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Medical History</Text>          
-      
-
+      <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Medical History</Text>   
       <View style={{width: "100%"}}>
           <BigInputBoxWithInnerLabel
               label="Chronic Illness"
@@ -239,10 +212,30 @@ export default function UploadMedicalInfo({ route, navigation }) {
           />
       </View>
 
-      
-      <Text style={{fontSize:20, fontWeight:400}}>Reason For Consultation</Text>          
-      
 
+      <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Vitals</Text> 
+      <View style={{width: "100%"}}>
+          {Object.entries(labelProperties).map(([label, properties], index) => (
+            
+          <InputBoxWithInnerLabel
+              key={index}
+              label={label}
+              value={vitalValues[label] || ''}
+              unit={properties.unit}
+              width={properties.width}
+              height={60}
+              placeholder={'Click to Enter...'}
+              onChange={(value) => handleInputChange("vital", label, value)}
+              onFocus = {handleOutsidePress}
+              keyboardType={'numeric'}
+              autoFocus={label === 'Temp'} // this line is added
+              
+          />
+          ))}
+      </View>
+      
+      
+      <Text style={{fontSize:20, fontWeight:400}}>Reason For Consultation</Text>
       <View style={{ marginBottom: 10, width:'100%'}}>
           <BigInputBoxWithInnerLabel
               label="Resaon For Consultation*"

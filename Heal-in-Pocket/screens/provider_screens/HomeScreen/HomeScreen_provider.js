@@ -1,17 +1,44 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import axios from 'axios';
 
 import styles from './styles';
 import RequestMessage from './components/RequestMessage'; 
 import RequestMessContext from "../../../context/context_requestMess";
-
+import baseURL from '../../../common/baseURL';
 
 export default function HomeScreen({navigation}) {
 
-  const {requests, setRequests} = useContext(RequestMessContext);
-  const handleAccept = (visit_id) => {
-    navigation.navigate("Provider Response", { visit_id })
+  // const {requests, setRequests} = useContext(RequestMessContext);
+  const [requests, setRequests] = useState([]);
+
+  const handleAccept = (id) => {
+    // navigation.navigate("Provider Response", { visit_id })
+    console.log(id);
   };
+
+  // fetch and update the request list every 5 second
+  useEffect(() => {
+    const fetchRequests  = async ()=> {
+      try{
+        const response = await axios.get(`${baseURL}request`);        
+        setRequests(response.data.requests);        
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchRequests(); // fetch once immediately when the component mounts
+
+    const intervalId = setInterval(fetchRequests, 5000); // Fetch every 5000 milliseconds (5 seconds)
+    
+    return () => {
+      clearInterval(intervalId); // Clear the interval when the component is unmounted
+      setRequests([]); // Reset the products state
+    };
+
+  }, []);
+
 
   return (
     <View style={{flex: 1}}>
@@ -35,11 +62,11 @@ export default function HomeScreen({navigation}) {
             requests.map((request, index) => (
               <RequestMessage
                 key={index}
-                chiefComplaint={request.chiefComplaint}
-                name={request.name}
-                time={request.time}
-                tag={request.tag}
-                onPress={() => handleAccept(request.visit_id)}
+                chiefComplaint={request.chief_complaint}
+                name={request.patient_name}
+                time={"12:01pm"}
+                tag={"new Patient"}
+                onPress={() => handleAccept(request.id)}
               />
             ))
           ) : (
