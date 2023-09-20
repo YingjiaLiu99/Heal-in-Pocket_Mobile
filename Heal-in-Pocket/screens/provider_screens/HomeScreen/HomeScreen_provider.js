@@ -21,10 +21,19 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     const fetchRequests  = async ()=> {
       try{
-        const response = await axios.get(`${baseURL}request`);        
+        const response = await axios.get(`${baseURL}request`);      
         setRequests(response.data.requests);        
       } catch (error) {
-        console.log(error);
+        if (error.response) {
+          // The request was successfully sent to the server and the server returned an error response. 
+          console.log('Backend Error:', error.response.data.message);
+        } else if (error.request) {
+          // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
+          console.log('Network Error:', error.message);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error:', error.message);
+        }
       }
     };
 
