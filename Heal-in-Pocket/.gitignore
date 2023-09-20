@@ -1,4 +1,5 @@
 node_modules/
+common/baseURL.js
 .expo/
 dist/
 npm-debug.*
