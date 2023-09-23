@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import axios from 'axios';
 
@@ -9,7 +9,6 @@ import baseURL from '../../../common/baseURL';
 
 export default function HomeScreen({navigation}) {
 
-  // const {requests, setRequests} = useContext(RequestMessContext);
   const [requests, setRequests] = useState([]);
 
   const handleAccept = (id) => {
@@ -21,7 +20,7 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     const fetchRequests  = async ()=> {
       try{
-        const response = await axios.get(`${baseURL}request`);      
+        const response = await axios.get(`${baseURL}request`);
         setRequests(response.data.requests);        
       } catch (error) {
         if (error.response) {
@@ -74,7 +73,7 @@ export default function HomeScreen({navigation}) {
                 chiefComplaint={request.chief_complaint}
                 name={request.patient_name}
                 time={"12:01pm"}
-                tag={"new Patient"}
+                tag={request.new_patient ? "New Patient" : "Follow Up"}
                 onPress={() => handleAccept(request.id)}
               />
             ))
