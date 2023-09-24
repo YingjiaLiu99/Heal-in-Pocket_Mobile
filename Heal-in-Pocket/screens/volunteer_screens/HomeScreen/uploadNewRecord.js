@@ -2,20 +2,18 @@ import React, { useState, useContext, useRef, createRef, useEffect } from 'react
 import { Text, View, TouchableOpacity, Alert, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
+import axios from 'axios';
 
 import InputBoxWithInnerLabel from '../../../components/InputBoxWithInnerLabel';
 import BigInputBoxWithInnerLabel from '../../../components/BigInputBoxWithInnerLabel';
 import styles from './styles';
 // import the context:
 import VisitDataContext from '../../../context/context_VisitData';
-import RequestMessContext from '../../../context/context_requestMess';
-import axios from 'axios';
 import baseURL from '../../../common/baseURL';
 
 export default function UploadMedicalInfo({ route, navigation }) {
   const visit_id = uuid.v4();
   const { visitData, setVisitData } = useContext(VisitDataContext);
-  const { requests, setRequests } = useContext(RequestMessContext);
 
   // This date is today's date
   const { firstName, lastName, DOB, gender, time, date} = route.params;
@@ -57,7 +55,8 @@ export default function UploadMedicalInfo({ route, navigation }) {
       setConfirmSubmit(false);
     }
   };
-  const postPatientDataToServer = async (data) => {
+
+  const postNewRequest = async (data) => {
     try {
       const response = await axios.post(`${baseURL}request/volunteer/add`, data);
       return response.data;
@@ -129,18 +128,9 @@ export default function UploadMedicalInfo({ route, navigation }) {
           };
           setVisitData([...visitData, newRecord]);
         }
-        // create new request and put it in the context
-        const newRequest = {
-          chiefComplaint:reason,
-          time:time,
-          name:`${firstName} ${lastName}`,
-          tag:'New Patient',
-          visit_id:visit_id,
-        };
-        setRequests([...requests, newRequest]);
-        console.log(visit_id);
-        // Now POST the data to the server:
-      const dataToSend = {
+
+      // create new request on server
+      const newRequest = {
         patient_name: `${firstName} ${lastName}`,
         corresponding_record: "64fe875d4a817ea50b7fcf63", // dummy data now
         new_patient: true, // or based on a condition
@@ -148,17 +138,15 @@ export default function UploadMedicalInfo({ route, navigation }) {
       };
 
       try {
-        const serverResponse = await postPatientDataToServer(dataToSend);
-        console.log("Data sent to server:", serverResponse);
+        const request = await postNewRequest(newRequest);
+        console.log("The new created request:", request);
       } catch (error) {
-        console.error("Failed to send data to server:", error);
-        // Handle the error, e.g., show an alert or message to the user
+        console.error("Failed to send data to server:", error);        
       }
-        navigation.dispatch(StackActions.replace('Success'));
+        navigation.dispatch(StackActions.replace('Success')); // prevent going back
       } 
       else {
-        setConfirmSubmit(true);
-        
+        setConfirmSubmit(true);        
     }
   }
 };

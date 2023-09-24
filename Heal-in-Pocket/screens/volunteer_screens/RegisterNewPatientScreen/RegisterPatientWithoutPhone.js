@@ -1,7 +1,6 @@
 // react native library：
 import React, { useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 // own components and styles
 import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
