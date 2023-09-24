@@ -21,7 +21,8 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     const fetchRequests  = async ()=> {
       try{
-        const response = await axios.get(`${baseURL}request`);      
+        const response = await axios.get(`${baseURL}request`);
+        console.log(response)      
         setRequests(response.data.requests);        
       } catch (error) {
         if (error.response) {

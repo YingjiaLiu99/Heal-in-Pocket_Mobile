@@ -9,11 +9,14 @@ import styles from './styles';
 // import the context:
 import VisitDataContext from '../../../context/context_VisitData';
 import RequestMessContext from '../../../context/context_requestMess';
+import axios from 'axios';
+import baseURL from '../../../common/baseURL';
 
 export default function UploadMedicalInfo({ route, navigation }) {
   const visit_id = uuid.v4();
   const { visitData, setVisitData } = useContext(VisitDataContext);
   const { requests, setRequests } = useContext(RequestMessContext);
+
   // This date is today's date
   const { firstName, lastName, DOB, gender, time, date} = route.params;
   const labelProperties = {    
@@ -54,8 +57,25 @@ export default function UploadMedicalInfo({ route, navigation }) {
       setConfirmSubmit(false);
     }
   };
-
-  const handleSubmit = () => {    
+  const postPatientDataToServer = async (data) => {
+    try {
+      const response = await axios.post(`${baseURL}request/volunteer/add`, data);
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        // The request was successfully sent to the server and the server returned an error response. 
+        console.log('Backend Error:', error.response.data.message);
+      } else if (error.request) {
+        // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
+        console.log('Network Error:', error.message);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error:', error.message);
+      }
+    }
+  };
+  
+  const handleSubmit = async() => {    
     if(reason === ''){
         // Set error message
       setErrorMessage('Please fill in reason for consultation');  
@@ -119,13 +139,29 @@ export default function UploadMedicalInfo({ route, navigation }) {
         };
         setRequests([...requests, newRequest]);
         console.log(visit_id);
+        // Now POST the data to the server:
+      const dataToSend = {
+        patient_name: `${firstName} ${lastName}`,
+        corresponding_record: "64fe875d4a817ea50b7fcf63", // dummy data now
+        new_patient: true, // or based on a condition
+        chief_complaint: reason
+      };
+
+      try {
+        const serverResponse = await postPatientDataToServer(dataToSend);
+        console.log("Data sent to server:", serverResponse);
+      } catch (error) {
+        console.error("Failed to send data to server:", error);
+        // Handle the error, e.g., show an alert or message to the user
+      }
         navigation.dispatch(StackActions.replace('Success'));
       } 
       else {
-        setConfirmSubmit(true);  
-      }
+        setConfirmSubmit(true);
+        
     }
-  };
+  }
+};
 
   const handleOutsidePress = () => {
     if(confirmSubmit) {
