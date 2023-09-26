@@ -6,6 +6,7 @@ import InputBoxWithLabel from './components/InputBoxWithLabel';
 import BigInputBoxWithLabel from './components/BigInputBoxWithLabel';
 import ProviderInputBox from './components/ProviderInputBox';
 import VisitDataContext from '../../../context/context_VisitData';
+import baseURL from '../../../common/baseURL';
 
 export default function WaitlistResponseScreen({route, navigation}) { 
   const { visit_id } = route.params;
@@ -40,6 +41,31 @@ export default function WaitlistResponseScreen({route, navigation}) {
   const [vitalValue5, setVitalValue5] = useState(vitalData[4].value);
   const [vitalValue6, setVitalValue6] = useState(vitalData[5].value);
 
+
+  const updatePatientData = async () => {
+    try {
+      const response = await fetch(baseURL + request-id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chiefComplaint,
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update patient data');
+      }
+
+      const responseData = await response.json();
+      navigation.navigate('Success');
+
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error updating patient data.');
+    }
+  };
 
 
 const handleSubmit = () => {
@@ -97,6 +123,7 @@ const handleSubmit = () => {
     // Press first time, input is done, so set it true
     setConfirmSubmit(true);  
   }
+  updatePatientData();
 }
  
   const handleOutsidePress = () => {
