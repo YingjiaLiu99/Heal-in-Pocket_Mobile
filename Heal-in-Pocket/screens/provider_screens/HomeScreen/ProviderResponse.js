@@ -44,7 +44,35 @@ export default function ProviderResponseScreen({route, navigation}) {
 
 
 
-const handleSubmit = () => {
+  const deleteRequest = async (visit_id) => {
+    try {
+      const response = await axios.delete(`${baseURL}request/${visit_id}`);
+
+      if (response.status !== 200) {
+          throw new Error(response.data.message || 'Failed to delete.');
+      }
+
+      return response.data;
+
+      //Alert.alert('Success', 'Request delete success');
+
+    } catch (error) {
+      if (error.response) {
+        // The request was successfully sent to the server and the server returned an error response. 
+        console.log('Backend Error:', error.response.data.message);
+      } else if (error.request) {
+        // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
+        console.log('Network Error:', error.message);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error:', error.message);
+      }
+    }
+  }
+
+
+
+const handleSubmit = async () => {
   // if(assessment === '' || subjective === '' || objective === ''){
   //   setErrorMessage('Please fill in fields.');      
   // }
@@ -94,9 +122,17 @@ const handleSubmit = () => {
     }));
     setVisitData(updatedVisitData);
     // delete the request:
-    const updatedRequests = requests.filter(request => request.visit_id !== visit_id);
-    setRequests(updatedRequests);
+
+    try {
+      const deleteRequest = await deleteRequest(visit_id);
+      console.log("Request removed:", deleteRequest);
+    } catch (error) {
+      console.error("Failed to send data to server:", error);   
+    } 
     navigation.navigate('Success');
+
+    // const updatedRequests = requests.filter(request => request.visit_id !== visit_id);
+    // setRequests(updatedRequests);
   } 
   else {
     // Press first time, input is done, so set it true
