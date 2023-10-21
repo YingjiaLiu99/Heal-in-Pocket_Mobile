@@ -3,17 +3,15 @@ import { FlatList, Text, TouchableOpacity, View, ScrollView} from 'react-native'
 import axios from 'axios';
 
 import styles from './styles.js';
-import RequestMessage from './components/RequestMessage.js'; 
-import RequestMessContext from "../../../context/context_requestMess.js";
+import RequestMessage from './components/RequestMessage.js';
 import baseURL from '../../../common/baseURL';
 
 export default function WaitlistMainScreen({navigation}) {
   
   const [requests, setRequests] = useState([]);
 
-  const handleAccept = (id) => {
-    // navigation.navigate("Waitlist Response", { visit_id })
-    console.log(id);
+  const handleAccept = (request_id) => {
+    navigation.navigate("Waitlist Response", { request_id })    
   };
 
   // fetch and update the request list every 5 second
@@ -71,7 +69,7 @@ export default function WaitlistMainScreen({navigation}) {
                 key={index}
                 chiefComplaint={request.chief_complaint}
                 name={request.patient_name}
-                time={"12:01pm"}
+                time={"00:00 AM"}
                 tag={request.new_patient ? "New Patient" : "Follow Up"}
                 onPress={() => handleAccept(request.id)}
               />
