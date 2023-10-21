@@ -57,7 +57,6 @@ const updateRequest = async (data) => {
   }
 }
 
-
 const handleSubmit = async () => {  
 
   if (confirmSubmit) {
@@ -94,6 +93,7 @@ const handleSubmit = async () => {
     // Press first time, input is done, so set it true
     setConfirmSubmit(true);  
   }
+  updatePatientData();
 }
  
   const handleOutsidePress = () => {
