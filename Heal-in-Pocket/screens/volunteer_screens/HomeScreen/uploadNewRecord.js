@@ -1,60 +1,25 @@
 import React, { useState, useContext, useRef, createRef, useEffect } from 'react';
 import { Text, View, TouchableOpacity, Alert, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { StackActions } from '@react-navigation/native';
-import uuid from 'react-native-uuid';
+
 import axios from 'axios';
 
 import InputBoxWithInnerLabel from '../../../components/InputBoxWithInnerLabel';
 import BigInputBoxWithInnerLabel from '../../../components/BigInputBoxWithInnerLabel';
 import styles from './styles';
-// import the context:
-import VisitDataContext from '../../../context/context_VisitData';
+
 import baseURL from '../../../common/baseURL';
 
 export default function UploadMedicalInfo({ route, navigation }) {
-  const visit_id = uuid.v4();
-  const { visitData, setVisitData } = useContext(VisitDataContext);
 
-  // This date is today's date
+
   const { firstName, lastName, DOB, gender, time, date} = route.params;
-  const labelProperties = {    
-    'Temp': { unit: 'F', width: '100%' },
-    'Pulse': { unit: 'bpm', width: '100%' },
-    'Oxygen': { unit: '%', width: '100%' },
-    'BG': { unit: 'mg/dl', width: '100%' },
-    'Sys BP': { unit: 'mmHg', width: '100%' },
-    'Dia BP': { unit: 'mmHg', width: '100%' },
 
-  };
 
-  const initialInputValues = Object.keys(labelProperties).reduce((values, label) => {
-    values[label] = '';
-    return values;
-  }, {});
-
-  // const [date, setDate] = useState(date);
-  const [reason, setReason] = useState('');
-  const [vitalValues, setVitalValues] = useState(initialInputValues);
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [medHistoryValues, setMedHistoryValues] = useState({chronicIllness: 'N.A.', currentMedication: 'N.A.', allergies: 'N.A.'});
 
-  const handleInputChange = (type, label, value) => {
-    if (type === "vital") {
-      setVitalValues({
-        ...vitalValues,
-        [label]: value,
-      });
-    } else if (type === "medHistory") {
-      setMedHistoryValues({
-        ...medHistoryValues,
-        [label]: value,
-      });
-    }
-    if (confirmSubmit) {
-      setConfirmSubmit(false);
-    }
-  };
+  // TODO: create states to store the vitals and medical histories
 
   const postNewRequest = async (data) => {
     try {
@@ -81,53 +46,11 @@ export default function UploadMedicalInfo({ route, navigation }) {
     }
     else{
       if (confirmSubmit) {   
-        // create new record and put it in the context         
-        const existingRecordIndex = visitData.findIndex(record => record.date === date);
+      // create a new record here, use all the data you stored in the states.
+      // for the fields that needed to be filled by doctors, put null
+      // after successfully create the record, get its record id from response
+      // and put it in the request's corresponding_record field below
 
-        const patientData = {
-          firstName: firstName,
-          lastName: lastName,
-          DOB: DOB,
-          site: "Street Corner Care",
-          DOS: date,
-          time: time,
-          visitNote: {
-            patientInfo: [
-              {label:'Name', value:`${firstName} ${lastName}`},
-              {label:'DOB', value:DOB},
-              {label:'location', value:'Street Corner Care'},
-              {label:'DOS', value:date},
-            ],
-            chiefComplaint: reason,
-            providerReport: [],
-            medicalHistory: [
-              { label: "Chronic Illness", value: medHistoryValues.chronicIllness },
-              { label: "Current Medication", value: medHistoryValues.currentMedication },
-              { label: "Allergies", value: medHistoryValues.allergies },
-            ],
-            vitalData: Object.entries(vitalValues).map(([label, value]) => ({
-              label,
-              value,
-              unit: labelProperties[label].unit,
-            })),
-          },
-          visit_id:visit_id,
-          published:false,
-        };
-
-        if (existingRecordIndex >= 0) {
-          // add patient data to existing record
-          const updatedVisitData = [...visitData];
-          updatedVisitData[existingRecordIndex].patients.push(patientData);
-          setVisitData(updatedVisitData);
-        } else {
-          // create new record
-          const newRecord = {
-            date: date,
-            patients: [patientData],
-          };
-          setVisitData([...visitData, newRecord]);
-        }
 
       // create new request on server
       const newRequest = {
@@ -212,7 +135,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
               value={medHistoryValues.chronicIllness}
               width='100%'
               height={100}
-              onChangeText={(text) => handleInputChange('medHistory', 'chronicIllness', text)}
+              onChangeText={(text) => }
               placeholder={'Please enter chronic illness...'}
               onFocus = {handleOutsidePress}
           />
@@ -221,7 +144,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
               value={medHistoryValues.currentMedication}
               width='100%'
               height={100}
-              onChangeText={(text) => handleInputChange('medHistory', 'currentMedication', text)}
+              onChangeText={(text) => }
               placeholder={'Please enter current medication...'}
               onFocus = {handleOutsidePress}
           />
@@ -230,7 +153,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
               value={medHistoryValues.allergies}
               width='100%'
               height={100}
-              onChangeText={(text) => handleInputChange('medHistory', 'allergies', text)}
+              onChangeText={(text) => }
               placeholder={'Please enter allergies...'}
               onFocus = {handleOutsidePress}
           />
@@ -239,9 +162,9 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
       <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Vitals</Text> 
       <View style={{width: "100%"}}>
-          {Object.entries(labelProperties).map(([label, properties], index) => (
-            
-          <InputBoxWithInnerLabel
+          
+           {/* the original implementation use map function, don't use it  */}
+          {/* <InputBoxWithInnerLabel
               key={index}
               label={label}
               value={vitalValues[label] || ''}
@@ -249,13 +172,16 @@ export default function UploadMedicalInfo({ route, navigation }) {
               width={properties.width}
               height={60}
               placeholder={'Click to Enter...'}
-              onChange={(value) => handleInputChange("vital", label, value)}
+              onChange={(value) => }
               onFocus = {handleOutsidePress}
               keyboardType={'numeric'}
-              autoFocus={label === 'Temp'} // this line is added
-              
-          />
-          ))}
+              autoFocus={label === 'Temp'} // this line is added              
+          /> */}
+
+          {/* TODO: use inputBoxWithInnerLabel one by one to store each vital
+          into its state. Also need to implement the feature: after click return key,
+          it can jump to next vital's box */}
+          
       </View>
       
       
