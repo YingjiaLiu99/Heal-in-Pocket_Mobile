@@ -13,7 +13,10 @@ import baseURL from '../../../common/baseURL';
 export default function UploadMedicalInfo({ route, navigation }) {
 
 
-  const { firstName, lastName, DOB, gender, time, date} = route.params;
+  const { firstName, lastName, DOB, gender, 
+          time, date, insurance, pcps, 
+          caseHistory, smoking, pregnancy} = route.params;
+  
 
 
   const [confirmSubmit, setConfirmSubmit] = useState(false);
@@ -24,8 +27,6 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const [corresponding_id, setCorrespondingId] = useState('');
 
   // Medical histories
-  const [smoking_status, setSmokingStatus] = useState('');
-  const [pregnancy_status, setPregnancyStatus] = useState('');
   const [chronic_condition, setChronicCondition] = useState('');
   const [current_medications, setCurrentMedications] = useState('');
   const [allergies, setAllergies] = useState('');
@@ -52,11 +53,11 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
 
   // Refs for input elements to manage focus
-  const temperatureRef = useRef(null);
+  // const temperatureRef = useRef(null);
   
-  const pulseRef = useRef(null);
-  const oxygenRef = useRef(null);
-  const glucoseRef = useRef(null);
+  // const pulseRef = useRef(null);
+  // const oxygenRef = useRef(null);
+  // const glucoseRef = useRef(null);
 
 
   const labelProperties = {    
@@ -115,6 +116,28 @@ export default function UploadMedicalInfo({ route, navigation }) {
     }
     else{
       if (confirmSubmit) {   
+
+        // create a new record here, use all the data you stored in the states.
+        // for the fields that needed to be filled by doctors, put null
+        // after successfully create the record, get its record id from response
+        // and put it in the request's corresponding_record field below
+        // try {
+        //   const re
+        // }
+
+        //  const newRecord ={
+        //   allergies: allergies,
+        //   ....
+        //   doctor_name: null
+        //   soapnote:注意 soapnote是一个object
+        //   saopnote: {
+        //     objective: null,
+        //     ...
+        //   }
+        //  }
+
+        //  axios. ..
+        
      
       // create new request on server
       const newRequest = {
@@ -134,8 +157,8 @@ export default function UploadMedicalInfo({ route, navigation }) {
       } 
       else {
         setConfirmSubmit(true);        
-    }
-  }
+      }
+   }
 };
 
   const handleOutsidePress = () => {
@@ -145,59 +168,64 @@ export default function UploadMedicalInfo({ route, navigation }) {
   };
 
   const handleVitalOnlySubmit = async () => {
-    // setRecordType("vital_only");
-
-    const newRecord = {
-      record_type: "vital_only",
-  
-      smoking_status: smoking_status,
-      pregnancy_status: pregnancy_status,
-      chronic_condition: chronic_condition,
-      current_medications, current_medications,
-      allergies: allergies,
-      chief_complaint: chief_complaint,
-  
-      vitals: {
-        temperature: temperature,
-        systolic_blood_pressure: systolic_blood_pressure,
-        diastolic_blood_pressure: diastolic_blood_pressure, 
-        pulse: pulse,
-        oxygen: oxygen,
-        glucose: glucose,
-      },
-  
-      soap: {
-        subjective: subjective,
-        objective: objective,
-        assessment: assessment,
-      },
-      
-      provider_name: provider_name,
-      scribe_name: scribe_name, 
-      owner: '64fe7dccf072c23851e8567b'
-  
-    };
+    if(chief_complaint === ''){
+      // Set error message
+      setErrorMessage('Please fill in reason for consultation');  
+    }
+    else {
+      const newRecord = {
+        record_type: "vital_only",
     
-    const uploadRecord = await uploadNewRecord(newRecord);
-    console.log(uploadRecord);
-    //corres_id = uploadRecord.data.record_id;
-
-    // const newRequest = {
-    //   patient_name: `${firstName} ${lastName}`,
-    //   corresponding_record: "1231231", 
-    //   new_patient: true, // or based on a condition
-    //   chief_complaint: chief_complaint
-    // };
+        smoking_status: smoking,
+        pregnancy_status: pregnancy,
+        chronic_condition: chronic_condition,
+        current_medications, current_medications,
+        allergies: allergies,
+        chief_complaint: chief_complaint,
     
+        vitals: {
+          temperature: temperature,
+          systolic_blood_pressure: systolic_blood_pressure,
+          diastolic_blood_pressure: diastolic_blood_pressure, 
+          pulse: pulse,
+          oxygen: oxygen,
+          glucose: glucose,
+        },
+    
+        soap: {
+          subjective: "",
+          objective: "",
+          assessment: "",
+        },
+        
+        provider_name: "",
+        scribe_name: "", 
+        owner: '64fe7dccf072c23851e8567b'
+    
+      };
 
-    // try {
-    //   const addRequest = await postNewRequest(newRequest);
-    //   console.log("Request added:", addRequest);
-    //   navigation.navigate('Home');
-    // } catch (error) {
-    //   console.error("Failed to send data to server:", error);   
-    // } 
+  
+      const uploadRecord = await uploadNewRecord(newRecord);
+      console.log(uploadRecord);    
 
+      const corres_id = uploadRecord.record._id;
+    
+      const newRequest = {
+        patient_name: `${firstName} ${lastName}`,
+        corresponding_record: corres_id, 
+        new_patient: true, // or based on a condition
+        chief_complaint: chief_complaint
+      };
+
+      try {
+        const addRequest = await postNewRequest(newRequest);
+        console.log("Request added:", addRequest);
+        navigation.navigate('Home');
+      } catch (error) {
+        console.error("Failed to send data to server:", error);   
+      } 
+
+    }
     
   }
 
