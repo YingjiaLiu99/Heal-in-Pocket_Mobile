@@ -83,7 +83,7 @@ export default function ProviderResponseScreen({route, navigation}) {
           setGlucose(record.vitals.glucose);
           // setting 
         }
-        
+        console.log(record);
       } catch (error) {
         console.error('Error fetching record:', error);
       }
@@ -150,7 +150,7 @@ const handleSubmit = async () => {
       chronic_condition: oldRecord.chronic_condition,
       current_medications: oldRecord.current_medications,
       allergies: oldRecord.allergies,
-      chief_complaint: chiefComplaint,
+      chief_complaint: oldRecord.chiefComplaint,
 
       vitals: {        
           temperature: temperature,
