@@ -118,48 +118,68 @@ export default function UploadMedicalInfo({ route, navigation }) {
       if (confirmSubmit) {   
 
         // create a new record here, use all the data you stored in the states.
-        // for the fields that needed to be filled by doctors, put null
+        // for the fields that needed to be filled by doctors, put null (leave
+        // empty for now)
         // after successfully create the record, get its record id from response
         // and put it in the request's corresponding_record field below
-        // try {
-        //   const re
-        // }
 
-        //  const newRecord ={
-        //   allergies: allergies,
-        //   ....
-        //   doctor_name: null
-        //   soapnote:注意 soapnote是一个object
-        //   saopnote: {
-        //     objective: null,
-        //     ...
-        //   }
-        //  }
+        const newRecord = {
+          record_type: "standard",
+      
+          smoking_status: smoking,
+          pregnancy_status: pregnancy,
+          chronic_condition: chronic_condition,
+          current_medications, current_medications,
+          allergies: allergies,
+          chief_complaint: chief_complaint,
+      
+          vitals: {
+            temperature: temperature,
+            systolic_blood_pressure: systolic_blood_pressure,
+            diastolic_blood_pressure: diastolic_blood_pressure, 
+            pulse: pulse,
+            oxygen: oxygen,
+            glucose: glucose,
+          },
+      
+          soap: {
+            subjective: "",
+            objective: "",
+            assessment: "",
+          },
+          
+          provider_name: "",
+          scribe_name: "", 
+          owner: '64fe7dccf072c23851e8567b' // Dummy for now
+      
+        };
 
-        //  axios. ..
-        
-     
-      // create new request on server
-      const newRequest = {
-        patient_name: `${firstName} ${lastName}`,
-        corresponding_record: " ", // dummy data now
-        new_patient: true, // or based on a condition
-        chief_complaint: chief_complaint
-      };
+        const uploadRecord = await uploadNewRecord(newRecord);
+        console.log(uploadRecord);    
 
-      try {
-        const request = await postNewRequest(newRequest);
-        console.log("The new created request:", request);
-      } catch (error) {
-        console.error("Failed to send data to server:", error);        
-      }
+        const corres_id = uploadRecord.record._id;
+
+        // create new request on server
+        const newRequest = {
+          patient_name: `${firstName} ${lastName}`,
+          corresponding_record: corres_id, // dummy data now
+          new_patient: true, // or based on a condition
+          chief_complaint: uploadRecord.record.chief_complaint
+        };
+
+        try {
+          const request = await postNewRequest(newRequest);
+          console.log("The new created request:", request);
+        } catch (error) {
+          console.error("Failed to send data to server:", error);        
+        }
         navigation.dispatch(StackActions.replace('Success')); // prevent going back
       } 
       else {
         setConfirmSubmit(true);        
       }
-   }
-};
+    }
+  };
 
   const handleOutsidePress = () => {
     if(confirmSubmit) {
@@ -168,64 +188,61 @@ export default function UploadMedicalInfo({ route, navigation }) {
   };
 
   const handleVitalOnlySubmit = async () => {
-    if(chief_complaint === ''){
-      // Set error message
-      setErrorMessage('Please fill in reason for consultation');  
-    }
-    else {
-      const newRecord = {
-        record_type: "vital_only",
     
-        smoking_status: smoking,
-        pregnancy_status: pregnancy,
-        chronic_condition: chronic_condition,
-        current_medications, current_medications,
-        allergies: allergies,
-        chief_complaint: chief_complaint,
+    const newRecord = {
+      record_type: "vital_only",
     
-        vitals: {
-          temperature: temperature,
-          systolic_blood_pressure: systolic_blood_pressure,
-          diastolic_blood_pressure: diastolic_blood_pressure, 
-          pulse: pulse,
-          oxygen: oxygen,
-          glucose: glucose,
-        },
+      smoking_status: smoking,
+      pregnancy_status: pregnancy,
+      chronic_condition: chronic_condition,
+      current_medications, current_medications,
+      allergies: allergies,
+      chief_complaint: chief_complaint || "N.A",
     
-        soap: {
-          subjective: "",
-          objective: "",
-          assessment: "",
-        },
+      vitals: {
+        temperature: temperature,
+        systolic_blood_pressure: systolic_blood_pressure,
+        diastolic_blood_pressure: diastolic_blood_pressure, 
+        pulse: pulse,
+        oxygen: oxygen,
+        glucose: glucose,
+      },
+    
+      soap: {
+        subjective: "",
+        objective: "",          
+        assessment: "",
+      },
         
-        provider_name: "",
-        scribe_name: "", 
-        owner: '64fe7dccf072c23851e8567b'
+      provider_name: "",
+      scribe_name: "", 
+      owner: '64fe7dccf072c23851e8567b'
     
-      };
+    };
 
   
-      const uploadRecord = await uploadNewRecord(newRecord);
-      console.log(uploadRecord);    
+    const uploadRecord = await uploadNewRecord(newRecord);
+    console.log(uploadRecord);    
 
-      const corres_id = uploadRecord.record._id;
+    const corres_id = uploadRecord.record._id;
+    console.log(corres_id);
     
-      const newRequest = {
-        patient_name: `${firstName} ${lastName}`,
-        corresponding_record: corres_id, 
-        new_patient: true, // or based on a condition
-        chief_complaint: chief_complaint
-      };
+    const newRequest = {
+      patient_name: `${firstName} ${lastName}`,
+      corresponding_record: corres_id, 
+      new_patient: true, // or based on a condition
+      chief_complaint: uploadRecord.record.chief_complaint
+    };
 
-      try {
-        const addRequest = await postNewRequest(newRequest);
-        console.log("Request added:", addRequest);
-        navigation.navigate('Home');
-      } catch (error) {
-        console.error("Failed to send data to server:", error);   
-      } 
+    try {
+      const addRequest = await postNewRequest(newRequest);
+      console.log("Request added:", addRequest);
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error("Failed to send data to server:", error);   
+    } 
 
-    }
+    
     
   }
 
