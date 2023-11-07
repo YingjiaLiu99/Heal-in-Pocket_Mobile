@@ -19,16 +19,13 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // TODO: create states to store the vitals and medical histories
-
   // use: "vital_only" for vital only
   // use: "standard" for vital + medical history
-  const [record_type, setRecordType] = useState('');
   const [corresponding_id, setCorrespondingId] = useState('');
 
   // Medical histories
-  const [smoking_status, setSmokingStatus] = useState(null);
-  const [pregnancy_status, setPregnancyStatus] = useState(null);
+  const [smoking_status, setSmokingStatus] = useState('');
+  const [pregnancy_status, setPregnancyStatus] = useState('');
   const [chronic_condition, setChronicCondition] = useState('');
   const [current_medications, setCurrentMedications] = useState('');
   const [allergies, setAllergies] = useState('');
@@ -92,7 +89,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
   };
 
 
-  const uploadRecord = async (data) => {
+  const uploadNewRecord = async (data) => {
     try {
       const response = await axios.post(`${baseURL}record`, data);
       return response.data;
@@ -110,11 +107,6 @@ export default function UploadMedicalInfo({ route, navigation }) {
     }
   };
 
-
-
-
-
-  
   
   const handleSubmit = async() => {    
     if(chief_complaint === ''){
@@ -123,29 +115,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
     }
     else{
       if (confirmSubmit) {   
-        // create a new record here, use all the data you stored in the states.
-        // for the fields that needed to be filled by doctors, put null
-        // after successfully create the record, get its record id from response
-        // and put it in the request's corresponding_record field below
-        // try {
-        //   const re
-        // }
-
-        //  const newRecord ={
-        //   allergies: allergies,
-        //   ....
-        //   doctor_name: null
-        //   soapnote:注意 soapnote是一个object
-        //   saopnote: {
-        //     objective: null,
-        //     ...
-        //   }
-        //  }
-
-        //  axios. ..
-
-
-
+     
       // create new request on server
       const newRequest = {
         patient_name: `${firstName} ${lastName}`,
@@ -174,18 +144,11 @@ export default function UploadMedicalInfo({ route, navigation }) {
     }    
   };
 
-
-
-
-
-  
-  
-
   const handleVitalOnlySubmit = async () => {
-    setRecordType("vital_only");
+    // setRecordType("vital_only");
 
     const newRecord = {
-      record_type: record_type,
+      record_type: "vital_only",
   
       smoking_status: smoking_status,
       pregnancy_status: pregnancy_status,
@@ -214,26 +177,26 @@ export default function UploadMedicalInfo({ route, navigation }) {
       owner: '64fe7dccf072c23851e8567b'
   
     };
-
-    const uploadRequest = await uploadRecord(newRecord);
+    
+    const uploadRecord = await uploadNewRecord(newRecord);
     console.log(uploadRecord);
-    //uploadRequestRecordId = uploadRequest.record_id;
+    //corres_id = uploadRecord.data.record_id;
 
-    const newRequest = {
-      patient_name: `${firstName} ${lastName}`,
-      corresponding_record: "1231231", 
-      new_patient: true, // or based on a condition
-      chief_complaint: chief_complaint
-    };
+    // const newRequest = {
+    //   patient_name: `${firstName} ${lastName}`,
+    //   corresponding_record: "1231231", 
+    //   new_patient: true, // or based on a condition
+    //   chief_complaint: chief_complaint
+    // };
     
 
-    try {
-      const addRequest = await postNewRequest(newRequest);
-      console.log("Request added:", addRequest);
-      navigation.navigate('Home');
-    } catch (error) {
-      console.error("Failed to send data to server:", error);   
-    } 
+    // try {
+    //   const addRequest = await postNewRequest(newRequest);
+    //   console.log("Request added:", addRequest);
+    //   navigation.navigate('Home');
+    // } catch (error) {
+    //   console.error("Failed to send data to server:", error);   
+    // } 
 
     
   }
