@@ -20,6 +20,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
 
   const [confirmSubmit, setConfirmSubmit] = useState(false);
+  const [confirmVital, setConfirmVital] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   // use: "vital_only" for vital only
@@ -185,66 +186,76 @@ export default function UploadMedicalInfo({ route, navigation }) {
     if(confirmSubmit) {
       setConfirmSubmit(false);
     }    
+    if (confirmVital) {
+      setConfirmVital(false);
+    }
   };
 
   const handleVitalOnlySubmit = async () => {
-    
-    const newRecord = {
-      record_type: "vital_only",
-    
-      smoking_status: smoking,
-      pregnancy_status: pregnancy,
-      chronic_condition: chronic_condition,
-      current_medications, current_medications,
-      allergies: allergies,
-      chief_complaint: chief_complaint || "N.A",
-    
-      vitals: {
-        temperature: temperature,
-        systolic_blood_pressure: systolic_blood_pressure,
-        diastolic_blood_pressure: diastolic_blood_pressure, 
-        pulse: pulse,
-        oxygen: oxygen,
-        glucose: glucose,
-      },
-    
-      soap: {
-        subjective: "",
-        objective: "",          
-        assessment: "",
-      },
-        
-      provider_name: "",
-      scribe_name: "", 
-      owner: '64fe7dccf072c23851e8567b'
-    
-    };
 
+    if (confirmVital) {
+      const newRecord = {
+        record_type: "vital_only",
+      
+        smoking_status: smoking,
+        pregnancy_status: pregnancy,
+        chronic_condition: chronic_condition,
+        current_medications, current_medications,
+        allergies: allergies,
+        chief_complaint: chief_complaint,
+      
+        vitals: {
+          temperature: temperature,
+          systolic_blood_pressure: systolic_blood_pressure,
+          diastolic_blood_pressure: diastolic_blood_pressure, 
+          pulse: pulse,
+          oxygen: oxygen,
+          glucose: glucose,
+        },
+      
+        soap: {
+          subjective: "",
+          objective: "",          
+          assessment: "",
+        },
+          
+        provider_name: "",
+        scribe_name: "", 
+        owner: '64fe7dccf072c23851e8567b'
+      
+      };
   
-    const uploadRecord = await uploadNewRecord(newRecord);
-    console.log(uploadRecord);    
-
-    const corres_id = uploadRecord.record._id;
-    console.log(corres_id);
     
-    const newRequest = {
-      patient_name: `${firstName} ${lastName}`,
-      corresponding_record: corres_id, 
-      new_patient: true, // or based on a condition
-      chief_complaint: uploadRecord.record.chief_complaint
-    };
+      const uploadRecord = await uploadNewRecord(newRecord);
+      console.log(uploadRecord);    
+  
+      const corres_id = uploadRecord.record._id;
+      console.log(corres_id);
+      
+      const newRequest = {
+        patient_name: `${firstName} ${lastName}`,
+        corresponding_record: corres_id, 
+        new_patient: true, // or based on a condition
+        chief_complaint: uploadRecord.record.chief_complaint
+      };
+  
+      try {
+        const addRequest = await postNewRequest(newRequest);
+        console.log("Request added:", addRequest);
+        navigation.navigate('Home');
+      } catch (error) {
+        console.error("Failed to send data to server:", error);   
+      } 
+    }
+    else {
+      setConfirmVital(true);
 
-    try {
-      const addRequest = await postNewRequest(newRequest);
-      console.log("Request added:", addRequest);
-      navigation.navigate('Home');
-    } catch (error) {
-      console.error("Failed to send data to server:", error);   
-    } 
-
+      if (chief_complaint === "" || chief_complaint === null || chief_complaint === '') {
+        setChiefCompliant("N.A");
+      }
+    }
     
-    
-  }
+  };
 
   return (
   <View style={{flex:1}}>
@@ -450,9 +461,17 @@ export default function UploadMedicalInfo({ route, navigation }) {
         </TouchableOpacity>
       </View>
 
-      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:60}}>
+      {/* <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:60}}>
         <TouchableOpacity style={styles.vitalOnlyButton} onPress={handleVitalOnlySubmit}>
           <Text style={styles.buttonText}>Vital Check Only</Text>
+        </TouchableOpacity>
+      </View> */}
+
+      <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:20}}>
+        <TouchableOpacity style={confirmVital ? styles.vitalConfirmButton : styles.vitalOnlyButton} onPress={handleVitalOnlySubmit}>
+          <Text style={styles.buttonText}>
+            {confirmVital ? 'Submit Vitals' : 'Vital Check Only'}
+          </Text>
         </TouchableOpacity>
       </View>
       

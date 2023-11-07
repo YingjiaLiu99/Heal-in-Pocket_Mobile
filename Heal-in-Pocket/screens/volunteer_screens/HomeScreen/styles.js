@@ -77,6 +77,17 @@ const styles = StyleSheet.create({
       paddingHorizontal: 5,
       borderRadius: 20
     },
+    vitalConfirmButton: {
+      backgroundColor: '#FF9248',
+      // ... other styles same as 'button' ...
+      height: 70,
+      width: '90%',      
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 5,
+      paddingHorizontal: 5,
+      borderRadius: 20
+    },
     normalButton: {
       backgroundColor: '#395BCD',
       // ... other styles same as 'button' ...
