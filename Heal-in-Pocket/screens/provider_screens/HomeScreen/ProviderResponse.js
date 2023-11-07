@@ -72,18 +72,24 @@ export default function ProviderResponseScreen({route, navigation}) {
       try {
         const response = await axios.get(`${baseURL}record/${record_id}`);
         const record = response.data.record
-        // setRecord(response.data.record);
-        if(record && record.vitals){
-          setRecord(record)
-          setTemperature(record.vitals.temperature);
-          setSystolic_bp(record.vitals.systolic_blood_pressure);
-          setDiastolic_bp(record.vitals.diastolic_blood_pressure);
-          setPulse(record.vitals.pulse);
-          setOxygen(record.vitals.oxygen);
-          setGlucose(record.vitals.glucose);
-          // setting 
-        }
-        console.log(record);
+        setRecord(record)
+        setSubjective(record.subjective);
+        setObjective(record.objective);
+        setAssessment(record.assessment);
+        setChronic_condition(record.chronic_condition);
+        setCurrent_medications(record.current_medications);
+        setAllergies(record.allergies);
+        setChiefComplaint(record.chiefComplaint);
+        setMedicalHistoryValue(record.medicalHistoryValue);
+        setMedicationAllergies(record.setMedicationAllergies);
+        setProviderName(record.provider_name);
+        setScribeName(record.scribe_name);
+        setTemperature(record.vitals.temperature);
+        setSystolic_bp(record.vitals.systolic_blood_pressure);
+        setDiastolic_bp(record.vitals.diastolic_blood_pressure);
+        setPulse(record.vitals.pulse);
+        setOxygen(record.vitals.oxygen);
+        setGlucose(record.vitals.glucose);
       } catch (error) {
         console.error('Error fetching record:', error);
       }
@@ -141,16 +147,16 @@ const handleSubmit = async () => {
     }  
     
     const oldRecord = response.data.record;
-    console.log("the old record is: ", oldRecord);
+
     const updatingRecord = {
       record_type: oldRecord.record_type,
 
       smoking_status: oldRecord.smoking_status,
       pregnancy_status: oldRecord.pregnancy_status,
       chronic_condition: oldRecord.chronic_condition,
-      current_medications: oldRecord.current_medications,
-      allergies: oldRecord.allergies,
-      chief_complaint: oldRecord.chiefComplaint,
+      current_medications: current_medications,
+      allergies: allergies,
+      chief_complaint: chiefComplaint,
 
       vitals: {        
           temperature: temperature,
@@ -162,18 +168,17 @@ const handleSubmit = async () => {
       },
     
       soap: {
-          subjective: oldRecord.soap.subjective,
-          objective: oldRecord.soap.objective,
-          assessment: oldRecord.soap.assessment,
+          subjective: subjective,
+          objective: objective,
+          assessment: assessment,
       },
 
-      provider_name: oldRecord.provider_name,
-      scribe_name: oldRecord.scribe_name,
+      provider_name: providerName,
+      scribe_name: scribeName,
       owner: oldRecord.owner,
     };
-    console.log("The record to update is: ", updatingRecord);
+    
     const updated_record = await updateRecord(updatingRecord);
-    console.log("The new updated record: ", updated_record);
     navigation.navigate('Success');
   } 
   else {
