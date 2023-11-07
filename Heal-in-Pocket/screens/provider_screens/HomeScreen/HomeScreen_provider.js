@@ -11,9 +11,9 @@ export default function HomeScreen({navigation}) {
 
   const [requests, setRequests] = useState([]);
 
-  const handleAccept = (id) => {
-    // navigation.navigate("Provider Response", { visit_id })
-    console.log(id);
+  const handleAccept = (visit_id, record_id) => {
+    navigation.navigate("Provider Response", { visit_id, record_id})
+    // console.log(id);
   };
 
   // fetch and update the request list every 5 second
@@ -74,7 +74,7 @@ export default function HomeScreen({navigation}) {
                 name={request.patient_name}
                 time={"12:01pm"}
                 tag={request.new_patient ? "New Patient" : "Follow Up"}
-                onPress={() => handleAccept(request.id)}
+                onPress={() => handleAccept(request.id, request.corresponding_record)}
               />
             ))
           ) : (
