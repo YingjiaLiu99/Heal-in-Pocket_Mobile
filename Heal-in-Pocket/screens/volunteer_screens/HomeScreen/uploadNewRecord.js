@@ -16,7 +16,12 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const { firstName, lastName, DOB, gender, 
           time, date, insurance, pcps, 
           caseHistory, smoking, pregnancy} = route.params;
-  
+
+  // Smoking and pregnancy: 
+        // { value: 'yes', choiceLabel: 'Yes' },
+        // { value: 'no', choiceLabel: 'No' },
+        // { value: 'na', choiceLabel: 'NA' },
+  // Default value is "na" for smoking and pregnancy
 
 
   const [confirmSubmit, setConfirmSubmit] = useState(false);
@@ -43,13 +48,17 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const [glucose, setGlucose] = useState('');
 
   //SOAP:
-  const [subjective, setSubjective] = useState('');
-  const [objective, setObjective] = useState('');
-  const [assessment, setAssessment] = useState('');
+  // Assign to Default value: N/A in this page
+  const [subjective, setSubjective] = useState('N/A');
+  const [objective, setObjective] = useState('N/A');
+  const [assessment, setAssessment] = useState('N/A');
 
   // provider_name, scribe_name, owner
-  const [provider_name, setProviderName] = useState('');
-  const [scribe_name, setScribeName] = useState('');
+  // Assign to Default value: N/A in this page
+  const [provider_name, setProviderName] = useState('N/A');
+  const [scribe_name, setScribeName] = useState('N/A');
+
+  // Owner should be get from the backend, now using the dummy only for test
   // const [owner, SetOwner] = useState('');
 
 
@@ -124,37 +133,44 @@ export default function UploadMedicalInfo({ route, navigation }) {
         // after successfully create the record, get its record id from response
         // and put it in the request's corresponding_record field below
 
+        // For entries that not being filled by user, 
+        // filled as default value instead
+        // "N/A" for type String, and -1 for type Number
+
         const newRecord = {
           record_type: "standard",
       
-          smoking_status: smoking,
-          pregnancy_status: pregnancy,
-          chronic_condition: chronic_condition,
-          current_medications, current_medications,
-          allergies: allergies,
+          smoking_status: smoking || "na",
+          pregnancy_status: pregnancy || "na",
+          chronic_condition: chronic_condition || "N/A",
+          current_medications: current_medications || "N/A",
+          allergies: allergies || "N/A",
           chief_complaint: chief_complaint,
       
           vitals: {
-            temperature: temperature,
-            systolic_blood_pressure: systolic_blood_pressure,
-            diastolic_blood_pressure: diastolic_blood_pressure, 
-            pulse: pulse,
-            oxygen: oxygen,
-            glucose: glucose,
+            temperature: temperature || -1,
+            systolic_blood_pressure: systolic_blood_pressure || -1,
+            diastolic_blood_pressure: diastolic_blood_pressure || -1, 
+            pulse: pulse || -1,
+            oxygen: oxygen || -1,
+            glucose: glucose || -1,
           },
       
+          // Initialized as "N/A" at the starting of this page
           soap: {
-            subjective: "",
-            objective: "",
-            assessment: "",
+            subjective: subjective,
+            objective: objective,
+            assessment: assessment,
           },
           
-          provider_name: "",
-          scribe_name: "", 
+          // Initialized as "N/A" at the starting of this page
+          provider_name: provider_name,
+          scribe_name: scribe_name, 
           owner: '64fe7dccf072c23851e8567b' // Dummy for now
       
         };
 
+        // Upload record
         const uploadRecord = await uploadNewRecord(newRecord);
         console.log(uploadRecord);    
 
@@ -168,6 +184,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
           chief_complaint: uploadRecord.record.chief_complaint
         };
 
+        // Send request to doctor panel
         try {
           const request = await postNewRequest(newRequest);
           console.log("The new created request:", request);
@@ -197,62 +214,45 @@ export default function UploadMedicalInfo({ route, navigation }) {
       const newRecord = {
         record_type: "vital_only",
       
-        smoking_status: smoking,
-        pregnancy_status: pregnancy,
-        chronic_condition: chronic_condition,
-        current_medications, current_medications,
-        allergies: allergies,
-        chief_complaint: chief_complaint,
-      
+        smoking_status: smoking || "na",
+        pregnancy_status: pregnancy || "na",
+        chronic_condition: chronic_condition || "N/A",
+        current_medications: current_medications || "N/A",
+        allergies: allergies || "N/A",
+        chief_complaint: "N/A",
+    
         vitals: {
-          temperature: temperature,
-          systolic_blood_pressure: systolic_blood_pressure,
-          diastolic_blood_pressure: diastolic_blood_pressure, 
-          pulse: pulse,
-          oxygen: oxygen,
-          glucose: glucose,
+          temperature: temperature || -1,
+          systolic_blood_pressure: systolic_blood_pressure || -1,
+          diastolic_blood_pressure: diastolic_blood_pressure || -1, 
+          pulse: pulse || -1,
+          oxygen: oxygen || -1,
+          glucose: glucose || -1,
         },
       
+        // Initialized as "N/A" at the starting of this page
         soap: {
-          subjective: "",
-          objective: "",          
-          assessment: "",
+          subjective: subjective,
+          objective: objective,          
+          assessment: assessment,
         },
           
-        provider_name: "",
-        scribe_name: "", 
+        // Initialized as "N/A" at the starting of this page
+        provider_name: provider_name,
+        scribe_name: scribe_name,
+
+        // Dummy Value:
         owner: '64fe7dccf072c23851e8567b'
       
       };
-  
-    
+
+      // Upload record
       const uploadRecord = await uploadNewRecord(newRecord);
-      console.log(uploadRecord);    
-  
-      const corres_id = uploadRecord.record._id;
-      console.log(corres_id);
-      
-      const newRequest = {
-        patient_name: `${firstName} ${lastName}`,
-        corresponding_record: corres_id, 
-        new_patient: true, // or based on a condition
-        chief_complaint: uploadRecord.record.chief_complaint
-      };
-  
-      try {
-        const addRequest = await postNewRequest(newRequest);
-        console.log("Request added:", addRequest);
-        navigation.navigate('Home');
-      } catch (error) {
-        console.error("Failed to send data to server:", error);   
-      } 
+      console.log(uploadRecord); 
+      navigation.dispatch(StackActions.replace('Success')); // prevent going back
     }
     else {
       setConfirmVital(true);
-
-      if (chief_complaint === "" || chief_complaint === null || chief_complaint === '') {
-        setChiefCompliant("N.A");
-      }
     }
     
   };
