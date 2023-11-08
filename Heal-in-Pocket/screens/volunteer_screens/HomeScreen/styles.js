@@ -101,7 +101,8 @@ const styles = StyleSheet.create({
     },
     // Only used for vital check
     vitalOnlyButton: {
-      backgroundColor: '#f16981',
+      // backgroundColor: '#f16981', // This is the pink
+      backgroundColor: '#395BCD',
       // ... other styles same as 'button' ...
       height: 70,
       width: '90%',      

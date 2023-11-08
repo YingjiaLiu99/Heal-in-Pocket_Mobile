@@ -454,7 +454,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
     {errorMessage ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}  
 
       <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:20}}>
-        <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.normalButton} onPress={handleSubmit}>
+        <TouchableOpacity style={confirmSubmit ? styles.confirmButton : styles.normalButton} onPress={handleSubmit}  onFocus={handleOutsidePress}>
           <Text style={styles.buttonText}>
             {confirmSubmit ? 'Submit Request' : 'Confirm Request'}
           </Text>
@@ -468,7 +468,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
       </View> */}
 
       <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:20}}>
-        <TouchableOpacity style={confirmVital ? styles.vitalConfirmButton : styles.vitalOnlyButton} onPress={handleVitalOnlySubmit}>
+        <TouchableOpacity style={confirmVital ? styles.vitalConfirmButton : styles.vitalOnlyButton} onPress={handleVitalOnlySubmit} onFocus={handleOutsidePress}>
           <Text style={styles.buttonText}>
             {confirmVital ? 'Submit Vitals' : 'Vital Check Only'}
           </Text>
