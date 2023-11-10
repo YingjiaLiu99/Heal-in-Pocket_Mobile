@@ -32,11 +32,11 @@ export default function WaitlistResponseScreen({route, navigation}) {
 
   const [temperature, setTemperature] = useState("");
   // High and low
-  const [systolic_blood_pressure, setSysBloodPressure] = useState('');
-  const [diastolic_blood_pressure, setDiaBloodPressure] = useState('');
-  const [pulse, setPulse] = useState('');
-  const [oxygen, setOxygen] = useState('');
-  const [glucose, setGlucose] = useState('');
+  const [systolic_blood_pressure, setSysBloodPressure] = useState("");
+  const [diastolic_blood_pressure, setDiaBloodPressure] = useState("");
+  const [pulse, setPulse] = useState("");
+  const [oxygen, setOxygen] = useState("");
+  const [glucose, setGlucose] = useState("");
 
 
 
@@ -95,6 +95,7 @@ export default function WaitlistResponseScreen({route, navigation}) {
         // Update state, guarding against undefined values
         // Vitals
         setTemperature(recordData.vitals.temperature); 
+        console.log(temperature);
         setGlucose(recordData.vitals.glucose);
         setOxygen(recordData.vitals.oxygen);
         setPulse(recordData.vitals.pulse);
@@ -103,6 +104,7 @@ export default function WaitlistResponseScreen({route, navigation}) {
 
         // SOAP, but not update:
         setAssessment(recordData.soap.assessment);
+        console.log(assessment);
         setObjective(recordData.soap.objective);
         setSubjective(recordData.soap.subjective);
 
@@ -298,7 +300,7 @@ return (
 
           <InputBoxWithLabel 
           label={"Temp"}
-          value={temperature}
+          value={temperature.toString()}
           onChange={(text) => setTemperature(text)}
           unit={"F"}
           width='32%'
@@ -306,7 +308,7 @@ return (
 
         <InputBoxWithLabel 
           label={"Pulse"}
-          value={pulse}
+          value={pulse.toString()}
           onChange={(text) => setPulse(text)}
           unit={"bpm"}
           width='32%'
@@ -314,7 +316,7 @@ return (
 
         <InputBoxWithLabel 
           label={"Oxygen"}
-          value={oxygen}
+          value={oxygen.toString()}
           onChange={(text) => setOxygen(text)}
           unit={"%"}
           width='32%'
@@ -325,7 +327,7 @@ return (
 
           <InputBoxWithLabel 
           label={"BG"}
-          value={glucose}
+          value={glucose.toString()}
           onChange={(text) => setGlucose(text)}
           unit={"mg/dl"}
           width='32%'
@@ -333,7 +335,7 @@ return (
 
         <InputBoxWithLabel 
           label={"Systolic BP"}
-          value={systolic_blood_pressure}
+          value={systolic_blood_pressure.toString()}
           onChange={(text) => setSysBloodPressure(text)}
           unit={"mmHg"}
           width='32%'
@@ -341,7 +343,7 @@ return (
 
         <InputBoxWithLabel 
           label={"Diastolic BP"}
-          value={diastolic_blood_pressure}
+          value={diastolic_blood_pressure.toString()}
           onChange={(text) => setDiaBloodPressure(text)}
           unit={"mmHg"}
           width='32%'
