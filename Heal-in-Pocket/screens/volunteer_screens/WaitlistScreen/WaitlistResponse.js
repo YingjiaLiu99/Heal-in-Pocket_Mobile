@@ -108,7 +108,7 @@ export default function WaitlistResponseScreen({route, navigation}) {
 
         // chronic(med history), medication, allegies, chief_compliant:
         setMedicalHistoryValue(recordData.chronic_condition);
-        setMedicationAllergies(recordData.allergies);
+        setMedicationAllergies(recordData.current_medications + "[Allergies: " + recordData.allergies + "]");
         setChiefComplaint(recordData.chief_complaint);
         
         // Provider and scribe, but not update:
@@ -151,12 +151,25 @@ export default function WaitlistResponseScreen({route, navigation}) {
       const oldRequest = response.data.request;
       console.log(oldRequest);
 
+      const parseMedicationAllergies = () => {
+        const allergyStart = medicationAllergies.indexOf('[Allergies: ');
+        const medication = medicationAllergies.substring(0, allergyStart).trim();
+        console.log(allergyStart);
+        const allergy = medicationAllergies.substring(allergyStart + 12, medicationAllergies.length - 1).trim();
+      
+        return { medication, allergy };
+      };
+
+      const medicationAllergyFormat = parseMedicationAllergies();
+      
+      console.log(medicationAllergyFormat.allergy);
+
       // Update the record here:
       const newRecord = {
         
         chronic_condition: medicalHistoryValue || "N/A",
-        // current_medications: current_medications || "N/A",
-        allergies: medicationAllergies || "N/A",
+        allergies: medicationAllergyFormat.allergy || "N/A",
+        current_medications: medicationAllergyFormat.medication || 'N/A',
         chief_complaint: chiefComplaint || "N/A",
     
         vitals: {
@@ -273,7 +286,9 @@ return (
           value={medicationAllergies}
           width="100%"
           onChange={(text) => {
-            // This is a bit more complex due to the formatting. If you simply want to edit the medications or allergies separately, consider splitting this into two fields.
+            // This is a bit more complex due to the formatting. 
+            // If you simply want to edit the medications or allergies separately,
+            // consider splitting this into two fields.
             setMedicationAllergies(text);
           }}
         />
