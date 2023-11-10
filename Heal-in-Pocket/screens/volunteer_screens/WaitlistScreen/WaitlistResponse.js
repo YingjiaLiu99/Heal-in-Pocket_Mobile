@@ -152,10 +152,10 @@ export default function WaitlistResponseScreen({route, navigation}) {
       console.log(oldRequest);
 
       const parseMedicationAllergies = () => {
-        const allergyStart = medicationAllergies.indexOf('[Allergies: ');
+        const allergyStart = medicationAllergies.indexOf('[Allergies:');
         const medication = medicationAllergies.substring(0, allergyStart).trim();
         console.log(allergyStart);
-        const allergy = medicationAllergies.substring(allergyStart + 12, medicationAllergies.length - 1).trim();
+        const allergy = medicationAllergies.substring(allergyStart + 11, medicationAllergies.length - 1).trim(" ");
       
         return { medication, allergy };
       };
