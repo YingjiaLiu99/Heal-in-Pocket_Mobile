@@ -5,13 +5,25 @@ import axios from 'axios';
 import styles from './styles.js';
 import RequestMessage from './components/RequestMessage.js';
 import baseURL from '../../../common/baseURL';
+import moment from 'moment-timezone';
 
 export default function WaitlistMainScreen({navigation}) {
   
   const [requests, setRequests] = useState([]);
+  
+  // It should consider time zone issue, ignore for now
 
   const handleAccept = (request_id) => {
     navigation.navigate("Waitlist Response", { request_id })    
+  };
+
+  // Parse time by timezone, default is "America/Los_Angeles"
+  const convertToTimeZone = (dateTimeString, timeZone) => {
+    const localTime = moment.utc(dateTimeString).tz(timeZone);
+    return {
+      date: localTime.format('YYYY-MM-DD'),
+      time: localTime.format('HH:mm:ss')
+    };
   };
 
   // fetch and update the request list every 5 second
@@ -19,7 +31,8 @@ export default function WaitlistMainScreen({navigation}) {
     const fetchRequests  = async ()=> {
       try{
         const response = await axios.get(`${baseURL}request`);
-        setRequests(response.data.requests);        
+        setRequests(response.data.requests);
+            
       } catch (error) {
         if (error.response) {
           // The request was successfully sent to the server and the server returned an error response. 
@@ -69,7 +82,9 @@ export default function WaitlistMainScreen({navigation}) {
                 key={index}
                 chiefComplaint={request.chief_complaint}
                 name={request.patient_name}
-                time={"12:01pm"}
+                time={
+                  convertToTimeZone(
+                    request.createdAt.toString(), "America/Los_Angeles").time}
                 tag={request.new_patient ? "New Patient" : "Follow Up"}
                 onPress={() => handleAccept(request.id)}
               />
