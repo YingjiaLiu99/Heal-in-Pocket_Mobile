@@ -68,7 +68,7 @@ export default function RecordPatientInfo({ route, navigation }) {
             lastName: lastName,
             DOB: DOB,
             gender: gender,
-            time: time,
+            // time: time,
             insurance: insurance,
             pcps: pcps,
             caseHistory: caseHistory,
@@ -127,7 +127,7 @@ export default function RecordPatientInfo({ route, navigation }) {
 
 
         <View style={{width: "100%"}}>
-            <InputBoxWithLabel
+            {/* <InputBoxWithLabel
                 label="Time"
                 value={time}
                 ref={timeRef}
@@ -138,7 +138,7 @@ export default function RecordPatientInfo({ route, navigation }) {
                 onSubmitEditing={() => insuranceRef.current.focus()}
                 returnKeyType='next'
                 autoFocus
-            />
+            /> */}
 
             <InputBoxWithLabel
                 label="Insurance"        
