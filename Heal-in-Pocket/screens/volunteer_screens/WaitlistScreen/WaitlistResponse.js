@@ -6,7 +6,6 @@ import styles from './styles';
 import InputBoxWithLabel from './components/InputBoxWithLabel';
 import BigInputBoxWithLabel from './components/BigInputBoxWithLabel';
 import ProviderInputBox from './components/ProviderInputBox';
-
 import baseURL from '../../../common/baseURL';
 
 export default function WaitlistResponseScreen({route, navigation}) { 
@@ -92,8 +91,7 @@ const handleSubmit = async () => {
   else {
     // Press first time, input is done, so set it true
     setConfirmSubmit(true);  
-  }
-  updatePatientData();
+  }  
 }
  
   const handleOutsidePress = () => {

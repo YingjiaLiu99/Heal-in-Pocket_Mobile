@@ -1,24 +1,19 @@
 import React, { useState, useRef, useContext,useEffect } from 'react';
 import { View, TouchableOpacity, Text, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
-import styles from './styles';
+import axios from 'axios';
 
+import styles from './styles';
 import InputBoxWithLabel from './components/InputBoxWithLabel';
 import BigInputBoxWithLabel from './components/BigInputBoxWithLabel';
 import ProviderInputBox from './components/ProviderInputBox';
-import VisitDataContext from '../../../context/context_VisitData';
-import RequestMessContext from '../../../context/context_requestMess';
+import baseURL from '../../../common/baseURL';
 
 export default function ProviderResponseScreen({route, navigation}) { 
-  const { visit_id } = route.params;
-  const { visitData, setVisitData } = useContext(VisitDataContext);
-  const { requests, setRequests } = useContext(RequestMessContext);
+  const { request_id } = route.params;
 
-  const visit = visitData.find(visit => visit.patients.find(patient => patient.visit_id === visit_id));
-  const patient = visit ? visit.patients.find(patient => patient.visit_id === visit_id) : null;
-
-  const patientInfo = patient.visitNote.patientInfo;
-  const medicalHistory = patient.visitNote.medicalHistory;
-  const vitalData = patient.visitNote.vitalData;
+  // const patientInfo = ;
+  // const medicalHistory = ;
+  // const vitalData = ;
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); 
   const [subjective, setSubjective] = useState('');
@@ -28,34 +23,26 @@ export default function ProviderResponseScreen({route, navigation}) {
   const objectiveRef = useRef(null);
   const assessmentRef = useRef(null);
 
-  const [chiefComplaint, setChiefComplaint] = useState(patient.visitNote.chiefComplaint);
-  const [medicalHistoryValue, setMedicalHistoryValue] = useState(medicalHistory[0].value);
-  const [medicationAllergies, setMedicationAllergies] = useState(medicalHistory[1].value + ' [Allergies: ' + medicalHistory[2].value + ']');
+  const [chiefComplaint, setChiefComplaint] = useState();
+  const [medicalHistoryValue, setMedicalHistoryValue] = useState();
+  const [medicationAllergies, setMedicationAllergies] = useState(' [Allergies: ' + ']');
   const [providerName, setProviderName] = useState(''); 
   const [scribeName, setScribeName] = useState('');
 
 
-  const [vitalValue1, setVitalValue1] = useState(vitalData[0].value);
-  const [vitalValue2, setVitalValue2] = useState(vitalData[1].value);
-  const [vitalValue3, setVitalValue3] = useState(vitalData[2].value);
-  const [vitalValue4, setVitalValue4] = useState(vitalData[3].value);
-  const [vitalValue5, setVitalValue5] = useState(vitalData[4].value);
-  const [vitalValue6, setVitalValue6] = useState(vitalData[5].value);
+  const [vitalValue1, setVitalValue1] = useState();
+  const [vitalValue2, setVitalValue2] = useState();
+  const [vitalValue3, setVitalValue3] = useState();
+  const [vitalValue4, setVitalValue4] = useState();
+  const [vitalValue5, setVitalValue5] = useState();
+  const [vitalValue6, setVitalValue6] = useState();
 
 
 
-  const deleteRequest = async (visit_id) => {
+  const deleteRequest = async () => {
     try {
-      const response = await axios.delete(`${baseURL}request/${visit_id}`);
-
-      if (response.status !== 200) {
-          throw new Error(response.data.message || 'Failed to delete.');
-      }
-
+      const response = await axios.delete(`${baseURL}request/${request_id}`);
       return response.data;
-
-      //Alert.alert('Success', 'Request delete success');
-
     } catch (error) {
       if (error.response) {
         // The request was successfully sent to the server and the server returned an error response. 
@@ -73,66 +60,14 @@ export default function ProviderResponseScreen({route, navigation}) {
 
 
 const handleSubmit = async () => {
-  // if(assessment === '' || subjective === '' || objective === ''){
-  //   setErrorMessage('Please fill in fields.');      
-  // }
-  // console.log(patient.visitNote.medicalHistory.slice(0, 1));
-  // console.log(medicationAllergies.split(' [Allergies: ')[0]);
-  // console.log(medicalHistoryValue );
-  // console.log(medicationAllergies.split(' [Allergies: ')[1].split(']')[0]);
 
-  if (confirmSubmit) {            
-    // publish the visit 
-    const updatedVisitData = visitData.map(visit => ({
-      ...visit,
-      patients: visit.patients.map(patient => 
-        patient.visit_id === visit_id ? {
-          ...patient,
-          published: true,
-          visitNote: {
-            // ...patient.visitNote,
-            ...patient.visitNote,
-            provider_name: providerName,
-            scribe_name:scribeName,
-            chiefComplaint: chiefComplaint,
-            medicalHistory: [
-              // ...patient.visitNote.medicalHistory.slice(0, 1), // Keep the initial data
-              { ...patient.visitNote.medicalHistory[0], value: medicalHistoryValue }, // Update the first value
-              { ...patient.visitNote.medicalHistory[1], value: medicationAllergies.split(' [Allergies: ')[0] }, // Update the second value by splitting the combined field
-              { ...patient.visitNote.medicalHistory[2], value: medicationAllergies.split(' [Allergies: ')[1].split(']')[0] }, // Update the third value by splitting the combined field
-            ],
-            vitalData: [
-              { ...patient.visitNote.vitalData[0], value: vitalValue1 },
-              { ...patient.visitNote.vitalData[1], value: vitalValue2 },
-              { ...patient.visitNote.vitalData[2], value: vitalValue3 },
-              { ...patient.visitNote.vitalData[3], value: vitalValue4 },
-              { ...patient.visitNote.vitalData[4], value: vitalValue5 },
-              { ...patient.visitNote.vitalData[5], value: vitalValue6 },
-            ],
-            providerReport: [
-    
-              {label: 'Subjective', value: subjective},
-              {label: 'Objective', value: objective},
-              {label: 'Assessment / Plan', value: assessment},
-           
-            ]
-          }
-        } : patient
-      )
-    }));
-    setVisitData(updatedVisitData);
+  if (confirmSubmit) {    
     // delete the request:
-
-    try {
-      const deleteRequest = await deleteRequest(visit_id);
-      console.log("Request removed:", deleteRequest);
-    } catch (error) {
-      console.error("Failed to send data to server:", error);   
-    } 
-    navigation.navigate('Success');
-
-    // const updatedRequests = requests.filter(request => request.visit_id !== visit_id);
-    // setRequests(updatedRequests);
+    
+    const deleteResult = deleteRequest();
+    console.log("Request deleting result:", deleteResult);
+   
+    navigation.navigate('Success');    
   } 
   else {
     // Press first time, input is done, so set it true
@@ -161,15 +96,15 @@ return (
       <View>
 
       <View style={{ flexDirection: 'row', paddingLeft:5}}>
-        <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{patientInfo[0].value}</Text>
+        <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{"Jimmy Wang"}</Text>
       </View>              
       
       <View style={{ flexDirection: 'row', paddingLeft:5}}>
-        <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {patientInfo[1].value}</Text>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {"09/23/1977"}</Text>
       </View>
 
       <View style={{ flexDirection: 'row', paddingLeft:5}}>
-        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>{patientInfo[2].value} {'['} {patientInfo[3].value} {']'}</Text>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>{"Street Corner Care"} {'['} {"11/12/2022"} {']'}</Text>
       </View>
 
       </View>
@@ -229,31 +164,29 @@ return (
       />
       </View>
 
-
-
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
 
-        <InputBoxWithLabel 
-        label={vitalData[0].label}
+      <InputBoxWithLabel 
+        label={"Temp"}
         value={vitalValue1}
         onChange={(text) => setVitalValue1(text)}
-        unit={vitalData[0].unit}
+        unit={"F"}
         width='32%'
       />
 
       <InputBoxWithLabel 
-        label={vitalData[1].label}
+        label={"Pulse"}
         value={vitalValue2}
         onChange={(text) => setVitalValue2(text)}
-        unit={vitalData[1].unit}
+        unit={"bpm"}
         width='32%'
       />
 
       <InputBoxWithLabel 
-        label={vitalData[2].label}
+        label={"Oxygen"}
         value={vitalValue3}
         onChange={(text) => setVitalValue3(text)}
-        unit={vitalData[2].unit}
+        unit={"%"}
         width='32%'
       />
       </View>
@@ -261,26 +194,26 @@ return (
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
 
         <InputBoxWithLabel 
-        label={vitalData[3].label}
+        label={"BG"}
         value={vitalValue4}
         onChange={(text) => setVitalValue4(text)}
-        unit={vitalData[3].unit}
+        unit={"mg/dl"}
         width='32%'
       />
 
       <InputBoxWithLabel 
-        label={vitalData[4].label}
+        label={"Systolic BP"}
         value={vitalValue5}
         onChange={(text) => setVitalValue5(text)}
-        unit={vitalData[4].unit}
+        unit={"mmHg"}
         width='32%'
       />
 
       <InputBoxWithLabel 
-        label={vitalData[5].label}
+        label={"Diastolic BP"}
         value={vitalValue6}
         onChange={(text) => setVitalValue6(text)}
-        unit={vitalData[5].unit}
+        unit={"mmHg"}
         width='32%'
       />
       </View>

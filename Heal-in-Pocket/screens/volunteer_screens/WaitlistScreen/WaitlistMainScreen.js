@@ -69,7 +69,7 @@ export default function WaitlistMainScreen({navigation}) {
                 key={index}
                 chiefComplaint={request.chief_complaint}
                 name={request.patient_name}
-                time={"00:00 AM"}
+                time={"12:01pm"}
                 tag={request.new_patient ? "New Patient" : "Follow Up"}
                 onPress={() => handleAccept(request.id)}
               />
