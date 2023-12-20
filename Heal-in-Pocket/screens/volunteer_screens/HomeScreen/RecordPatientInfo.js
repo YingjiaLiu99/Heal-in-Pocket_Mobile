@@ -1,12 +1,7 @@
 import React, { useRef, useState, useContext } from 'react';
 import { Text, View, TouchableOpacity, Alert, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { StackActions } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 
-import InputBoxWithInnerLabel from '../../../components/InputBoxWithInnerLabel';
-import BigInputBoxWithInnerLabel from '../../../components/BigInputBoxWithInnerLabel';
-import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
 import InputBoxWithLabel from '../../../components/InputBoxWithLabel';
 import RadioMutipleChoiceCenter from '../../../components/RadioMultipleChoiceCenter';
 import styles from './styles';
@@ -45,8 +40,7 @@ export default function RecordPatientInfo({ route, navigation }) {
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
         const year = date.getFullYear();
-        // setDate(`${month}/${day}/${year}`);
-        
+        // setDate(`${month}/${day}/${year}`);        
         return `${month}/${day}/${year}`;
     }
 
@@ -85,10 +79,11 @@ export default function RecordPatientInfo({ route, navigation }) {
       position: 'absolute',              
       paddingTop: 0, 
       backgroundColor: '#DDE5FD', 
-      zIndex: 999, 
-      elevation: 3, 
+      zIndex: 5, // for ios
+      elevation: 1, // for android
       flexDirection: 'column',
       justifyContent: 'space-between',
+      width:'100%',
       height:85
     }}>
       <View>
@@ -110,36 +105,17 @@ export default function RecordPatientInfo({ route, navigation }) {
   </View>
         <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={
             {
-              alignItems: 'center',      
-              justifyContent: 'flex-start',
-              flexDirection: 'column',
-              paddingHorizontal: 20,
-              paddingVertical:0,      
-              marginTop: 0,
-              marginHorizontal:0,    
-            paddingTop: 85          
+                alignItems: 'center',      
+                justifyContent: 'flex-start',
+                flexDirection: 'column',
+                paddingHorizontal: 20,
+                paddingVertical:0,      
+                marginTop: 0,
+                marginHorizontal:0,    
+                paddingTop: 85          
             }}>
 
-        {/* <View style={{marginTop: 35,marginBottom:30,width:'100%'}}>
-            <Text style={styles.dateText}>Date: {getCurrentDate()}</Text>
-
-        </View> */}
-
-
         <View style={{width: "100%"}}>
-            {/* <InputBoxWithLabel
-                label="Time"
-                value={time}
-                ref={timeRef}
-                onChangeText={(text) => {setTime(text)}}
-                width="100%"
-                keyboardType="default"
-                placeholder={"e.g. 01:35 pm"}
-                onSubmitEditing={() => insuranceRef.current.focus()}
-                returnKeyType='next'
-                autoFocus
-            /> */}
-
             <InputBoxWithLabel
                 label="Insurance"        
                 value={insurance}
@@ -150,7 +126,7 @@ export default function RecordPatientInfo({ route, navigation }) {
                 width='100%'
                 onSubmitEditing={() => pcpsRef.current.focus()}
                 returnKeyType='next'
-                
+                autoFocus                
             />
 
             <InputBoxWithLabel

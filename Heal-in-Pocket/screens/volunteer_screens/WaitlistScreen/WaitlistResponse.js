@@ -16,7 +16,7 @@ export default function WaitlistResponseScreen({route, navigation}) {
   // const vitalData =;
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); 
-  const [subjective, setSubjective] = useState("");
+  const [subjective, setSubjective] = useState('');
   const [objective, setObjective] = useState('');
   const [assessment, setAssessment] = useState(''); 
   const subjectiveRef = useRef(null);
@@ -30,13 +30,12 @@ export default function WaitlistResponseScreen({route, navigation}) {
   const [scribeName, setScribeName] = useState('');
 
 
-  const [temperature, setTemperature] = useState("");
-  // High and low
-  const [systolic_blood_pressure, setSysBloodPressure] = useState("");
-  const [diastolic_blood_pressure, setDiaBloodPressure] = useState("");
-  const [pulse, setPulse] = useState("");
-  const [oxygen, setOxygen] = useState("");
-  const [glucose, setGlucose] = useState("");
+  const [temperature, setTemperature] = useState('');
+  const [systolic_blood_pressure, setSysBloodPressure] = useState('');
+  const [diastolic_blood_pressure, setDiaBloodPressure] = useState('');
+  const [pulse, setPulse] = useState('');
+  const [oxygen, setOxygen] = useState('');
+  const [glucose, setGlucose] = useState('');
 
 
 
@@ -92,15 +91,18 @@ export default function WaitlistResponseScreen({route, navigation}) {
         const recordData = recordResponse.data.record;
         console.log(recordData);
   
-        // Update state, guarding against undefined values
-        // Vitals
-        setTemperature(recordData.vitals.temperature); 
-        console.log(temperature);
-        setGlucose(recordData.vitals.glucose);
-        setOxygen(recordData.vitals.oxygen);
-        setPulse(recordData.vitals.pulse);
-        setSysBloodPressure(recordData.vitals.systolic_blood_pressure);
-        setDiaBloodPressure(recordData.vitals.diastolic_blood_pressure);
+        /**
+         * We don't want to show -1 on the screen (may cause confusion to users)
+         * if the value is -1, which means it is a null, then we update our local state as null
+         * When the volunteer update(or upload) the record again, all the null value will still be 
+         * uploaded as -1 to the database
+         */
+        setTemperature(recordData.vitals.temperature === -1 ? null : recordData.vitals.temperature);
+        setGlucose(recordData.vitals.glucose === -1 ? null : recordData.vitals.glucose);
+        setOxygen(recordData.vitals.oxygen === -1 ? null : recordData.vitals.oxygen);
+        setPulse(recordData.vitals.pulse === -1 ? null : recordData.vitals.pulse);
+        setSysBloodPressure(recordData.vitals.systolic_blood_pressure === -1 ? null : recordData.vitals.systolic_blood_pressure);
+        setDiaBloodPressure(recordData.vitals.diastolic_blood_pressure === -1 ? null : recordData.vitals.diastolic_blood_pressure);
 
         // SOAP, but not update:
         setAssessment(recordData.soap.assessment);
@@ -300,7 +302,7 @@ return (
 
           <InputBoxWithLabel 
           label={"Temp"}
-          value={temperature.toString()}
+          value={temperature !== null ? temperature.toString() : ''}
           onChange={(text) => setTemperature(text)}
           unit={"F"}
           width='32%'
@@ -308,7 +310,7 @@ return (
 
         <InputBoxWithLabel 
           label={"Pulse"}
-          value={pulse.toString()}
+          value={pulse !== null ? pulse.toString() : ''}
           onChange={(text) => setPulse(text)}
           unit={"bpm"}
           width='32%'
@@ -316,7 +318,7 @@ return (
 
         <InputBoxWithLabel 
           label={"Oxygen"}
-          value={oxygen.toString()}
+          value={oxygen !== null ? oxygen.toString() : ''}
           onChange={(text) => setOxygen(text)}
           unit={"%"}
           width='32%'
@@ -327,7 +329,7 @@ return (
 
           <InputBoxWithLabel 
           label={"BG"}
-          value={glucose.toString()}
+          value={glucose !== null ? glucose.toString() : ''}
           onChange={(text) => setGlucose(text)}
           unit={"mg/dl"}
           width='32%'
@@ -335,7 +337,7 @@ return (
 
         <InputBoxWithLabel 
           label={"Systolic BP"}
-          value={systolic_blood_pressure.toString()}
+          value={systolic_blood_pressure !== null ? systolic_blood_pressure.toString() : ''}
           onChange={(text) => setSysBloodPressure(text)}
           unit={"mmHg"}
           width='32%'
@@ -343,7 +345,7 @@ return (
 
         <InputBoxWithLabel 
           label={"Diastolic BP"}
-          value={diastolic_blood_pressure.toString()}
+          value={diastolic_blood_pressure !== null ? diastolic_blood_pressure.toString() : ''}
           onChange={(text) => setDiaBloodPressure(text)}
           unit={"mmHg"}
           width='32%'

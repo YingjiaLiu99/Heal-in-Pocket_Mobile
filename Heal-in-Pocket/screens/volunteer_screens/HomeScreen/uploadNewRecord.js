@@ -47,17 +47,6 @@ export default function UploadMedicalInfo({ route, navigation }) {
   const [oxygen, setOxygen] = useState('');
   const [glucose, setGlucose] = useState('');
 
-  //SOAP:
-  // Assign to Default value: N/A in this page
-  const [subjective, setSubjective] = useState('N/A');
-  const [objective, setObjective] = useState('N/A');
-  const [assessment, setAssessment] = useState('N/A');
-
-  // provider_name, scribe_name, owner
-  // Assign to Default value: N/A in this page
-  const [provider_name, setProviderName] = useState('N/A');
-  const [scribe_name, setScribeName] = useState('N/A');
-
   // Owner should be get from the backend, now using the dummy only for test
   // const [owner, SetOwner] = useState('');
 
@@ -79,8 +68,6 @@ export default function UploadMedicalInfo({ route, navigation }) {
     'Dia_BP': { unit: 'mmHg', width: '100%' },
   };
 
-
-
   const postNewRequest = async (data) => {
     try {
       const response = await axios.post(`${baseURL}request/volunteer/add`, data);
@@ -98,7 +85,6 @@ export default function UploadMedicalInfo({ route, navigation }) {
       }
     }
   };
-
 
   const uploadNewRecord = async (data) => {
     try {
@@ -126,27 +112,24 @@ export default function UploadMedicalInfo({ route, navigation }) {
     }
     else{
       if (confirmSubmit) {   
-
-        // create a new record here, use all the data you stored in the states.
-        // for the fields that needed to be filled by doctors, put null (leave
-        // empty for now)
-        // after successfully create the record, get its record id from response
-        // and put it in the request's corresponding_record field below
-
-        // For entries that not being filled by user, 
-        // filled as default value instead
-        // "N/A" for type String, and -1 for type Number
-
+        /**
+         * following are procedures to create a new record & request
+         * N/A are null value for string, -1 are null value for number
+         * Standard record: use fields filled by volunteer; leave N/A for fields for doctors;  
+         *                  create a request and put it the waitlist queue; set its title, time,
+         *                  id according to the new record
+         * Vital-only record: use fields filled by volunteer; filling everything else with NA for strings, -1 for numbers 
+         *                    Vital-only record doesn't need to create request as it means the patient doesn't need to see
+         *                    a doctor
+         */
         const newRecord = {
-          record_type: "standard",
-      
-          smoking_status: smoking || "na",
-          pregnancy_status: pregnancy || "na",
+          record_type: "standard",      
+          smoking_status: smoking || "N/A",
+          pregnancy_status: pregnancy || "N/A",
           chronic_condition: chronic_condition || "N/A",
           current_medications: current_medications || "N/A",
           allergies: allergies || "N/A",
-          chief_complaint: chief_complaint,
-      
+          chief_complaint: chief_complaint,      
           vitals: {
             temperature: temperature || -1,
             systolic_blood_pressure: systolic_blood_pressure || -1,
@@ -155,31 +138,25 @@ export default function UploadMedicalInfo({ route, navigation }) {
             oxygen: oxygen || -1,
             glucose: glucose || -1,
           },
-      
-          // Initialized as "N/A" at the starting of this page
           soap: {
-            subjective: subjective,
-            objective: objective,
-            assessment: assessment,
-          },
-          
-          // Initialized as "N/A" at the starting of this page
-          provider_name: provider_name,
-          scribe_name: scribe_name, 
-          owner: '64fe7dccf072c23851e8567b' // Dummy for now
-      
+            subjective: "N/A",
+            objective: "N/A",
+            assessment: "N/A",
+          },          
+          provider_name: "N/A",
+          scribe_name: "N/A", 
+          owner: '65680bc74d44698b1a7ae263' // Dummy for now      
         };
 
         // Upload record
         const uploadRecord = await uploadNewRecord(newRecord);
-        console.log(uploadRecord);    
-
-        const corres_id = uploadRecord.record._id;
+        console.log(uploadRecord);            
+        const corres_id = uploadRecord.record._id; // get its corresponding id from the new created record
 
         // create new request on server
         const newRequest = {
           patient_name: `${firstName} ${lastName}`,
-          corresponding_record: corres_id, // dummy data now
+          corresponding_record: corres_id, 
           new_patient: true, // or based on a condition
           chief_complaint: uploadRecord.record.chief_complaint
         };
@@ -212,10 +189,9 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
     if (confirmVital) {
       const newRecord = {
-        record_type: "vital_only",
-      
-        smoking_status: smoking || "na",
-        pregnancy_status: pregnancy || "na",
+        record_type: "vital_only",      
+        smoking_status: smoking || "N/A",
+        pregnancy_status: pregnancy || "N/A",
         chronic_condition: chronic_condition || "N/A",
         current_medications: current_medications || "N/A",
         allergies: allergies || "N/A",
@@ -229,24 +205,18 @@ export default function UploadMedicalInfo({ route, navigation }) {
           oxygen: oxygen || -1,
           glucose: glucose || -1,
         },
-      
-        // Initialized as "N/A" at the starting of this page
         soap: {
-          subjective: subjective,
-          objective: objective,          
-          assessment: assessment,
+          subjective: "N/A",
+          objective: "N/A",          
+          assessment: "N/A",
         },
-          
-        // Initialized as "N/A" at the starting of this page
-        provider_name: provider_name,
-        scribe_name: scribe_name,
-
-        // Dummy Value:
-        owner: '64fe7dccf072c23851e8567b'
-      
+        provider_name: "N/A",
+        scribe_name: "N/A",
+        // Dummy Value for now:
+        owner: '65680bc74d44698b1a7ae263'      
       };
 
-      // Upload record
+      // Upload record without creating request
       const uploadRecord = await uploadNewRecord(newRecord);
       console.log(uploadRecord); 
       navigation.dispatch(StackActions.replace('Success')); // prevent going back
@@ -267,6 +237,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
       elevation: 3, 
       flexDirection: 'column',
       justifyContent: 'space-between',
+      width:'100%',
       height:85
     }}>
       <View>
@@ -311,6 +282,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
               onChangeText={(text) => setChronicCondition(text)}
               placeholder={'Please enter chronic illness...'}
               onFocus = {handleOutsidePress}
+              autoFocus
           />
           <BigInputBoxWithInnerLabel
               label="Current Medication"
@@ -335,27 +307,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
 
       <Text style={{fontSize:20, fontWeight:400}}>Upload Patient's Vitals</Text> 
       <View style={{width: "100%"}}>
-          
-           {/* the original implementation use map function, don't use it  */}
-          {/* <InputBoxWithInnerLabel
-              key={index}
-              label={label}
-              value={vitalValues[label] || ''}
-              unit={properties.unit}
-              width={properties.width}
-              height={60}
-              placeholder={'Click to Enter...'}
-              onChange={(value) => }
-              onFocus = {handleOutsidePress}
-              keyboardType={'numeric'}
-              autoFocus={label === 'Temp'} // this line is added              
-          /> */}
-
-          {/* TODO: use inputBoxWithInnerLabel one by one to store each vital
-          into its state. Also need to implement the feature: after click return key,
-          it can jump to next vital's box */}
-          <InputBoxWithInnerLabel
-              
+          <InputBoxWithInnerLabel              
               label={"Temperature"}
               value={temperature}
               unit={labelProperties.Temp.unit}
@@ -364,14 +316,10 @@ export default function UploadMedicalInfo({ route, navigation }) {
               placeholder={'Click to Enter...'}
               onChange={(value) => setTemperature(value)}
               onFocus = {handleOutsidePress}
-              keyboardType={'numeric'}
-              // onSubmitEditing={() => bloodPressureRef.current.focus()}
-              // returnKeyType='next'
-              autoFocus          
+              keyboardType={'numeric'}                                  
           /> 
 
-          <InputBoxWithInnerLabel
-              
+          <InputBoxWithInnerLabel              
               label={"Systoloc Blood Pressure"}
               value={systolic_blood_pressure}
               unit={labelProperties.Sys_BP.unit}
@@ -383,8 +331,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
               keyboardType={'numeric'}        
           /> 
 
-          <InputBoxWithInnerLabel
-              
+          <InputBoxWithInnerLabel              
               label={"Diastolic Blood Pressure"}
               value={diastolic_blood_pressure}
               unit={labelProperties.Dia_BP.unit}
@@ -396,8 +343,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
               keyboardType={'numeric'}        
           /> 
 
-          <InputBoxWithInnerLabel
-              
+          <InputBoxWithInnerLabel              
               label={"Pulse"}
               value={pulse}
               unit={labelProperties.Pulse.unit}
@@ -409,8 +355,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
               keyboardType={'numeric'}         
           /> 
 
-          <InputBoxWithInnerLabel
-              
+          <InputBoxWithInnerLabel              
               label={"Oxygen"}
               value={oxygen}
               unit={labelProperties.Oxygen.unit}
@@ -422,8 +367,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
               keyboardType={'numeric'}        
           /> 
 
-          <InputBoxWithInnerLabel
-              
+          <InputBoxWithInnerLabel              
               label={"Glucose"}
               value={glucose}
               unit={labelProperties.Glucose.unit}
@@ -460,12 +404,6 @@ export default function UploadMedicalInfo({ route, navigation }) {
           </Text>
         </TouchableOpacity>
       </View>
-
-      {/* <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:60}}>
-        <TouchableOpacity style={styles.vitalOnlyButton} onPress={handleVitalOnlySubmit}>
-          <Text style={styles.buttonText}>Vital Check Only</Text>
-        </TouchableOpacity>
-      </View> */}
 
       <View style={{width:'80%',alignItems:'center',marginTop:0,marginBottom:20}}>
         <TouchableOpacity style={confirmVital ? styles.vitalConfirmButton : styles.vitalOnlyButton} onPress={handleVitalOnlySubmit} onFocus={handleOutsidePress}>
