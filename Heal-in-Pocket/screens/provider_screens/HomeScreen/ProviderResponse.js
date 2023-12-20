@@ -11,8 +11,7 @@ import VisitDataContext from '../../../context/context_VisitData';
 import RequestMessContext from '../../../context/context_requestMess';
 
 export default function ProviderResponseScreen({route, navigation}) { 
-  const { visit_id, record_id } = route.params;
-  const [record, setRecord] = useState('');
+  const { request_id } = route.params;  
 
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); 
@@ -23,85 +22,64 @@ export default function ProviderResponseScreen({route, navigation}) {
   const objectiveRef = useRef(null);
   const assessmentRef = useRef(null);
 
-  const [chronic_condition, setChronic_condition] = useState("");
-  const [current_medications, setCurrent_medications] = useState("");
-  const [allergies, setAllergies] = useState("");
   const [chiefComplaint, setChiefComplaint] = useState("");
-  const [medicalHistoryValue, setMedicalHistoryValue] = useState(chronic_condition);
-  const [medicationAllergies, setMedicationAllergies] = useState(current_medications + ' [Allergies: ' + allergies + ']');
+  const [medicalHistoryValue, setMedicalHistoryValue] = useState("");
+  const [medicationAllergies, setMedicationAllergies] = useState(' [Allergies: ' + ']');
   const [providerName, setProviderName] = useState(''); 
   const [scribeName, setScribeName] = useState('');
 
   const [temperature, setTemperature] = useState('');
-  const [systolic_blood_pressure, setSystolic_bp] = useState('');
-  const [diastolic_blood_pressure, setDiastolic_bp] = useState('');
+  const [systolic_blood_pressure, setSysBloodPressure] = useState('');
+  const [diastolic_blood_pressure, setDiaBloodPressure] = useState('');
   const [pulse, setPulse] = useState('');
   const [oxygen, setOxygen] = useState('');
   const [glucose, setGlucose] = useState('');
 
-
-
-  const deleteRequest = async(visit_id) => {
-    try {
-      const response = await axios.delete(`${baseURL}request/${visit_id}`);
-
-      if (response.status !== 200) {
-          throw new Error(response.data.message || 'Failed to delete.');
-      }
-
-      return response.data;
-
-      //Alert.alert('Success', 'Request delete success');
-
-    } catch (error) {
-      if (error.response) {
-        // The request was successfully sent to the server and the server returned an error response. 
-        console.log('Backend Error:', error.response.data.message);
-      } else if (error.request) {
-        // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
-        console.log('Network Error:', error.message);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log('Error:', error.message);
-      }
-    }
-  }
  
   useEffect(() => {
     const fetchRecord = async () => {
       try {
-        const response = await axios.get(`${baseURL}record/${record_id}`);
-        const record = response.data.record
-        setRecord(record)
-        setSubjective(record.subjective);
-        setObjective(record.objective);
-        setAssessment(record.assessment);
-        setChronic_condition(record.chronic_condition);
-        setCurrent_medications(record.current_medications);
-        setAllergies(record.allergies);
-        setChiefComplaint(record.chiefComplaint);
-        setMedicalHistoryValue(record.medicalHistoryValue);
-        setMedicationAllergies(record.setMedicationAllergies);
-        setProviderName(record.provider_name);
-        setScribeName(record.scribe_name);
-        setTemperature(record.vitals.temperature);
-        setSystolic_bp(record.vitals.systolic_blood_pressure);
-        setDiastolic_bp(record.vitals.diastolic_blood_pressure);
-        setPulse(record.vitals.pulse);
-        setOxygen(record.vitals.oxygen);
-        setGlucose(record.vitals.glucose);
+        // Fetch the request to get the corresponding record ID
+        const requestResponse = await axios.get(`${baseURL}request/${request_id}`);
+        const recordId = requestResponse.data.request.corresponding_record;
+        const recordResponse = await axios.get(`${baseURL}record/${recordId}`);
+        const recordData = recordResponse.data.record;
+        console.log(recordData);
+
+        /**
+         * We don't want to show -1 on the screen (may cause confusion to users)
+         * if the value is -1, which means it is a null, then we update our local state as null
+         * When the volunteer update(or upload) the record again, all the null value will still be 
+         * uploaded as -1 to the database
+         */
+        setTemperature(recordData.vitals.temperature === -1 ? null : recordData.vitals.temperature);
+        setGlucose(recordData.vitals.glucose === -1 ? null : recordData.vitals.glucose);
+        setOxygen(recordData.vitals.oxygen === -1 ? null : recordData.vitals.oxygen);
+        setPulse(recordData.vitals.pulse === -1 ? null : recordData.vitals.pulse);
+        setSysBloodPressure(recordData.vitals.systolic_blood_pressure === -1 ? null : recordData.vitals.systolic_blood_pressure);
+        setDiaBloodPressure(recordData.vitals.diastolic_blood_pressure === -1 ? null : recordData.vitals.diastolic_blood_pressure);
+        // SOAP
+        setAssessment(recordData.soap.assessment);        
+        setObjective(recordData.soap.objective);
+        setSubjective(recordData.soap.subjective);
+        // chronic(med history), medication, allegies, chief_compliant:
+        setMedicalHistoryValue(recordData.chronic_condition);
+        setMedicationAllergies(recordData.current_medications + "[Allergies: " + recordData.allergies + "]");
+        setChiefComplaint(recordData.chief_complaint);
+        // Provider and scribe, but not update:
+        setProviderName(recordData.provider_name);
+        setScribeName(recordData.scribe_name);
+
       } catch (error) {
-        console.error('Error fetching record:', error);
+        console.error('Error fetching the corresponding record of this request:', error);
       }
     };
     fetchRecord();
-  }, []);
+  }, [request_id]); // Only re-run the effect if request_id changes
 
-  const updateRecord = async (data) => {
+  const updateRecord = async (data, recordId) => {
     try {
-      const response = await axios.put(`${baseURL}record/${record_id}`, data);
-      console.log("response is:", response);
-      console.log("response data is: ", response.data);
+      const response = await axios.put(`${baseURL}record/${recordId}`, data);      
       return response.data;
     } catch (error) {
       if (error.response) {
@@ -117,22 +95,39 @@ export default function ProviderResponseScreen({route, navigation}) {
     }
   }
 
+  const deleteRequest = async(request_id) => {
+    try {
+      const response = await axios.delete(`${baseURL}request/${request_id}`);
+
+      if (response.status !== 200) {
+          throw new Error(response.data.message || 'Failed to delete.');
+      }      
+      return response.data;
+
+    } catch (error) {
+      if (error.response) {
+        // The request was successfully sent to the server and the server returned an error response. 
+        console.log('Backend Error:', error.response.data.message);
+      } else if (error.request) {
+        // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
+        console.log('Network Error:', error.message);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error:', error.message);
+      }
+    }
+  }
 
 
 const handleSubmit = async () => {
 
-  if (confirmSubmit) {            
-
-    // try {
-    //   const deleteRequest_ = await deleteRequest(visit_id);
-    //   console.log("Request removed:", deleteRequest_);
-    // } catch (error) {
-    //   console.error("Failed to send data to server:", error);   
-    // } 
-
+  if(assessment === "" || assessment ==="N/A") {
+    setErrorMessage("Please fill in Assessent");
+  }
+  if (confirmSubmit) { 
     let response;
     try{
-      response = await axios.get(`${baseURL}record/${record_id}`);
+      response = await axios.get(`${baseURL}request/${request_id}`);
     } catch (error) {
       if (error.response) {
         // The request was successfully sent to the server and the server returned an error response. 
@@ -145,40 +140,38 @@ const handleSubmit = async () => {
         console.log('Error:', error.message);
       }
     }  
+    const oldRequest = response.data.request;
+    // helper method for parsing the allergies and medication's format
+    const parseMedicationAllergies = () => {
+      const allergyStart = medicationAllergies.indexOf('[Allergies:');
+      const medication = medicationAllergies.substring(0, allergyStart).trim();
+      console.log(allergyStart);
+      const allergy = medicationAllergies.substring(allergyStart + 11, medicationAllergies.length - 1).trim(" ");
     
-    const oldRecord = response.data.record;
-
-    const updatingRecord = {
-      record_type: oldRecord.record_type,
-
-      smoking_status: oldRecord.smoking_status,
-      pregnancy_status: oldRecord.pregnancy_status,
-      chronic_condition: oldRecord.chronic_condition,
-      current_medications: current_medications,
-      allergies: allergies,
-      chief_complaint: chiefComplaint,
-
-      vitals: {        
-          temperature: temperature,
-          systolic_blood_pressure: systolic_blood_pressure,
-          diastolic_blood_pressure: diastolic_blood_pressure,
-          pulse: pulse,
-          oxygen: oxygen,
-          glucose: glucose,        
-      },
-    
-      soap: {
-          subjective: subjective,
-          objective: objective,
-          assessment: assessment,
-      },
-
-      provider_name: providerName,
-      scribe_name: scribeName,
-      owner: oldRecord.owner,
+      return { medication, allergy };
     };
-    
-    const updated_record = await updateRecord(updatingRecord);
+
+    const medicationAllergyFormat = parseMedicationAllergies();
+
+    // Update the record here:
+    const newRecord = {        
+      chronic_condition: medicalHistoryValue || "N/A",
+      allergies: medicationAllergyFormat.allergy || "N/A",
+      current_medications: medicationAllergyFormat.medication || 'N/A',
+      chief_complaint: chiefComplaint || "N/A",
+  
+      vitals: {
+        temperature: temperature || -1,
+        systolic_blood_pressure: systolic_blood_pressure || -1,
+        diastolic_blood_pressure: diastolic_blood_pressure || -1, 
+        pulse: pulse || -1,
+        oxygen: oxygen || -1,
+        glucose: glucose || -1,
+      },
+    };
+    const recordId = oldRequest.corresponding_record;
+    const updated_record = updateRecord(newRecord, recordId); 
+    const deletedRequest = deleteRequest(oldRequest.id)  
     navigation.navigate('Success');
   } 
   else {
@@ -186,8 +179,7 @@ const handleSubmit = async () => {
     setConfirmSubmit(true);  
   }
   
-}
- 
+} 
   const handleOutsidePress = () => {
     if(confirmSubmit) {
       setConfirmSubmit(false);
@@ -282,55 +274,56 @@ return (
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
 
         <InputBoxWithLabel 
-        label={"Temp"}
-        value={temperature}
-        onChange={(text) => setTemperature(text)}
-        unit={"F"}
-        width='32%'
+          label={"Temp"}
+          value={temperature !== null ? temperature.toString() : ''}
+          onChange={(text) => setTemperature(text)}
+          unit={"F"}
+          width='32%'
         />
 
         <InputBoxWithLabel 
-        label={"Pulse"}
-        value={pulse}
-        onChange={(text) => setPulse(text)}
-        unit={"bpm"}
-        width='32%'
+          label={"Pulse"}
+          value={pulse !== null ? pulse.toString() : ''}
+          onChange={(text) => setPulse(text)}
+          unit={"bpm"}
+          width='32%'
         />
 
         <InputBoxWithLabel 
-        label={"Oxygen"}
-        value={oxygen}
-        onChange={(text) => setOxygen(text)}
-        unit={"%"}
-        width='32%'
+          label={"Oxygen"}
+          value={oxygen !== null ? oxygen.toString() : ''}
+          onChange={(text) => setOxygen(text)}
+          unit={"%"}
+          width='32%'
         />
-      </View>
+        </View>
 
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
 
         <InputBoxWithLabel 
-        label={"BG"}
-        value={glucose}
-        onChange={(text) => setGlucose(text)}
-        unit={"mg/dl"}
-        width='32%'
+          label={"BG"}
+          value={glucose !== null ? glucose.toString() : ''}
+          onChange={(text) => setGlucose(text)}
+          unit={"mg/dl"}
+          width='32%'
         />
 
-      <InputBoxWithLabel 
-        label={"Sys BP"}
-        value={systolic_blood_pressure}
-        onChange={(text) => setSystolic_bp(text)}
-        unit={"mmHg"}
-        width='32%'
-      />
+        <InputBoxWithLabel 
+          label={"Systolic BP"}
+          value={systolic_blood_pressure !== null ? systolic_blood_pressure.toString() : ''}
+          onChange={(text) => setSysBloodPressure(text)}
+          unit={"mmHg"}
+          width='32%'
+        />
 
-      <InputBoxWithLabel 
-        label={"Dia BP"}
-        value={diastolic_blood_pressure}
-        onChange={(text) => setDiastolic_bp(text)}
-        unit={"mmHg"}
-        width='32%'
-      />
+        <InputBoxWithLabel 
+          label={"Diastolic BP"}
+          value={diastolic_blood_pressure !== null ? diastolic_blood_pressure.toString() : ''}
+          onChange={(text) => setDiaBloodPressure(text)}
+          unit={"mmHg"}
+          width='32%'
+          onFocus={handleOutsidePress}
+        />
       </View>
 
 
