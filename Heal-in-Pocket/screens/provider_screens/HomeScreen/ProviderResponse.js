@@ -155,6 +155,12 @@ const handleSubmit = async () => {
 
     // Update the record here:
     const newRecord = {        
+      soap: {
+        subjective: subjective || "N/A",
+        objective: objective || "N/A",
+        assessment: assessment || "N/A",
+      },
+
       chronic_condition: medicalHistoryValue || "N/A",
       allergies: medicationAllergyFormat.allergy || "N/A",
       current_medications: medicationAllergyFormat.medication || 'N/A',
@@ -168,6 +174,8 @@ const handleSubmit = async () => {
         oxygen: oxygen || -1,
         glucose: glucose || -1,
       },
+      provider_name: providerName || "N/A",
+      scribe_name: scribeName || "N/A"
     };
     const recordId = oldRequest.corresponding_record;
     const updated_record = updateRecord(newRecord, recordId); 
@@ -192,11 +200,12 @@ return (
       position: 'absolute',              
       paddingTop: 0, 
       backgroundColor: '#DDE5FD', 
-      zIndex: 999, 
+      zIndex: 3, 
       elevation: 3, 
       flexDirection: 'column',
       justifyContent: 'space-between',
-      height:85
+      height:85,
+      width:'100%'
     }}>
       <View>
 
