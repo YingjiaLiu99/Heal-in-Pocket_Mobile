@@ -11,7 +11,9 @@ export default function HomeScreen({navigation}) {
   const [requests, setRequests] = useState([]);
 
   const handleAccept = (request_id) => {
+
     navigation.navigate("Provider Response", { request_id })    
+
   };
 
   // fetch and update the request list every 5 second
