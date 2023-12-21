@@ -3,8 +3,7 @@ import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import axios from 'axios';
 
 import styles from './styles';
-import RequestMessage from './components/RequestMessage'; 
-import RequestMessContext from "../../../context/context_requestMess";
+import RequestMessage from './components/RequestMessage';
 import baseURL from '../../../common/baseURL';
 
 export default function HomeScreen({navigation}) {
@@ -12,7 +11,9 @@ export default function HomeScreen({navigation}) {
   const [requests, setRequests] = useState([]);
 
   const handleAccept = (request_id) => {
-    navigation.navigate("Provider Response", {request_id})    
+
+    navigation.navigate("Provider Response", { request_id })    
+
   };
 
   // fetch and update the request list every 5 second

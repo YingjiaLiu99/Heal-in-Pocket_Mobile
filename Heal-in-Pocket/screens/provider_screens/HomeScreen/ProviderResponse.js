@@ -1,18 +1,17 @@
 import React, { useState, useRef, useContext,useEffect } from 'react';
 import { View, TouchableOpacity, Text, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
+
 import styles from './styles';
 import axios from 'axios';
-import baseURL from '../../../common/baseURL';
 
 import InputBoxWithLabel from './components/InputBoxWithLabel';
 import BigInputBoxWithLabel from './components/BigInputBoxWithLabel';
 import ProviderInputBox from './components/ProviderInputBox';
-import VisitDataContext from '../../../context/context_VisitData';
-import RequestMessContext from '../../../context/context_requestMess';
+import baseURL from '../../../common/baseURL';
 
-export default function ProviderResponseScreen({route, navigation}) { 
-  const { request_id } = route.params;  
-
+export default function ProviderResponseScreen({route, navigation}) {   
+  const { request_id } = route.params;
+  
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); 
   const [subjective, setSubjective] = useState('');
@@ -22,8 +21,10 @@ export default function ProviderResponseScreen({route, navigation}) {
   const objectiveRef = useRef(null);
   const assessmentRef = useRef(null);
 
+
   const [chiefComplaint, setChiefComplaint] = useState("");
   const [medicalHistoryValue, setMedicalHistoryValue] = useState("");
+
   const [medicationAllergies, setMedicationAllergies] = useState(' [Allergies: ' + ']');
   const [providerName, setProviderName] = useState(''); 
   const [scribeName, setScribeName] = useState('');
@@ -35,7 +36,6 @@ export default function ProviderResponseScreen({route, navigation}) {
   const [oxygen, setOxygen] = useState('');
   const [glucose, setGlucose] = useState('');
 
- 
   useEffect(() => {
     const fetchRecord = async () => {
       try {
@@ -103,7 +103,6 @@ export default function ProviderResponseScreen({route, navigation}) {
           throw new Error(response.data.message || 'Failed to delete.');
       }      
       return response.data;
-
     } catch (error) {
       if (error.response) {
         // The request was successfully sent to the server and the server returned an error response. 
@@ -120,7 +119,6 @@ export default function ProviderResponseScreen({route, navigation}) {
 
 
 const handleSubmit = async () => {
-
   if(assessment === "" || assessment ==="N/A") {
     setErrorMessage("Please fill in Assessent");
   }
@@ -210,6 +208,7 @@ return (
       <View>
 
       <View style={{ flexDirection: 'row', paddingLeft:5}}>
+
         <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{"Robert Zhang"}</Text>
       </View>              
       
@@ -277,8 +276,6 @@ return (
         }}
       />
       </View>
-
-
 
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
 
