@@ -1,36 +1,33 @@
-import React, { useRef } from 'react';
+import React, { forwardRef} from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-
-const BigInputBoxWithInnerLabel = ({ label, value, width, height, onChangeText, placeholder, onFocus, ...props }) => {
-
-  const inputRef = useRef(null);
-
+const VitalsInputBoxWithLabel = forwardRef(({ label, value, unit, width, onChange, onFocus, onEndEditing }, ref) => {
   const handlePress = () => {
-    inputRef.current.focus();
+    ref.current.focus();
   };
-
   return (
     <TouchableOpacity onPress={handlePress} activeOpacity={1}>
       <View style={[styles.boxContainer, { width: width }]}>
         <View style={styles.valueContainer}>
-          <View style={{flex:1}}>
-            <Text style={styles.boxLabel}>{label}</Text>              
-              <TextInput
-                ref={inputRef}
-                style={[styles.boxField, {height: height}]}
-                value={value}
-                onChangeText={onChangeText}
-                onFocus={onFocus}
-                placeholder={placeholder}
-                multiline
-                {...props}
-              />
+          <View>
+            <Text style={styles.boxLabel}>{label}</Text>
+            <TextInput
+              ref={ref}
+              style={styles.boxField}
+              value={value}
+              onChangeText={onChange}
+              onEndEditing={onEndEditing}
+              onFocus={onFocus}
+              placeholder='Click to Enter Your Vital ...'
+              keyboardType="numeric"
+      
+            />
           </View>
+          <Text style={styles.unit}>{unit}</Text>
         </View>
       </View>
     </TouchableOpacity>
   );
-};
+});
 
 const styles = StyleSheet.create({
   boxContainer: {
@@ -45,16 +42,15 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 10,
     paddingTop: 5,
-  },  
+    height: 60,
+  },
   boxLabel: {
     fontSize: 15,
     fontWeight: '300',
-    marginRight: 10,
+    marginBottom: 5,
   },
   boxField: {
     fontSize: 20,
-    maxWidth: '100%',
-    // height: 100, // This sets a fixed height for the TextInput    
   },
   unit: {
     fontSize: 20,
@@ -63,4 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BigInputBoxWithInnerLabel;
+export default VitalsInputBoxWithLabel;

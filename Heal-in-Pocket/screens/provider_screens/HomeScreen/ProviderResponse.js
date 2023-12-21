@@ -1,24 +1,17 @@
 import React, { useState, useRef, useContext,useEffect } from 'react';
 import { View, TouchableOpacity, Text, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
+
 import styles from './styles';
+import axios from 'axios';
 
 import InputBoxWithLabel from './components/InputBoxWithLabel';
 import BigInputBoxWithLabel from './components/BigInputBoxWithLabel';
 import ProviderInputBox from './components/ProviderInputBox';
-import VisitDataContext from '../../../context/context_VisitData';
-import RequestMessContext from '../../../context/context_requestMess';
+import baseURL from '../../../common/baseURL';
 
-export default function ProviderResponseScreen({route, navigation}) { 
-  const { visit_id } = route.params;
-  const { visitData, setVisitData } = useContext(VisitDataContext);
-  const { requests, setRequests } = useContext(RequestMessContext);
-
-  const visit = visitData.find(visit => visit.patients.find(patient => patient.visit_id === visit_id));
-  const patient = visit ? visit.patients.find(patient => patient.visit_id === visit_id) : null;
-
-  const patientInfo = patient.visitNote.patientInfo;
-  const medicalHistory = patient.visitNote.medicalHistory;
-  const vitalData = patient.visitNote.vitalData;
+export default function ProviderResponseScreen({route, navigation}) {   
+  const { request_id } = route.params;
+  
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); 
   const [subjective, setSubjective] = useState('');
@@ -28,82 +21,171 @@ export default function ProviderResponseScreen({route, navigation}) {
   const objectiveRef = useRef(null);
   const assessmentRef = useRef(null);
 
-  const [chiefComplaint, setChiefComplaint] = useState(patient.visitNote.chiefComplaint);
-  const [medicalHistoryValue, setMedicalHistoryValue] = useState(medicalHistory[0].value);
-  const [medicationAllergies, setMedicationAllergies] = useState(medicalHistory[1].value + ' [Allergies: ' + medicalHistory[2].value + ']');
+
+  const [chiefComplaint, setChiefComplaint] = useState("");
+  const [medicalHistoryValue, setMedicalHistoryValue] = useState("");
+
+  const [medicationAllergies, setMedicationAllergies] = useState(' [Allergies: ' + ']');
   const [providerName, setProviderName] = useState(''); 
   const [scribeName, setScribeName] = useState('');
 
+  const [temperature, setTemperature] = useState('');
+  const [systolic_blood_pressure, setSysBloodPressure] = useState('');
+  const [diastolic_blood_pressure, setDiaBloodPressure] = useState('');
+  const [pulse, setPulse] = useState('');
+  const [oxygen, setOxygen] = useState('');
+  const [glucose, setGlucose] = useState('');
 
-  const [vitalValue1, setVitalValue1] = useState(vitalData[0].value);
-  const [vitalValue2, setVitalValue2] = useState(vitalData[1].value);
-  const [vitalValue3, setVitalValue3] = useState(vitalData[2].value);
-  const [vitalValue4, setVitalValue4] = useState(vitalData[3].value);
-  const [vitalValue5, setVitalValue5] = useState(vitalData[4].value);
-  const [vitalValue6, setVitalValue6] = useState(vitalData[5].value);
+  useEffect(() => {
+    const fetchRecord = async () => {
+      try {
+        // Fetch the request to get the corresponding record ID
+        const requestResponse = await axios.get(`${baseURL}request/${request_id}`);
+        const recordId = requestResponse.data.request.corresponding_record;
+        const recordResponse = await axios.get(`${baseURL}record/${recordId}`);
+        const recordData = recordResponse.data.record;
+        console.log(recordData);
+
+        /**
+         * We don't want to show -1 on the screen (may cause confusion to users)
+         * if the value is -1, which means it is a null, then we update our local state as null
+         * When the volunteer update(or upload) the record again, all the null value will still be 
+         * uploaded as -1 to the database
+         */
+        setTemperature(recordData.vitals.temperature === -1 ? null : recordData.vitals.temperature);
+        setGlucose(recordData.vitals.glucose === -1 ? null : recordData.vitals.glucose);
+        setOxygen(recordData.vitals.oxygen === -1 ? null : recordData.vitals.oxygen);
+        setPulse(recordData.vitals.pulse === -1 ? null : recordData.vitals.pulse);
+        setSysBloodPressure(recordData.vitals.systolic_blood_pressure === -1 ? null : recordData.vitals.systolic_blood_pressure);
+        setDiaBloodPressure(recordData.vitals.diastolic_blood_pressure === -1 ? null : recordData.vitals.diastolic_blood_pressure);
+        // SOAP
+        setAssessment(recordData.soap.assessment);        
+        setObjective(recordData.soap.objective);
+        setSubjective(recordData.soap.subjective);
+        // chronic(med history), medication, allegies, chief_compliant:
+        setMedicalHistoryValue(recordData.chronic_condition);
+        setMedicationAllergies(recordData.current_medications + "[Allergies: " + recordData.allergies + "]");
+        setChiefComplaint(recordData.chief_complaint);
+        // Provider and scribe, but not update:
+        setProviderName(recordData.provider_name);
+        setScribeName(recordData.scribe_name);
+
+      } catch (error) {
+        console.error('Error fetching the corresponding record of this request:', error);
+      }
+    };
+    fetchRecord();
+  }, [request_id]); // Only re-run the effect if request_id changes
+
+  const updateRecord = async (data, recordId) => {
+    try {
+      const response = await axios.put(`${baseURL}record/${recordId}`, data);      
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        // The request was successfully sent to the server and the server returned an error response. 
+        console.log('Backend Error:', error.response.data.message);
+      } else if (error.request) {
+        // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
+        console.log('Network Error:', error.message);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error:', error.message);
+      }
+    }
+  }
+
+  const deleteRequest = async(request_id) => {
+    try {
+      const response = await axios.delete(`${baseURL}request/${request_id}`);
+
+      if (response.status !== 200) {
+          throw new Error(response.data.message || 'Failed to delete.');
+      }      
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        // The request was successfully sent to the server and the server returned an error response. 
+        console.log('Backend Error:', error.response.data.message);
+      } else if (error.request) {
+        // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
+        console.log('Network Error:', error.message);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error:', error.message);
+      }
+    }
+  }
 
 
-
-const handleSubmit = () => {
-  // if(assessment === '' || subjective === '' || objective === ''){
-  //   setErrorMessage('Please fill in fields.');      
-  // }
-  // console.log(patient.visitNote.medicalHistory.slice(0, 1));
-  // console.log(medicationAllergies.split(' [Allergies: ')[0]);
-  // console.log(medicalHistoryValue );
-  // console.log(medicationAllergies.split(' [Allergies: ')[1].split(']')[0]);
-
-  if (confirmSubmit) {            
-    // publish the visit 
-    const updatedVisitData = visitData.map(visit => ({
-      ...visit,
-      patients: visit.patients.map(patient => 
-        patient.visit_id === visit_id ? {
-          ...patient,
-          published: true,
-          visitNote: {
-            // ...patient.visitNote,
-            ...patient.visitNote,
-            provider_name: providerName,
-            scribe_name:scribeName,
-            chiefComplaint: chiefComplaint,
-            medicalHistory: [
-              // ...patient.visitNote.medicalHistory.slice(0, 1), // Keep the initial data
-              { ...patient.visitNote.medicalHistory[0], value: medicalHistoryValue }, // Update the first value
-              { ...patient.visitNote.medicalHistory[1], value: medicationAllergies.split(' [Allergies: ')[0] }, // Update the second value by splitting the combined field
-              { ...patient.visitNote.medicalHistory[2], value: medicationAllergies.split(' [Allergies: ')[1].split(']')[0] }, // Update the third value by splitting the combined field
-            ],
-            vitalData: [
-              { ...patient.visitNote.vitalData[0], value: vitalValue1 },
-              { ...patient.visitNote.vitalData[1], value: vitalValue2 },
-              { ...patient.visitNote.vitalData[2], value: vitalValue3 },
-              { ...patient.visitNote.vitalData[3], value: vitalValue4 },
-              { ...patient.visitNote.vitalData[4], value: vitalValue5 },
-              { ...patient.visitNote.vitalData[5], value: vitalValue6 },
-            ],
-            providerReport: [
+const handleSubmit = async () => {
+  if(assessment === "" || assessment ==="N/A") {
+    setErrorMessage("Please fill in Assessent");
+  }
+  if (confirmSubmit) { 
+    let response;
+    try{
+      response = await axios.get(`${baseURL}request/${request_id}`);
+    } catch (error) {
+      if (error.response) {
+        // The request was successfully sent to the server and the server returned an error response. 
+        console.log('Backend Error:', error.response.data.message);
+      } else if (error.request) {
+        // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
+        console.log('Network Error:', error.message);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error:', error.message);
+      }
+    }  
+    const oldRequest = response.data.request;
+    // helper method for parsing the allergies and medication's format
+    const parseMedicationAllergies = () => {
+      const allergyStart = medicationAllergies.indexOf('[Allergies:');
+      const medication = medicationAllergies.substring(0, allergyStart).trim();
+      console.log(allergyStart);
+      const allergy = medicationAllergies.substring(allergyStart + 11, medicationAllergies.length - 1).trim(" ");
     
-              {label: 'Subjective', value: subjective},
-              {label: 'Objective', value: objective},
-              {label: 'Assessment / Plan', value: assessment},
-           
-            ]
-          }
-        } : patient
-      )
-    }));
-    setVisitData(updatedVisitData);
-    // delete the request:
-    const updatedRequests = requests.filter(request => request.visit_id !== visit_id);
-    setRequests(updatedRequests);
+      return { medication, allergy };
+    };
+
+    const medicationAllergyFormat = parseMedicationAllergies();
+
+    // Update the record here:
+    const newRecord = {        
+      soap: {
+        subjective: subjective || "N/A",
+        objective: objective || "N/A",
+        assessment: assessment || "N/A",
+      },
+
+      chronic_condition: medicalHistoryValue || "N/A",
+      allergies: medicationAllergyFormat.allergy || "N/A",
+      current_medications: medicationAllergyFormat.medication || 'N/A',
+      chief_complaint: chiefComplaint || "N/A",
+  
+      vitals: {
+        temperature: temperature || -1,
+        systolic_blood_pressure: systolic_blood_pressure || -1,
+        diastolic_blood_pressure: diastolic_blood_pressure || -1, 
+        pulse: pulse || -1,
+        oxygen: oxygen || -1,
+        glucose: glucose || -1,
+      },
+      provider_name: providerName || "N/A",
+      scribe_name: scribeName || "N/A"
+    };
+    const recordId = oldRequest.corresponding_record;
+    const updated_record = updateRecord(newRecord, recordId); 
+    const deletedRequest = deleteRequest(oldRequest.id)  
     navigation.navigate('Success');
   } 
   else {
     // Press first time, input is done, so set it true
     setConfirmSubmit(true);  
   }
-}
- 
+  
+} 
   const handleOutsidePress = () => {
     if(confirmSubmit) {
       setConfirmSubmit(false);
@@ -116,24 +198,26 @@ return (
       position: 'absolute',              
       paddingTop: 0, 
       backgroundColor: '#DDE5FD', 
-      zIndex: 999, 
+      zIndex: 3, 
       elevation: 3, 
       flexDirection: 'column',
       justifyContent: 'space-between',
-      height:85
+      height:85,
+      width:'100%'
     }}>
       <View>
 
       <View style={{ flexDirection: 'row', paddingLeft:5}}>
-        <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{patientInfo[0].value}</Text>
+
+        <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{"Robert Zhang"}</Text>
       </View>              
       
       <View style={{ flexDirection: 'row', paddingLeft:5}}>
-        <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {patientInfo[1].value}</Text>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {"00/00/0000"}</Text>
       </View>
 
       <View style={{ flexDirection: 'row', paddingLeft:5}}>
-        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>{patientInfo[2].value} {'['} {patientInfo[3].value} {']'}</Text>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>{"San Diego"} {'['} {"09/23/2021"} {']'}</Text>
       </View>
 
       </View>
@@ -193,60 +277,59 @@ return (
       />
       </View>
 
+      <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
 
+        <InputBoxWithLabel 
+          label={"Temp"}
+          value={temperature !== null ? temperature.toString() : ''}
+          onChange={(text) => setTemperature(text)}
+          unit={"F"}
+          width='32%'
+        />
+
+        <InputBoxWithLabel 
+          label={"Pulse"}
+          value={pulse !== null ? pulse.toString() : ''}
+          onChange={(text) => setPulse(text)}
+          unit={"bpm"}
+          width='32%'
+        />
+
+        <InputBoxWithLabel 
+          label={"Oxygen"}
+          value={oxygen !== null ? oxygen.toString() : ''}
+          onChange={(text) => setOxygen(text)}
+          unit={"%"}
+          width='32%'
+        />
+        </View>
 
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
 
         <InputBoxWithLabel 
-        label={vitalData[0].label}
-        value={vitalValue1}
-        onChange={(text) => setVitalValue1(text)}
-        unit={vitalData[0].unit}
-        width='32%'
-      />
-
-      <InputBoxWithLabel 
-        label={vitalData[1].label}
-        value={vitalValue2}
-        onChange={(text) => setVitalValue2(text)}
-        unit={vitalData[1].unit}
-        width='32%'
-      />
-
-      <InputBoxWithLabel 
-        label={vitalData[2].label}
-        value={vitalValue3}
-        onChange={(text) => setVitalValue3(text)}
-        unit={vitalData[2].unit}
-        width='32%'
-      />
-      </View>
-
-      <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
+          label={"BG"}
+          value={glucose !== null ? glucose.toString() : ''}
+          onChange={(text) => setGlucose(text)}
+          unit={"mg/dl"}
+          width='32%'
+        />
 
         <InputBoxWithLabel 
-        label={vitalData[3].label}
-        value={vitalValue4}
-        onChange={(text) => setVitalValue4(text)}
-        unit={vitalData[3].unit}
-        width='32%'
-      />
+          label={"Systolic BP"}
+          value={systolic_blood_pressure !== null ? systolic_blood_pressure.toString() : ''}
+          onChange={(text) => setSysBloodPressure(text)}
+          unit={"mmHg"}
+          width='32%'
+        />
 
-      <InputBoxWithLabel 
-        label={vitalData[4].label}
-        value={vitalValue5}
-        onChange={(text) => setVitalValue5(text)}
-        unit={vitalData[4].unit}
-        width='32%'
-      />
-
-      <InputBoxWithLabel 
-        label={vitalData[5].label}
-        value={vitalValue6}
-        onChange={(text) => setVitalValue6(text)}
-        unit={vitalData[5].unit}
-        width='32%'
-      />
+        <InputBoxWithLabel 
+          label={"Diastolic BP"}
+          value={diastolic_blood_pressure !== null ? diastolic_blood_pressure.toString() : ''}
+          onChange={(text) => setDiaBloodPressure(text)}
+          unit={"mmHg"}
+          width='32%'
+          onFocus={handleOutsidePress}
+        />
       </View>
 
 
