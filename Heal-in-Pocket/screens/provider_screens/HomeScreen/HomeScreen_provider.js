@@ -29,7 +29,7 @@ export default function HomeScreen({navigation}) {
       const fetchRequests  = async ()=> {
         try{
           const response = await axios.get(`${baseURL}request`);
-          setRequests(response.data.requests);            
+          if (isActive){ setRequests(response.data.requests); }                 
         } catch (error) {
           if (error.response) {
             // The request was successfully sent to the server and the server returned an error response. 
