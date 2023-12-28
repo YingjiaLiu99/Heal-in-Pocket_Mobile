@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 // own components and styles
-import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
+import RadioMutipleChoice from './components/RadioMultipleChoice';
 import InputBoxWithLabel from '../../../components/InputBoxWithLabel';
 import styles from './styles';
 import axios from 'axios';
@@ -22,10 +22,11 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
 
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
+  const dobRef = useRef(null);
   const insuranceRef = useRef(null);
   const primaryCareProviderRef = useRef(null);
   const lastSeenRef = useRef(null);
-  const dobRef = useRef(null);
+
 
   const genderOptions = [
     {value: 'male', choiceLabel: 'Male'},
@@ -76,9 +77,9 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
         name: `${firstName} ${lastName}`,
         gender: genderSelection,
         date_of_birth: dateofbirth,
-        insurance: insurance,
-        primary_care_provider: primaryCareProvider,
-        last_seen: lastSeen
+        insurance: insurance || "N/A",
+        primary_care_provider: primaryCareProvider || "N/A",
+        last_seen: lastSeen || "N/A"
       }
 
       try {
@@ -149,17 +150,18 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
         returnKeyType='next'
       />
       
-      <View style={{width:'100%'}}>
-        <InputBoxWithLabel
-          label="Date of Birth*"        
-          value={dateofbirth}
-          ref={dobRef}
-          onChangeText={(text) => handleDateChange(text)}
-          placeholder="MM/DD/YYYY"        
-          width='100%'
-          keyboardType="phone-pad"
-          returnKeyType='done'
-        />
+      
+      <InputBoxWithLabel
+        label="Date of Birth*"        
+        value={dateofbirth}
+        ref={dobRef}
+        onChangeText={(text) => handleDateChange(text)}
+        placeholder="MM/DD/YYYY"        
+        width='100%'
+        keyboardType="phone-pad"
+        returnKeyType='next'
+        onSubmitEditing={() => insuranceRef.current.focus()}
+      />
 
       <InputBoxWithLabel
           label="Insurance"        
@@ -195,14 +197,14 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
           width='100%'
       />
 
-        <View style={{marginTop:-10, marginLeft:-105}}>
-          <RadioMutipleChoice
-            options={genderOptions}
-            onSelectionChange={setGenderSelection}
-            upperLabel='Biological Sex*'
-          />        
-        </View>
-      </View>      
+      
+      <View style={{marginTop:-10}}>
+        <RadioMutipleChoice
+          options={genderOptions}
+          onSelectionChange={setGenderSelection}
+          upperLabel='Biological Sex*'
+        />        
+      </View>            
       
 
       <View style={{width:'100%',alignItems:'flex-end',marginTop:20,marginBottom:20}}>
