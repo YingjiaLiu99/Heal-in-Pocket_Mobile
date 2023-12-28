@@ -6,6 +6,8 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
 import InputBoxWithLabel from '../../../components/InputBoxWithLabel';
 import styles from './styles';
+import axios from 'axios';
+import baseURL from '../../../common/baseURL';
 
 const RegisterPatientWithoutPhone = ({navigation}) => {
 
@@ -13,10 +15,16 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dateofbirth, setDateofBirth] = useState('');
+  const [insurance, setInsurance] = useState('');
+  const [primaryCareProvider, setPrimaryCareProvider] = useState('');
+  const [lastSeen, setLastSeen] = useState('');
   const [genderSelection, setGenderSelection] = useState(null);
 
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
+  const insuranceRef = useRef(null);
+  const primaryCareProviderRef = useRef(null);
+  const lastSeenRef = useRef(null);
   const dobRef = useRef(null);
 
   const genderOptions = [
@@ -24,6 +32,16 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
     {value: 'female', choiceLabel: 'Female'},
     {value: 'other', choiceLabel: 'Other'},
   ];  
+
+  const getCurrentDate = () => {
+    const date = new Date();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const year = date.getFullYear();
+    // setDate(`${month}/${day}/${year}`);
+    
+    return `${month}/${day}/${year}`;
+  }
 
   // Handle date of birth with "/"
   const handleDateChange = (text) => {
@@ -40,7 +58,7 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
   };
 
   // Backend api call GOES INSIDE
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if (!firstName) {
       setErrorMessage('Please enter your first name');      
     }
@@ -54,16 +72,37 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
       setErrorMessage('Please enter a valid name');
     }
     else {
-      console.log(`First Name: ${firstName}, Last Name: ${lastName}, DOB: ${dateofbirth}, Sex: ${genderSelection}`);
+      const newPatient = {
+        name: `${firstName} ${lastName}`,
+        gender: genderSelection,
+        date_of_birth: dateofbirth,
+        insurance: insurance,
+        primary_care_provider: primaryCareProvider,
+        last_seen: lastSeen
+      }
 
-      navigation.navigate("Record Patient Info", 
-      {
-        firstName: firstName,
-        lastName: lastName,
-        DOB: dateofbirth,
-        gender: genderSelection
-      });
-    }   
+      try {
+        //api call to backend
+        const response = await axios.post(`${baseURL}patient/volCreateNewPatientWithoutPhoneNum`, newPatient);
+        console.log("the patient is: ", response.data);
+        console.log("the patient id is : ", response.data.patient.id);
+        const patient_id = response.data.patient.id; //store the patient id
+        
+        // navigate to the next page together with the required parameters
+        navigation.navigate("Upload New Record",
+        {
+          firstName: firstName,
+          lastName: lastName,
+          DOB: dateofbirth,
+          patientId: patient_id,
+          date:getCurrentDate(),
+        });
+      } catch (error) {
+        console.error('Error registering patient:', error.response?.data || error.message);
+        setErrorMessage('Failed to register patient.');
+      }
+    }
+    
   };
 
   return (
@@ -121,6 +160,40 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
           keyboardType="phone-pad"
           returnKeyType='done'
         />
+
+      <InputBoxWithLabel
+          label="Insurance"        
+          value={insurance}
+          ref={insuranceRef}
+          onChangeText={(text) => setInsurance(text)}
+          placeholder="Please enter insurance"
+          keyboardType="default"
+          width='100%'
+          onSubmitEditing={() => primaryCareProviderRef.current.focus()}
+          returnKeyType='next'
+      />
+
+      <InputBoxWithLabel
+          label="Primary Care Provider"        
+          value={primaryCareProvider}
+          ref={primaryCareProviderRef}
+          onChangeText={(text) => setPrimaryCareProvider(text)}
+          placeholder="Please enter primary care provider"
+          keyboardType="default"
+          width='100%'
+          onSubmitEditing={() => lastSeenRef.current.focus()}
+          returnKeyType='next'
+      />
+
+      <InputBoxWithLabel
+          label = "Last Seen/Hospitalized"
+          value={lastSeen}
+          ref={lastSeenRef}
+          onChangeText={(text) => setLastSeen(text)}
+          placeholder="Please enter the hospitalized history"
+          keyboardType="default"
+          width='100%'
+      />
 
         <View style={{marginTop:-10, marginLeft:-105}}>
           <RadioMutipleChoice
