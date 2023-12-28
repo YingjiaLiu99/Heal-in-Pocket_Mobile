@@ -223,7 +223,8 @@ return (
         elevation: 3, 
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height:85
+        height:85,
+        width:'100%'
       }}>
         <View>
 

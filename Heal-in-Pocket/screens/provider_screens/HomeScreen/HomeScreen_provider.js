@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
 
 import styles from './styles';
@@ -16,37 +17,44 @@ export default function HomeScreen({navigation}) {
 
   };
 
-  // fetch and update the request list every 5 second
-  useEffect(() => {
-    const fetchRequests  = async ()=> {
-      try{
-        const response = await axios.get(`${baseURL}request`);
-        setRequests(response.data.requests);        
-      } catch (error) {
-        if (error.response) {
-          // The request was successfully sent to the server and the server returned an error response. 
-          console.log('Backend Error:', error.response.data.message);
-        } else if (error.request) {
-          // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
-          console.log('Network Error:', error.message);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error:', error.message);
+  /**
+   * 1. fetch and update immediately when you navigate to this screen;
+   * 2. if you are in this screen, fetch and update every 5 second;
+   * 3. if you are not in this screen, stop fetching and updating
+   */
+  useFocusEffect(
+    React.useCallback(() => {
+      let isActive = true; // Flag to prevent state update if component is unmounted
+
+      const fetchRequests  = async ()=> {
+        try{
+          const response = await axios.get(`${baseURL}request`);
+          setRequests(response.data.requests);            
+        } catch (error) {
+          if (error.response) {
+            // The request was successfully sent to the server and the server returned an error response. 
+            console.log('Backend Error:', error.response.data.message);
+          } else if (error.request) {
+            // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
+            console.log('Network Error:', error.message);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error:', error.message);
+          }
         }
-      }
-    };
+      };
 
-    fetchRequests(); // fetch once immediately when the component mounts
+      fetchRequests(); // Fetch immediately when the screen comes into focus
 
-    const intervalId = setInterval(fetchRequests, 5000); // Fetch every 5000 milliseconds (5 seconds)
+      const intervalId = setInterval(fetchRequests, 2500); // Continuously fetch every 2.5 seconds
     
-    return () => {
-      clearInterval(intervalId); // Clear the interval when the component is unmounted
-      setRequests([]); // Reset the products state
-    };
+      return () => {
+        clearInterval(intervalId); // Clear interval when the screen goes out of focus
+        isActive = false; // Prevent state update on unmounted component
+      };
 
-  }, []);
-
+    }, [])
+  );
 
   return (
     <View style={{flex: 1}}>
