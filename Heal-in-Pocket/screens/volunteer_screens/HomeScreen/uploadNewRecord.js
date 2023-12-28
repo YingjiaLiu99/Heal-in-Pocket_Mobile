@@ -6,22 +6,29 @@ import axios from 'axios';
 
 import InputBoxWithInnerLabel from '../../../components/InputBoxWithInnerLabel';
 import BigInputBoxWithInnerLabel from '../../../components/BigInputBoxWithInnerLabel';
+import RadioMutipleChoice from '../../../components/RadioMultipleChoice';
+import RadioMutipleChoiceCenter from '../../../components/RadioMultipleChoiceCenter';
 import styles from './styles';
-
 import baseURL from '../../../common/baseURL';
 
 export default function UploadMedicalInfo({ route, navigation }) {
 
 
-  const { firstName, lastName, DOB, gender, 
-          time, date, insurance, pcps, 
-          caseHistory, smoking, pregnancy} = route.params;
+  const { firstName, lastName, DOB, date, patientId} = route.params;
+  
+  const [smoking, setSmoking] = useState(null);
+  const [pregnancy, setPregnancy] = useState(null);
+  const smokingOption = [
+    { value: 'yes', choiceLabel: 'Yes' },
+    { value: 'no', choiceLabel: 'No' },
+    { value: 'na', choiceLabel: 'NA' },
+  ];
 
-  // Smoking and pregnancy: 
-        // { value: 'yes', choiceLabel: 'Yes' },
-        // { value: 'no', choiceLabel: 'No' },
-        // { value: 'na', choiceLabel: 'NA' },
-  // Default value is "na" for smoking and pregnancy
+  const pregnancyOption = [
+      { value: 'yes', choiceLabel: 'Yes' },
+      { value: 'no', choiceLabel: 'No' },
+      { value: 'na', choiceLabel: 'NA' },
+  ];
 
 
   const [confirmSubmit, setConfirmSubmit] = useState(false);
@@ -145,7 +152,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
           },          
           provider_name: "N/A",
           scribe_name: "N/A", 
-          owner: '65680bc74d44698b1a7ae263' // Dummy for now      
+          owner: patientId     //replaced with the actual Id
         };
 
         // Upload record
@@ -213,7 +220,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
         provider_name: "N/A",
         scribe_name: "N/A",
         // Dummy Value for now:
-        owner: '65680bc74d44698b1a7ae263'      
+        owner: patientId      
       };
 
       // Upload record without creating request
@@ -394,6 +401,21 @@ export default function UploadMedicalInfo({ route, navigation }) {
               onFocus = {handleOutsidePress}
           />
       </View>
+
+      <View>
+        <RadioMutipleChoiceCenter
+            options={smokingOption}
+            onSelectionChange={(selectSmoking) => setSmoking(selectSmoking)}
+            upperLabel="Smoking Status"
+        />
+
+        <RadioMutipleChoiceCenter
+            options={pregnancyOption}
+            onSelectionChange={(selectPregnancy) => setPregnancy(selectPregnancy)}
+            upperLabel="Pregancy Status"
+        />
+      </View>
+
 
     {errorMessage ? <Text style={{color:'red', fontSize:18, marginBottom:10}}>{errorMessage}</Text> : null}  
 
