@@ -1,37 +1,22 @@
 import React, { useState, useRef } from "react";
 import { Text, View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { SearchBar } from '@rneui/themed';
+import axios from 'axios';
 
-
+import baseURL from '../../../common/baseURL';
 import styles from "./styles";
 
 // Patient info component
 const UserItem = ({user, onPress}) => (
   <TouchableOpacity onPress={onPress} style={styles.userShowcase}>
-    <Text style={styles.userShowcaseText}>{user.firstName} {user.lastName}</Text>
-    <Text style={styles.userShowcaseText}>Date of Birth: {user.dateOfBirth}</Text>
+    <Text style={styles.userShowcaseText}>{user.name}</Text>
+    <Text style={styles.userShowcaseText}>Date of Birth: {user.date_of_birth}</Text>
   </TouchableOpacity>
 );
 
 export default function HomeScreen({navigation}) {
-  
-  const users = [
-    {firstName: 'James', lastName: 'Smith', dateOfBirth: '5/16/1980'},
-    {firstName: 'Michael', lastName: 'Smith', dateOfBirth: '10/26/1986'},
-    {firstName: 'Maria', lastName: 'Garcia', dateOfBirth: '8/13/1989'},
-    {firstName: 'Robert', lastName: 'Smith', dateOfBirth: '2/1/1982'},
-    {firstName: 'David', lastName: 'Smith', dateOfBirth: '06/26/1996'},
-    {firstName: 'Maria', lastName: 'Rodriguez', dateOfBirth: '8/13/1989'},
-    {firstName: 'Mary', lastName: 'Smith', dateOfBirth: '5/16/1973'},
-    {firstName: 'Maria', lastName: 'Martinez', dateOfBirth: '20/22/1976'},
-    {firstName: 'Henry', lastName: 'Taylor', dateOfBirth: '8/13/1989'},
-    {firstName: 'George', lastName: 'Jones', dateOfBirth: '5/17/1980'},
-    {firstName: 'Michael', lastName: 'Clark', dateOfBirth: '12/02/1986'},
-    {firstName: 'Maria', lastName: 'Davis', dateOfBirth: '1/1/1989'},
-  ];
-
   const [searchInput, setSearchInput] = useState('');
-  const [filteredUsers, setFilteredUsers] = useState(users);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const searchRef = useRef(null);
   const [searchFocus, setSearchFocus] = useState(false);
   
@@ -39,25 +24,28 @@ export default function HomeScreen({navigation}) {
     setSearchFocus(status);
   };
 
-  const handleSearch = (text) => {
+  const handleSearch = async (text) => {
     setSearchInput(text);
-  
-    // Split the input text by space and filter out any empty strings
-    const searchTerms = text.toLowerCase().split(' ').filter(term => term);
-  
-    const filtered = users.filter(user => {
-      const fullName = user.firstName.toLowerCase() + " " + user.lastName.toLowerCase();
-  
-      // Check that every search term appears somewhere in the full name
-      return searchTerms.every(term => fullName.includes(term));
-    });
-  
-    setFilteredUsers(filtered);
+    
+    if (text === '') {
+      setFilteredUsers([]);
+      return;
+    }
+
+    try {
+      const response = await axios.get(`${baseURL}patient/search/${text}`);
+      setFilteredUsers(response.data.patients); // Assuming response.data is an array of user objects
+      // console.log(filteredUsers);
+    } catch (error) {
+      console.error('Error fetching patient data:', error);
+      // You can set filteredUsers to an empty array or handle the error as needed
+    }
+    
   };
 
   const handleClear = () => {
     setSearchInput('');
-    setFilteredUsers(users);
+    setFilteredUsers([]);
     searchRef.current.blur();
   };
 
