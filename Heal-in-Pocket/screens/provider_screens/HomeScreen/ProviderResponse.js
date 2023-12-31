@@ -117,6 +117,10 @@ export default function ProviderResponseScreen({route, navigation}) {
     }
   }
 
+  // 把新的record id加到doctor的view_record里面
+  const addRecord = async(record_id) => {
+    // ... 
+  }
 
 const handleSubmit = async () => {
   if(assessment === "" || assessment ==="N/A") {
@@ -177,7 +181,8 @@ const handleSubmit = async () => {
     };
     const recordId = oldRequest.corresponding_record;
     const updated_record = updateRecord(newRecord, recordId); 
-    const deletedRequest = deleteRequest(oldRequest.id)  
+    const deletedRequest = deleteRequest(oldRequest.id);
+    // call addRecord  
     navigation.navigate('Success');
   } 
   else {
