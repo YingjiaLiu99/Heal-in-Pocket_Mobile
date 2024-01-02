@@ -9,7 +9,7 @@ import BigInputBoxWithLabel from './components/BigInputBoxWithLabel';
 import ProviderInputBox from './components/ProviderInputBox';
 import baseURL from '../../../common/baseURL';
 
-export default function ProviderResponseScreen({route, navigation}) {   
+export default function ProviderResponseScreen({route, navigation}) {  
   const { request_id } = route.params;
   
   const [confirmSubmit, setConfirmSubmit] = useState(false);
@@ -117,10 +117,26 @@ export default function ProviderResponseScreen({route, navigation}) {
     }
   }
 
-  // 把新的record id加到doctor的view_record里面
-  const addRecord = async(record_id) => {
-    // ... 
-  }
+  const doctorId = '6590a453e9775c5e7191519b';
+
+  // add the record id to doctor's viewed_records
+  const addRecord = async(doctorId, recordId) => {
+    try {
+      const response = await axios.patch(`${baseURL}doctor/${doctorId}/addViewedRecords`, { recordId });
+      console.log("Record added successfully:", response.data);
+    } catch (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code that falls out of the range of 2xx
+        console.error("Backend Error:", error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Network Error:", error.message);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error:", error.message);
+      }
+    }
+  };
 
 const handleSubmit = async () => {
   if(assessment === "" || assessment ==="N/A") {
@@ -181,6 +197,9 @@ const handleSubmit = async () => {
     };
     const recordId = oldRequest.corresponding_record;
     const updated_record = updateRecord(newRecord, recordId); 
+    if (updated_record){
+      await addRecord(doctorId, recordId);
+    }
     const deletedRequest = deleteRequest(oldRequest.id);
     // call addRecord  
     navigation.navigate('Success');
