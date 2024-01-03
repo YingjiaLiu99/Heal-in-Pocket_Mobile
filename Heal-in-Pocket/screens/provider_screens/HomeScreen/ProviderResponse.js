@@ -120,9 +120,9 @@ export default function ProviderResponseScreen({route, navigation}) {
   const doctorId = '6590a453e9775c5e7191519b';
 
   // add the record id to doctor's viewed_records
-  const addRecord = async(doctorId, recordId) => {
+  const addRecordtoDoctor = async(doctorId, recordId) => {
     try {
-      const response = await axios.patch(`${baseURL}doctor/${doctorId}/addViewedRecords`, { recordId });
+      const response = await axios.patch(`${baseURL}doctor/addViewedRecords/${doctorId}`, { record_id: recordId });
       console.log("Record added successfully:", response.data);
     } catch (error) {
       if (error.response) {
@@ -197,11 +197,13 @@ const handleSubmit = async () => {
     };
     const recordId = oldRequest.corresponding_record;
     const updated_record = updateRecord(newRecord, recordId); 
+
+    // add this record id to doctor's viewed_records
     if (updated_record){
-      await addRecord(doctorId, recordId);
+      await addRecordtoDoctor(doctorId, recordId);
     }
     const deletedRequest = deleteRequest(oldRequest.id);
-    // call addRecord  
+    
     navigation.navigate('Success');
   } 
   else {
