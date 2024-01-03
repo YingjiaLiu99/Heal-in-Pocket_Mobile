@@ -6,10 +6,14 @@ import BigShowcaseBoxWithLabel from '../../../../components/BigShowcaseBoxWithLa
 import ShowcaseBoxWithLabel from '../../../../components/ShowcaseBoxWithLabel';
 
 
-const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerReport, medicalData, vitalData, providerName, scribeName, width }) => {
+const PastVisitReport = ({ name, time, chiefComplaint, providerReport, medicalData, vitalData, patientInfo, providerName, scribeName, width }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const firstLine = vitalData.slice(0, 3);
-  const secondLine = vitalData.slice(3);
+  const providerReportItems = providerReport ? Object.entries(providerReport).map(([key, value]) => ({ label: key, value })) : [];
+  // const medicalDataItems = medicalData ? Object.entries(medicalData).map(([key, value]) => ({ label: key, value })) : [];
+  const vitalDataItems = vitalData ? Object.entries(vitalData).map(([key, value]) => ({ label: key, value, unit: 'Units' })) : [];
+  const firstLineVitalData = vitalDataItems.slice(0, 3);
+  const secondLineVitalData = vitalDataItems.slice(3); 
+
 
   return (
     <View style={{ width: '95%'}}>
@@ -31,24 +35,27 @@ const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerRepo
         />
         <ShowcaseBoxWithLabel                
           label={patientInfo[1].label}
-          value={patientInfo[1].value}                       
+          value={patientInfo[1].value}                
           width={width}
         />
         <BigShowcaseBoxWithLabel label={"Site/DOS"} value={patientInfo[2].value + ' [' + patientInfo[3].value+']'} width={width}/>
+
         <Text style={styles.classifyText}>Chief Complaint:</Text>
         <BigShowcaseBoxWithLabel label={'Chief Complaint'} value={chiefComplaint} width={width}/>
+
         <Text style={styles.classifyText}>Medical Provider's note:</Text>
         {/* render doctor's report */}
-        {providerReport.map((item, index) => {            
+        {providerReportItems.map((item, index) => {            
             return <BigShowcaseBoxWithLabel key={index} {...item} width={width} />;
         })} 
-        <Text style={styles.classifyText}>Patient's Infomation:</Text>
+
+        <Text style={styles.classifyText}>Patient's Medical Infomation:</Text>
         {/* render patient's medical history */}
         <BigShowcaseBoxWithLabel label={medicalData[0].label} value={medicalData[0].value} width={width}/>
         <BigShowcaseBoxWithLabel label={"Current Medication/Allergies"} value={medicalData[1].value + ' [Allergies: ' + medicalData[2].value+']'} width={width}/>
 
         <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
-          {firstLine.map((item, index) => {
+          {firstLineVitalData.map((item, index) => {
             return (
               <ShowcaseBoxWithLabel
                 key={index}
@@ -62,7 +69,7 @@ const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerRepo
         </View>
 
         <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
-          {secondLine.map((item, index) => {
+          {secondLineVitalData.map((item, index) => {
             return (
               <ShowcaseBoxWithLabel
                 key={index}
@@ -88,9 +95,8 @@ const PastVisitReport = ({ name, time, patientInfo, chiefComplaint, providerRepo
         />
         
     </View>
-
   )}
-    </View>
+  </View>
   );
 };
 
