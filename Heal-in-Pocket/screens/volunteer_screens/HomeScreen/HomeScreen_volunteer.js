@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Text, View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { SearchBar } from '@rneui/themed';
 import axios from 'axios';
@@ -19,13 +19,36 @@ export default function HomeScreen({navigation}) {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const searchRef = useRef(null);
   const [searchFocus, setSearchFocus] = useState(false);
+  const timerRef = useRef(null);
   
   const handleSearchFocus = (status) => {
     setSearchFocus(status);
   };
 
+  // Effect debouncing the search input
+   useEffect(() => {
+    // Clear the existing timer
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    // Set a new timer
+    timerRef.current = setTimeout(async () => {
+      handleSearch(searchInput);
+    }, 500); // 500ms delay
+
+    // Cleanup function to clear timer when component unmounts or before next effect runs
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, [searchInput]); // Effect depends on searchInput
+
+
+
   const handleSearch = async (text) => {
-    setSearchInput(text);
+    //setSearchInput(text);
     
     if (text === '') {
       setFilteredUsers([]);
@@ -75,7 +98,7 @@ export default function HomeScreen({navigation}) {
             inputContainerStyle={{backgroundColor: '#E4E3E9'}}
             ref={searchRef}
             placeholder="Enter first name, last name"
-            onChangeText={handleSearch}
+            onChangeText={(text) => setSearchInput(text)}
             onClear={handleClear}
             value={searchInput}
             onFocus={() => handleSearchFocus(true)}    
