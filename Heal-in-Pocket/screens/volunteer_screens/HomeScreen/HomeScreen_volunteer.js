@@ -72,8 +72,27 @@ export default function HomeScreen({navigation}) {
     searchRef.current.blur();
   };
 
+  const getCurrentDate = () => {
+    const date = new Date();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const year = date.getFullYear();
+    // setDate(`${month}/${day}/${year}`);
+    
+    return `${month}/${day}/${year}`;
+  }
+
+  // Should send the information together now:
   const handleUserPress = (user) => {
-    navigation.navigate('Options');    
+    navigation.navigate('Options', {
+      firstName: user.name.substr(0, user.name.indexOf(' ')),
+      lastName: user.name.substr(user.name.indexOf(' ') + 1),
+      DOB: user.date_of_birth,
+      patientId: user._id,
+      date:getCurrentDate(),
+    });  
+    
+    console.log(user._id, user.name, user.date_of_birth);
   };
 
   const handleRegister = () => {

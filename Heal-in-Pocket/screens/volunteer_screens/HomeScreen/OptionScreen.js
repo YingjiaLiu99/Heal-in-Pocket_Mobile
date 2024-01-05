@@ -3,11 +3,24 @@ import { Text, View, TouchableOpacity } from "react-native";
 
 import styles from "./styles";
 
-export default function OptionScreen({navigation}) {
+export default function OptionScreen({navigation, route}) {
+
+    const {firstName, lastName, DOB, date, patientId} = route.params;
 
     const handleCreateNewRecord = () => {
         // Disable this function for beta testing
         // navigation.navigate('Upload New Record');
+
+        navigation.navigate("Upload New Record",
+        {
+          firstName: firstName,
+          lastName: lastName,
+          DOB: DOB,
+          patientId: patientId,
+          date:date,
+        });
+
+
     };
 
     const handleUploadRecord = () => {
