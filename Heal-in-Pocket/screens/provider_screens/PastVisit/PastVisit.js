@@ -47,8 +47,8 @@ export default function PastVisit( {navigation} ) {
               console.log('Error:', error.message);
             }
             return {
-                name: "N/A",
-                DOB: "N/A"
+                name: "failed to load",
+                DOB: "failed to load"
             };
           } 
     };
