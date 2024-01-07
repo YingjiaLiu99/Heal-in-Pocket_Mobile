@@ -11,8 +11,6 @@ import baseURL from '../../../common/baseURL';
 export default function PastVisit( {navigation} ) {
     const [reviewedRecordsData, setReviewedRecordsData] = useState([]);
     const [expandedDates, setExpandedDates] = useState([]);
-    // const [patientNames, setPatientNames] = useState({});
-    // const [dobs, setDobs] = useState({});
     const [medicalHistory, setMedicalHistory] = useState({});
     const [patientInfo, setPatientInfo] = useState({});
 
@@ -29,66 +27,61 @@ export default function PastVisit( {navigation} ) {
         return date.slice(0, 10);
     };
 
-    const getPatientNames = async (patientId) => {
+    const getPatientInfo = async (patientId) => {
         try {
             const response = await axios.get(`${baseURL}patient/patient/${patientId}`);
-            // console.log("Patient information:", response.data);
-            return response.data.patient.name;
+            const patientInfo = response.data.patient;
+            return {
+                name: patientInfo.name,
+                DOB: patientInfo.date_of_birth
+            };
         } catch (error) {
-            console.error('Error fetching patient information:', error);
-        }
+            if (error.response) {
+              // The request was successfully sent to the server and the server returned an error response. 
+              console.log('Backend Error:', error.response.data.message);
+            } else if (error.request) {
+              // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
+              console.log('Network Error:', error.message);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error:', error.message);
+            }
+            return {
+                name: "N/A",
+                DOB: "N/A"
+            };
+          } 
     };
 
-    const getPatientDobs = async (patientId) => {
-        try {
-            const response = await axios.get(`${baseURL}patient/patient/${patientId}`);
-            return response.data.patient.date_of_birth;
-        } catch (error) {
-            console.error('Error fetching patient information:', error);
-        }
-    };
-
-    // const getPatientInfo = async (patientId) => {
-    //     try {
-    //         const response = await axios.get(`${baseURL}patient/patient/${patientId}`);
-    //         return response.data.patient;
-    //     } catch (error) {
-    //         console.error('Error fetching patient information:', error);
-    //     }
-    // };
-
-    const doctorId = "6590a453e9775c5e7191519b";
+    const doctorId = "659afd3ac4f02806bb8e6b8e";
     const site = "Street Corner Care"
     const time = "10:00 am"
 
     // call backend to get all viewed_records of a corresponding doctor_id
     const getAllViewedRecords = async (doctorId) => {
         try {
-          const response = await axios.get(`${baseURL}doctor/${doctorId}`);
-          const records = response.data.viewed_records;
-        //   const names = {};
-        //   const dobs = {};
+          const response = await axios.get(`${baseURL}doctor/viewedRecords/${doctorId}`);
+          const records = response.data.viewed_records;        
           const medicalHistory = {}
           const patientInfo = {}
           
           for(const record of records){
             console.log("record is: ", record);
             if (record.owner) {
-                // names[record.owner] = await getPatientNames(record.owner);
-                // dobs[record.owner] = await getPatientDobs(record.owner);
-                medicalHistory[record.owner] = [];
-                medicalHistory[record.owner].push({ label: 'Chronic Illness', value: record.chronic_condition || 'None' });
-                medicalHistory[record.owner].push({ label: 'Current Medication', value: record.current_medications || 'None' });
-                medicalHistory[record.owner].push({ label: 'Allergies', value: record.allergies || 'None' });
-                patientInfo[record.owner] = [];
-                patientInfo[record.owner].push({ label: 'Name', value: await getPatientNames(record.owner) || 'None' });
-                patientInfo[record.owner].push({ label: 'Date of Birth', value: await getPatientDobs(record.owner) || 'None' });
-                patientInfo[record.owner].push({ label: 'Location', value: site || 'None' });
-                patientInfo[record.owner].push({ label: 'DOS', value: time|| 'None' });
+                const {name, DOB} = await getPatientInfo(record.owner);
+                medicalHistory[record.owner] = [
+                    { label: 'Chronic Illness', value: record.chronic_condition || 'N/A' },
+                    { label: 'Current Medication', value: record.current_medications || 'N/A' },
+                    { label: 'Allergies', value: record.allergies || 'N/A' }
+                ];
+                patientInfo[record.owner] = [
+                    { label: 'Name', value: name },
+                    { label: 'Date of Birth', value: DOB },
+                    { label: 'Location', value: site || 'N/A' },
+                    { label: 'DOS', value: time || 'N/A' }
+                ];
             }
-          }
-        //   setPatientNames(names);
-        //   setDobs(dobs);
+          }        
           setMedicalHistory(medicalHistory);
           setPatientInfo(patientInfo);
           setReviewedRecordsData(records);

@@ -117,7 +117,7 @@ export default function ProviderResponseScreen({route, navigation}) {
     }
   }
 
-  const doctorId = '6590a453e9775c5e7191519b';
+  const doctorId = '659afd3ac4f02806bb8e6b8e';
 
   // add the record id to doctor's viewed_records
   const addRecordtoDoctor = async(doctorId, recordId) => {
