@@ -72,6 +72,7 @@ import HomeScreen_volunteer from './screens/volunteer_screens/HomeScreen/HomeScr
 import OptionScreen_vol from './screens/volunteer_screens/HomeScreen/OptionScreen';
 import RegisterNewPatient_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterNewPatientScreen';
 import RegisterPatientWithoutPhone_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientWithoutPhone';
+import CheckPatientInformation_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/CheckPatientInformation';
 import RegisterPatientWithPhone_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientWithPhone';
 import RegisterPatientPhoneVerification_volunteer from './screens/volunteer_screens/RegisterNewPatientScreen/RegisterPatientPhoneVerification';
 import UploadNewRecord_vol from './screens/volunteer_screens/HomeScreen/uploadNewRecord';
@@ -354,6 +355,7 @@ function HomeNavigator_vol() {
       <HomeStack_vol.Screen name="Register A New Patient" component={RegisterNewPatient_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <HomeStack_vol.Screen name="Register Patient With Phone" component={RegisterPatientWithPhone_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <HomeStack_vol.Screen name="Register Patient Without Phone" component={RegisterPatientWithoutPhone_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HomeStack_vol.Screen name="Check Patient Information" component={CheckPatientInformation_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <HomeStack_vol.Screen name="Register Patient Phone Verification" component={RegisterPatientPhoneVerification_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <HomeStack_vol.Screen name="Options" component={OptionScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <HomeStack_vol.Screen name="Upload New Record" component={UploadNewRecord_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>

@@ -195,6 +195,9 @@ const RegisterPatientWithoutPhone = ({navigation}) => {
           placeholder="Please enter the hospitalized history"
           keyboardType="default"
           width='100%'
+          // Test for editable: 
+          // editable={false}
+          // selectTextOnFocus={false}
       />
 
       

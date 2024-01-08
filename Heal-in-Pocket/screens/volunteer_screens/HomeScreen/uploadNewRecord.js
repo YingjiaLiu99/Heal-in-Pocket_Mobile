@@ -262,7 +262,6 @@ export default function UploadMedicalInfo({ navigation, route }) {
       </View>
 
       </View>
-
   </View>
 
     <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={
@@ -371,7 +370,7 @@ export default function UploadMedicalInfo({ navigation, route }) {
               placeholder={'Click to Enter...'}
               onChange={(value) => setOxygen(value)}
               onFocus = {handleOutsidePress}
-              keyboardType={'numeric'}        
+              keyboardType={'numeric'}       
           /> 
 
           <InputBoxWithInnerLabel              

@@ -46,6 +46,17 @@ export default function HomeScreen({navigation}) {
   }, [searchInput]); // Effect depends on searchInput
 
 
+  // Clear search input and filtered users when user back from option screen
+   useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setSearchInput('');
+      setFilteredUsers([]);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+
 
   const handleSearch = async (text) => {
     //setSearchInput(text);
@@ -90,9 +101,13 @@ export default function HomeScreen({navigation}) {
       DOB: user.date_of_birth,
       patientId: user._id,
       date:getCurrentDate(),
+      gender: user.gender,
+      insurance: user.insurance, 
+      pcp: user.primary_care_provider,
+      lastSeen: user.last_seen,
     });  
     
-    console.log(user._id, user.name, user.date_of_birth);
+    console.log(user._id, user.name, user.date_of_birth, user.gender);
   };
 
   const handleRegister = () => {
