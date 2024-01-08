@@ -39,6 +39,18 @@ const PastVisitReport = ({ name, time, chiefComplaint, providerReport, medicalDa
           width={width}
         />
         <BigShowcaseBoxWithLabel label={"Site/DOS"} value={patientInfo[2].value + ' [' + patientInfo[3].value+']'} width={width}/>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+            <ShowcaseBoxWithLabel                
+              label={patientInfo[4].label}
+              value={patientInfo[4].value}                
+              width='49%'
+            />
+            <ShowcaseBoxWithLabel                
+              label={patientInfo[5].label}
+              value={patientInfo[5].value}                
+              width='49%'
+            />
+          </View>
 
         <Text style={styles.classifyText}>Chief Complaint:</Text>
         <BigShowcaseBoxWithLabel label={'Chief Complaint'} value={chiefComplaint} width={width}/>

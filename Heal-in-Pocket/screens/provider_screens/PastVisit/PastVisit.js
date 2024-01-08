@@ -22,8 +22,10 @@ export default function PastVisit( {navigation} ) {
         }
     }
 
+    const dates = {}
     const getDate = (date) => {
         // console.log("The type of updatedAt is: ", typeof date);
+        dates[date.slice(0, 10)] = date.slice(11, 19) 
         return date.slice(0, 10);
     };
 
@@ -55,7 +57,7 @@ export default function PastVisit( {navigation} ) {
 
     const doctorId = "659afd3ac4f02806bb8e6b8e";
     const site = "Street Corner Care"
-    const time = "10:00 am"
+    // const time = "10:00 am"
 
     // call backend to get all viewed_records of a corresponding doctor_id
     const getAllViewedRecords = async (doctorId) => {
@@ -64,27 +66,54 @@ export default function PastVisit( {navigation} ) {
           const records = response.data.viewed_records;        
           const medicalHistory = {}
           const patientInfo = {}
+
+          const processVitals = (vitals) => {
+            Object.keys(vitals).forEach(key => {
+                if (vitals[key] === -1) {
+                    vitals[key] = "N/A";
+                }
+            });
+            return vitals;
+            };
           
-          for(const record of records){
-            console.log("record is: ", record);
-            if (record.owner) {
-                const {name, DOB} = await getPatientInfo(record.owner);
-                medicalHistory[record.owner] = [
-                    { label: 'Chronic Illness', value: record.chronic_condition || 'N/A' },
-                    { label: 'Current Medication', value: record.current_medications || 'N/A' },
-                    { label: 'Allergies', value: record.allergies || 'N/A' }
-                ];
-                patientInfo[record.owner] = [
-                    { label: 'Name', value: name },
-                    { label: 'Date of Birth', value: DOB },
-                    { label: 'Location', value: site || 'N/A' },
-                    { label: 'DOS', value: time || 'N/A' }
-                ];
+          const groupedRecords = records.reduce((acc, record) => {
+            if (record.vitals) {
+                record.vitals = processVitals(record.vitals);
             }
-          }        
+
+            const date = getDate(record.updatedAt);
+            if (!acc[date]) {
+                acc[date] = [];
+            }
+            acc[date].push(record);
+            return acc;
+        }, {});
+
+            for(const record of records){
+                console.log("record is: ", record);
+                if (record.owner) {
+                    const {name, DOB} = await getPatientInfo(record.owner);
+                    const date = getDate(record.updatedAt);
+                    medicalHistory[record.owner] = [
+                        { label: 'Chronic Illness', value: record.chronic_condition || 'N/A' },
+                        { label: 'Current Medication', value: record.current_medications || 'N/A' },
+                        { label: 'Allergies', value: record.allergies || 'N/A' }
+                    ];
+                    patientInfo[record.owner] = [
+                        { label: 'Name', value: name },
+                        { label: 'Date of Birth', value: DOB },
+                        { label: 'Location', value: site || 'N/A' },
+                        { label: 'DOS', value: dates[date] || 'N/A' },
+                        { label: 'Smoking Status', value: record.smoking_status || 'N/A' },
+                        { label: 'Pregnancy Status', value: record.pregnancy_status || 'N/A' }
+                    ];
+                    console.log("time is: ", dates[date]);
+                }
+            }
+
           setMedicalHistory(medicalHistory);
           setPatientInfo(patientInfo);
-          setReviewedRecordsData(records);
+          setReviewedRecordsData(groupedRecords);
           return response.data.viewed_records;
         } catch (error) {
           console.error('Error fetching viewed records:', error);
@@ -108,34 +137,34 @@ export default function PastVisit( {navigation} ) {
     
         <FlatList
             style={{width:"100%"}}
-            data={reviewedRecordsData}
-            keyExtractor={(item) => item._id}
+            data={Object.entries(reviewedRecordsData)}
+            keyExtractor={(item) => item[0]}
             renderItem={({ item }) => (
                 <View>
                     <TouchableOpacity 
-                            style={[styles.header, { backgroundColor: expandedDates.includes(getDate(item.updatedAt)) ? 'white' : 'white' }]} 
-                            onPress={() => toggleExpandedDate(getDate(item.updatedAt))}>
-                        <Text style={styles.dateText}>{getDate(item.updatedAt)}</Text>
-                        <Icon name={expandedDates.includes(getDate(item.updatedAt)) ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
+                            style={[styles.header, { backgroundColor: expandedDates.includes(item[0]) ? 'white' : 'white' }]} 
+                            onPress={() => toggleExpandedDate(item[0])}>
+                        <Text style={styles.dateText}>{item[0]}</Text>
+                        <Icon name={expandedDates.includes(item[0]) ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
                     </TouchableOpacity>
-                    {expandedDates.includes(getDate(item.updatedAt)) &&  
+                    {expandedDates.includes(item[0]) &&  
                         <View style={{ alignItems: 'center' }}>
-                        {/* { (reviewed_record.published === true) && */}
-                        {<PastVisitReport
-                            key={item._id}
-                            owner={item.owner}
-                            name={patientInfo[item.owner][0]['value']}
-                            time={time}
-                            chiefComplaint={item.chief_complaint}
-                            providerReport={item.soap}
-                            medicalData={medicalHistory[item.owner]}
-                            vitalData={item.vitals}
-                            patientInfo={patientInfo[item.owner]}
-                            providerName = {item.provider_name}
-                            scribeName = {item.scribe_name}
-                            width={'100%'}
-                        />
-                        }
+                        {item[1].map(record => (
+                            <PastVisitReport
+                                key={record._id}
+                                owner={record.owner}
+                                name={patientInfo[record.owner][0]['value']}
+                                time={patientInfo[record.owner][3]['value']}
+                                chiefComplaint={record.chief_complaint}
+                                providerReport={record.soap}
+                                medicalData={medicalHistory[record.owner]}
+                                vitalData={record.vitals}
+                                patientInfo={patientInfo[record.owner]}
+                                providerName = {record.provider_name}
+                                scribeName = {record.scribe_name}
+                                width={'100%'}
+                            />
+                        ))}
                         </View>
                     }
                 </View>
