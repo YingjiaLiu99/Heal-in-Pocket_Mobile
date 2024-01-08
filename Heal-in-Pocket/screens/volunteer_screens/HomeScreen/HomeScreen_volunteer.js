@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Text, View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { SearchBar } from '@rneui/themed';
 import axios from 'axios';
@@ -19,13 +19,47 @@ export default function HomeScreen({navigation}) {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const searchRef = useRef(null);
   const [searchFocus, setSearchFocus] = useState(false);
+  const timerRef = useRef(null);
   
   const handleSearchFocus = (status) => {
     setSearchFocus(status);
   };
 
+  // Effect debouncing the search input
+   useEffect(() => {
+    // Clear the existing timer
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    // Set a new timer
+    timerRef.current = setTimeout(async () => {
+      handleSearch(searchInput);
+    }, 500); // 500ms delay
+
+    // Cleanup function to clear timer when component unmounts or before next effect runs
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, [searchInput]); // Effect depends on searchInput
+
+
+  // Clear search input and filtered users when user back from option screen
+   useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setSearchInput('');
+      setFilteredUsers([]);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+
+
   const handleSearch = async (text) => {
-    setSearchInput(text);
+    //setSearchInput(text);
     
     if (text === '') {
       setFilteredUsers([]);
@@ -49,8 +83,31 @@ export default function HomeScreen({navigation}) {
     searchRef.current.blur();
   };
 
+  const getCurrentDate = () => {
+    const date = new Date();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const year = date.getFullYear();
+    // setDate(`${month}/${day}/${year}`);
+    
+    return `${month}/${day}/${year}`;
+  }
+
+  // Should send the information together now:
   const handleUserPress = (user) => {
-    navigation.navigate('Options');    
+    navigation.navigate('Options', {
+      firstName: user.name.substr(0, user.name.indexOf(' ')),
+      lastName: user.name.substr(user.name.indexOf(' ') + 1),
+      DOB: user.date_of_birth,
+      patientId: user._id,
+      date:getCurrentDate(),
+      gender: user.gender,
+      insurance: user.insurance, 
+      pcp: user.primary_care_provider,
+      lastSeen: user.last_seen,
+    });  
+    
+    console.log(user._id, user.name, user.date_of_birth, user.gender);
   };
 
   const handleRegister = () => {
@@ -75,7 +132,7 @@ export default function HomeScreen({navigation}) {
             inputContainerStyle={{backgroundColor: '#E4E3E9'}}
             ref={searchRef}
             placeholder="Enter first name, last name"
-            onChangeText={handleSearch}
+            onChangeText={(text) => setSearchInput(text)}
             onClear={handleClear}
             value={searchInput}
             onFocus={() => handleSearchFocus(true)}    

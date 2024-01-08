@@ -11,7 +11,7 @@ import RadioMutipleChoiceCenter from '../../../components/RadioMultipleChoiceCen
 import styles from './styles';
 import baseURL from '../../../common/baseURL';
 
-export default function UploadMedicalInfo({ route, navigation }) {
+export default function UploadMedicalInfo({ navigation, route }) {
 
 
   const { firstName, lastName, DOB, date, patientId} = route.params;
@@ -262,7 +262,6 @@ export default function UploadMedicalInfo({ route, navigation }) {
       </View>
 
       </View>
-
   </View>
 
     <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={
@@ -371,7 +370,7 @@ export default function UploadMedicalInfo({ route, navigation }) {
               placeholder={'Click to Enter...'}
               onChange={(value) => setOxygen(value)}
               onFocus = {handleOutsidePress}
-              keyboardType={'numeric'}        
+              keyboardType={'numeric'}       
           /> 
 
           <InputBoxWithInnerLabel              
