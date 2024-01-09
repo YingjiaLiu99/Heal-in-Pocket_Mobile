@@ -14,6 +14,7 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
     const {firstName, lastName, DOB, patientId, date, gender, insurance, pcp, lastSeen} = route.params;
 
     const [enableEdit, setEnableEdit] = useState(false);
+    const [confirmCheck, setConfirmCheck] = useState(true);
 
     let oldInsurance = insurance;
     let oldPcp = pcp;
@@ -30,17 +31,14 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
 
     const handleSubmit = async() => {
 
-        if (enableEdit) {
-            setErrorMessage("Please click Done to finish your change");
-        }
-        else {
-            setErrorMessage("");
-
+        if ((confirmCheck)) {
             const infoChange = {
                 insurance: insuranceCheck,
                 primary_care_provider: pcpCheck,
                 last_seen: lastSeenCheck,
             };
+
+            setConfirmCheck(true);
 
             try { 
                 const response = await axios.patch(`${baseURL}patient/update/${patientId}`, infoChange)
@@ -65,12 +63,28 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
                 setErrorMessage('Failed to update information.');
             }
         }
+        else {
+            setConfirmCheck(true);
+        }
 
     };
 
+    const afterEnableEditConfirmCheck = async() => {
+        // False at first, while edit is click but the confirm is false
+        // Change to True if the confirm is clicked and change to submit: 
+        // Release the update while set to true
+
+        if (enableEdit) {
+            setConfirmCheck(!confirmCheck);
+        }
+        
+    };
+
     const handleEdit = async() => {
-        setEnableEdit(!enableEdit);
+        //setEnableEdit(!enableEdit);
         // console.log(enableEdit ? 'Disable Edit' : 'Enable Edit');
+        setEnableEdit(true);
+        setConfirmCheck(!confirmCheck);
     };
     
     return (
@@ -116,8 +130,21 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
           }}>
         
         <View style={{marginTop: 10,marginBottom:20,width:'100%', alignItems: 'center'}}>
-            <Text style={{fontSize:18, color: "#458FE4", fontWeight: "bold"}}>
-                {enableEdit ? "Click Done to Finish Your Change" : "Click Edit to Change Your Information"}
+            <Text style={{
+                    fontSize:18, 
+                    
+                    // color: "#458FE4", 
+                    color: enableEdit && !confirmCheck ? "#4CBC2D"
+                    : !enableEdit && confirmCheck ? "#458FE4"
+                    : enableEdit && confirmCheck ? "#F9A514"
+                    : "",
+                    fontWeight: "bold"
+                }}>
+                {enableEdit && !confirmCheck ? "Click Confirm to Finish Your Change" 
+                : !enableEdit && confirmCheck ? "Click Edit to Change Your Information"
+                : enableEdit && confirmCheck ? "Click Submit to Submit Your Change"
+                : ""}
+
             </Text>
             {/* <Text style={{marginTop:10,fontSize:17}}>* is Required</Text> */}
         </View>    
@@ -169,39 +196,47 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
         
 
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginTop: 20, marginBottom: 20 }}>
-        {/* Edit Button */}
-        <TouchableOpacity 
-            style={{
-                height: 70,
-                width: '30%',
-                marginVertical: 10,
-                alignItems: 'center',
-                justifyContent: 'center',
-                // backgroundColor: '#4CAF50', // Green color for edit
-                backgroundColor: enableEdit ? "#F9A514" : '#4CBC2D',// Darker Green color for edit
-                borderRadius: 20
-            }} 
-            onPress={handleEdit}>
-            <Text style={{ color: '#fff', fontSize: 25 }}>
-                {enableEdit ? 'Done' : 'Edit'}
-            </Text>
-        </TouchableOpacity>
+        {/* Edit Button or Placeholder */}
+        {!enableEdit ? (
+            <TouchableOpacity 
+                style={{
+                    height: 70,
+                    width: '30%',
+                    marginVertical: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: '#395BCD', // Blue for edit
+                    borderRadius: 20,
+                }} 
+                onPress={handleEdit}>
+                <Text style={{ color: '#fff', fontSize: 25 }}>
+                    Edit
+                </Text>
+            </TouchableOpacity>
+        ) : (
+            <View style={{ width: '30%', height: 70, marginVertical: 10 }} />
+        )}
 
-        {/* Next Button */}
+        {/* Skip Button */}
         <TouchableOpacity 
             style={{
                 height: 70,
-                width: '30%',
+                width: '30%', 
                 marginVertical: 10,
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: '#395BCD', // Blue color for next
+                backgroundColor: confirmCheck && enableEdit ? "#F9A514" : '#4CBC2D', // Green color for next
                 borderRadius: 20
             }} 
             onPress={handleSubmit}>
-            <Text style={{ color: '#fff', fontSize: 25 }}>Next</Text>
-        </TouchableOpacity>
+            <Text style={{ color: '#fff', fontSize: 25 }}>
+                {((enableEdit === false) && (confirmCheck === true)) ? 'Skip'
+                 : ((enableEdit === true) && (confirmCheck === false)) ? "Confirm"
+                :  ((enableEdit === true) && (confirmCheck === true)) ? "Submit" : ""}
 
+                
+            </Text>
+        </TouchableOpacity>
         </View>
         {/* reserve empty space for keyboard: */}
         <View style={{ height: enableEdit ? 200 : 50 }} /> 
