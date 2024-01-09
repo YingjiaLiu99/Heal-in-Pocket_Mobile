@@ -14,6 +14,10 @@ const PastVisitReport = ({ name, time, chiefComplaint, providerReport, medicalDa
   const firstLineVitalData = vitalDataItems.slice(0, 3);
   const secondLineVitalData = vitalDataItems.slice(3); 
 
+  // Revise the abbreviation of blood pressure
+  firstLineVitalData[1].label = "Systolic BP";
+  firstLineVitalData[2].label = "Diastolic BP";
+
 
   return (
     <View style={{ width: '95%'}}>
