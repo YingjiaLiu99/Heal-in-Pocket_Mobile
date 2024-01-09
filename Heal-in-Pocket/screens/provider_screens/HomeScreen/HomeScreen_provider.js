@@ -11,6 +11,18 @@ export default function HomeScreen({navigation}) {
 
   const [requests, setRequests] = useState([]);
 
+
+  const convertTimestamp = (mongodbTimestamp) => {
+    const date = new Date(mongodbTimestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    const formattedHours = hours % 12 || 12; // Convert to 12-hour format and handle midnight
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
+    return formattedTime;
+  };
+
   const handleAccept = (request_id) => {
 
     navigation.navigate("Provider Response", { request_id })    
@@ -80,7 +92,7 @@ export default function HomeScreen({navigation}) {
                 key={index}
                 chiefComplaint={request.chief_complaint}
                 name={request.patient_name}
-                time={"12:01pm"}
+                time={convertTimestamp(request.updatedAt)}
                 tag={request.new_patient ? "New Patient" : "Follow Up"}
                 onPress={() => handleAccept(request.id)}
               />
