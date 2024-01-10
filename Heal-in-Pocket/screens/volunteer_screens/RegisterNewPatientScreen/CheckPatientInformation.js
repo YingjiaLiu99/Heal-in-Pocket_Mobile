@@ -3,7 +3,6 @@ import React, { useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 // own components and styles
-import RadioMutipleChoice from './components/RadioMultipleChoice';
 import InputBoxWithLabel from '../../../components/InputBoxWithLabel';
 import styles from './styles';
 import axios from 'axios';
@@ -15,10 +14,6 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
 
     const [enableEdit, setEnableEdit] = useState(false);
     const [confirmCheck, setConfirmCheck] = useState(true);
-
-    let oldInsurance = insurance;
-    let oldPcp = pcp;
-    let oldLastSeen = lastSeen;
 
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -69,23 +64,16 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
 
     };
 
-    const afterEnableEditConfirmCheck = async() => {
-        // False at first, while edit is click but the confirm is false
-        // Change to True if the confirm is clicked and change to submit: 
-        // Release the update while set to true
 
-        if (enableEdit) {
-            setConfirmCheck(!confirmCheck);
-        }
-        
-    };
-
-    const handleEdit = async() => {
-        //setEnableEdit(!enableEdit);
-        // console.log(enableEdit ? 'Disable Edit' : 'Enable Edit');
+    const handleEdit = () => {        
         setEnableEdit(true);
         setConfirmCheck(!confirmCheck);
     };
+
+    const handleOutsidePress = () => {        
+        setConfirmCheck(false);      
+        console.log("outside!")  
+    }
     
     return (
     <View style={{flex:1}}>
@@ -132,21 +120,20 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
         <View style={{marginTop: 10,marginBottom:20,width:'100%', alignItems: 'center'}}>
             <Text style={{
                     fontSize:18, 
-                    
-                    // color: "#458FE4", 
                     color: enableEdit && !confirmCheck ? "#4CBC2D"
                     : !enableEdit && confirmCheck ? "#458FE4"
                     : enableEdit && confirmCheck ? "#F9A514"
                     : "",
                     fontWeight: "bold"
                 }}>
+
                 {enableEdit && !confirmCheck ? "Click Confirm to Finish Your Change" 
                 : !enableEdit && confirmCheck ? "Click Edit to Change Your Information"
                 : enableEdit && confirmCheck ? "Click Submit to Submit Your Change"
                 : ""}
 
             </Text>
-            {/* <Text style={{marginTop:10,fontSize:17}}>* is Required</Text> */}
+            
         </View>    
 
         {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
@@ -163,6 +150,7 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
             editable={enableEdit}
             selectTextOnFocus={enableEdit}
             color = {enableEdit ? "#000" : "#808080"}
+            onFocus = {handleOutsidePress}
         />
 
         <InputBoxWithLabel
@@ -178,6 +166,7 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
             editable={enableEdit}
             selectTextOnFocus={enableEdit}
             color = {enableEdit ? "#000" : "#808080"}
+            onFocus = {handleOutsidePress}
         />
 
         <InputBoxWithLabel
@@ -192,6 +181,7 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
             editable={enableEdit}
             selectTextOnFocus={enableEdit}
             color = {enableEdit ? "#000" : "#808080"}
+            onFocus = {handleOutsidePress}
         />
         
 
@@ -210,7 +200,7 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
                 }} 
                 onPress={handleEdit}>
                 <Text style={{ color: '#fff', fontSize: 25 }}>
-                    Edit
+                    Update
                 </Text>
             </TouchableOpacity>
         ) : (
@@ -238,6 +228,7 @@ export default function CheckPatientInformation_volunteer({route, navigation}) {
             </Text>
         </TouchableOpacity>
         </View>
+
         {/* reserve empty space for keyboard: */}
         <View style={{ height: enableEdit ? 200 : 50 }} /> 
          

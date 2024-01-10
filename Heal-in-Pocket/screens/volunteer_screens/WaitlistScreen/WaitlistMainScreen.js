@@ -29,7 +29,7 @@ export default function WaitlistMainScreen({navigation}) {
 
   /**
    * 1. fetch and update immediately when you navigate to this screen;
-   * 2. if you are in this screen, fetch and update every 5 second;
+   * 2. if you are in this screen, fetch and update every 2.5 second;
    * 3. if you are not in this screen, stop fetching and updating
    */
   useFocusEffect(
