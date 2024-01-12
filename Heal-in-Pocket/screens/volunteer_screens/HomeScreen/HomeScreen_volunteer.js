@@ -123,10 +123,6 @@ export default function HomeScreen({navigation}) {
           <Text style={{fontSize:30, fontWeight:400}}>Search Patient Profile</Text>          
         </View>
 
-        <View style={{alignItems:'center'}}>
-          <Text style={{fontSize:18, fontWeight:300}}>This feature is still under development, all the search results are fake data. Please use the register function instead.</Text>        
-        </View>
-
         <View style={{width:'100%', marginTop:10}}>
           <SearchBar
             containerStyle={{borderRadius: 15, borderWidth: 1, borderColor: "transparent", backgroundColor: "#E4E3E9",  borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
