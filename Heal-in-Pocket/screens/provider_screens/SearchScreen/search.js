@@ -1,75 +1,103 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Text, View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { SearchBar } from '@rneui/themed';
+import axios from 'axios';
 
+import baseURL from '../../../common/baseURL';
 import styles from './styles.js';
 
 // Patient info component
 const UserItem = ({user, onPress}) => (
     <TouchableOpacity onPress={onPress} style={styles.userShowcase}>
-      <Text style={styles.userShowcaseText}>{user.firstName} {user.lastName}</Text>
-      <Text style={styles.userShowcaseText}>Date of Birth: {user.dateOfBirth}</Text>
+      <Text style={styles.userShowcaseText}>{user.name}</Text>
+      <Text style={styles.userShowcaseText}>Date of Birth: {user.date_of_birth}</Text>
     </TouchableOpacity>
   );
 
 export default function PatientPastVisit( {navigation} ) {
 
-    // Dummy Variables, just to test
-    const users = [
-        {firstName: 'James', lastName: 'Smith', dateOfBirth: '5/16/1980'},
-        {firstName: 'Michael', lastName: 'Smith', dateOfBirth: '10/26/1986'},
-        {firstName: 'Maria', lastName: 'Garcia', dateOfBirth: '8/13/1989'},
-        {firstName: 'Robert', lastName: 'Smith', dateOfBirth: '2/1/1982'},
-        {firstName: 'David', lastName: 'Smith', dateOfBirth: '06/26/1996'},
-        {firstName: 'Maria', lastName: 'Rodriguez', dateOfBirth: '8/13/1989'},
-        {firstName: 'Mary', lastName: 'Smith', dateOfBirth: '5/16/1973'},
-        {firstName: 'Maria', lastName: 'Martinez', dateOfBirth: '02/22/1976'},
-        {firstName: 'Henry', lastName: 'Taylor', dateOfBirth: '8/13/1989'},
-        {firstName: 'George', lastName: 'Jones', dateOfBirth: '5/17/1980'},
-        {firstName: 'Michael', lastName: 'Clark', dateOfBirth: '12/02/1986'},
-        {firstName: 'Maria', lastName: 'Davis', dateOfBirth: '1/1/1989'},
-      ];
-      
-
-      const [searchInput, setSearchInput] = useState("");
+      const [searchInput, setSearchInput] = useState('');
+      const [filteredUsers, setFilteredUsers] = useState([]);
       const searchRef = useRef(null);
       const [searchFocus, setSearchFocus] = useState(false);
-      const [filteredUsers, setFilteredUsers] = useState(users);
+      const timerRef = useRef(null);
 
 
       const handleSearchFocus = (status) => {
         setSearchFocus(status);
       };
 
-      const handleSearch = (text) => {
-        // Do your search logic here
-        // You can filter your list based on the text
-        setSearchInput(text);
+      // Effect debouncing the search input
+      useEffect(() => {
+        // Clear the existing timer
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
 
-        // Split the input text by space and filter out any empty strings
-        const searchTerms = text.toLowerCase().split(' ').filter(term => term);
-  
-        const filtered = users.filter(user => {
-            const fullName = user.firstName.toLowerCase() + " " + user.lastName.toLowerCase();
-  
-            // Check that every search term appears somewhere in the full name
-            return searchTerms.every(term => fullName.includes(term));
+        // Set a new timer
+        timerRef.current = setTimeout(async () => {
+          handleSearch(searchInput);
+        }, 500); // 500ms delay
+
+        // Cleanup function to clear timer when component unmounts or before next effect runs
+        return () => {
+          if (timerRef.current) {
+            clearTimeout(timerRef.current);
+          }
+        };
+      }, [searchInput]); // Effect depends on searchInput
+
+
+      // Clear search input and filtered users when user back from option screen
+      useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+          setSearchInput('');
+          setFilteredUsers([]);
         });
 
-        // All fulfilled users
-        setFilteredUsers(filtered);
+        return unsubscribe;
+      }, [navigation]);
+
+      const handleSearch = async (text) => {
+        //setSearchInput(text);
+        
+        if (text === '') {
+          setFilteredUsers([]);
+          return;
+        }
+    
+        try {
+          const response = await axios.get(`${baseURL}patient/search/${text}`);
+          setFilteredUsers(response.data.patients); // Assuming response.data is an array of user objects
+          // console.log(filteredUsers);
+        } catch (error) {
+          console.error('Error fetching patient data:', error);
+          // You can set filteredUsers to an empty array or handle the error as needed
+        }
+        
       };
 
       const handleClear = () => {
-        // Clear your search result if any and reset your list
         setSearchInput('');
+        setFilteredUsers([]);
         searchRef.current.blur();
-        setFilteredUsers(users);
       };
 
+      const getCurrentDate = () => {
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+        const year = date.getFullYear();
+        // setDate(`${month}/${day}/${year}`);
+        
+        return `${month}/${day}/${year}`;
+      }
+
+      // Should send the information together now:
       const handleUserPress = (user) => {
-        // navigation.navigate("Patient Past Visits");
         navigation.navigate("Patient Past Visits", { user });
+        
+        console.log(user._id, user.name, user.date_of_birth, user.gender);
       };
 
 
@@ -91,7 +119,7 @@ export default function PatientPastVisit( {navigation} ) {
                         inputContainerStyle={{backgroundColor: '#E4E3E9'}}
                         ref={searchRef}
                         placeholder="Enter patient first name, last name"
-                        onChangeText={handleSearch}
+                        onChangeText={(text) => setSearchInput(text)}
                         onClear={handleClear}
                         value={searchInput}
                         onFocus={() => handleSearchFocus(true)}

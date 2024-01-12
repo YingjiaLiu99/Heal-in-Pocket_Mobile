@@ -68,6 +68,7 @@ export default function HomeScreen({navigation}) {
 
     try {
       const response = await axios.get(`${baseURL}patient/search/${text}`);
+      console.log("the patient data is: ", response.data.patients);
       setFilteredUsers(response.data.patients); // Assuming response.data is an array of user objects
       // console.log(filteredUsers);
     } catch (error) {
