@@ -25,7 +25,7 @@ const SearchPastVisitReport = ({ time, chiefComplaint, providerReport, medicalDa
         style={styles.header} 
         onPress={() => setIsExpanded(!isExpanded)}
       >
-        <Text style={styles.headerText}>{time}</Text>
+        <Text style={styles.headerText}>Visit Time: {time}</Text>
         <Icon name={isExpanded ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
       </TouchableOpacity>
 

@@ -110,7 +110,13 @@ export default function PatientPastVisit( {route, navigation} ) {
 
             <View style={{marginTop: 0,marginBottom:10,width:'100%', paddingTop:10}}>
                 <Text style={{fontSize:30, fontWeight:400}}>{user.name}</Text> 
-                <Text style={{fontSize: 20}}>DOB: {user.date_of_birth}</Text>           
+                <Text style={{fontSize: 20}}>
+                    DOB: {user.date_of_birth} | Gender: {user.gender}
+                </Text>
+                <Text style={{fontSize: 20}}>Insurance: {user.insurance} </Text>   
+                <Text style={{fontSize: 20}}>Primary Care Provider: {user.primary_care_provider}</Text> 
+                <Text style={{fontSize: 20}}>Last Seen: {user.last_seen}</Text> 
+                      
             </View>
 
             <View style={{alignItems: 'center',}}>
@@ -126,7 +132,7 @@ export default function PatientPastVisit( {route, navigation} ) {
                         <TouchableOpacity 
                                 style={[styles.header, { backgroundColor: expandedDates.includes(item[0]) ? 'white' : 'white' }]} 
                                 onPress={() => toggleExpandedDate(item[0])}>
-                            <Text style={styles.dateText}>{item[0]}</Text>
+                            <Text style={styles.dateText}>Visit Date: {item[0]}</Text>
                             <Icon name={expandedDates.includes(item[0]) ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
                         </TouchableOpacity>
                         {expandedDates.includes(item[0]) &&  
