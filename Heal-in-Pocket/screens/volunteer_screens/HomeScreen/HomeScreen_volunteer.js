@@ -68,6 +68,7 @@ export default function HomeScreen({navigation}) {
 
     try {
       const response = await axios.get(`${baseURL}patient/search/${text}`);
+      console.log("the patient data is: ", response.data.patients);
       setFilteredUsers(response.data.patients); // Assuming response.data is an array of user objects
       // console.log(filteredUsers);
     } catch (error) {
@@ -120,10 +121,6 @@ export default function HomeScreen({navigation}) {
 
         <View style={{marginTop:10,marginBottom:10,width:'100%',alignItems:'center'}}>
           <Text style={{fontSize:30, fontWeight:400}}>Search Patient Profile</Text>          
-        </View>
-
-        <View style={{alignItems:'center'}}>
-          <Text style={{fontSize:18, fontWeight:300}}>This feature is still under development, all the search results are fake data. Please use the register function instead.</Text>        
         </View>
 
         <View style={{width:'100%', marginTop:10}}>

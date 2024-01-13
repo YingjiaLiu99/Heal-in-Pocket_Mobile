@@ -56,7 +56,7 @@ import PastVisits_provider from './screens/provider_screens/PastVisit/PastVisit'
 // Provider search related screens:
 import Search_provider from './screens/provider_screens/SearchScreen/search';
 import PatientPastVisit_provider from './screens/provider_screens/SearchScreen/PatientPastVisit';
-import CreateNewNote_provider from './screens/provider_screens/SearchScreen/createNewNote';
+
 // Provider settings related screens:
 import SettingsMainScreen_provider from './screens/provider_screens/SettingsScreen/SettingsMainScreen';
 
@@ -295,7 +295,7 @@ function SearchNavigator_provider() {
     <SearchStack_provider.Navigator>
       <SearchStack_provider.Screen name="Search" component={Search_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <SearchStack_provider.Screen name="Patient Past Visits" component={PatientPastVisit_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
-      <SearchStack_provider.Screen name="Create New Note" component={CreateNewNote_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      
     </SearchStack_provider.Navigator>
   );
 }
