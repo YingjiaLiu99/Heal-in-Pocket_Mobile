@@ -35,67 +35,66 @@ export default function PatientPastVisit( {route, navigation} ) {
     
     // call backend to get all records of a corresponding patient_id
     const getPastVisitRecords = async (patientId) => {
-        try {
-            
+        let records;
+        try {            
             const response = await axios.get(`${baseURL}record/patient/${patientId}`);
-            const records = response.data.records;
+            records = response.data.records;
             console.log("the records are: ", records);
-                    
-            const medicalHistory = {}
-            const patientInfo = {}
-          
 
-            const processVitals = (vitals) => {
-                Object.keys(vitals).forEach(key => {
-                    if (vitals[key] === -1) {
-                        vitals[key] = "N/A";
-                    }
-                });
-                return vitals;
-                };
-            
-            const groupedRecords = records.reduce((acc, record) => {
-                if (record.vitals) {
-                    record.vitals = processVitals(record.vitals);
+        } catch (error) {
+            console.error('Error fetching records:', error);
+        }            
+        const medicalHistory = {}
+        const patientInfo = {}          
+
+        const processVitals = (vitals) => {
+            Object.keys(vitals).forEach(key => {
+                if (vitals[key] === -1) {
+                    vitals[key] = "N/A";
                 }
-
-                const date = getDate(record.updatedAt);
-                if (!acc[date]) {
-                    acc[date] = [];
-                }
-                acc[date].push(record);
-                return acc;
-            }, {});
-
-            for(const record of records){
-                console.log("record is: ", record);
-                const name = user.name;
-                const DOB = user.date_of_birth;
-                const date = getDate(record.updatedAt);
-                medicalHistory[record._id] = [
-                    { label: 'Chronic Illness', value: record.chronic_condition || 'N/A' },
-                    { label: 'Current Medication', value: record.current_medications || 'N/A' },
-                    { label: 'Allergies', value: record.allergies || 'N/A' }
-                ];
-                patientInfo[record._id] = [
-                    { label: 'Name', value: name },
-                    { label: 'Date of Birth', value: DOB },
-                    { label: 'Location', value: site || 'N/A' },
-                    { label: 'DOS', value: dates[date] || 'N/A' },
-                    { label: 'Smoking Status', value: record.smoking_status || 'N/A' },
-                    { label: 'Pregnancy Status', value: record.pregnancy_status || 'N/A' }
-                ];
-                
+            });
+            return vitals;
+        };
+        
+        const groupedRecords = records.reduce((acc, record) => {
+            if (record.vitals) {
+                record.vitals = processVitals(record.vitals);
             }
 
-            setMedicalHistory(medicalHistory);
-            setPatientInfo(patientInfo);
-            setRecordsData(groupedRecords);
-            console.log("medical history is: ", medicalHistory);
-            return response.data.records;
-        } catch (error) {
-          console.error('Error fetching records:', error);
+            const date = getDate(record.updatedAt);
+            if (!acc[date]) {
+                acc[date] = [];
+            }
+            acc[date].push(record);
+            return acc;
+        }, {});
+
+        for(const record of records){
+            console.log("record is: ", record);
+            const name = user.name;
+            const DOB = user.date_of_birth;
+            const date = getDate(record.updatedAt);
+            medicalHistory[record._id] = [
+                { label: 'Chronic Illness', value: record.chronic_condition || 'N/A' },
+                { label: 'Current Medication', value: record.current_medications || 'N/A' },
+                { label: 'Allergies', value: record.allergies || 'N/A' }
+            ];
+            patientInfo[record._id] = [
+                { label: 'Name', value: name },
+                { label: 'Date of Birth', value: DOB },
+                { label: 'Location', value: site || 'N/A' },
+                { label: 'DOS', value: dates[date] || 'N/A' },
+                { label: 'Smoking Status', value: record.smoking_status || 'N/A' },
+                { label: 'Pregnancy Status', value: record.pregnancy_status || 'N/A' }
+            ];
+            
         }
+
+        setMedicalHistory(medicalHistory);
+        setPatientInfo(patientInfo);
+        setRecordsData(groupedRecords);
+        console.log("medical history is: ", medicalHistory);
+        return records;
     };
 
     useEffect(() => {
