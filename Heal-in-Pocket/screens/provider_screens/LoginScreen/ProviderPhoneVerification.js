@@ -25,9 +25,8 @@ export default function PhoneVerification({route, navigation}) {
         if(!verificationCode) {
             setErrorMessage('Please Enter Your Verification Code');
         }
-        else{
-            console.log('from sign up');
-            navigation.navigate("Basic Provider Info");
+        else{            
+            navigation.navigate("More Provider Info");
         }      
     };
     const handleFromResetPassword = () => {

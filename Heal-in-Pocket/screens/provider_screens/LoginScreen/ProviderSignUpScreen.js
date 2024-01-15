@@ -1,30 +1,65 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import axios from 'axios';
 
+import { UserContext } from '../../../context/userContext';
+import baseURL from '../../../common/baseURL';
 import InputBoxWithLabel from './components/InputBoxWithLabel';
 import styles from './styles';
 
 
 export default function ProviderSignUpScreen({navigation}) {
+  const { userId, setUserId } = useContext(UserContext);
+
+  const [doctorName, setDoctorName] = useState('');
+  const [title, setTitle] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [pocketHealthCode, setCode] = useState('');
+  const [invitationCode, setInvitationCode] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const nameRef = useRef();
+  const titleRef = useRef();
+  const phoneRef = useRef();
   const pwdRef1 = useRef();
   const pwdRef2 = useRef();
-  const pwdRef3 = useRef();
+
 // The Backend code goes here
-  const handleSignUp = () => {   
-    if (!phoneNumber || !password || !confirmPassword) {
+  const handleSignUp = async() => {   
+    if (!invitationCode || !doctorName || !phoneNumber || !password || !confirmPassword) {
       setErrorMessage('Please fill in all fields');
     } else if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match');
     } else {
-      // Call API to create user account      
-      console.log('Step to Phone Verification');
-      navigation.navigate("Provider Phone Verification", { phoneNumber: phoneNumber });
+      
+      try {
+        const newDoctor = {
+          name: doctorName,
+          title: title,
+          phone_number: phoneNumber,
+          password: password,
+          invitation_code: invitationCode,
+          bio: "N/A"
+        }
+        const response = await axios.post(`${baseURL}doctor/signup-phone`, newDoctor);        
+        if (response.status >= 200 && response.status < 300){         
+          setUserId(response.data.doctor.id); // set the global userId to be the new created doctor's id
+          navigation.navigate("Provider Phone Verification", { phoneNumber: phoneNumber });
+        }
+
+      } catch (error) {
+        if (error.response) {
+          // The request was successfully sent to the server and the server returned an error response. 
+          console.log('Backend Error:', error.response.data.message);
+        } else if (error.request) {
+          // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
+          console.log('Network Error:', error.message);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error:', error.message);
+        }
+      }
     }
   };
 
@@ -40,34 +75,52 @@ export default function ProviderSignUpScreen({navigation}) {
 
       <InputBoxWithLabel
         autoFocus
-        label="Pocket Health Code*"    
-        value={pocketHealthCode}  
-        onChangeText={(text) => setCode(text)}  
-        placeholder="Please Enter Your Invitation Code"    
-        keyboardType="phone-pad"   
-        onSubmitEditing={() => pwdRef1.current.focus()}       
+        label="Heal in Pocket Invitation Code*"    
+        value={invitationCode}  
+        onChangeText={(text) => setInvitationCode(text)}  
+        placeholder="Please Enter Your Invitation Code"
+        onSubmitEditing={() => nameRef.current.focus()}       
       />
+
       <InputBoxWithLabel
-        ref={pwdRef1}
-        label="Phone Number*"    
+        ref={nameRef}
+        label="Name*"
+        value={doctorName}
+        onChangeText={(text) => setDoctorName(text)}
+        placeholder="Please Enter Your Name"
+        onSubmitEditing={() => titleRef.current.focus()}
+      />
+
+      <InputBoxWithLabel
+        ref={titleRef}
+        label="Title*"
+        value={title}
+        onChangeText={(text) => setTitle(text)}
+        placeholder="Please Enter Your title (eg. MD, NP, etc.)"
+        onSubmitEditing={() => phoneRef.current.focus()}
+      />
+
+      <InputBoxWithLabel
+        ref={phoneRef}
+        label="Phone Number* (won't be displayed to patients)"    
         value={phoneNumber}  
         onChangeText={(text) => setPhoneNumber(text)}  
         placeholder="Please Enter Your Phone Number"    
         keyboardType="phone-pad" 
-        onSubmitEditing={() => pwdRef2.current.focus()}         
+        onSubmitEditing={() => pwdRef1.current.focus()}         
       />
       <InputBoxWithLabel
-        ref={pwdRef2}
+        ref={pwdRef1}
         label="Password*"   
         value={password}   
         onChangeText={(text) => setPassword(text)}  
         placeholder="Please Enter Password"   
         secureTextEntry={true}
         returnKeyType='next'
-        onSubmitEditing={() => pwdRef3.current.focus()}  
+        onSubmitEditing={() => pwdRef2.current.focus()}  
       />
       <InputBoxWithLabel
-        ref={pwdRef3}
+        ref={pwdRef2}
         label="Confirm Password*"
         value={confirmPassword}        
         onChangeText={(text) => setConfirmPassword(text)}

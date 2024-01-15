@@ -1,10 +1,10 @@
-import React, { useState, useRef, useContext,useEffect } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { View, TouchableOpacity, Text, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 
 
 import styles from './styles';
 import axios from 'axios';
-
+import { UserContext } from "../../../context/userContext.js";
 import InputBoxWithLabel from './components/InputBoxWithLabel';
 import BigInputBoxWithLabel from './components/BigInputBoxWithLabel';
 import ProviderInputBox from './components/ProviderInputBox';
@@ -12,7 +12,7 @@ import baseURL from '../../../common/baseURL';
 
 export default function ProviderResponseScreen({route, navigation}) {  
   const { request_id } = route.params;
-
+  const { userId, setUserId } = useContext(UserContext);
   const [name, setName] =  useState("");
   const [dob, setDOB] = useState("");
   const [insurance, setInsurance] = useState("");
@@ -57,17 +57,10 @@ export default function ProviderResponseScreen({route, navigation}) {
         const requestResponse = await axios.get(`${baseURL}request/${request_id}`);
         const recordId = requestResponse.data.request.corresponding_record;
         const recordResponse = await axios.get(`${baseURL}record/${recordId}`);
-        const recordData = recordResponse.data.record;
-        console.log(recordData);
-
+        const recordData = recordResponse.data.record;  
         const patientId = recordData.owner;
-        console.log("patientID is: " + patientId);
-
         const patient = await axios.get(`${baseURL}patient/patient/${patientId}`);
         const patientData = patient.data.patient;
-        console.log(patientData);
-
-
         /**
          * We don't want to show -1 on the screen (may cause confusion to users)
          * if the value is -1, which means it is a null, then we update our local state as null
@@ -143,14 +136,12 @@ export default function ProviderResponseScreen({route, navigation}) {
         console.log('Error:', error.message);
       }
     }
-  }
-
-  const doctorId = '659afd3ac4f02806bb8e6b8e';
+  };
 
   // add the record id to doctor's viewed_records
-  const addRecordtoDoctor = async(doctorId, recordId) => {
+  const addRecordtoDoctor = async(userId, recordId) => {
     try {
-      const response = await axios.patch(`${baseURL}doctor/addViewedRecords/${doctorId}`, { record_id: recordId });
+      const response = await axios.patch(`${baseURL}doctor/addViewedRecords/${userId}`, { record_id: recordId });
       console.log("Record added successfully:", response.data);
     } catch (error) {
       if (error.response) {
@@ -190,10 +181,8 @@ const handleSubmit = async () => {
     // helper method for parsing the allergies and medication's format
     const parseMedicationAllergies = () => {
       const allergyStart = medicationAllergies.indexOf('[Allergies:');
-      const medication = medicationAllergies.substring(0, allergyStart).trim();
-      console.log(allergyStart);
-      const allergy = medicationAllergies.substring(allergyStart + 11, medicationAllergies.length - 1).trim(" ");
-    
+      const medication = medicationAllergies.substring(0, allergyStart).trim();      
+      const allergy = medicationAllergies.substring(allergyStart + 11, medicationAllergies.length - 1).trim(" ");    
       return { medication, allergy };
     };
 
@@ -228,7 +217,7 @@ const handleSubmit = async () => {
 
     // add this record id to doctor's viewed_records
     if (updated_record){
-      await addRecordtoDoctor(doctorId, recordId);
+      await addRecordtoDoctor(userId, recordId);
     }
     const deletedRequest = deleteRequest(oldRequest.id);
     
