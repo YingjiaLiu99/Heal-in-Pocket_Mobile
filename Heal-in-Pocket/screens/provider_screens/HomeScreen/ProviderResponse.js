@@ -46,6 +46,8 @@ export default function ProviderResponseScreen({route, navigation}) {
   const [oxygen, setOxygen] = useState('');
   const [glucose, setGlucose] = useState('');
 
+  const [patientData, setPatientData] = useState(null);
+
 
   const convertTimestamp = (mongodbTimestamp) => {
     const date = new Date(mongodbTimestamp);
@@ -69,6 +71,7 @@ export default function ProviderResponseScreen({route, navigation}) {
 
         const patient = await axios.get(`${baseURL}patient/patient/${patientId}`);
         const patientData = patient.data.patient;
+        setPatientData(patient.data.patient);
         console.log(patientData);
 
 
@@ -81,6 +84,8 @@ export default function ProviderResponseScreen({route, navigation}) {
         //smoking and pregnant
         setSmokingStatus(recordData.smoking_status);     
         setPregnancyStatus(recordData.pregnancy_status)
+
+        //vitals
 
         setTemperature(recordData.vitals.temperature === -1 ? null : recordData.vitals.temperature);
         setGlucose(recordData.vitals.glucose === -1 ? null : recordData.vitals.glucose);
@@ -259,12 +264,16 @@ const handleSubmit = async () => {
   };
 
   const navigateToPatientProfile = () => {
-    navigation.navigate('Patient Profile'); //
+    if (patientData) {
+      navigation.navigate('Patient Profile', { patientData });
+    } else {
+      console.log('Patient data is not yet loaded.');
+    }
   };
 
 return (
   <View style={{flex:1}}>
-    <View style={{
+    {/* <View style={{
       position: 'absolute',              
       paddingTop: 0, 
       backgroundColor: '#DDE5FD', 
@@ -274,23 +283,53 @@ return (
       justifyContent: 'space-between',
       height:85,
       width:'100%'
-    }}>
-      <View>
+    }}> */}
 
-      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+    <View style={{
+    // position: 'absolute',  
+    paddingTop: 0,
+    backgroundColor: '#DDE5FD',
+    flexDirection: 'row', // This is the row that contains the text column and the button
+    justifyContent: 'space-between', // This will place the column on the left and the button on the right
+    alignItems: 'center', // Vertically center the contents
+    height: 85,
+    paddingHorizontal: 10, // Add some horizontal padding
+    zIndex: 3,
+    elevation: 3,
+  }}>
+    {/* Column for Name, DOB, and Street Corner Care */}
+    <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+      <Text style={{ fontSize: 25, fontWeight: '500' }}>{name}</Text>
+      <Text style={{ fontSize: 20, fontWeight: '400' }}>DOB: {dob}</Text>
+      <Text style={{ fontSize: 20, fontWeight: '400' }}>
+        Street Corner Care {'['} {formattedDate} {']'}
+      </Text>
+    </View>
+    {/* Button to navigate to the patient profile page */}
+
+      <TouchableOpacity onPress={navigateToPatientProfile} style={styles.headerButton}>
+    <Text style={styles.headerButtonText}>Patient Profile</Text> 
+    </TouchableOpacity>
+      
+
+    {/* <View> */}
+
+      {/* <View style={{ flexDirection: 'row', paddingLeft:5}}>
 
         <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{name}</Text>
-      </View>              
+      </View>               */}
       
-      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+      {/* <View style={{ flexDirection: 'row', paddingLeft:5}}>
         <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {dob}</Text>
-      </View>
+      </View> */}
 
-      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+      {/* <View style={{ flexDirection: 'row', paddingLeft:5}}>
         <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>Street Corner Care  {'['} {formattedDate} {']'}</Text>
-      </View>
-
-      </View>
+   
+      </View>  */}
+      {/* </View> */}
+    
+    
 
   </View>
 
@@ -303,7 +342,7 @@ return (
         paddingVertical:0,      
         marginTop: 0,
         marginHorizontal:0, 
-        paddingTop: 85
+        // paddingTop: 25
       }}>
     
       <Text style={{fontSize:27}}>Visit Note</Text>

@@ -49,6 +49,7 @@ import MoreInfoProvider from './screens/provider_screens/LoginScreen/MoreInfoPro
 import HomeScreen_provider from './screens/provider_screens/HomeScreen/HomeScreen_provider';
 import ProviderResponseScreen from './screens/provider_screens/HomeScreen/ProviderResponse';
 import SuccessScreen_provider from './screens/provider_screens/HomeScreen/Success';
+import PatientProfileScreen from './screens/provider_screens/HomeScreen/PatientProfile';
 // Provider chat related screens:
 import ChatMainPage_provider from './screens/provider_screens/Chat/ChatMainScreen_provider';
 // Provider past visit related screens:
@@ -275,6 +276,7 @@ function HomeNavigator_provider() {
     <HomeStack_provider.Navigator>
       <HomeStack_provider.Screen name="Home" component={HomeScreen_provider} options={{headerBackTitle:'Back', headerTitle: '', headerStyle:{backgroundColor:'#DDE5FD'}}} />
       <HomeStack_provider.Screen name="Provider Response" component={ProviderResponseScreen} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}} />
+      <HomeStack_provider.Screen name="Patient Profile" component={PatientProfileScreen} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}} />
       <HomeStack_provider.Screen name="Success" component={SuccessScreen_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD',}}} />
       
       {/* any follow up screens from home goes from here */}

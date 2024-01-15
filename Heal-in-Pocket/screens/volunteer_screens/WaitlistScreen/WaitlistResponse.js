@@ -9,7 +9,7 @@ import ProviderInputBox from './components/ProviderInputBox';
 import baseURL from '../../../common/baseURL';
 
 export default function WaitlistResponseScreen({route, navigation}) { 
-  const { request_id } = route.params;
+  const {request_id } = route.params;
 
   // const patientInfo = ;
   // const medicalHistory = ;
