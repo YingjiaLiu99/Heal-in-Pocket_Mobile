@@ -72,12 +72,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderRadius: 20,
   },  
-  // headerButton: {
-  //   marginRight: 10,
-  //   backgroundColor: 'white',
-  //   padding: 10,
-  //   borderRadius: 5,
-  // },
   headerButton: {
   width: 70, // Diameter of the round button
   height: 70, // Diameter of the round button
