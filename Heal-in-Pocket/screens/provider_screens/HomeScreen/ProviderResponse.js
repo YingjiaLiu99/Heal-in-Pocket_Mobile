@@ -244,7 +244,7 @@ const handleSubmit = async () => {
     }
     const deletedRequest = deleteRequest(oldRequest.id);
     
-    navigation.navigate('Success');
+    navigation.navigate('Success'); 
   } 
   else {
     // Press first time, input is done, so set it true
@@ -256,7 +256,11 @@ const handleSubmit = async () => {
     if(confirmSubmit) {
       setConfirmSubmit(false);
     }    
-  }; 
+  };
+
+  const navigateToPatientProfile = () => {
+    navigation.navigate('Patient Profile'); //
+  };
 
 return (
   <View style={{flex:1}}>
@@ -283,7 +287,7 @@ return (
       </View>
 
       <View style={{ flexDirection: 'row', paddingLeft:5}}>
-        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>{insurance} {'['} {formattedDate} {']'}</Text>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>Street Corner Care  {'['} {formattedDate} {']'}</Text>
       </View>
 
       </View>
