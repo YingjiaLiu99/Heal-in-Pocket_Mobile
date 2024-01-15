@@ -23,6 +23,10 @@ export default function ProviderResponseScreen({route, navigation}) {
   const [subjective, setSubjective] = useState('');
   const [objective, setObjective] = useState('');
   const [assessment, setAssessment] = useState(''); 
+
+  const [smokingStatus, setSmokingStatus] = useState('');
+  const [pregnancyStatus, setPregnancyStatus] = useState('');
+
   const subjectiveRef = useRef(null);
   const objectiveRef = useRef(null);
   const assessmentRef = useRef(null);
@@ -74,6 +78,10 @@ export default function ProviderResponseScreen({route, navigation}) {
          * When the volunteer update(or upload) the record again, all the null value will still be 
          * uploaded as -1 to the database
          */
+        //smoking and pregnant
+        setSmokingStatus(recordData.smoking_status);     
+        setPregnancyStatus(recordData.pregnancy_status)
+
         setTemperature(recordData.vitals.temperature === -1 ? null : recordData.vitals.temperature);
         setGlucose(recordData.vitals.glucose === -1 ? null : recordData.vitals.glucose);
         setOxygen(recordData.vitals.oxygen === -1 ? null : recordData.vitals.oxygen);
@@ -330,6 +338,24 @@ return (
         }}
       />
       </View>
+      <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>
+      <InputBoxWithLabel 
+      label={"Smoking Status"}
+      value={smokingStatus}
+      onChange={(text) => setSmokingStatus(text)}
+      placeholder={"N/A"}
+      width='48%'
+    />
+
+      <InputBoxWithLabel 
+      label={"Pregnant Status"}
+      value={pregnancyStatus}
+      onChange={(text) => setPregnancyStatus(text)}
+      placeholder={"N/A"}
+      width='48%'
+    />
+      </View>
+
 
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
 
