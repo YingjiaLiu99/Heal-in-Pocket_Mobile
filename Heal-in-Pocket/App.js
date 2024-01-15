@@ -358,7 +358,7 @@ function HomeNavigator_vol() {
       <HomeStack_vol.Screen name="Check Patient Information" component={CheckPatientInformation_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <HomeStack_vol.Screen name="Register Patient Phone Verification" component={RegisterPatientPhoneVerification_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <HomeStack_vol.Screen name="Options" component={OptionScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
-      <HomeStack_vol.Screen name="Upload New Record" component={UploadNewRecord_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <HomeStack_vol.Screen name="Upload New Record" component={UploadNewRecord_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}, headerLeft: () => null,}}/>
       <HomeStack_vol.Screen name='Success' component={SuccessScreen_vol} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
 
     </HomeStack_vol.Navigator>

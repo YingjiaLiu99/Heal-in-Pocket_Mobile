@@ -11,6 +11,10 @@ import RadioMutipleChoiceCenter from '../../../components/RadioMultipleChoiceCen
 import styles from './styles';
 import baseURL from '../../../common/baseURL';
 
+UploadMedicalInfo.navigationOptions = {
+  headerLeft: () => null,
+  // You can add other navigation options here as needed
+};
 export default function UploadMedicalInfo({ navigation, route }) {
 
 
