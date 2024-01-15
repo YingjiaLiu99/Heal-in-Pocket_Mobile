@@ -219,6 +219,10 @@ const handleSubmit = async () => {
       allergies: medicationAllergyFormat.allergy || "N/A",
       current_medications: medicationAllergyFormat.medication || 'N/A',
       chief_complaint: chiefComplaint || "N/A",
+      smoking_status: smokingStatus || "N/A",
+      pregnancy_status: pregnancyStatus || "N/A",
+
+
   
       vitals: {
         temperature: temperature || -1,
