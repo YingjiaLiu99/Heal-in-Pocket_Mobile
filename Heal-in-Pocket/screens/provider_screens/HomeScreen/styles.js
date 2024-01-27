@@ -71,7 +71,21 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 5,
     borderRadius: 20,
-  },      
+  },  
+  headerButton: {
+  width: 70, // Diameter of the round button
+  height: 70, // Diameter of the round button
+  borderRadius: 35, // Half the width/height to make it round
+  backgroundColor: 'blue', // Button color
+  justifyContent: 'center',
+  alignItems: 'center',
+  },
+  headerButtonText: {
+    color: 'white', 
+    fontSize: 16,
+    textAlign: 'center'
+  }
+      
   
 });
 

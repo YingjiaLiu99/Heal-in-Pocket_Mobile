@@ -9,11 +9,14 @@ import ProviderInputBox from './components/ProviderInputBox';
 import baseURL from '../../../common/baseURL';
 
 export default function WaitlistResponseScreen({route, navigation}) { 
-  const { request_id } = route.params;
+  const {request_id } = route.params;
 
   // const patientInfo = ;
   // const medicalHistory = ;
-  // const vitalData =;
+  // const vitalData =;'
+  const [name, setName] =  useState("");
+  const [dob, setDOB] = useState("");
+  const [formattedDate, setFormattedDate] = useState("");
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); 
   const [subjective, setSubjective] = useState('');
@@ -77,6 +80,13 @@ export default function WaitlistResponseScreen({route, navigation}) {
       }
     }
   }
+  const convertTimestamp = (mongodbTimestamp) => {
+    const date = new Date(mongodbTimestamp);
+    const formatted = `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}/${date.getFullYear()}`;  
+    setFormattedDate(formatted);
+    return formatted;
+  };
+
 
 
   useEffect(() => {
@@ -90,6 +100,14 @@ export default function WaitlistResponseScreen({route, navigation}) {
         const recordResponse = await axios.get(`${baseURL}record/${recordId}`);
         const recordData = recordResponse.data.record;
         console.log(recordData);
+
+        const patientId = recordData.owner;
+        console.log("patientID is: " + patientId);
+
+        const patient = await axios.get(`${baseURL}patient/patient/${patientId}`);
+        const patientData = patient.data.patient;
+        console.log(patientData);
+
   
         /**
          * We don't want to show -1 on the screen (may cause confusion to users)
@@ -118,6 +136,11 @@ export default function WaitlistResponseScreen({route, navigation}) {
         // Provider and scribe, but not update:
         setProviderName(recordData.provider_name);
         setScribeName(recordData.scribe_name);
+
+        setName(patientData.name);
+        setDOB(patientData.date_of_birth);  
+        // setInsurance(patientData.insurance);
+        const formattedDate = convertTimestamp(requestResponse.data.request.updatedAt)
   
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -228,7 +251,7 @@ return (
       }}>
         <View>
 
-        <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        {/* <View style={{ flexDirection: 'row', paddingLeft:5}}>
           <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{"Jimmy Wang"}</Text>
         </View>              
         
@@ -238,6 +261,18 @@ return (
 
         <View style={{ flexDirection: 'row', paddingLeft:5}}>
           <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>{"Street Corner Care"} {'['} {"11/12/2022"} {']'}</Text>
+        </View> */}
+        <View style={{ flexDirection: 'row', paddingLeft:5}}>
+
+        <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{name}</Text>
+        </View>              
+
+        <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {dob}</Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>Street Corner Care  {'['} {formattedDate} {']'}</Text>
         </View>
 
         </View>

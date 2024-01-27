@@ -23,6 +23,10 @@ export default function ProviderResponseScreen({route, navigation}) {
   const [subjective, setSubjective] = useState('');
   const [objective, setObjective] = useState('');
   const [assessment, setAssessment] = useState(''); 
+
+  const [smokingStatus, setSmokingStatus] = useState('');
+  const [pregnancyStatus, setPregnancyStatus] = useState('');
+
   const subjectiveRef = useRef(null);
   const objectiveRef = useRef(null);
   const assessmentRef = useRef(null);
@@ -41,6 +45,8 @@ export default function ProviderResponseScreen({route, navigation}) {
   const [pulse, setPulse] = useState('');
   const [oxygen, setOxygen] = useState('');
   const [glucose, setGlucose] = useState('');
+
+  const [patientData, setPatientData] = useState(null);
 
 
   const convertTimestamp = (mongodbTimestamp) => {
@@ -61,12 +67,22 @@ export default function ProviderResponseScreen({route, navigation}) {
         const patientId = recordData.owner;
         const patient = await axios.get(`${baseURL}patient/patient/${patientId}`);
         const patientData = patient.data.patient;
+
+        setPatientData(patient.data.patient);
+        console.log(patientData);
+
         /**
          * We don't want to show -1 on the screen (may cause confusion to users)
          * if the value is -1, which means it is a null, then we update our local state as null
          * When the volunteer update(or upload) the record again, all the null value will still be 
          * uploaded as -1 to the database
          */
+        //smoking and pregnant
+        setSmokingStatus(recordData.smoking_status);     
+        setPregnancyStatus(recordData.pregnancy_status)
+
+        //vitals
+
         setTemperature(recordData.vitals.temperature === -1 ? null : recordData.vitals.temperature);
         setGlucose(recordData.vitals.glucose === -1 ? null : recordData.vitals.glucose);
         setOxygen(recordData.vitals.oxygen === -1 ? null : recordData.vitals.oxygen);
@@ -200,6 +216,10 @@ const handleSubmit = async () => {
       allergies: medicationAllergyFormat.allergy || "N/A",
       current_medications: medicationAllergyFormat.medication || 'N/A',
       chief_complaint: chiefComplaint || "N/A",
+      smoking_status: smokingStatus || "N/A",
+      pregnancy_status: pregnancyStatus || "N/A",
+
+
   
       vitals: {
         temperature: temperature || -1,
@@ -221,7 +241,7 @@ const handleSubmit = async () => {
     }
     const deletedRequest = deleteRequest(oldRequest.id);
     
-    navigation.navigate('Success');
+    navigation.navigate('Success'); 
   } 
   else {
     // Press first time, input is done, so set it true
@@ -233,11 +253,19 @@ const handleSubmit = async () => {
     if(confirmSubmit) {
       setConfirmSubmit(false);
     }    
-  }; 
+  };
+
+  const navigateToPatientProfile = () => {
+    if (patientData) {
+      navigation.navigate('Patient Profile', { patientData });
+    } else {
+      console.log('Patient data is not yet loaded.');
+    }
+  };
 
 return (
   <View style={{flex:1}}>
-    <View style={{
+    {/* <View style={{
       position: 'absolute',              
       paddingTop: 0, 
       backgroundColor: '#DDE5FD', 
@@ -247,23 +275,53 @@ return (
       justifyContent: 'space-between',
       height:85,
       width:'100%'
-    }}>
-      <View>
+    }}> */}
 
-      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+    <View style={{
+    // position: 'absolute',  
+    paddingTop: 0,
+    backgroundColor: '#DDE5FD',
+    flexDirection: 'row', // This is the row that contains the text column and the button
+    justifyContent: 'space-between', // This will place the column on the left and the button on the right
+    alignItems: 'center', // Vertically center the contents
+    height: 85,
+    paddingHorizontal: 10, // Add some horizontal padding
+    zIndex: 3,
+    elevation: 3,
+  }}>
+    {/* Column for Name, DOB, and Street Corner Care */}
+    <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+      <Text style={{ fontSize: 25, fontWeight: '500' }}>{name}</Text>
+      <Text style={{ fontSize: 20, fontWeight: '400' }}>DOB: {dob}</Text>
+      <Text style={{ fontSize: 20, fontWeight: '400' }}>
+        Street Corner Care {'['} {formattedDate} {']'}
+      </Text>
+    </View>
+    {/* Button to navigate to the patient profile page */}
+
+      <TouchableOpacity onPress={navigateToPatientProfile} style={styles.headerButton}>
+    <Text style={styles.headerButtonText}>Patient Profile</Text> 
+    </TouchableOpacity>
+      
+
+    {/* <View> */}
+
+      {/* <View style={{ flexDirection: 'row', paddingLeft:5}}>
 
         <Text style={{fontSize: 25, fontWeight: '500',width:'100%',}}>{name}</Text>
-      </View>              
+      </View>               */}
       
-      <View style={{ flexDirection: 'row', paddingLeft:5}}>
+      {/* <View style={{ flexDirection: 'row', paddingLeft:5}}>
         <Text style={{fontSize: 20, fontWeight: '400', width: '45%'}}>DOB: {dob}</Text>
-      </View>
+      </View> */}
 
-      <View style={{ flexDirection: 'row', paddingLeft:5}}>
-        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>{insurance} {'['} {formattedDate} {']'}</Text>
-      </View>
-
-      </View>
+      {/* <View style={{ flexDirection: 'row', paddingLeft:5}}>
+        <Text style={{fontSize: 20, fontWeight: '400', width: '100%'}}>Street Corner Care  {'['} {formattedDate} {']'}</Text>
+   
+      </View>  */}
+      {/* </View> */}
+    
+    
 
   </View>
 
@@ -276,7 +334,7 @@ return (
         paddingVertical:0,      
         marginTop: 0,
         marginHorizontal:0, 
-        paddingTop: 85
+        // paddingTop: 25
       }}>
     
       <Text style={{fontSize:27}}>Visit Note</Text>
@@ -319,6 +377,24 @@ return (
         }}
       />
       </View>
+      <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>
+      <InputBoxWithLabel 
+      label={"Smoking Status"}
+      value={smokingStatus}
+      onChange={(text) => setSmokingStatus(text)}
+      placeholder={"N/A"}
+      width='48%'
+    />
+
+      <InputBoxWithLabel 
+      label={"Pregnant Status"}
+      value={pregnancyStatus}
+      onChange={(text) => setPregnancyStatus(text)}
+      placeholder={"N/A"}
+      width='48%'
+    />
+      </View>
+
 
       <View style={{width:'100%', flexDirection: 'row', justifyContent: 'space-between',}}>
 

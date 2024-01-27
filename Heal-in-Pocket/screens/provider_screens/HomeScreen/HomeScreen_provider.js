@@ -25,7 +25,7 @@ export default function HomeScreen({navigation}) {
 
   const handleAccept = (request_id) => {
 
-    navigation.navigate("Provider Response", { request_id })    
+    navigation.navigate("Provider Response", {request_id })    
 
   };
 
