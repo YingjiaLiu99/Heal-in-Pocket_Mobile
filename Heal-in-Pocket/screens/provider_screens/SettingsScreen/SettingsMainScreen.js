@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 
 import styles from "./styles";
+import { UserContext } from '../../../context/userContext';
 
 export default function SettingsMainScreen({navigation}) {
 
+    const { userId, setUserId } = useContext(UserContext);
     const handleLogout = () => {
+        setUserId('');
+
         navigation.reset({
             index: 0,
             routes: [{ name: 'Login Section' }],
-        });
-        // navigation.navigate("Login");
+        });        
     };
 
     return (

@@ -1,11 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import axios from 'axios';
 
+import { UserContext } from '../../../context/userContext';
+import baseURL from '../../../common/baseURL';
 import InputBoxWithLabel from '../../provider_screens/LoginScreen/components/InputBoxWithLabel';
 import styles from './styles';
 
 export default function ProviderLoginScreen({ navigation }) {
+  const { userId, setUserId } = useContext(UserContext);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -13,22 +17,45 @@ export default function ProviderLoginScreen({ navigation }) {
 
 // The backend authentification should put inside handleLogin
 
-  const handleLogin = () => {
+  const handleLogin = async() => {
     if (!phoneNumber || !password) {
       setErrorMessage('Please fill in all fields');
     }
     else{
-      // Backend code goes here
-      console.log('log in successful');     
-      // this will prevent user go back to previous stack
-      navigation.reset({
-        index: 0,
-        routes: [{ name:'Provider Main Tab', 
-          state:{ 
-            routes:[ {name:'My Home', state:{routes:[ {name:'Home'} ]}} ] 
-          } 
-        }],
-      });
+      
+      try {
+        const signinBody = {
+          phone_number: phoneNumber,
+          password: password
+        }
+        const response = await axios.post(`${baseURL}doctor/login-phone`, signinBody);
+        if (response.status >= 200 && response.status < 300){
+          setUserId(response.data.doctor.id);
+
+          // this will prevent user go back to previous stack
+          navigation.reset({
+            index: 0,
+            routes: [{ name:'Provider Main Tab', 
+              state:{ 
+                routes:[ {name:'My Home', state:{routes:[ {name:'Home'} ]}} ] 
+              } 
+            }],
+          });
+
+        }
+        
+      } catch (error) {
+        if (error.response) {
+          // The request was successfully sent to the server and the server returned an error response. 
+          console.log('Backend Error:', error.response.data.message);
+        } else if (error.request) {
+          // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
+          console.log('Network Error:', error.message);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error:', error.message);
+        }
+      }
 
     }
   };

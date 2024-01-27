@@ -1,20 +1,14 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import BigInputBoxWithLabel from './components/BigInputBoxWithLabel';
 import styles from './styles';
 
-const MoreInfoProvider = ({navigation}) =>{    
-    const [bio, setBio] = useState('');
-    const [experience, setExperience] = useState('');
-    const pwdRef1 = useRef();
-    const pwdRef2 = useRef();
-
+const MoreInfoProvider = ({navigation}) =>{        
+    const [bio, setBio] = useState(''); 
+    
     const handleCreateAccount = () => {
-        console.log(`Bio: ${bio}`);
-        console.log(`Experience: ${experience}`);        
-
         navigation.reset({
             index: 0,
             routes: [{ name:'Provider Main Tab', 
@@ -39,29 +33,17 @@ const MoreInfoProvider = ({navigation}) =>{
                     label="Bio"        
                     value={bio}
                     onChangeText={(text) => setBio(text)}
-                    placeholder="Write a short introduction of yourself... (Optional) "
-                    keyboardType="default"
-                    width='100%'
-                    returnKeyType='next'
-                    onSubmitEditing={() => pwdRef1.current.focus()}  
-
-                />
-
-                <BigInputBoxWithLabel
-                    ref={pwdRef1}
-                    label="Experience"        
-                    value={experience}
-                    onChangeText={(text) => setExperience(text)}
-                    placeholder="Write down any experience you want to share... (Optional) "
+                    placeholder="Write a short introduction of yourself...Such as your experience, affiliation, hobbies (Optional) "
                     keyboardType="default"
                     width='100%'
                     returnKeyType='done'
                 />
+
             </View>
             
             <View style={{width:'100%',alignItems:'center',marginTop:15,marginBottom:40}}>
                 <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
-                    <Text style={styles.buttonText}>Create Account</Text>
+                    <Text style={styles.buttonText}>Skip</Text>
                 </TouchableOpacity>
             </View>
 

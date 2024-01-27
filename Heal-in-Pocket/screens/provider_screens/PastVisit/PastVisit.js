@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles.js';
 import PastVisitReport from './components/PastVisitReport.js';
-
+import { UserContext } from "../../../context/userContext.js";
 import axios from 'axios';
 import baseURL from '../../../common/baseURL';
 
 export default function PastVisit( {navigation} ) {
+    const { userId, setUserId } = useContext(UserContext);
     const [reviewedRecordsData, setReviewedRecordsData] = useState([]);
     const [expandedDates, setExpandedDates] = useState([]);
     const [medicalHistory, setMedicalHistory] = useState({});
@@ -55,14 +56,13 @@ export default function PastVisit( {navigation} ) {
           } 
     };
 
-    const doctorId = "659afd3ac4f02806bb8e6b8e";
     const site = "Street Corner Care"
     // const time = "10:00 am"
 
     // call backend to get all viewed_records of a corresponding doctor_id
-    const getAllViewedRecords = async (doctorId) => {
+    const getAllViewedRecords = async (userId) => {
         try {
-          const response = await axios.get(`${baseURL}doctor/viewedRecords/${doctorId}`);
+          const response = await axios.get(`${baseURL}doctor/viewedRecords/${userId}`);
           const records = response.data.viewed_records;        
           const medicalHistory = {}
           const patientInfo = {}
@@ -89,8 +89,7 @@ export default function PastVisit( {navigation} ) {
             return acc;
         }, {});
 
-            for(const record of records){
-                console.log("record is: ", record);
+            for(const record of records){                
                 if (record.owner) {
                     const {name, DOB} = await getPatientInfo(record.owner);
                     const date = getDate(record.updatedAt);
@@ -121,10 +120,11 @@ export default function PastVisit( {navigation} ) {
     };
 
     useEffect(() => {
-        getAllViewedRecords(doctorId);
-    }, [doctorId]);
+        console.log(userId);
+        getAllViewedRecords(userId);
+    }, [userId]);
       
-    console.log("reviewedRecordsData looks like: ", reviewedRecordsData);
+    // console.log("reviewedRecordsData looks like: ", reviewedRecordsData);
 
    
     

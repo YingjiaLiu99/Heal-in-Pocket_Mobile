@@ -6,9 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import  Feather from 'react-native-vector-icons/Feather';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
-// import the context of VisitData
-import { VisitDataContextProvider } from './context/context_VisitData_function';
-import { RequestMessContextProvider } from './context/context_requestMess_function';
+// import the context of user
+import { UserProvider } from './context/userContext';
 // Welcome Page:
 import WelcomeScreen from './screens/WelcomeScreen';
 // Entry screen of the app: general login page:
@@ -43,7 +42,6 @@ import LoginScreen_provider from './screens/provider_screens/LoginScreen/Provide
 import PhoneVerification_provider from './screens/provider_screens/LoginScreen/ProviderPhoneVerification';
 import ProviderEnterPhoneNumToResetPass from './screens/provider_screens/LoginScreen/ProviderEnterPhoneNumToResetPass';
 import ProviderResetPassword from './screens/provider_screens/LoginScreen/ProviderResetPassword';
-import BasicProviderInfo from './screens/provider_screens/LoginScreen/BasicProviderInfo';
 import MoreInfoProvider from './screens/provider_screens/LoginScreen/MoreInfoProvider';
 // provider homescreen and related screens:
 import HomeScreen_provider from './screens/provider_screens/HomeScreen/HomeScreen_provider';
@@ -131,8 +129,7 @@ function LoginNavigator() {
       <LoginStack.Screen name="Provider Sign Up" component={SignUpScreen_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <LoginStack.Screen name="Provider Phone Verification" component={PhoneVerification_provider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <LoginStack.Screen name="Provider Reset Password" component={ProviderResetPassword} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
-      <LoginStack.Screen name="Provider Enter Phone Num to Reset Password" component={ProviderEnterPhoneNumToResetPass} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
-      <LoginStack.Screen name="Basic Provider Info" component={BasicProviderInfo} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
+      <LoginStack.Screen name="Provider Enter Phone Num to Reset Password" component={ProviderEnterPhoneNumToResetPass} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>      
       <LoginStack.Screen name="More Provider Info" component={MoreInfoProvider} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>      
       
       {/* Volunteer login related screens: */}
@@ -391,8 +388,7 @@ function SettingsNavigator_vol() {
 //-------------------------------------------------Entry Point of App.js----------------------------------------------------------------//
 function App() {
   return (
-    <VisitDataContextProvider>
-    <RequestMessContextProvider>
+    <UserProvider>
     <NavigationContainer>
       <Stack.Navigator options={{ headerShown: false }}>
         <Stack.Screen name="Login Section" options={{ headerShown: false }} component={LoginNavigator} />
@@ -401,8 +397,7 @@ function App() {
         <Stack.Screen name="Volunteer Main Tab" options={{ headerShown: false }} component={HomeTab_vol} />
       </Stack.Navigator>
     </NavigationContainer>
-    </RequestMessContextProvider>
-    </VisitDataContextProvider>
+    </UserProvider>
   );
 }
 
