@@ -27,7 +27,16 @@ export default function PhoneVerification({route, navigation}) {
         }
         else{
             console.log('go to volunteer basic info, because its from sign up');
-            navigation.navigate("Basic Volunteer Info");
+            // navigation.navigate("Basic Volunteer Info");
+            navigation.reset({
+                index: 0,
+                routes: [{ name:'Volunteer Main Tab', 
+                  state:{ 
+                    routes:[ {name:'My Home', state:{routes:[ {name:'Home'} ]}} ] 
+                  } 
+                }],
+              });
+
         }      
     };
     const handleFromResetPassword = () => {
