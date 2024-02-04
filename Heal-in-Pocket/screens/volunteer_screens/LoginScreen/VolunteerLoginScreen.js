@@ -1,9 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import InputBoxWithLabel from '../../volunteer_screens/LoginScreen/components/InputBoxWithLabel';
 import styles from './styles';
+import axios from 'axios';
+import baseURL from '../../../common/baseURL';
+import { UserContext } from '../../../context/userContext';
+
 
 export default function VolunteerLoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -11,6 +15,7 @@ export default function VolunteerLoginScreen({ navigation }) {
   const [errorMessage, setErrorMessage] = useState('');
   const pwdRef = useRef();
   const phoneRef = useRef(null);
+  const {userId, setUserId} = useContext(UserContext);
 
   //my attempt to fix losing focus after navigations. don't work yet
   // useEffect(() => {
@@ -23,22 +28,49 @@ export default function VolunteerLoginScreen({ navigation }) {
   //   return unsubscribe;
   // }, [navigation]);
 
-  const handleLogin = () => {
+  const handleLogin = async() => {
     if (!phoneNumber || !password) {
       setErrorMessage('Please fill in all fields');
     }
     else{
       // Backend code goes here
-      console.log('volunteer log in successful');     
-      // this will prevent user go back to previous stack
-      navigation.reset({
-        index: 0,
-        routes: [{ name:'Volunteer Main Tab', 
-          state:{ 
-            routes:[ {name:'My Home', state:{routes:[ {name:'Home'} ]}} ] 
-          } 
-        }],
-      });
+
+      try {
+        const loginVolunteer = {
+          phone_number: phoneNumber,
+          password: password,
+        }
+
+        const response = await axios.post(`${baseURL}volunteer/login_phone`, loginVolunteer);
+
+        if (response.status >= 200 && response.status < 300){         
+          setUserId(response.data.volunteer.id); // set the global userId to be the new created doctor's id
+          console.log('volunteer log in successful');     
+          navigation.reset({
+            index: 0,
+            routes: [{ name:'Volunteer Main Tab', 
+              state:{ 
+                routes:[ {name:'My Home', state:{routes:[ {name:'Home'} ]}} ] 
+              } 
+            }],
+          });
+        }
+
+      } catch (error) {
+        if (error.response) {
+          // The request was successfully sent to the server and the server returned an error response. 
+          console.log('Backend Error:', error.response.data.message);
+          setErrorMessage(error.response.data.message);
+        } else if (error.request) {
+          // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
+          console.log('Network Error:', error.message);
+          setErrorMessage(error.response.data.message);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error:', error.message);
+          setErrorMessage(error.response.data.message);
+        }
+      }
 
     }
   };
