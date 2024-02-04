@@ -265,29 +265,17 @@ const handleSubmit = async () => {
 
 return (
   <View style={{flex:1}}>
-    {/* <View style={{
-      position: 'absolute',              
-      paddingTop: 0, 
-      backgroundColor: '#DDE5FD', 
-      zIndex: 3, 
-      elevation: 3, 
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      height:85,
-      width:'100%'
-    }}> */}
-
     <View style={{
-    // position: 'absolute',  
-    paddingTop: 0,
-    backgroundColor: '#DDE5FD',
-    flexDirection: 'row', // This is the row that contains the text column and the button
-    justifyContent: 'space-between', // This will place the column on the left and the button on the right
-    alignItems: 'center', // Vertically center the contents
-    height: 85,
-    paddingHorizontal: 10, // Add some horizontal padding
-    zIndex: 3,
-    elevation: 3,
+      // position: 'absolute',  
+      paddingTop: 0,
+      backgroundColor: '#DDE5FD',
+      flexDirection: 'row', // This is the row that contains the text column and the button
+      justifyContent: 'space-between', // This will place the column on the left and the button on the right
+      alignItems: 'center', // Vertically center the contents
+      height: 85,
+      paddingHorizontal: 10, // Add some horizontal padding
+      zIndex: 3,
+      elevation: 3,
   }}>
     {/* Column for Name, DOB, and Street Corner Care */}
     <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
@@ -297,10 +285,10 @@ return (
         Street Corner Care {'['} {formattedDate} {']'}
       </Text>
     </View>
+    
     {/* Button to navigate to the patient profile page */}
-
-      <TouchableOpacity onPress={navigateToPatientProfile} style={styles.headerButton}>
-    <Text style={styles.headerButtonText}>Patient Profile</Text> 
+    <TouchableOpacity onPress={navigateToPatientProfile} style={styles.headerButton}>
+      <Text style={styles.headerButtonText}>Patient Profile</Text> 
     </TouchableOpacity>
       
 

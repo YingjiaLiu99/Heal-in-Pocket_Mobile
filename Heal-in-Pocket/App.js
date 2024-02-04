@@ -65,7 +65,6 @@ import LoginScreen_volunteer from './screens/volunteer_screens/LoginScreen/Volun
 import PhoneVerification_volunteer from './screens/volunteer_screens/LoginScreen/VolunteerPhoneVerification';
 import VolunteerEnterPhoneNumToResetPass from './screens/volunteer_screens/LoginScreen/VolunteerEnterPhoneNumToResetPass';
 import VolunteerResetPassword from './screens/volunteer_screens/LoginScreen/VolunteerResetPassword';
-import BasicVolunteerInfo from './screens/volunteer_screens/LoginScreen/BasicVolunteerInfo';
 // volunteer home screen related screens:
 import HomeScreen_volunteer from './screens/volunteer_screens/HomeScreen/HomeScreen_volunteer';
 import OptionScreen_vol from './screens/volunteer_screens/HomeScreen/OptionScreen';
@@ -138,7 +137,7 @@ function LoginNavigator() {
       <LoginStack.Screen name="Volunteer Phone Verification" component={PhoneVerification_volunteer} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <LoginStack.Screen name="Volunteer Reset Password" component={VolunteerResetPassword} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
       <LoginStack.Screen name="Volunteer Enter Phone Num to Reset Password" component={VolunteerEnterPhoneNumToResetPass} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>
-      <LoginStack.Screen name="Basic Volunteer Info" component={BasicVolunteerInfo} options={{headerBackTitle:'Back',headerTitle: '',headerStyle:{backgroundColor:'#DDE5FD'}}}/>      
+          
 
     </LoginStack.Navigator>
   );

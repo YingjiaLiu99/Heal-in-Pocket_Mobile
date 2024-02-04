@@ -118,7 +118,8 @@ export default function PastVisit( {navigation} ) {
           console.error('Error fetching viewed records:', error);
         }
     };
-
+     
+    // need change here:
     useEffect(() => {
         console.log(userId);
         getAllViewedRecords(userId);

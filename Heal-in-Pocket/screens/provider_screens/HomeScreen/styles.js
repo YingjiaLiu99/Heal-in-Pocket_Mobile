@@ -73,16 +73,16 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },  
   headerButton: {
-  width: 70, // Diameter of the round button
-  height: 70, // Diameter of the round button
+  width: 63, // Diameter of the round button
+  height: 63, // Diameter of the round button
   borderRadius: 35, // Half the width/height to make it round
-  backgroundColor: 'blue', // Button color
+  backgroundColor: '#4287f5', // Button color
   justifyContent: 'center',
   alignItems: 'center',
   },
   headerButtonText: {
     color: 'white', 
-    fontSize: 16,
+    fontSize: 15,
     textAlign: 'center'
   }
       

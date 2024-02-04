@@ -31,7 +31,7 @@ export default function ProviderLoginScreen({ navigation }) {
         const response = await axios.post(`${baseURL}doctor/login-phone`, signinBody);
         if (response.status >= 200 && response.status < 300){
           setUserId(response.data.doctor.id);
-
+          // store the token in secure space
           // this will prevent user go back to previous stack
           navigation.reset({
             index: 0,
