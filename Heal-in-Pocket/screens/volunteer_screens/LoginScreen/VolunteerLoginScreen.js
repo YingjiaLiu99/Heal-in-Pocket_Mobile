@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Modal, ActivityIndicator, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import InputBoxWithLabel from '../../volunteer_screens/LoginScreen/components/InputBoxWithLabel';
@@ -10,6 +10,8 @@ import { UserContext } from '../../../context/userContext';
 
 
 export default function VolunteerLoginScreen({ navigation }) {
+  const [modalVisible, setModalVisible] = useState(false);
+  
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -34,13 +36,12 @@ export default function VolunteerLoginScreen({ navigation }) {
     }
     else{
       // Backend code goes here
-
+      setModalVisible(true);
       try {
         const loginVolunteer = {
           phone_number: phoneNumber,
           password: password,
         }
-
         const response = await axios.post(`${baseURL}volunteer/login_phone`, loginVolunteer);
 
         if (response.status >= 200 && response.status < 300){         
@@ -55,7 +56,6 @@ export default function VolunteerLoginScreen({ navigation }) {
             }],
           });
         }
-
       } catch (error) {
         if (error.response) {
           // The request was successfully sent to the server and the server returned an error response. 
@@ -64,14 +64,15 @@ export default function VolunteerLoginScreen({ navigation }) {
         } else if (error.request) {
           // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
           console.log('Network Error:', error.message);
-          setErrorMessage(error.response.data.message);
+          setErrorMessage("Network error, please try again.");
         } else {
           // Something happened in setting up the request that triggered an Error
-          console.log('Error:', error.message);
-          setErrorMessage(error.response.data.message);
+          console.log('Error:', error);
+          setErrorMessage("An unexpected error occurred, please try again.");
         }
+      } finally {
+        setModalVisible(false); // End loading
       }
-
     }
   };
 
@@ -86,11 +87,27 @@ export default function VolunteerLoginScreen({ navigation }) {
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-    
+      
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>          
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        </View>
+      </Modal>
+
+
       <View style={{marginTop: 25,marginBottom:30}}>
         <Text style={styles.titleText}>Volunteer Login</Text>
       </View>
-      
+
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}      
   
       <InputBoxWithLabel
@@ -129,6 +146,7 @@ export default function VolunteerLoginScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       
+     
     </KeyboardAwareScrollView>
   );
 }

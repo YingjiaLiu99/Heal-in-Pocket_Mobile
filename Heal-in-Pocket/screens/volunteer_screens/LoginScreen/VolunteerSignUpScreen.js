@@ -13,7 +13,6 @@ export default function VolunteerSignUpScreen({navigation}) {
 
   const {userId, setUserId} = useContext(UserContext);
 
-
   const [phoneNumber, setPhoneNumber] = useState('');
   const [invitationCode, setInvitationCode] = useState('');
   const [password, setPassword] = useState('');
@@ -21,11 +20,11 @@ export default function VolunteerSignUpScreen({navigation}) {
   const [errorMessage, setErrorMessage] = useState('');
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');   
-  const pwdRef1 = useRef();
-  const pwdRef2 = useRef();
-  const pwdRef3 = useRef();
-  const pwdRef4 = useRef();
-  const pwdRef5 = useRef();
+  const Ref1 = useRef();
+  const Ref2 = useRef();
+  const Ref3 = useRef();
+  const Ref4 = useRef();
+  const Ref5 = useRef();
 // The Backend code goes here
   const handleSignUp = async() => {   
     if (!phoneNumber || !password || !confirmPassword || !firstName 
@@ -52,8 +51,6 @@ export default function VolunteerSignUpScreen({navigation}) {
           navigation.navigate("Volunteer Phone Verification", { phoneNumber: phoneNumber });
         }
 
-
-
       } catch (error) {
         if (error.response) {
           // The request was successfully sent to the server and the server returned an error response. 
@@ -62,11 +59,11 @@ export default function VolunteerSignUpScreen({navigation}) {
         } else if (error.request) {
           // The request was sent, but no response was received from the server. This can be due to network issues, server downtime, etc.
           console.log('Network Error:', error.message);
-          setErrorMessage(error.response.data.message);
+          setErrorMessage("Network error, please try again.");
         } else {
           // Something happened in setting up the request that triggered an Error
           console.log('Error:', error.message);
-          setErrorMessage(error.response.data.message);
+          setErrorMessage("An unexpected error occurred, please try again.");
         }
       }
     }
@@ -89,61 +86,59 @@ export default function VolunteerSignUpScreen({navigation}) {
         onChangeText={(text) => setInvitationCode(text)}  
         placeholder="Please Enter Your Invitation Code"    
         keyboardType="phone-pad"   
-        onSubmitEditing={() => pwdRef1.current.focus()}       
+        onSubmitEditing={() => Ref1.current.focus()}       
       />
       <InputBoxWithLabel
-        ref={pwdRef1}
+        ref={Ref1}
         label="Phone Number*"    
         value={phoneNumber}  
         onChangeText={(text) => setPhoneNumber(text)}  
         placeholder="Please Enter Your Phone Number"    
         keyboardType="phone-pad" 
-        onSubmitEditing={() => pwdRef2.current.focus()}         
+        onSubmitEditing={() => Ref2.current.focus()}         
       />
 
       <InputBoxWithLabel
-        ref={pwdRef2}
+        ref={Ref2}
         label="Password*"   
         value={password}   
         onChangeText={(text) => setPassword(text)}  
         placeholder="Please Enter Password"   
         secureTextEntry={true}
         returnKeyType='next'
-        onSubmitEditing={() => pwdRef3.current.focus()}  
+        onSubmitEditing={() => Ref3.current.focus()}  
       />
       <InputBoxWithLabel
-        ref={pwdRef3}
+        ref={Ref3}
         label="Confirm Password*"
         value={confirmPassword}        
         onChangeText={(text) => setConfirmPassword(text)}
         placeholder="Please Enter Your Password Again"
         secureTextEntry={true}
         returnKeyType='done'
-        onSubmitEditing={() => pwdRef4.current.focus()} 
+        onSubmitEditing={() => Ref4.current.focus()} 
       />
 
       <InputBoxWithLabel
-        ref={pwdRef4}
+        ref={Ref4}
         label="First Name*"    
         value={firstName}  
         onChangeText={(text) => setFirstName(text)}  
         placeholder="Please Enter Your First Name"    
-        keyboardType="default"  
-        secureTextEntry={true}
+        keyboardType="default"          
         // returnKeyType='next'
-        onSubmitEditing={() => pwdRef5.current.focus()}  
+        onSubmitEditing={() => Ref5.current.focus()}  
 
       />
 
       <InputBoxWithLabel
-        ref={pwdRef5}
+        ref={Ref5}
         label="Last Name*"    
         value={lastName}  
         onChangeText={(text) => setLastName(text)}  
         placeholder="Please Enter Your Last Name"    
         keyboardType="default"  
-        // returnKeyType='done'  
-        secureTextEntry={true}
+        // returnKeyType='done'          
       />
 
       <View style={{width:'100%',alignItems:'center',marginTop:20,marginBottom:40}}>
