@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState, useEffect } from 'react';
 import { ScrollView, Text, TouchableOpacity, View, } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from 'axios';
@@ -8,6 +8,7 @@ import InputBoxWithLabel from './components/InputBoxWithLabel';
 import styles from './styles';
 import { UserContext } from '../../../context/userContext';
 import PasswordInputWithToggle from './components/PasswordInputWithToggle';
+import PasswordRequirementStatus from './components/PasswordRequirementStatus';
 
 
 export default function VolunteerSignUpScreen({navigation}) {
@@ -21,18 +22,58 @@ export default function VolunteerSignUpScreen({navigation}) {
   const [errorMessage, setErrorMessage] = useState('');
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');   
+  const [passwordCheck, setPasswordCheck] = useState(false); // [length, upper, lower, digit, special]
   const Ref1 = useRef();
   const Ref2 = useRef();
   const Ref3 = useRef();
   const Ref4 = useRef();
   const Ref5 = useRef();
+
+  // Constant in this file: 
+  const minPasswordLength = 10;
+
+  // Password Check:
+  const [lengthValid, setLengthValid] = useState(false);
+  const [upperValid, setUpperValid] = useState(false);
+  const [lowerValid, setLowerValid] = useState(false);
+  const [digitValid, setDigitValid] = useState(false);
+  const [specialValid, setSpecialValid] = useState(false);
+
+
+  // Check for password requirements
+  const handlePasswordChange = (text) => {
+    setPassword(text.trim());
+    // Update validation states
+    setLengthValid(text.length >= minPasswordLength); 
+    setUpperValid(/[A-Z]/.test(text));
+    setLowerValid(/[a-z]/.test(text));
+    setDigitValid(/\d/.test(text));
+    setSpecialValid(/[!@#$%^&*(),.?":{}|<>]/.test(text));
+  };
+
+  useEffect(() => {
+    // Perform actions based on the updated state
+    if (lengthValid && upperValid && lowerValid && digitValid && specialValid) {
+      setPasswordCheck(true);
+    } else {
+      setPasswordCheck(false);
+    }
+
+    // This effect should run whenever any of the validation states change
+  }, [lengthValid, upperValid, lowerValid, digitValid, specialValid]);
+  
+
 // The Backend code goes here
-  const handleSignUp = async() => {   
+  const handleSignUp = async() => {  
+    
     if (!phoneNumber || !password || !confirmPassword || !firstName 
         || !lastName || !invitationCode) {
       setErrorMessage('Please fill in all fields');
     } else if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match');
+    }
+    else if (!passwordCheck) {
+      setErrorMessage('Password does not meet requirements');
     } else {
       // Call API to create user account      
       // console.log('go to volunteer Phone Verification from sign up');
@@ -110,11 +151,25 @@ export default function VolunteerSignUpScreen({navigation}) {
         onSubmitEditing={() => Ref3.current.focus()}  
       /> */}
 
+      <View style={{width:'100%',alignItems:'center',marginTop:10,marginBottom:10}}>                
+
+      <Text style={{color:'#7C7C7C',fontSize:15}}>Password Requirements:</Text>
+
+      </View> 
+
+      <PasswordRequirementStatus isValid={lengthValid} text={"\u2022 At least 10 characters long"} />
+      <PasswordRequirementStatus isValid={upperValid} text={"\u2022 Contains at least one uppercase letter"}/>
+      <PasswordRequirementStatus isValid={lowerValid} text={"\u2022 Contains at least one lowercase letter"}/>
+      <PasswordRequirementStatus isValid={digitValid} text={"\u2022 Includes at least one digit (0-9)"}/>
+      <PasswordRequirementStatus isValid={specialValid} text={"\u2022 Has at least one special character"}/>
+
+      <View style={{width:'100%',alignItems:'center',marginTop:0,marginBottom:20}}></View> 
+
       <PasswordInputWithToggle
         ref={Ref2}
         label="Password*"
         value={password}
-        onChangeText={(text) => setPassword(text.trim())} 
+        onChangeText={(text) => handlePasswordChange(text)} 
         placeholder="Please enter password"
         secureTextEntry
         returnKeyType='next'
