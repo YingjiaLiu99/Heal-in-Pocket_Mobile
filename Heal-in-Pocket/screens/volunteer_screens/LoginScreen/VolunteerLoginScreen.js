@@ -144,8 +144,8 @@ export default function VolunteerLoginScreen({ navigation }) {
         ref={pwdRef}
         label="Password*"
         value={password}
-        onChangeText={setPassword} // Update the password state when the input changes
-        placeholder="Enter your password"
+        onChangeText={(text) => setPassword(text.trim())}  // Update the password state when the input changes
+        placeholder="Please enter password"
         secureTextEntry
         returnKeyType='done'
       />    

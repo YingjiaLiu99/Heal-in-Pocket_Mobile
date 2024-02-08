@@ -1,5 +1,5 @@
 import React, { useState, forwardRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // Forward ref is used here to allow parent components to directly access the text input if needed.
@@ -7,6 +7,7 @@ const PasswordInputWithToggle = forwardRef(({ label, value, onChangeText, placeh
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
+    // Keyboard.dismiss(); 
     setIsPasswordVisible(!isPasswordVisible);
   };
 

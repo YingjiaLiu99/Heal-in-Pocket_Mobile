@@ -7,6 +7,7 @@ import baseURL from '../../../common/baseURL';
 import InputBoxWithLabel from './components/InputBoxWithLabel';
 import styles from './styles';
 import { UserContext } from '../../../context/userContext';
+import PasswordInputWithToggle from './components/PasswordInputWithToggle';
 
 
 export default function VolunteerSignUpScreen({navigation}) {
@@ -98,7 +99,7 @@ export default function VolunteerSignUpScreen({navigation}) {
         onSubmitEditing={() => Ref2.current.focus()}         
       />
 
-      <InputBoxWithLabel
+      {/* <InputBoxWithLabel
         ref={Ref2}
         label="Password*"   
         value={password}   
@@ -107,8 +108,21 @@ export default function VolunteerSignUpScreen({navigation}) {
         secureTextEntry={true}
         returnKeyType='next'
         onSubmitEditing={() => Ref3.current.focus()}  
-      />
-      <InputBoxWithLabel
+      /> */}
+
+      <PasswordInputWithToggle
+        ref={Ref2}
+        label="Password*"
+        value={password}
+        onChangeText={(text) => setPassword(text.trim())} 
+        placeholder="Please enter password"
+        secureTextEntry
+        returnKeyType='next'
+        onSubmitEditing={() => Ref3.current.focus()}  
+      />   
+
+
+      {/* <InputBoxWithLabel
         ref={Ref3}
         label="Confirm Password*"
         value={confirmPassword}        
@@ -117,7 +131,20 @@ export default function VolunteerSignUpScreen({navigation}) {
         secureTextEntry={true}
         returnKeyType='done'
         onSubmitEditing={() => Ref4.current.focus()} 
-      />
+      /> */}
+
+      <PasswordInputWithToggle
+        ref={Ref3}
+        label="Confirm Password*"
+        value={confirmPassword}        
+        onChangeText={(text) => setConfirmPassword(text.trim())}
+        placeholder="Please Enter Password Again"
+        secureTextEntry
+        returnKeyType='done'
+        onSubmitEditing={() => Ref4.current.focus()}  
+      />   
+
+      
 
       <InputBoxWithLabel
         ref={Ref4}
