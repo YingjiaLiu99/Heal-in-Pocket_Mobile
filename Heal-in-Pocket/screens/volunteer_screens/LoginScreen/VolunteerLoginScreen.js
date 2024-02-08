@@ -7,10 +7,14 @@ import styles from './styles';
 import axios from 'axios';
 import baseURL from '../../../common/baseURL';
 import { UserContext } from '../../../context/userContext';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import PasswordInputWithToggle from './components/PasswordInputWithToggle';
+
 
 
 export default function VolunteerLoginScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [passwordInvisible, setPasswordInvisible] = useState(true);
   
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
@@ -29,6 +33,10 @@ export default function VolunteerLoginScreen({ navigation }) {
   //   // Return the function to unsubscribe from the event so it gets removed on unmount
   //   return unsubscribe;
   // }, [navigation]);
+
+  const togglePasswordVisibility = () => {
+    setPasswordInvisible(!passwordInvisible);
+  };
 
   const handleLogin = async() => {
     if (!phoneNumber || !password) {
@@ -121,15 +129,26 @@ export default function VolunteerLoginScreen({ navigation }) {
         returnKeyType='next'
         onSubmitEditing={() => pwdRef.current.focus()}
       />
-      <InputBoxWithLabel
+
+        {/* <InputBoxWithLabel
+          ref={pwdRef}
+          label="Password*"
+          value={password}
+          onChangeText={(text) => setPassword(text)}              
+          placeholder="Please Enter Password"
+          secureTextEntry = {true}
+          // returnKeyType='done'
+        /> */}
+
+      <PasswordInputWithToggle
         ref={pwdRef}
         label="Password*"
         value={password}
-        onChangeText={(text) => setPassword(text)}              
-        placeholder="Please Enter Password"
+        onChangeText={setPassword} // Update the password state when the input changes
+        placeholder="Enter your password"
         secureTextEntry
         returnKeyType='done'
-      />
+      />    
 
       <TouchableOpacity onPress={handleForgetPassword}>
         <Text style={styles.forgotPassword}>Forgot password?</Text>
