@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { useFocusEffect } from '@react-navigation/native';
 import styles from './styles.js';
 import PastVisitReport from './components/PastVisitReport.js';
 import { UserContext } from "../../../context/userContext.js";
@@ -56,8 +56,7 @@ export default function PastVisit( {navigation} ) {
           } 
     };
 
-    const site = "Street Corner Care"
-    // const time = "10:00 am"
+    const site = "Street Corner Care"    
 
     // call backend to get all viewed_records of a corresponding doctor_id
     const getAllViewedRecords = async (userId) => {
@@ -119,17 +118,15 @@ export default function PastVisit( {navigation} ) {
         }
     };
      
-    // need change here:
-    useEffect(() => {
-        console.log(userId);
-        getAllViewedRecords(userId);
-    }, [userId]);
-      
-    // console.log("reviewedRecordsData looks like: ", reviewedRecordsData);
+    
+    useFocusEffect(
+        React.useCallback(() => {
+            console.log(userId);
+            getAllViewedRecords(userId);
+        }, [userId])
+    );
 
-   
-    
-    
+
     return (
         <View style={styles.container}>
         <View style={{marginTop: 20,marginBottom:30,width:'100%'}}>
